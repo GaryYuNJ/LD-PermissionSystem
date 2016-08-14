@@ -44,4 +44,9 @@ public class CustomerServiceImpl implements ICustomerService {
 	public int updateCustomer(CustomerModel custoemrModel) {
 		return customerDao.updateByCIDSelective(custoemrModel);
 	}
+
+	@Override
+	public CustomerModel getUserByCId(String cid) {
+		return customerDao.simpleSelectByCID(cid);
+	}
 }
