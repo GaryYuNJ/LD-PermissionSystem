@@ -2,26 +2,32 @@
 <!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" 
   "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd"> 
 <generatorConfiguration> 
-<!-- <classPathEntry location="D:\Document_x64\Downloads\mysql-connector-java-5.1.11.jar"/>  -->
-<context id="MysqlTables" targetRuntime="MyBatis3"> 
-<commentGenerator>   
-    <property name="suppressAllComments" value="true" />      
-    </commentGenerator>  
-<jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/db_demo" userId="demo" password="demo"> 
-        </jdbcConnection> 
-<javaTypeResolver> 
-<property name="forceBigDecimals" value="false"/> 
-</javaTypeResolver> 
-<javaModelGenerator targetPackage="com.wuye.demo.model" targetProject="src\main\java"> 
-<property name="enableSubPackages" value="true"/> 
-<property name="trimStrings" value="true"/> 
-</javaModelGenerator> 
-<sqlMapGenerator targetPackage="com.wuye.demo.mapping" targetProject="src\main\java"> 
-<property name="enableSubPackages" value="true"/> 
-</sqlMapGenerator> 
-<javaClientGenerator type="XMLMAPPER" targetPackage="com.wuye.demo.dao" targetProject="src\main\java"> 
-<property name="enableSubPackages" value="true"/> 
-</javaClientGenerator> 
-<table tableName="user_t" domainObjectName="User" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
-</context> 
+	<!-- <classPathEntry location="D:\Document_x64\Downloads\mysql-connector-java-5.1.11.jar"/>  -->
+	<context id="MysqlTables" targetRuntime="MyBatis3"> 
+		<commentGenerator>   
+		    <property name="suppressAllComments" value="true" />      
+	 	</commentGenerator>   
+	 	
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://121.40.80.223:3306/LDPS" userId="ldps" password="ldps"> 
+		 </jdbcConnection> 
+		 
+		<javaTypeResolver> 
+			<property name="forceBigDecimals" value="false"/> 
+		</javaTypeResolver> 
+		
+		<javaModelGenerator targetPackage="com.ldps.model" targetProject="src\main\java"> 
+			<property name="enableSubPackages" value="true"/> 
+			<property name="trimStrings" value="true"/> 
+		</javaModelGenerator> 
+		
+		<sqlMapGenerator targetPackage="com.ldps.mapping" targetProject="src\main\java"> 
+			<property name="enableSubPackages" value="true"/> 
+		</sqlMapGenerator> 
+		
+		<javaClientGenerator type="XMLMAPPER" targetPackage="com.ldps.dao" targetProject="src\main\java"> 
+			<property name="enableSubPackages" value="true"/> 
+		</javaClientGenerator> 
+		
+		<table tableName="user_t" domainObjectName="User" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+	</context> 
 </generatorConfiguration> 
