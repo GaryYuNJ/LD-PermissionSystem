@@ -14,4 +14,8 @@ public interface CustomerModelMapper {
     int updateByPrimaryKeySelective(CustomerModel record);
 
     int updateByPrimaryKey(CustomerModel record);
+    
+    int deleteByCID(String cid);
+    
+    int updateByCIDSelective(CustomerModel record); 
 }
