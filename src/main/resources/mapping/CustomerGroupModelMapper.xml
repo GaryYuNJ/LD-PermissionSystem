@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ldps.dao.CustomerGroupModelMapper" >
+  <resultMap id="BaseResultMap" type="com.ldps.model.CustomerGroupModel" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="CHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="DATE" />
+    <result column="CREATE_USER" property="createUser" jdbcType="INTEGER" />
+    <result column="NUM1" property="num1" jdbcType="DECIMAL" />
+    <result column="NUM2" property="num2" jdbcType="DECIMAL" />
+    <result column="VC1" property="vc1" jdbcType="VARCHAR" />
+    <result column="VC2" property="vc2" jdbcType="VARCHAR" />
+    <result column="CHR1" property="chr1" jdbcType="CHAR" />
+    <result column="CHR2" property="chr2" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, NAME, STATUS, CREATE_DATE, CREATE_USER, NUM1, NUM2, VC1, VC2, CHR1, CHR2
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from CGROUP
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from CGROUP
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ldps.model.CustomerGroupModel" >
+    insert into CGROUP (ID, NAME, STATUS, 
+      CREATE_DATE, CREATE_USER, NUM1, 
+      NUM2, VC1, VC2, CHR1, 
+      CHR2)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, 
+      #{createDate,jdbcType=DATE}, #{createUser,jdbcType=INTEGER}, #{num1,jdbcType=DECIMAL}, 
+      #{num2,jdbcType=DECIMAL}, #{vc1,jdbcType=VARCHAR}, #{vc2,jdbcType=VARCHAR}, #{chr1,jdbcType=CHAR}, 
+      #{chr2,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ldps.model.CustomerGroupModel" >
+    insert into CGROUP
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER,
+      </if>
+      <if test="num1 != null" >
+        NUM1,
+      </if>
+      <if test="num2 != null" >
+        NUM2,
+      </if>
+      <if test="vc1 != null" >
+        VC1,
+      </if>
+      <if test="vc2 != null" >
+        VC2,
+      </if>
+      <if test="chr1 != null" >
+        CHR1,
+      </if>
+      <if test="chr2 != null" >
+        CHR2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=DATE},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=INTEGER},
+      </if>
+      <if test="num1 != null" >
+        #{num1,jdbcType=DECIMAL},
+      </if>
+      <if test="num2 != null" >
+        #{num2,jdbcType=DECIMAL},
+      </if>
+      <if test="vc1 != null" >
+        #{vc1,jdbcType=VARCHAR},
+      </if>
+      <if test="vc2 != null" >
+        #{vc2,jdbcType=VARCHAR},
+      </if>
+      <if test="chr1 != null" >
+        #{chr1,jdbcType=CHAR},
+      </if>
+      <if test="chr2 != null" >
+        #{chr2,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ldps.model.CustomerGroupModel" >
+    update CGROUP
+    <set >
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=CHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=DATE},
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER = #{createUser,jdbcType=INTEGER},
+      </if>
+      <if test="num1 != null" >
+        NUM1 = #{num1,jdbcType=DECIMAL},
+      </if>
+      <if test="num2 != null" >
+        NUM2 = #{num2,jdbcType=DECIMAL},
+      </if>
+      <if test="vc1 != null" >
+        VC1 = #{vc1,jdbcType=VARCHAR},
+      </if>
+      <if test="vc2 != null" >
+        VC2 = #{vc2,jdbcType=VARCHAR},
+      </if>
+      <if test="chr1 != null" >
+        CHR1 = #{chr1,jdbcType=CHAR},
+      </if>
+      <if test="chr2 != null" >
+        CHR2 = #{chr2,jdbcType=CHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ldps.model.CustomerGroupModel" >
+    update CGROUP
+    set NAME = #{name,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=CHAR},
+      CREATE_DATE = #{createDate,jdbcType=DATE},
+      CREATE_USER = #{createUser,jdbcType=INTEGER},
+      NUM1 = #{num1,jdbcType=DECIMAL},
+      NUM2 = #{num2,jdbcType=DECIMAL},
+      VC1 = #{vc1,jdbcType=VARCHAR},
+      VC2 = #{vc2,jdbcType=VARCHAR},
+      CHR1 = #{chr1,jdbcType=CHAR},
+      CHR2 = #{chr2,jdbcType=CHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

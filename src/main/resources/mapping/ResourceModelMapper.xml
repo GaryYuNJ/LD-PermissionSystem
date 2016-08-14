@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ldps.dao.ResourceModelMapper" >
+  <resultMap id="BaseResultMap" type="com.ldps.model.ResourceModel" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="TYPE_ID" property="typeId" jdbcType="INTEGER" />
+    <result column="STATUS" property="status" jdbcType="CHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="DATE" />
+    <result column="CREATE_USER" property="createUser" jdbcType="INTEGER" />
+    <result column="MAC" property="mac" jdbcType="CHAR" />
+    <result column="BUILDING_ID" property="buildingId" jdbcType="INTEGER" />
+    <result column="FLOOR" property="floor" jdbcType="INTEGER" />
+    <result column="PASSWORD" property="password" jdbcType="CHAR" />
+    <result column="SEQUENCE" property="sequence" jdbcType="INTEGER" />
+    <result column="SHARE_ENABLE" property="shareEnable" jdbcType="CHAR" />
+    <result column="R_INT1" property="rInt1" jdbcType="INTEGER" />
+    <result column="R_INT2" property="rInt2" jdbcType="INTEGER" />
+    <result column="NUM1" property="num1" jdbcType="DECIMAL" />
+    <result column="NUM2" property="num2" jdbcType="DECIMAL" />
+    <result column="VC1" property="vc1" jdbcType="VARCHAR" />
+    <result column="VC2" property="vc2" jdbcType="VARCHAR" />
+    <result column="CHR1" property="chr1" jdbcType="CHAR" />
+    <result column="CHR2" property="chr2" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, NAME, TYPE_ID, STATUS, CREATE_DATE, CREATE_USER, MAC, BUILDING_ID, FLOOR, PASSWORD, 
+    SEQUENCE, SHARE_ENABLE, R_INT1, R_INT2, NUM1, NUM2, VC1, VC2, CHR1, CHR2
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from RESOURCE
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from RESOURCE
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ldps.model.ResourceModel" >
+    insert into RESOURCE (ID, NAME, TYPE_ID, 
+      STATUS, CREATE_DATE, CREATE_USER, 
+      MAC, BUILDING_ID, FLOOR, 
+      PASSWORD, SEQUENCE, SHARE_ENABLE, 
+      R_INT1, R_INT2, NUM1, 
+      NUM2, VC1, VC2, CHR1, 
+      CHR2)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{typeId,jdbcType=INTEGER}, 
+      #{status,jdbcType=CHAR}, #{createDate,jdbcType=DATE}, #{createUser,jdbcType=INTEGER}, 
+      #{mac,jdbcType=CHAR}, #{buildingId,jdbcType=INTEGER}, #{floor,jdbcType=INTEGER}, 
+      #{password,jdbcType=CHAR}, #{sequence,jdbcType=INTEGER}, #{shareEnable,jdbcType=CHAR}, 
+      #{rInt1,jdbcType=INTEGER}, #{rInt2,jdbcType=INTEGER}, #{num1,jdbcType=DECIMAL}, 
+      #{num2,jdbcType=DECIMAL}, #{vc1,jdbcType=VARCHAR}, #{vc2,jdbcType=VARCHAR}, #{chr1,jdbcType=CHAR}, 
+      #{chr2,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ldps.model.ResourceModel" >
+    insert into RESOURCE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="typeId != null" >
+        TYPE_ID,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER,
+      </if>
+      <if test="mac != null" >
+        MAC,
+      </if>
+      <if test="buildingId != null" >
+        BUILDING_ID,
+      </if>
+      <if test="floor != null" >
+        FLOOR,
+      </if>
+      <if test="password != null" >
+        PASSWORD,
+      </if>
+      <if test="sequence != null" >
+        SEQUENCE,
+      </if>
+      <if test="shareEnable != null" >
+        SHARE_ENABLE,
+      </if>
+      <if test="rInt1 != null" >
+        R_INT1,
+      </if>
+      <if test="rInt2 != null" >
+        R_INT2,
+      </if>
+      <if test="num1 != null" >
+        NUM1,
+      </if>
+      <if test="num2 != null" >
+        NUM2,
+      </if>
+      <if test="vc1 != null" >
+        VC1,
+      </if>
+      <if test="vc2 != null" >
+        VC2,
+      </if>
+      <if test="chr1 != null" >
+        CHR1,
+      </if>
+      <if test="chr2 != null" >
+        CHR2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="typeId != null" >
+        #{typeId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=DATE},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=INTEGER},
+      </if>
+      <if test="mac != null" >
+        #{mac,jdbcType=CHAR},
+      </if>
+      <if test="buildingId != null" >
+        #{buildingId,jdbcType=INTEGER},
+      </if>
+      <if test="floor != null" >
+        #{floor,jdbcType=INTEGER},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=CHAR},
+      </if>
+      <if test="sequence != null" >
+        #{sequence,jdbcType=INTEGER},
+      </if>
+      <if test="shareEnable != null" >
+        #{shareEnable,jdbcType=CHAR},
+      </if>
+      <if test="rInt1 != null" >
+        #{rInt1,jdbcType=INTEGER},
+      </if>
+      <if test="rInt2 != null" >
+        #{rInt2,jdbcType=INTEGER},
+      </if>
+      <if test="num1 != null" >
+        #{num1,jdbcType=DECIMAL},
+      </if>
+      <if test="num2 != null" >
+        #{num2,jdbcType=DECIMAL},
+      </if>
+      <if test="vc1 != null" >
+        #{vc1,jdbcType=VARCHAR},
+      </if>
+      <if test="vc2 != null" >
+        #{vc2,jdbcType=VARCHAR},
+      </if>
+      <if test="chr1 != null" >
+        #{chr1,jdbcType=CHAR},
+      </if>
+      <if test="chr2 != null" >
+        #{chr2,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ldps.model.ResourceModel" >
+    update RESOURCE
+    <set >
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="typeId != null" >
+        TYPE_ID = #{typeId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=CHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=DATE},
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER = #{createUser,jdbcType=INTEGER},
+      </if>
+      <if test="mac != null" >
+        MAC = #{mac,jdbcType=CHAR},
+      </if>
+      <if test="buildingId != null" >
+        BUILDING_ID = #{buildingId,jdbcType=INTEGER},
+      </if>
+      <if test="floor != null" >
+        FLOOR = #{floor,jdbcType=INTEGER},
+      </if>
+      <if test="password != null" >
+        PASSWORD = #{password,jdbcType=CHAR},
+      </if>
+      <if test="sequence != null" >
+        SEQUENCE = #{sequence,jdbcType=INTEGER},
+      </if>
+      <if test="shareEnable != null" >
+        SHARE_ENABLE = #{shareEnable,jdbcType=CHAR},
+      </if>
+      <if test="rInt1 != null" >
+        R_INT1 = #{rInt1,jdbcType=INTEGER},
+      </if>
+      <if test="rInt2 != null" >
+        R_INT2 = #{rInt2,jdbcType=INTEGER},
+      </if>
+      <if test="num1 != null" >
+        NUM1 = #{num1,jdbcType=DECIMAL},
+      </if>
+      <if test="num2 != null" >
+        NUM2 = #{num2,jdbcType=DECIMAL},
+      </if>
+      <if test="vc1 != null" >
+        VC1 = #{vc1,jdbcType=VARCHAR},
+      </if>
+      <if test="vc2 != null" >
+        VC2 = #{vc2,jdbcType=VARCHAR},
+      </if>
+      <if test="chr1 != null" >
+        CHR1 = #{chr1,jdbcType=CHAR},
+      </if>
+      <if test="chr2 != null" >
+        CHR2 = #{chr2,jdbcType=CHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ldps.model.ResourceModel" >
+    update RESOURCE
+    set NAME = #{name,jdbcType=VARCHAR},
+      TYPE_ID = #{typeId,jdbcType=INTEGER},
+      STATUS = #{status,jdbcType=CHAR},
+      CREATE_DATE = #{createDate,jdbcType=DATE},
+      CREATE_USER = #{createUser,jdbcType=INTEGER},
+      MAC = #{mac,jdbcType=CHAR},
+      BUILDING_ID = #{buildingId,jdbcType=INTEGER},
+      FLOOR = #{floor,jdbcType=INTEGER},
+      PASSWORD = #{password,jdbcType=CHAR},
+      SEQUENCE = #{sequence,jdbcType=INTEGER},
+      SHARE_ENABLE = #{shareEnable,jdbcType=CHAR},
+      R_INT1 = #{rInt1,jdbcType=INTEGER},
+      R_INT2 = #{rInt2,jdbcType=INTEGER},
+      NUM1 = #{num1,jdbcType=DECIMAL},
+      NUM2 = #{num2,jdbcType=DECIMAL},
+      VC1 = #{vc1,jdbcType=VARCHAR},
+      VC2 = #{vc2,jdbcType=VARCHAR},
+      CHR1 = #{chr1,jdbcType=CHAR},
+      CHR2 = #{chr2,jdbcType=CHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

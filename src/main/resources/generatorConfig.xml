@@ -2,7 +2,7 @@
 <!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" 
   "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd"> 
 <generatorConfiguration> 
-	<!-- <classPathEntry location="D:\Document_x64\Downloads\mysql-connector-java-5.1.11.jar"/>  -->
+	<classPathEntry location="C:/Users/yuga001/.m2/repository/mysql/mysql-connector-java/5.1.30/mysql-connector-java-5.1.30.jar"/>
 	<context id="MysqlTables" targetRuntime="MyBatis3"> 
 		<commentGenerator>   
 		    <property name="suppressAllComments" value="true" />      
@@ -15,19 +15,35 @@
 			<property name="forceBigDecimals" value="false"/> 
 		</javaTypeResolver> 
 		
-		<javaModelGenerator targetPackage="com.ldps.model" targetProject="src\main\java"> 
+		<javaModelGenerator targetPackage="com.ldps.model" targetProject="LD-PermissionSystem\src\main\java"> 
 			<property name="enableSubPackages" value="true"/> 
 			<property name="trimStrings" value="true"/> 
 		</javaModelGenerator> 
 		
-		<sqlMapGenerator targetPackage="com.ldps.mapping" targetProject="src\main\java"> 
+		<sqlMapGenerator targetPackage="mapping" targetProject="LD-PermissionSystem\src\main\resources"> 
 			<property name="enableSubPackages" value="true"/> 
 		</sqlMapGenerator> 
 		
-		<javaClientGenerator type="XMLMAPPER" targetPackage="com.ldps.dao" targetProject="src\main\java"> 
+		<javaClientGenerator type="XMLMAPPER" targetPackage="com.ldps.dao" targetProject="LD-PermissionSystem\src\main\java"> 
 			<property name="enableSubPackages" value="true"/> 
 		</javaClientGenerator> 
 		
-		<table tableName="user_t" domainObjectName="User" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+		<!-- 
+		<table tableName="BACKEND_USER" domainObjectName="UserModel" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+		<table tableName="CUSTOMER" domainObjectName="CustomerModel" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+		<table tableName="CGROUP" domainObjectName="CustomerGroupModel" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+		<table tableName="CGROUP_REL" domainObjectName="CusGroupRelModel" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+		<table tableName="RESOURCE_TYPE" domainObjectName="ResourceTypeModel" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+		<table tableName="BUILDING" domainObjectName="BuildingModel" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+		<table tableName="RESOURCE" domainObjectName="ResourceModel" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+		<table tableName="RESOURCE_GROUP" domainObjectName="ResourceGroupModel" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+		<table tableName="RESOURCE_GROUP_REL" domainObjectName="ResourceGrpRelModel" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+		<table tableName="CUSTOMER_RESOURCE_REL" domainObjectName="CusResourceRelModel" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+		<table tableName="CGROUP_RESOURCE_REL" domainObjectName="CusGrpResourceRelModel" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+		<table tableName="PERMISSION_RECORD" domainObjectName="PermissonRecordModel" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+		<table tableName="NODE" domainObjectName="NodeModel" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+		<table tableName="NODE_REL" domainObjectName="NodeRelModel" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+		<table tableName="NODE_RESOURCE_REL" domainObjectName="NodeResourceRelModel" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+		 -->
 	</context> 
 </generatorConfiguration> 

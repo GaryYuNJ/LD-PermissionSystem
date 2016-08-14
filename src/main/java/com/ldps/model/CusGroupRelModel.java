@@ -2,29 +2,29 @@ package com.ldps.model;
 
 import java.util.Date;
 
-public class ResourceGrpRelModel {
-    private Integer rgroupId;
+public class CusGroupRelModel {
+    private Integer cgroupId;
 
-    private Integer resourceId;
+    private String cid;
 
     private Date createDate;
 
     private Integer createUser;
 
-    public Integer getRgroupId() {
-        return rgroupId;
+    public Integer getCgroupId() {
+        return cgroupId;
     }
 
-    public void setRgroupId(Integer rgroupId) {
-        this.rgroupId = rgroupId;
+    public void setCgroupId(Integer cgroupId) {
+        this.cgroupId = cgroupId;
     }
 
-    public Integer getResourceId() {
-        return resourceId;
+    public String getCid() {
+        return cid;
     }
 
-    public void setResourceId(Integer resourceId) {
-        this.resourceId = resourceId;
+    public void setCid(String cid) {
+        this.cid = cid == null ? null : cid.trim();
     }
 
     public Date getCreateDate() {

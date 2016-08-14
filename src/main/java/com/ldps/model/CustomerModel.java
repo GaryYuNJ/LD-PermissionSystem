@@ -1,324 +1,455 @@
 package com.ldps.model;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class CustomerModel {
-    private Integer id;    		//'会员ID'
-    private String customerId;	//会员帐号
-    private String customerType ;	//会员类型
-    private String customerStatus ; //会员状态
-    private Double customerCurrentJF ; //当期积分
-    private Double customerHisJF ; //历史积分
-    private Double customerTotalJF ; //总积分
-    private Double customerCurrentXFJF ; //当期消费金额
-    private Double customerHisXFJF ; //历史消费金额
-    private Double customerTotalXFJF ; //总消费金额
-    private String customerVipNo ; //申办卡号
-    private String customerName ; //申办姓名
-    private String customerCreator ; //创建人
-    private Date customerCreaterDate ; //创建日期
-    private String customerMaintor ; //最近维护人
-    private Date customerMaintDate ; //最近维护日期
-    private Date cDate1 ; //最近定期处理的日期
-    private Date cDate2 ;
-    private Date cDate3 ;
-    private Date cDate4 ;
-    private Date cDate5 ;
-    private Double cNum1 ;
-    private Double cNum2 ;
-    private Double cNum3 ;
-    private Double cNum4 ; //有效期内有效积分
-    private Double cNum5 ; //有效期内消费金额
-    private Double cNum6 ;
-    private Double cNum7 ;
-    private Double cNum8 ;
-    private Double cNum9 ;
-    private Double cNum10 ; //成长值
-    private String cVC1 ; //客服顾问
-    private String cVC2 ; //升降级未换卡前的卡类别
-    private String cVC3 ;
-    private String cVC4 ;
-    private String cVC5 ;
-    private String cVC6 ;
-    private String cVC7 ;
-    private String cVC8 ;
-    private String cChr1 ;
-    private String cChr2 ;
-    private String cChr3 ;
-    private String cChr4 ;
-    private String cChr5 ;
-    private String cChr6 ; //租客所属的主成员会员号custno
-	public Integer getId() {
-		return id;
-	}
-	public void setId(Integer id) {
-		this.id = id;
-	}
-	public String getCustomerId() {
-		return customerId;
-	}
-	public void setCustomerId(String customerId) {
-		this.customerId = customerId;
-	}
-	public String getCustomerType() {
-		return customerType;
-	}
-	public void setCustomerType(String customerType) {
-		this.customerType = customerType;
-	}
-	public String getCustomerStatus() {
-		return customerStatus;
-	}
-	public void setCustomerStatus(String customerStatus) {
-		this.customerStatus = customerStatus;
-	}
-	public Double getCustomerCurrentJF() {
-		return customerCurrentJF;
-	}
-	public void setCustomerCurrentJF(Double customerCurrentJF) {
-		this.customerCurrentJF = customerCurrentJF;
-	}
-	public Double getCustomerHisJF() {
-		return customerHisJF;
-	}
-	public void setCustomerHisJF(Double customerHisJF) {
-		this.customerHisJF = customerHisJF;
-	}
-	public Double getCustomerTotalJF() {
-		return customerTotalJF;
-	}
-	public void setCustomerTotalJF(Double customerTotalJF) {
-		this.customerTotalJF = customerTotalJF;
-	}
-	public Double getCustomerCurrentXFJF() {
-		return customerCurrentXFJF;
-	}
-	public void setCustomerCurrentXFJF(Double customerCurrentXFJF) {
-		this.customerCurrentXFJF = customerCurrentXFJF;
-	}
-	public Double getCustomerHisXFJF() {
-		return customerHisXFJF;
-	}
-	public void setCustomerHisXFJF(Double customerHisXFJF) {
-		this.customerHisXFJF = customerHisXFJF;
-	}
-	public Double getCustomerTotalXFJF() {
-		return customerTotalXFJF;
-	}
-	public void setCustomerTotalXFJF(Double customerTotalXFJF) {
-		this.customerTotalXFJF = customerTotalXFJF;
-	}
-	public String getCustomerVipNo() {
-		return customerVipNo;
-	}
-	public void setCustomerVipNo(String customerVipNo) {
-		this.customerVipNo = customerVipNo;
-	}
-	public String getCustomerName() {
-		return customerName;
-	}
-	public void setCustomerName(String customerName) {
-		this.customerName = customerName;
-	}
-	public String getCustomerCreator() {
-		return customerCreator;
-	}
-	public void setCustomerCreator(String customerCreator) {
-		this.customerCreator = customerCreator;
-	}
-	public Date getCustomerCreaterDate() {
-		return customerCreaterDate;
-	}
-	public void setCustomerCreaterDate(Date customerCreaterDate) {
-		this.customerCreaterDate = customerCreaterDate;
-	}
-	public String getCustomerMaintor() {
-		return customerMaintor;
-	}
-	public void setCustomerMaintor(String customerMaintor) {
-		this.customerMaintor = customerMaintor;
-	}
-	public Date getCustomerMaintDate() {
-		return customerMaintDate;
-	}
-	public void setCustomerMaintDate(Date customerMaintDate) {
-		this.customerMaintDate = customerMaintDate;
-	}
-	public Date getcDate1() {
-		return cDate1;
-	}
-	public void setcDate1(Date cDate1) {
-		this.cDate1 = cDate1;
-	}
-	public Date getcDate2() {
-		return cDate2;
-	}
-	public void setcDate2(Date cDate2) {
-		this.cDate2 = cDate2;
-	}
-	public Date getcDate3() {
-		return cDate3;
-	}
-	public void setcDate3(Date cDate3) {
-		this.cDate3 = cDate3;
-	}
-	public Date getcDate4() {
-		return cDate4;
-	}
-	public void setcDate4(Date cDate4) {
-		this.cDate4 = cDate4;
-	}
-	public Date getcDate5() {
-		return cDate5;
-	}
-	public void setcDate5(Date cDate5) {
-		this.cDate5 = cDate5;
-	}
-	public Double getcNum1() {
-		return cNum1;
-	}
-	public void setcNum1(Double cNum1) {
-		this.cNum1 = cNum1;
-	}
-	public Double getcNum2() {
-		return cNum2;
-	}
-	public void setcNum2(Double cNum2) {
-		this.cNum2 = cNum2;
-	}
-	public Double getcNum3() {
-		return cNum3;
-	}
-	public void setcNum3(Double cNum3) {
-		this.cNum3 = cNum3;
-	}
-	public Double getcNum4() {
-		return cNum4;
-	}
-	public void setcNum4(Double cNum4) {
-		this.cNum4 = cNum4;
-	}
-	public Double getcNum5() {
-		return cNum5;
-	}
-	public void setcNum5(Double cNum5) {
-		this.cNum5 = cNum5;
-	}
-	public Double getcNum6() {
-		return cNum6;
-	}
-	public void setcNum6(Double cNum6) {
-		this.cNum6 = cNum6;
-	}
-	public Double getcNum7() {
-		return cNum7;
-	}
-	public void setcNum7(Double cNum7) {
-		this.cNum7 = cNum7;
-	}
-	public Double getcNum8() {
-		return cNum8;
-	}
-	public void setcNum8(Double cNum8) {
-		this.cNum8 = cNum8;
-	}
-	public Double getcNum9() {
-		return cNum9;
-	}
-	public void setcNum9(Double cNum9) {
-		this.cNum9 = cNum9;
-	}
-	public Double getcNum10() {
-		return cNum10;
-	}
-	public void setcNum10(Double cNum10) {
-		this.cNum10 = cNum10;
-	}
-	public String getcVC1() {
-		return cVC1;
-	}
-	public void setcVC1(String cVC1) {
-		this.cVC1 = cVC1;
-	}
-	public String getcVC2() {
-		return cVC2;
-	}
-	public void setcVC2(String cVC2) {
-		this.cVC2 = cVC2;
-	}
-	public String getcVC3() {
-		return cVC3;
-	}
-	public void setcVC3(String cVC3) {
-		this.cVC3 = cVC3;
-	}
-	public String getcVC4() {
-		return cVC4;
-	}
-	public void setcVC4(String cVC4) {
-		this.cVC4 = cVC4;
-	}
-	public String getcVC5() {
-		return cVC5;
-	}
-	public void setcVC5(String cVC5) {
-		this.cVC5 = cVC5;
-	}
-	public String getcVC6() {
-		return cVC6;
-	}
-	public void setcVC6(String cVC6) {
-		this.cVC6 = cVC6;
-	}
-	public String getcVC7() {
-		return cVC7;
-	}
-	public void setcVC7(String cVC7) {
-		this.cVC7 = cVC7;
-	}
-	public String getcVC8() {
-		return cVC8;
-	}
-	public void setcVC8(String cVC8) {
-		this.cVC8 = cVC8;
-	}
-	public String getcChr1() {
-		return cChr1;
-	}
-	public void setcChr1(String cChr1) {
-		this.cChr1 = cChr1;
-	}
-	public String getcChr2() {
-		return cChr2;
-	}
-	public void setcChr2(String cChr2) {
-		this.cChr2 = cChr2;
-	}
-	public String getcChr3() {
-		return cChr3;
-	}
-	public void setcChr3(String cChr3) {
-		this.cChr3 = cChr3;
-	}
-	public String getcChr4() {
-		return cChr4;
-	}
-	public void setcChr4(String cChr4) {
-		this.cChr4 = cChr4;
-	}
-	public String getcChr5() {
-		return cChr5;
-	}
-	public void setcChr5(String cChr5) {
-		this.cChr5 = cChr5;
-	}
-	public String getcChr6() {
-		return cChr6;
-	}
-	public void setcChr6(String cChr6) {
-		this.cChr6 = cChr6;
-	}
-    
-    
-    
+    private Long id;
+
+    private String cid;
+
+    private String ctype;
+
+    private String cstatus;
+
+    private Long ccurjfye;
+
+    private Long chisjfye;
+
+    private Long ctotjfye;
+
+    private Long ccurxfje;
+
+    private Long chisxfje;
+
+    private Long ctotxfje;
+
+    private String cvipno;
+
+    private String cname;
+
+    private String ccreator;
+
+    private Date ccreatdate;
+
+    private String cmaintor;
+
+    private Date cmaintdate;
+
+    private Date cdate1;
+
+    private Date cdate2;
+
+    private Date cdate3;
+
+    private Date cdate4;
+
+    private Date cdate5;
+
+    private Long cnum1;
+
+    private Long cnum2;
+
+    private Long cnum3;
+
+    private Long cnum4;
+
+    private Long cnum5;
+
+    private Long cnum6;
+
+    private Long cnum7;
+
+    private Long cnum8;
+
+    private Long cnum9;
+
+    private Long cnum10;
+
+    private String cvc1;
+
+    private String cvc2;
+
+    private String cvc3;
+
+    private String cvc4;
+
+    private String cvc5;
+
+    private String cvc6;
+
+    private String cvc7;
+
+    private String cvc8;
+
+    private String cchr1;
+
+    private String cchr2;
+
+    private String cchr3;
+
+    private String cchr4;
+
+    private String cchr5;
+
+    private String cchr6;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getCid() {
+        return cid;
+    }
+
+    public void setCid(String cid) {
+        this.cid = cid == null ? null : cid.trim();
+    }
+
+    public String getCtype() {
+        return ctype;
+    }
+
+    public void setCtype(String ctype) {
+        this.ctype = ctype == null ? null : ctype.trim();
+    }
+
+    public String getCstatus() {
+        return cstatus;
+    }
+
+    public void setCstatus(String cstatus) {
+        this.cstatus = cstatus == null ? null : cstatus.trim();
+    }
+
+    public Long getCcurjfye() {
+        return ccurjfye;
+    }
+
+    public void setCcurjfye(Long ccurjfye) {
+        this.ccurjfye = ccurjfye;
+    }
+
+    public Long getChisjfye() {
+        return chisjfye;
+    }
+
+    public void setChisjfye(Long chisjfye) {
+        this.chisjfye = chisjfye;
+    }
+
+    public Long getCtotjfye() {
+        return ctotjfye;
+    }
+
+    public void setCtotjfye(Long ctotjfye) {
+        this.ctotjfye = ctotjfye;
+    }
+
+    public Long getCcurxfje() {
+        return ccurxfje;
+    }
+
+    public void setCcurxfje(Long ccurxfje) {
+        this.ccurxfje = ccurxfje;
+    }
+
+    public Long getChisxfje() {
+        return chisxfje;
+    }
+
+    public void setChisxfje(Long chisxfje) {
+        this.chisxfje = chisxfje;
+    }
+
+    public Long getCtotxfje() {
+        return ctotxfje;
+    }
+
+    public void setCtotxfje(Long ctotxfje) {
+        this.ctotxfje = ctotxfje;
+    }
+
+    public String getCvipno() {
+        return cvipno;
+    }
+
+    public void setCvipno(String cvipno) {
+        this.cvipno = cvipno == null ? null : cvipno.trim();
+    }
+
+    public String getCname() {
+        return cname;
+    }
+
+    public void setCname(String cname) {
+        this.cname = cname == null ? null : cname.trim();
+    }
+
+    public String getCcreator() {
+        return ccreator;
+    }
+
+    public void setCcreator(String ccreator) {
+        this.ccreator = ccreator == null ? null : ccreator.trim();
+    }
+
+    public Date getCcreatdate() {
+        return ccreatdate;
+    }
+
+    public void setCcreatdate(Date ccreatdate) {
+        this.ccreatdate = ccreatdate;
+    }
+
+    public String getCmaintor() {
+        return cmaintor;
+    }
+
+    public void setCmaintor(String cmaintor) {
+        this.cmaintor = cmaintor == null ? null : cmaintor.trim();
+    }
+
+    public Date getCmaintdate() {
+        return cmaintdate;
+    }
+
+    public void setCmaintdate(Date cmaintdate) {
+        this.cmaintdate = cmaintdate;
+    }
+
+    public Date getCdate1() {
+        return cdate1;
+    }
+
+    public void setCdate1(Date cdate1) {
+        this.cdate1 = cdate1;
+    }
+
+    public Date getCdate2() {
+        return cdate2;
+    }
+
+    public void setCdate2(Date cdate2) {
+        this.cdate2 = cdate2;
+    }
+
+    public Date getCdate3() {
+        return cdate3;
+    }
+
+    public void setCdate3(Date cdate3) {
+        this.cdate3 = cdate3;
+    }
+
+    public Date getCdate4() {
+        return cdate4;
+    }
+
+    public void setCdate4(Date cdate4) {
+        this.cdate4 = cdate4;
+    }
+
+    public Date getCdate5() {
+        return cdate5;
+    }
+
+    public void setCdate5(Date cdate5) {
+        this.cdate5 = cdate5;
+    }
+
+    public Long getCnum1() {
+        return cnum1;
+    }
+
+    public void setCnum1(Long cnum1) {
+        this.cnum1 = cnum1;
+    }
+
+    public Long getCnum2() {
+        return cnum2;
+    }
+
+    public void setCnum2(Long cnum2) {
+        this.cnum2 = cnum2;
+    }
+
+    public Long getCnum3() {
+        return cnum3;
+    }
+
+    public void setCnum3(Long cnum3) {
+        this.cnum3 = cnum3;
+    }
+
+    public Long getCnum4() {
+        return cnum4;
+    }
+
+    public void setCnum4(Long cnum4) {
+        this.cnum4 = cnum4;
+    }
+
+    public Long getCnum5() {
+        return cnum5;
+    }
+
+    public void setCnum5(Long cnum5) {
+        this.cnum5 = cnum5;
+    }
+
+    public Long getCnum6() {
+        return cnum6;
+    }
+
+    public void setCnum6(Long cnum6) {
+        this.cnum6 = cnum6;
+    }
+
+    public Long getCnum7() {
+        return cnum7;
+    }
+
+    public void setCnum7(Long cnum7) {
+        this.cnum7 = cnum7;
+    }
+
+    public Long getCnum8() {
+        return cnum8;
+    }
+
+    public void setCnum8(Long cnum8) {
+        this.cnum8 = cnum8;
+    }
+
+    public Long getCnum9() {
+        return cnum9;
+    }
+
+    public void setCnum9(Long cnum9) {
+        this.cnum9 = cnum9;
+    }
+
+    public Long getCnum10() {
+        return cnum10;
+    }
+
+    public void setCnum10(Long cnum10) {
+        this.cnum10 = cnum10;
+    }
+
+    public String getCvc1() {
+        return cvc1;
+    }
+
+    public void setCvc1(String cvc1) {
+        this.cvc1 = cvc1 == null ? null : cvc1.trim();
+    }
+
+    public String getCvc2() {
+        return cvc2;
+    }
+
+    public void setCvc2(String cvc2) {
+        this.cvc2 = cvc2 == null ? null : cvc2.trim();
+    }
+
+    public String getCvc3() {
+        return cvc3;
+    }
+
+    public void setCvc3(String cvc3) {
+        this.cvc3 = cvc3 == null ? null : cvc3.trim();
+    }
+
+    public String getCvc4() {
+        return cvc4;
+    }
+
+    public void setCvc4(String cvc4) {
+        this.cvc4 = cvc4 == null ? null : cvc4.trim();
+    }
+
+    public String getCvc5() {
+        return cvc5;
+    }
+
+    public void setCvc5(String cvc5) {
+        this.cvc5 = cvc5 == null ? null : cvc5.trim();
+    }
+
+    public String getCvc6() {
+        return cvc6;
+    }
+
+    public void setCvc6(String cvc6) {
+        this.cvc6 = cvc6 == null ? null : cvc6.trim();
+    }
+
+    public String getCvc7() {
+        return cvc7;
+    }
+
+    public void setCvc7(String cvc7) {
+        this.cvc7 = cvc7 == null ? null : cvc7.trim();
+    }
+
+    public String getCvc8() {
+        return cvc8;
+    }
+
+    public void setCvc8(String cvc8) {
+        this.cvc8 = cvc8 == null ? null : cvc8.trim();
+    }
+
+    public String getCchr1() {
+        return cchr1;
+    }
+
+    public void setCchr1(String cchr1) {
+        this.cchr1 = cchr1 == null ? null : cchr1.trim();
+    }
+
+    public String getCchr2() {
+        return cchr2;
+    }
+
+    public void setCchr2(String cchr2) {
+        this.cchr2 = cchr2 == null ? null : cchr2.trim();
+    }
+
+    public String getCchr3() {
+        return cchr3;
+    }
+
+    public void setCchr3(String cchr3) {
+        this.cchr3 = cchr3 == null ? null : cchr3.trim();
+    }
+
+    public String getCchr4() {
+        return cchr4;
+    }
+
+    public void setCchr4(String cchr4) {
+        this.cchr4 = cchr4 == null ? null : cchr4.trim();
+    }
+
+    public String getCchr5() {
+        return cchr5;
+    }
+
+    public void setCchr5(String cchr5) {
+        this.cchr5 = cchr5 == null ? null : cchr5.trim();
+    }
+
+    public String getCchr6() {
+        return cchr6;
+    }
+
+    public void setCchr6(String cchr6) {
+        this.cchr6 = cchr6 == null ? null : cchr6.trim();
+    }
 }

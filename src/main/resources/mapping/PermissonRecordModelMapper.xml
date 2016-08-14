@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ldps.dao.PermissonRecordModelMapper" >
+  <resultMap id="BaseResultMap" type="com.ldps.model.PermissonRecordModel" >
+    <result column="OBJECT_TYPE" property="objectType" jdbcType="INTEGER" />
+    <result column="CGROUP_NAME" property="cgroupName" jdbcType="VARCHAR" />
+    <result column="RESOURCE_NAME" property="resourceName" jdbcType="VARCHAR" />
+    <result column="CID" property="cid" jdbcType="VARCHAR" />
+    <result column="ACTION_TYPE" property="actionType" jdbcType="INTEGER" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="DATE" />
+    <result column="CREATE_USER" property="createUser" jdbcType="VARCHAR" />
+  </resultMap>
+  <insert id="insert" parameterType="com.ldps.model.PermissonRecordModel" >
+    insert into PERMISSION_RECORD (OBJECT_TYPE, CGROUP_NAME, RESOURCE_NAME, 
+      CID, ACTION_TYPE, CREATE_DATE, 
+      CREATE_USER)
+    values (#{objectType,jdbcType=INTEGER}, #{cgroupName,jdbcType=VARCHAR}, #{resourceName,jdbcType=VARCHAR}, 
+      #{cid,jdbcType=VARCHAR}, #{actionType,jdbcType=INTEGER}, #{createDate,jdbcType=DATE}, 
+      #{createUser,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ldps.model.PermissonRecordModel" >
+    insert into PERMISSION_RECORD
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="objectType != null" >
+        OBJECT_TYPE,
+      </if>
+      <if test="cgroupName != null" >
+        CGROUP_NAME,
+      </if>
+      <if test="resourceName != null" >
+        RESOURCE_NAME,
+      </if>
+      <if test="cid != null" >
+        CID,
+      </if>
+      <if test="actionType != null" >
+        ACTION_TYPE,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="objectType != null" >
+        #{objectType,jdbcType=INTEGER},
+      </if>
+      <if test="cgroupName != null" >
+        #{cgroupName,jdbcType=VARCHAR},
+      </if>
+      <if test="resourceName != null" >
+        #{resourceName,jdbcType=VARCHAR},
+      </if>
+      <if test="cid != null" >
+        #{cid,jdbcType=VARCHAR},
+      </if>
+      <if test="actionType != null" >
+        #{actionType,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=DATE},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

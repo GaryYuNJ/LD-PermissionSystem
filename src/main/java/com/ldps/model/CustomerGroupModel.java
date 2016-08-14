@@ -1,92 +1,115 @@
 package com.ldps.model;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class CustomerGroupModel {
     private Integer id;
 
-    private String cGPName;
+    private String name;
 
     private String status;
-    
+
     private Date createDate;
-    
+
     private Integer createUser;
-    
-    private Double cGPNum1;
-    private Double cGPNum2;
-    private String cGPVc1;
-    private String cGPVc2;
-    private String cGPChar1;
-    private String cGPChar2;
-    
-	public Integer getId() {
-		return id;
-	}
-	public void setId(Integer id) {
-		this.id = id;
-	}
-	public String getcGPName() {
-		return cGPName;
-	}
-	public void setcGPName(String cGPName) {
-		this.cGPName = cGPName;
-	}
-	public String getStatus() {
-		return status;
-	}
-	public void setStatus(String status) {
-		this.status = status;
-	}
-	public Date getCreateDate() {
-		return createDate;
-	}
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
-	public Integer getCreateUser() {
-		return createUser;
-	}
-	public void setCreateUser(Integer createUser) {
-		this.createUser = createUser;
-	}
-	public Double getcGPNum1() {
-		return cGPNum1;
-	}
-	public void setcGPNum1(Double cGPNum1) {
-		this.cGPNum1 = cGPNum1;
-	}
-	public Double getcGPNum2() {
-		return cGPNum2;
-	}
-	public void setcGPNum2(Double cGPNum2) {
-		this.cGPNum2 = cGPNum2;
-	}
-	public String getcGPVc1() {
-		return cGPVc1;
-	}
-	public void setcGPVc1(String cGPVc1) {
-		this.cGPVc1 = cGPVc1;
-	}
-	public String getcGPVc2() {
-		return cGPVc2;
-	}
-	public void setcGPVc2(String cGPVc2) {
-		this.cGPVc2 = cGPVc2;
-	}
-	public String getcGPChar1() {
-		return cGPChar1;
-	}
-	public void setcGPChar1(String cGPChar1) {
-		this.cGPChar1 = cGPChar1;
-	}
-	public String getcGPChar2() {
-		return cGPChar2;
-	}
-	public void setcGPChar2(String cGPChar2) {
-		this.cGPChar2 = cGPChar2;
-	}
 
+    private Long num1;
 
+    private Long num2;
 
+    private String vc1;
+
+    private String vc2;
+
+    private String chr1;
+
+    private String chr2;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status == null ? null : status.trim();
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public Integer getCreateUser() {
+        return createUser;
+    }
+
+    public void setCreateUser(Integer createUser) {
+        this.createUser = createUser;
+    }
+
+    public Long getNum1() {
+        return num1;
+    }
+
+    public void setNum1(Long num1) {
+        this.num1 = num1;
+    }
+
+    public Long getNum2() {
+        return num2;
+    }
+
+    public void setNum2(Long num2) {
+        this.num2 = num2;
+    }
+
+    public String getVc1() {
+        return vc1;
+    }
+
+    public void setVc1(String vc1) {
+        this.vc1 = vc1 == null ? null : vc1.trim();
+    }
+
+    public String getVc2() {
+        return vc2;
+    }
+
+    public void setVc2(String vc2) {
+        this.vc2 = vc2 == null ? null : vc2.trim();
+    }
+
+    public String getChr1() {
+        return chr1;
+    }
+
+    public void setChr1(String chr1) {
+        this.chr1 = chr1 == null ? null : chr1.trim();
+    }
+
+    public String getChr2() {
+        return chr2;
+    }
+
+    public void setChr2(String chr2) {
+        this.chr2 = chr2 == null ? null : chr2.trim();
+    }
 }
