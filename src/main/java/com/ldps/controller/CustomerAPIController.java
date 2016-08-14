@@ -95,5 +95,5 @@ public class CustomerAPIController {
 		}
 		// 返回信息
 		return JSON.toJSONString(apiMessage);
-	}
+	} 
 }
