@@ -1,5 +1,7 @@
 package com.ldps.model;
 
+import java.sql.Date;
+
 public class User {
     private Integer id;
 
@@ -7,7 +9,12 @@ public class User {
 
     private String password;
 
-    private Integer age;
+    private String status;
+    
+    private Date createDate;
+    
+    private Integer createUser;
+    
 
     public Integer getId() {
         return id;
@@ -33,11 +40,29 @@ public class User {
         this.password = password == null ? null : password.trim();
     }
 
-    public Integer getAge() {
-        return age;
-    }
+	public String getStatus() {
+		return status;
+	}
 
-    public void setAge(Integer age) {
-        this.age = age;
-    }
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+
+	public Integer getCreateUser() {
+		return createUser;
+	}
+
+	public void setCreateUser(Integer createUser) {
+		this.createUser = createUser;
+	}
+
+
 }
