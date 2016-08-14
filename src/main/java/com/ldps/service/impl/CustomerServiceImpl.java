@@ -3,22 +3,45 @@ package com.ldps.service.impl;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.ldps.dao.CustomerModelMapper;
 import com.ldps.model.CustomerModel;
 import com.ldps.service.ICustomerService;
 
-@Service("customerService")
+@Service("iCustomerSevice")
 public class CustomerServiceImpl implements ICustomerService {
 
 	@Resource
-	private CustomerModelMapper customerMapper;
-
+	private CustomerModelMapper customerDao;
+	
 	@Override
-	public CustomerModel getUserByCId(String cid) {
-		// TODO Auto-generated method stub
-		return this.customerMapper.simpleSelectByCID(cid);
+	public String addVerification(CustomerModel custoemrModel) {
+		 String message="";
+		 if(StringUtils.isEmpty(custoemrModel.getCid())){
+			 message+="会员账号不能为空;";
+		 }
+		 if(StringUtils.isEmpty(custoemrModel.getCtype())){
+			 message+="会员类型不能为空;";
+		 }
+		 if(StringUtils.isEmpty(custoemrModel.getCstatus())){
+			 message+="会员状态不能为空;";
+		 }
+		return message;
+	}
+ 
+	@Override
+	public int addCustomer(CustomerModel custoemrModel) {
+		return customerDao.insertSelective(custoemrModel);
 	}
 
-	
+	@Override
+	public int deleteCustomer(String cid) {
+		return customerDao.deleteByCID(cid);
+	}
+
+	@Override
+	public int updateCustomer(CustomerModel custoemrModel) {
+		return customerDao.updateByCIDSelective(custoemrModel);
+	}
 }

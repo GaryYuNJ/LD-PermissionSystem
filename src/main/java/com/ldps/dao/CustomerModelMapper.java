@@ -4,8 +4,6 @@ import com.ldps.model.CustomerModel;
 
 public interface CustomerModelMapper {
     int deleteByPrimaryKey(Long id);
-    
-    int deleteByCID(String cid);
 
     int insert(CustomerModel record);
 
@@ -19,5 +17,8 @@ public interface CustomerModelMapper {
 
     int updateByPrimaryKey(CustomerModel record);
     
-    int updateByCIDSelective(CustomerModel record);
+    int deleteByCID(String cid);
+    
+    int updateByCIDSelective(CustomerModel record);  
+
 }

@@ -89,7 +89,7 @@
     where ID = #{id,jdbcType=BIGINT}
   </delete>
   
-   <delete id="deleteByCID" parameterType="java.lang.String" >
+  <delete id="deleteByCID" parameterType="java.lang.String" >
     delete from CUSTOMER
     where CID = #{cid,jdbcType=VARCHAR}
   </delete>
