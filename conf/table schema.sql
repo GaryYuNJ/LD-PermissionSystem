@@ -234,7 +234,7 @@ CREATE TABLE PERMISSION_RECORD    (
 	CGP_NAME varchar(20) COMMENT '会员组名称', 
   	R_NAME varchar(20) NOT NULL COMMENT '资源名称', 
 	CID varchar(20) COMMENT '会员帐号',
-	PR_TYPE int(1) NOT NULL COMMENT '动作；1 授权；0 撤销权限',
+	PR_ACTIONTYPE int(1) NOT NULL COMMENT '动作；1 授权；0 撤销权限',
 	PR_CREATEDATE DATE  COMMENT '时间', 
 	PR_CREATEUSER varchar(20) COMMENT '行为创建人(分享人或者后台用户名)',
     INDEX (R_NAME)
