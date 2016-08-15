@@ -1,5 +1,7 @@
 package com.ldps.dao;
 
+import java.util.List;
+
 import com.ldps.model.ResourceGroupModel;
 
 public interface ResourceGroupModelMapper {
@@ -14,4 +16,6 @@ public interface ResourceGroupModelMapper {
     int updateByPrimaryKeySelective(ResourceGroupModel record);
 
     int updateByPrimaryKey(ResourceGroupModel record);
+    
+    List<ResourceGroupModel> selectByResourceId(Integer id);
 }

@@ -6,4 +6,6 @@ public interface CusGrpResourceRelModelMapper {
     int insert(CusGrpResourceRelModel record);
 
     int insertSelective(CusGrpResourceRelModel record);
+    
+    CusGrpResourceRelModel selectByGrpIdAndResId(CusGrpResourceRelModel record);
 }

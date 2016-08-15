@@ -1,6 +1,7 @@
 package com.ldps.model;
 
 import java.util.Date;
+import java.util.List;
 
 public class CustomerModel {
     private Long id;
@@ -93,7 +94,17 @@ public class CustomerModel {
 
     private String cchr6;
 
-    public Long getId() {
+    private List<CustomerGroupModel> customerGroups;
+    
+    public List<CustomerGroupModel> getCustomerGroups() {
+		return customerGroups;
+	}
+
+	public void setCustomerGroups(List<CustomerGroupModel> customerGroups) {
+		this.customerGroups = customerGroups;
+	}
+
+	public Long getId() {
         return id;
     }
 

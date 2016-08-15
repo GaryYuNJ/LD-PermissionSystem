@@ -1,5 +1,7 @@
 package com.ldps.dao;
 
+import java.util.List;
+
 import com.ldps.model.ResourceModel;
 
 public interface ResourceModelMapper {
@@ -14,4 +16,9 @@ public interface ResourceModelMapper {
     int updateByPrimaryKeySelective(ResourceModel record);
 
     int updateByPrimaryKey(ResourceModel record);
+    
+    ResourceModel selectByMac(String mac);
+    
+    ResourceModel  selectWithGroupsByMAC(String mac);
+    
 }

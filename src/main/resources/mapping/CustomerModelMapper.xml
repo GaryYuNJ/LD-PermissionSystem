@@ -57,6 +57,26 @@
     <result column="CNAME" property="cname" jdbcType="VARCHAR" />
   </resultMap>
   
+  <resultMap id="SimpleWithGroupsResultMap" type="com.ldps.model.CustomerModel" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="CID" property="cid" jdbcType="VARCHAR" />
+    <result column="CSTATUS" property="cstatus" jdbcType="CHAR" />
+    <result column="CNAME" property="cname" jdbcType="VARCHAR" />
+    <collection property="customerGroups" javaType="java.util.List" ofType="com.ldps.model.CustomerGroupModel">  
+        <id column="CG_ID" property="id" jdbcType="INTEGER" />
+	    <result column="CG_NAME" property="name" jdbcType="VARCHAR" />
+	    <result column="CG_STATUS" property="status" jdbcType="CHAR" />
+	    <result column="CG_CREATE_DATE" property="createDate" jdbcType="DATE" />
+	    <result column="CG_CREATE_USER" property="createUser" jdbcType="INTEGER" />
+	    <result column="CG_NUM1" property="num1" jdbcType="DECIMAL" />
+	    <result column="CG_NUM2" property="num2" jdbcType="DECIMAL" />
+	    <result column="CG_VC1" property="vc1" jdbcType="VARCHAR" />
+	    <result column="CG_VC2" property="vc2" jdbcType="VARCHAR" />
+	    <result column="CG_CHR1" property="chr1" jdbcType="CHAR" />
+	    <result column="CG_CHR2" property="chr2" jdbcType="CHAR" />
+    </collection>  
+  </resultMap>
+  
   <sql id="Base_Column_List" >
     ID, CID, CTYPE, CSTATUS, CCURJFYE, CHISJFYE, CTOTJFYE, CCURXFJE, CHISXFJE, CTOTXFJE, 
     CVIPNO, CNAME, CCREATOR, CCREATDATE, CMAINTOR, CMAINTDATE, CDATE1, CDATE2, CDATE3, 
@@ -67,6 +87,12 @@
   
   <sql id="Simple_Column_List" >
   	ID, CID, CSTATUS, CNAME
+  </sql>
+  
+  <sql id="Simple_Column_WithGroups" >
+  	C.ID, C.CID, C.CSTATUS, C.CNAME, 
+	CG.ID CG_ID, CG.NAME CG_NAME,CG.STATUS CG_STATUS, CG.CREATE_DATE CG_CREATE_DATE,
+	CG.CREATE_USER CG_CREATE_USER, CG.NUM1 CG_NUM1, CG.NUM2 CG_NUM2, CG.VC1 CG_VC1, CG.VC2 CG_VC2, CG.CHR1 CG_CHR1, CG.CHR2 CG_CHR2
   </sql>
   
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
@@ -83,6 +109,13 @@
     where CID = #{cid,jdbcType=VARCHAR}
   </select>
   
+  <select id="simpleSelectWithGroupsByCID" resultMap="SimpleWithGroupsResultMap" parameterType="java.lang.String" >
+	SELECT 
+	<include refid="Simple_Column_WithGroups" />
+	FROM CUSTOMER C LEFT JOIN CGROUP_REL CGR ON CGR.CID=C.CID 
+	LEFT JOIN CGROUP CG ON CG.ID=CGR.CGROUP_ID 
+	where C.CID = #{cid,jdbcType=VARCHAR}
+  </select>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from CUSTOMER

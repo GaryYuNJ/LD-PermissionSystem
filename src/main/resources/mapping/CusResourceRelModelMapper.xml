@@ -10,6 +10,11 @@
     <result column="CREATE_DATE" property="createDate" jdbcType="DATE" />
     <result column="CREATE_USER" property="createUser" jdbcType="INTEGER" />
   </resultMap>
+  
+  <sql id="Base_Column_List" >
+    CID, RESOURCE_ID, ENABLE, FROM_SHARED, SHARED_USER, CREATE_DATE,CREATE_USER
+  </sql>
+  
   <insert id="insert" parameterType="com.ldps.model.CusResourceRelModel" >
     insert into CUSTOMER_RESOURCE_REL (CID, RESOURCE_ID, ENABLE, 
       FROM_SHARED, SHARED_USER, CREATE_DATE, 
@@ -67,4 +72,13 @@
       </if>
     </trim>
   </insert>
+  
+  <select id="selectByCidAndGroupId" resultMap="BaseResultMap" parameterType="com.ldps.model.CusGroupRelModel" >
+    select 
+    <include refid="Base_Column_List" />
+    from CGROUP_RESOURCE_REL
+    where CID = #{cid,jdbcType=VARCHAR}
+   	and RESOURCE_ID=#{resourceId,jdbcType=INTEGER}
+  </select>
+  
 </mapper>

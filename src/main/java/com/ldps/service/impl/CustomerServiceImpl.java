@@ -49,4 +49,9 @@ public class CustomerServiceImpl implements ICustomerService {
 	public CustomerModel getUserByCId(String cid) {
 		return customerDao.simpleSelectByCID(cid);
 	}
+	
+	@Override
+	public CustomerModel getModelWithGroupsByCID(String cid) {
+		return customerDao.simpleSelectWithGroupsByCID(cid);
+	}
 }

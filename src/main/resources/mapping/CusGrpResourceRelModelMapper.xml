@@ -9,6 +9,11 @@
     <result column="UPDATE_DATE" property="updateDate" jdbcType="DATE" />
     <result column="CREATE_USER" property="createUser" jdbcType="INTEGER" />
   </resultMap>
+  
+  <sql id="Base_Column_List" >
+    CGROUP_ID, RESOURCE_ID, ENABLE, CREATE_DATE, UPDATE_DATE, CREATE_USER
+  </sql>
+  
   <insert id="insert" parameterType="com.ldps.model.CusGrpResourceRelModel" >
     insert into CGROUP_RESOURCE_REL (CGROUP_ID, RESOURCE_ID, ENABLE, 
       CREATE_DATE, UPDATE_DATE, CREATE_USER
@@ -60,4 +65,12 @@
       </if>
     </trim>
   </insert>
+  <select id="selectByGrpIdAndResId" resultMap="BaseResultMap" parameterType="com.ldps.model.CusGrpResourceRelModel" >
+    select 
+    <include refid="Base_Column_List" />
+    from RESOURCE
+    where CGROUP_ID = #{cgroupId,jdbcType=INTEGER}
+   	and RESOURCE_ID=#{resourceId,jdbcType=INTEGER}
+  </select>
+  
 </mapper>

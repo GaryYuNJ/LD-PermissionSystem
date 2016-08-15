@@ -12,6 +12,8 @@ public interface CustomerModelMapper {
     CustomerModel selectByPrimaryKey(Long id);
     
     CustomerModel simpleSelectByCID(String cid);
+    
+    CustomerModel simpleSelectWithGroupsByCID(String cid);
 
     int updateByPrimaryKeySelective(CustomerModel record);
 

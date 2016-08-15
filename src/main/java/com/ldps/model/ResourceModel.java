@@ -1,6 +1,7 @@
 package com.ldps.model;
 
 import java.util.Date;
+import java.util.List;
 
 public class ResourceModel {
     private Integer id;
@@ -42,6 +43,16 @@ public class ResourceModel {
     private String chr1;
 
     private String chr2;
+    
+    private List<ResourceGroupModel> resourceGroups;  
+    
+    public List<ResourceGroupModel> getResourceGroups() {
+		return resourceGroups;
+	}
+
+	public void setResourceGroups(List<ResourceGroupModel> resourceGroups) {
+		this.resourceGroups = resourceGroups;
+	}
 
     public Integer getId() {
         return id;

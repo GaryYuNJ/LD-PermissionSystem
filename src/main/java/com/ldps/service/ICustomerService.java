@@ -16,5 +16,7 @@ public interface ICustomerService {
 	
 	//按照账号更新数据
 	int updateCustomer(CustomerModel custoemrModel);
+
+	public CustomerModel getModelWithGroupsByCID(String cid);
 	 
 }

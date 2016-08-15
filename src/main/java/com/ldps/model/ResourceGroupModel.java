@@ -1,6 +1,7 @@
 package com.ldps.model;
 
 import java.util.Date;
+import java.util.List;
 
 public class ResourceGroupModel {
     private Integer id;
@@ -27,7 +28,7 @@ public class ResourceGroupModel {
 
     private String chr2;
 
-    public Integer getId() {
+	public Integer getId() {
         return id;
     }
 

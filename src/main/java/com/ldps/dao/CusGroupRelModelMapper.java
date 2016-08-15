@@ -6,4 +6,6 @@ public interface CusGroupRelModelMapper {
     int insert(CusGroupRelModel record);
 
     int insertSelective(CusGroupRelModel record);
+    
+    
 }
