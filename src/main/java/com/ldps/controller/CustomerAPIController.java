@@ -16,7 +16,7 @@ import com.ldps.model.CustomerModel;
 import com.ldps.service.ICustomerService;
 
 @Controller
-@RequestMapping(value = "customerApi")
+@RequestMapping(value = "crmApi")
 public class CustomerAPIController {
 	private static Logger logger = Logger
 			.getLogger(CustomerAPIController.class);
@@ -41,9 +41,13 @@ public class CustomerAPIController {
 				apiMessage.setMessage(addVerificatString);
 			} else {
 				// 进行入库
-				iCustomerSevice.addCustomer(customer);
-				apiMessage.setStatus(1);
-				apiMessage.setMessage("添加数据成功");
+				if(iCustomerSevice.addCustomer(customer)==-1){
+					apiMessage.setStatus(2);
+					apiMessage.setMessage("改会员已存在");
+				}else{
+					apiMessage.setStatus(1);
+					apiMessage.setMessage("添加数据成功");
+				}
 			}
 		} catch (JSONException e) {
 			apiMessage.setStatus(2);

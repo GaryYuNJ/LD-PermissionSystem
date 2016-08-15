@@ -32,6 +32,8 @@ public class CustomerServiceImpl implements ICustomerService {
  
 	@Override
 	public int addCustomer(CustomerModel custoemrModel) {
+		if(getUserByCId(custoemrModel.getCid())!=null)
+			return -1;
 		return customerDao.insertSelective(custoemrModel);
 	}
 
