@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ldps.dao.CusResourceRelModelMapper" >
+  <cache 
+  	eviction="LRU" 
+  	flushInterval="36000000" 
+  	size="1024" 
+  	readOnly="true" >
+  </cache>
   <resultMap id="BaseResultMap" type="com.ldps.model.CusResourceRelModel" >
     <result column="CID" property="cid" jdbcType="VARCHAR" />
     <result column="RESOURCE_ID" property="resourceId" jdbcType="INTEGER" />
@@ -9,19 +15,63 @@
     <result column="SHARED_USER" property="sharedUser" jdbcType="VARCHAR" />
     <result column="CREATE_DATE" property="createDate" jdbcType="DATE" />
     <result column="CREATE_USER" property="createUser" jdbcType="INTEGER" />
+    <result column="START_DATE" property="startDate" jdbcType="DATE" />
+    <result column="END_DATE" property="endDate" jdbcType="DATE" />
   </resultMap>
   
-  <sql id="Base_Column_List" >
-    CID, RESOURCE_ID, ENABLE, FROM_SHARED, SHARED_USER, CREATE_DATE,CREATE_USER
+  <resultMap id="ResultWithResourceModelMap" type="com.ldps.model.CusResourceRelModel" >
+    <result column="CID" property="cid" jdbcType="VARCHAR" />
+    <result column="RESOURCE_ID" property="resourceId" jdbcType="INTEGER" />
+    <result column="ENABLE" property="enable" jdbcType="CHAR" />
+    <result column="FROM_SHARED" property="fromShared" jdbcType="CHAR" />
+    <result column="SHARED_USER" property="sharedUser" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="DATE" />
+    <result column="CREATE_USER" property="createUser" jdbcType="INTEGER" />
+    <result column="START_DATE" property="startDate" jdbcType="DATE" />
+    <result column="END_DATE" property="endDate" jdbcType="DATE" />
+    
+    <association property="resourceModel" javaType="com.ldps.model.ResourceModel">
+	    <id column="R_ID" property="id" jdbcType="INTEGER" />
+	    <result column="R_NAME" property="name" jdbcType="VARCHAR" />
+	    <result column="R_TYPE_ID" property="typeId" jdbcType="INTEGER" />
+	    <result column="R_STATUS" property="status" jdbcType="CHAR" />
+	    <result column="R_CREATE_DATE" property="createDate" jdbcType="DATE" />
+	    <result column="R_CREATE_USER" property="createUser" jdbcType="INTEGER" />
+	    <result column="R_MAC" property="mac" jdbcType="CHAR" />
+	    <result column="R_BUILDING_ID" property="buildingId" jdbcType="INTEGER" />
+	    <result column="R_FLOOR" property="floor" jdbcType="INTEGER" />
+	    <result column="R_PASSWORD" property="password" jdbcType="CHAR" />
+	    <result column="R_SEQUENCE" property="sequence" jdbcType="INTEGER" />
+	    <result column="R_SHARE_ENABLE" property="shareEnable" jdbcType="CHAR" />
+	    <result column="R_R_INT1" property="rInt1" jdbcType="INTEGER" />
+	    <result column="R_R_INT2" property="rInt2" jdbcType="INTEGER" />
+	    <result column="R_NUM1" property="num1" jdbcType="DECIMAL" />
+	    <result column="R_NUM2" property="num2" jdbcType="DECIMAL" />
+	    <result column="R_VC1" property="vc1" jdbcType="VARCHAR" />
+	    <result column="R_VC2" property="vc2" jdbcType="VARCHAR" />
+	    <result column="R_CHR1" property="chr1" jdbcType="CHAR" />
+	    <result column="R_CHR2" property="chr2" jdbcType="CHAR" />
+    </association>
+  </resultMap>
+  
+  <sql id="Column_WithResourceModel_List" >
+    CR.CID, CR.RESOURCE_ID, CR.ENABLE, CR.FROM_SHARED, CR.SHARED_USER, CR.CREATE_DATE, 
+    CR.CREATE_USER,CR.START_DATE,CR.END_DATE,
+    R.ID, R.NAME, R.TYPE_ID, R.STATUS, R.CREATE_DATE, R.CREATE_USER, R.MAC, R.BUILDING_ID, R.FLOOR, R.PASSWORD, 
+    R.SEQUENCE, R.SHARE_ENABLE, R.R_INT1, R.R_INT2, R.NUM1, R.NUM2, R.VC1, R.VC2, R.CHR1, R.CHR2
+  </sql>
+  
+    <sql id="Base_Column_List" >
+    CID, RESOURCE_ID, ENABLE, FROM_SHARED, SHARED_USER, CREATE_DATE, CREATE_USER, START_DATE, END_DATE
   </sql>
   
   <insert id="insert" parameterType="com.ldps.model.CusResourceRelModel" >
     insert into CUSTOMER_RESOURCE_REL (CID, RESOURCE_ID, ENABLE, 
       FROM_SHARED, SHARED_USER, CREATE_DATE, 
-      CREATE_USER)
+      CREATE_USER, START_DATE, END_DATE)
     values (#{cid,jdbcType=VARCHAR}, #{resourceId,jdbcType=INTEGER}, #{enable,jdbcType=CHAR}, 
       #{fromShared,jdbcType=CHAR}, #{sharedUser,jdbcType=VARCHAR}, #{createDate,jdbcType=DATE}, 
-      #{createUser,jdbcType=INTEGER})
+      #{createUser,jdbcType=INTEGER},#{startDate,jdbcType=DATE},#{endDate,jdbcType=DATE})
   </insert>
   <insert id="insertSelective" parameterType="com.ldps.model.CusResourceRelModel" >
     insert into CUSTOMER_RESOURCE_REL
@@ -47,6 +97,12 @@
       <if test="createUser != null" >
         CREATE_USER,
       </if>
+      <if test="startDate != null" >
+        START_DATE,
+      </if>
+      <if test="endDate != null" >
+        END_DATE,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="cid != null" >
@@ -70,15 +126,28 @@
       <if test="createUser != null" >
         #{createUser,jdbcType=INTEGER},
       </if>
+      <if test="startDate != null" >
+        #{startDate,jdbcType=INTEGER},
+      </if>
+      <if test="endDate != null" >
+        #{endDate,jdbcType=INTEGER},
+      </if>
     </trim>
   </insert>
   
-  <select id="selectByCidAndGroupId" resultMap="BaseResultMap" parameterType="com.ldps.model.CusResourceRelModel" >
+  <select id="selectByCidAndResourceId" resultMap="BaseResultMap" parameterType="com.ldps.model.CusResourceRelModel" >
     select 
     <include refid="Base_Column_List" />
     from CUSTOMER_RESOURCE_REL
     where CID = #{cid,jdbcType=VARCHAR}
    	and RESOURCE_ID=#{resourceId,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectByShareCustomerId" resultMap="ResultWithResourceModelMap" parameterType="com.ldps.model.CusResourceRelModel" >
+    select 
+    <include refid="Column_WithResourceModel_List" />
+    from RESOURCE R, CUSTOMER_RESOURCE_REL CR
+    where SHARED_USER=#{sharedUser,jdbcType=VARCHAR}
   </select>
   
 </mapper>

@@ -1,12 +1,16 @@
 package com.ldps.service.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.ldps.dao.CustomerModelMapper;
+import com.ldps.dao.ResourceModelMapper;
 import com.ldps.model.CustomerModel;
+import com.ldps.model.ResourceModel;
 import com.ldps.service.ICustomerService;
 
 @Service("iCustomerSevice")
@@ -14,6 +18,9 @@ public class CustomerServiceImpl implements ICustomerService {
 
 	@Resource
 	private CustomerModelMapper customerDao;
+	
+	@Resource
+	private ResourceModelMapper resourceDao;
 	
 	@Override
 	public String addVerification(CustomerModel custoemrModel) {
@@ -55,5 +62,14 @@ public class CustomerServiceImpl implements ICustomerService {
 	@Override
 	public CustomerModel getModelWithGroupsByCID(String cid) {
 		return customerDao.simpleSelectWithGroupsByCID(cid);
+	}
+
+	//获取用户可分享权限的资源列表
+	/*
+		不包含公共资源，不包含用户组授权，只针对用户与资源的可用关系
+	*/
+	@Override
+	public List<ResourceModel> querySharableResource(String cid) {
+		return resourceDao.selectSharableResourceByCID(cid);
 	}
 }

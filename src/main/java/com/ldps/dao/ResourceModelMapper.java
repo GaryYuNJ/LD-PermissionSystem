@@ -21,4 +21,6 @@ public interface ResourceModelMapper {
     
     ResourceModel  selectWithGroupsByMAC(String mac);
     
+    List<ResourceModel>  selectSharableResourceByCID(String cid);
+    
 }

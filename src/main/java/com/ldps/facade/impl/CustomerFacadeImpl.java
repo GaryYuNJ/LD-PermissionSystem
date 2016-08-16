@@ -1,10 +1,15 @@
-package com.ldps.facade;
+package com.ldps.facade.impl;
 
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import com.ldps.converter.CusResourceRelModelConverter;
+import com.ldps.converter.ResourceModelConverter;
+import com.ldps.data.CusResourceRelData;
+import com.ldps.data.ResourceData;
+import com.ldps.facade.CustomerFacade;
 import com.ldps.model.CusGrpResourceRelModel;
 import com.ldps.model.CusResourceRelModel;
 import com.ldps.model.CustomerModel;
@@ -17,11 +22,12 @@ import com.ldps.service.ICustomerService;
 import com.ldps.service.IResourceService;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
-@Service("permissionCheckFacade")
-public class PermissionCheckFacade {
+@Service("customerFacade")
+public class CustomerFacadeImpl implements CustomerFacade {
 
 	@Resource
 	private ICustomerService iCustomerSevice;
@@ -31,8 +37,31 @@ public class PermissionCheckFacade {
 	ICusResourceRelService iCusResourceRelService;
 	@Resource
 	ICusGrpResourceRelService iCusGrpResourceRelService;
+	@Resource
+	ResourceModelConverter resourceModelConverter;
+	@Resource
+	CusResourceRelModelConverter cusResourceRelModelConverter;
+
+	//获取用户可分享权限的资源列表
+	/*
+		不包含公共资源，不包含用户组授权，只针对用户与资源的可用关系
+	*/
+	@Override
+	public List<ResourceData> querySharableResource(String cid) {
+		List<ResourceModel> resourceModel = iCustomerSevice.querySharableResource(cid);
+		return resourceModelConverter.processList(resourceModel);
+	}
+	/*
+		查看用户分享出去的资源
+	*/
+	@Override
+	public List<CusResourceRelData> queryResourceRelByShareCustomerId(String customerId) {
+		List<CusResourceRelModel> cusResourceRelModel = iCusResourceRelService.queryByShareCustomerId(customerId);
+		return cusResourceRelModelConverter.processList(cusResourceRelModel);
+	}
 	
 	//验证用户是否有权限操作资源
+	@Override
 	public String verification(String cid, String mac) {
 		
 		String verifiMessage = "0";
@@ -96,6 +125,11 @@ public class PermissionCheckFacade {
 						//禁用
 						}else if("N".equals(cusRRModel.getEnable())){
 							verifiMessage = "E004"; //该用户禁用这个资源
+						//权限已过期
+						}else if("Y".equals(cusRRModel.getEnable()) 
+								&& ((null != cusRRModel.getStartDate() && cusRRModel.getStartDate().after(new Date()) )
+										|| (null != cusRRModel.getEndDate() && cusRRModel.getEndDate().before(new Date())))){
+							verifiMessage = "E008"; //该用权限已过期
 						}
 					}
 				}
@@ -121,5 +155,33 @@ public class PermissionCheckFacade {
 	public void setiResourceService(IResourceService iResourceService) {
 		this.iResourceService = iResourceService;
 	}
-	
+
+	public ICusResourceRelService getiCusResourceRelService() {
+		return iCusResourceRelService;
+	}
+
+	public void setiCusResourceRelService(
+			ICusResourceRelService iCusResourceRelService) {
+		this.iCusResourceRelService = iCusResourceRelService;
+	}
+
+	public ICusGrpResourceRelService getiCusGrpResourceRelService() {
+		return iCusGrpResourceRelService;
+	}
+
+	public void setiCusGrpResourceRelService(
+			ICusGrpResourceRelService iCusGrpResourceRelService) {
+		this.iCusGrpResourceRelService = iCusGrpResourceRelService;
+	}
+
+	public ResourceModelConverter getResourceModelConverter() {
+		return resourceModelConverter;
+	}
+
+	public void setResourceModelConverter(
+			ResourceModelConverter resourceModelConverter) {
+		this.resourceModelConverter = resourceModelConverter;
+	}
+
+
 }

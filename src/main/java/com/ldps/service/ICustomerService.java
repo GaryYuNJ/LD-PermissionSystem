@@ -1,6 +1,9 @@
 package com.ldps.service;
 
+import java.util.List;
+
 import com.ldps.model.CustomerModel;
+import com.ldps.model.ResourceModel;
 
 public interface ICustomerService {
     public CustomerModel getUserByCId(String cid); 
@@ -18,5 +21,11 @@ public interface ICustomerService {
 	int updateCustomer(CustomerModel custoemrModel);
 
 	public CustomerModel getModelWithGroupsByCID(String cid);
+	
+	//获取用户可分享权限的资源列表
+	/*
+		不包含公共资源，不包含用户组授权，只针对用户与资源的可用关系
+	*/
+	List<ResourceModel> querySharableResource(String cid);
 	 
 }
