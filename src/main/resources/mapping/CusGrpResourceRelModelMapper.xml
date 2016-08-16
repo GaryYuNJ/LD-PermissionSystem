@@ -68,9 +68,19 @@
   <select id="selectByGrpIdAndResId" resultMap="BaseResultMap" parameterType="com.ldps.model.CusGrpResourceRelModel" >
     select 
     <include refid="Base_Column_List" />
-    from RESOURCE
+    from CGROUP_RESOURCE_REL
     where CGROUP_ID = #{cgroupId,jdbcType=INTEGER}
    	and RESOURCE_ID=#{resourceId,jdbcType=INTEGER}
   </select>
   
+  <select id="selectByGroupIdListAndResId" resultMap="BaseResultMap" parameterType="com.ldps.model.CusGrpResourceRelModel" >
+    select 
+    <include refid="Base_Column_List" />
+    from CGROUP_RESOURCE_REL
+    where RESOURCE_ID=#{resourceId,jdbcType=INTEGER}
+   	and CGROUP_ID in 
+   	<foreach item="item" index="index" collection="groupIds" open="(" separator="," close=")">
+   		#{item,jdbcType=INTEGER}
+   	</foreach>
+  </select>
 </mapper>

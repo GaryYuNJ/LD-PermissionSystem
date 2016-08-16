@@ -1,5 +1,7 @@
 package com.ldps.service.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -18,6 +20,13 @@ public class CusGrpResourceRelServiceImpl implements ICusGrpResourceRelService {
 	public CusGrpResourceRelModel queryModelByCidAndResId(CusGrpResourceRelModel model) {
 		// TODO Auto-generated method stub
 		return customerGrpResourceRelDao.selectByGrpIdAndResId(model);
+	}
+	
+
+	@Override
+	public  List<CusGrpResourceRelModel> queryByGroupIdListAndResId(List<Integer> groupIds, Integer resourceId) {
+		// TODO Auto-generated method stub
+		return customerGrpResourceRelDao.selectByGroupIdListAndResId(groupIds,resourceId);
 	}
 
 }

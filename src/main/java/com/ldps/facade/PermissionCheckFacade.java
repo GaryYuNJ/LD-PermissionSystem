@@ -15,6 +15,8 @@ import com.ldps.service.ICusGrpResourceRelService;
 import com.ldps.service.ICusResourceRelService;
 import com.ldps.service.ICustomerService;
 import com.ldps.service.IResourceService;
+
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -33,36 +35,33 @@ public class PermissionCheckFacade {
 	//验证用户是否有权限操作资源
 	public String verification(String cid, String mac) {
 		
-		String errorCode = "0";
+		String verifiMessage = "0";
 		if(StringUtils.isEmpty(cid) || StringUtils.isEmpty(mac)){
-			errorCode = "E001"; //入参有空值
+			verifiMessage = "E001"; //入参有空值
 		}else{
 			CustomerModel customerModel = iCustomerSevice.getModelWithGroupsByCID(cid);
 			if(null == customerModel){
-				errorCode = "E002"; //用户不存在
+				verifiMessage = "E002"; //用户不存在
 			}else{
+				//先判断设备状态
 				ResourceModel rModel = iResourceService.queryWithGroupsByMAC(mac);
 				if(null == rModel || "N".equals(rModel.getStatus())){
-					errorCode = "E003"; //设备不可用
+					verifiMessage = "E003"; //设备不可用
 				}else{
-					//检查资源是否属于公共资源组
-					int publicFlag = 1;
-					if(null ==rModel.getResourceGroups() || rModel.getResourceGroups().size() ==0){
-						publicFlag = 0;
-					}else{
+					//检查资源是否属于公共资源组(公共资源任何会员都有权限)
+					int publicFlag = 0;
+					//有隶属于资源组数据
+					if(null !=rModel.getResourceGroups() && rModel.getResourceGroups().size() >0){
 						for(ResourceGroupModel rGroupModel : rModel.getResourceGroups()){
-							//只要有一个组非公共资源，该资源就被认为不是公共资源
-							if(!"Y".equals(rGroupModel.getIsPublic())){
+							//只要有一个组非公共资源（有效状态），该资源就被认为不是公共资源
+							if(!"Y".equals(rGroupModel.getIsPublic()) && "Y".equals(rGroupModel.getStatus())){
 								publicFlag = 0;
 								break;
-//							}else if("N".equals(rGroupModel.getStatus())){
-//								publicFlag = 0;
-//							}else{
-//								publicFlag = 1;
+							}else if("Y".equals(rGroupModel.getIsPublic()) && "Y".equals(rGroupModel.getStatus())){
+								publicFlag = 1;
 							}
 						}
 					}
-					//公共资源，直接返回0
 					//非公共资源，继续验证权限
 					if(publicFlag == 0){
 						CusResourceRelModel cusRRModel = new CusResourceRelModel();
@@ -73,29 +72,36 @@ public class PermissionCheckFacade {
 						if(null == cusRRModel){
 							//用户没有绑定任何用户组
 							if(null == customerModel.getCustomerGroups() || customerModel.getCustomerGroups().size() ==0){
-								errorCode = "E006"; //该用户&所属用户组没有配置权限使用该资源
+								verifiMessage = "E006"; //该用户&所属用户组没有配置权限使用该资源
 							}else{
+								List<Integer> groupIds = new ArrayList<Integer>();
 								for(CustomerGroupModel cGModel : customerModel.getCustomerGroups()){
-									CusGrpResourceRelModel cGrpResRelModel = new CusGrpResourceRelModel();
-									cGrpResRelModel.setCgroupId(cGModel.getId());
-									cGrpResRelModel.setResourceId(rModel.getId());
-									cGrpResRelModel = iCusGrpResourceRelService.queryModelByCidAndResId(cGrpResRelModel);
-									//只要有一个所属用户组禁用该资源，该用户就不能使用
-									if("N".equals(cGrpResRelModel.getEnable())){
-										errorCode = "E005"; //该用户所属用户组禁用这个资源
-										break;
+									groupIds.add(cGModel.getId());
+								}
+								//获取用户组与资源的绑定关系
+								List<CusGrpResourceRelModel> cGRRModels = 
+										iCusGrpResourceRelService.queryByGroupIdListAndResId(groupIds, rModel.getId());
+								
+								if(null == cGRRModels || cGRRModels.size() == 0){
+									verifiMessage = "E007"; //所有用户组与资源都没有匹配关系
+								}else{
+									for(CusGrpResourceRelModel cGRRModel: cGRRModels){
+										if("N".equals(cGRRModel.getEnable())){
+											verifiMessage = "E005"; //该用户所属用户组禁用这个资源(只要有一个用户组禁用，就看做是禁用状态)
+											break;
+										}
 									}
 								}
 							}
 						//禁用
 						}else if("N".equals(cusRRModel.getEnable())){
-							errorCode = "E004"; //该用户禁用这个资源
+							verifiMessage = "E004"; //该用户禁用这个资源
 						}
 					}
 				}
 			}
 		}
-		return errorCode;
+		return verifiMessage;
 	}
 
 

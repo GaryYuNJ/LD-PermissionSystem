@@ -73,10 +73,10 @@
     </trim>
   </insert>
   
-  <select id="selectByCidAndGroupId" resultMap="BaseResultMap" parameterType="com.ldps.model.CusGroupRelModel" >
+  <select id="selectByCidAndGroupId" resultMap="BaseResultMap" parameterType="com.ldps.model.CusResourceRelModel" >
     select 
     <include refid="Base_Column_List" />
-    from CGROUP_RESOURCE_REL
+    from CUSTOMER_RESOURCE_REL
     where CID = #{cid,jdbcType=VARCHAR}
    	and RESOURCE_ID=#{resourceId,jdbcType=INTEGER}
   </select>
