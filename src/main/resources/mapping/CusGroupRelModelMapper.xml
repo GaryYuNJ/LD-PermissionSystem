@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ldps.dao.CusGroupRelModelMapper" >
+  <resultMap id="BaseResultMap" type="com.ldps.model.CusGroupRelModel" >
+    <result column="CGROUP_ID" property="cgroupId" jdbcType="INTEGER" />
+    <result column="CID" property="cid" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="DATE" />
+    <result column="CREATE_USER" property="createUser" jdbcType="INTEGER" />
+  </resultMap>
+  <insert id="insert" parameterType="com.ldps.model.CusGroupRelModel" >
+    insert into CGROUP_REL (CGROUP_ID, CID, CREATE_DATE, 
+      CREATE_USER)
+    values (#{cgroupId,jdbcType=INTEGER}, #{cid,jdbcType=VARCHAR}, #{createDate,jdbcType=DATE}, 
+      #{createUser,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ldps.model.CusGroupRelModel" >
+    insert into CGROUP_REL
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cgroupId != null" >
+        CGROUP_ID,
+      </if>
+      <if test="cid != null" >
+        CID,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cgroupId != null" >
+        #{cgroupId,jdbcType=INTEGER},
+      </if>
+      <if test="cid != null" >
+        #{cid,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=DATE},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>

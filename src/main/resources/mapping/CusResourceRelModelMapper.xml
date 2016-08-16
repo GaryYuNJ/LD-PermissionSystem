@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ldps.dao.CusResourceRelModelMapper" >
+  <resultMap id="BaseResultMap" type="com.ldps.model.CusResourceRelModel" >
+    <result column="CID" property="cid" jdbcType="VARCHAR" />
+    <result column="RESOURCE_ID" property="resourceId" jdbcType="INTEGER" />
+    <result column="ENABLE" property="enable" jdbcType="CHAR" />
+    <result column="FROM_SHARED" property="fromShared" jdbcType="CHAR" />
+    <result column="SHARED_USER" property="sharedUser" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="DATE" />
+    <result column="CREATE_USER" property="createUser" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    CID, RESOURCE_ID, ENABLE, FROM_SHARED, SHARED_USER, CREATE_DATE,CREATE_USER
+  </sql>
+  
+  <insert id="insert" parameterType="com.ldps.model.CusResourceRelModel" >
+    insert into CUSTOMER_RESOURCE_REL (CID, RESOURCE_ID, ENABLE, 
+      FROM_SHARED, SHARED_USER, CREATE_DATE, 
+      CREATE_USER)
+    values (#{cid,jdbcType=VARCHAR}, #{resourceId,jdbcType=INTEGER}, #{enable,jdbcType=CHAR}, 
+      #{fromShared,jdbcType=CHAR}, #{sharedUser,jdbcType=VARCHAR}, #{createDate,jdbcType=DATE}, 
+      #{createUser,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ldps.model.CusResourceRelModel" >
+    insert into CUSTOMER_RESOURCE_REL
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cid != null" >
+        CID,
+      </if>
+      <if test="resourceId != null" >
+        RESOURCE_ID,
+      </if>
+      <if test="enable != null" >
+        ENABLE,
+      </if>
+      <if test="fromShared != null" >
+        FROM_SHARED,
+      </if>
+      <if test="sharedUser != null" >
+        SHARED_USER,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cid != null" >
+        #{cid,jdbcType=VARCHAR},
+      </if>
+      <if test="resourceId != null" >
+        #{resourceId,jdbcType=INTEGER},
+      </if>
+      <if test="enable != null" >
+        #{enable,jdbcType=CHAR},
+      </if>
+      <if test="fromShared != null" >
+        #{fromShared,jdbcType=CHAR},
+      </if>
+      <if test="sharedUser != null" >
+        #{sharedUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=DATE},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  
+  <select id="selectByCidAndGroupId" resultMap="BaseResultMap" parameterType="com.ldps.model.CusResourceRelModel" >
+    select 
+    <include refid="Base_Column_List" />
+    from CUSTOMER_RESOURCE_REL
+    where CID = #{cid,jdbcType=VARCHAR}
+   	and RESOURCE_ID=#{resourceId,jdbcType=INTEGER}
+  </select>
+  
+</mapper>
