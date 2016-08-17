@@ -43,7 +43,7 @@ public class CustomerAPIController {
 				// 进行入库
 				if(iCustomerSevice.addCustomer(customer)==-1){
 					apiMessage.setStatus(2);
-					apiMessage.setMessage("改会员已存在");
+					apiMessage.setMessage("该会员已存在");
 				}else{
 					apiMessage.setStatus(1);
 					apiMessage.setMessage("添加数据成功");
@@ -82,11 +82,11 @@ public class CustomerAPIController {
 	public String UpdateCustomer(@RequestParam String customerStr) {
 		APIMessage apiMessage = new APIMessage();
 		apiMessage.setStatus(2);
-		apiMessage.setMessage("删除失败");
+		apiMessage.setMessage("更新失败");
 		try {
 			CustomerModel customer = JSON.parseObject(customerStr,
 					CustomerModel.class);
-			if (!StringUtils.isEmpty(customer)) {
+			if (!StringUtils.isEmpty(customer)&&!StringUtils.isEmpty(customer.getCid())) {
 				int i = iCustomerSevice.updateCustomer(customer);
 				if (i > 0) {
 					apiMessage.setStatus(1);
