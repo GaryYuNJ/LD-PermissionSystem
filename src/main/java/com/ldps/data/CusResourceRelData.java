@@ -1,8 +1,8 @@
-package com.ldps.model;
+package com.ldps.data;
 
 import java.util.Date;
 
-public class CusResourceRelModel {
+public class CusResourceRelData {
     private String cid;
 
     private Integer resourceId;
@@ -17,7 +17,7 @@ public class CusResourceRelModel {
 
     private Integer createUser;
     
-    private ResourceModel resourceModel;
+    private ResourceData resourceData;
     
     private Date startDate;
     
@@ -39,12 +39,12 @@ public class CusResourceRelModel {
 		this.endDate = endDate;
 	}
 
-	public ResourceModel getResourceModel() {
-		return resourceModel;
+	public ResourceData getResourceData() {
+		return resourceData;
 	}
 
-	public void setResourceModel(ResourceModel resourceModel) {
-		this.resourceModel = resourceModel;
+	public void setResourceData(ResourceData resourceData) {
+		this.resourceData = resourceData;
 	}
 
 	public String getCid() {

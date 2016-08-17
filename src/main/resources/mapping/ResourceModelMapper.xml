@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ldps.dao.ResourceModelMapper" >
+  <cache 
+  	eviction="LRU" 
+  	flushInterval="36000000" 
+  	size="1024" 
+  	readOnly="true" >
+  </cache>
   <resultMap id="BaseResultMap" type="com.ldps.model.ResourceModel" >
     <id column="ID" property="id" jdbcType="INTEGER" />
     <result column="NAME" property="name" jdbcType="VARCHAR" />
@@ -329,4 +335,18 @@
       CHR2 = #{chr2,jdbcType=CHAR}
     where ID = #{id,jdbcType=INTEGER}
   </update>
+  
+  <sql id="Base_Column_List_WithLable" >
+    R.ID, R.NAME, R.TYPE_ID, R.STATUS, R.CREATE_DATE, R.CREATE_USER, R.MAC, R.BUILDING_ID, R.FLOOR, R.PASSWORD, 
+    R.SEQUENCE, R.SHARE_ENABLE, R.R_INT1, R.R_INT2, R.NUM1, R.NUM2, R.VC1, R.VC2, R.CHR1, R.CHR2 
+  </sql>
+  
+  <select id="selectSharableResourceByCID" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List_WithLable" /> 
+    FROM RESOURCE R, CUSTOMER_RESOURCE_REL CR 
+	WHERE CR.RESOURCE_ID=R.ID AND R.SHARE_ENABLE='Y' 
+	<![CDATA[ AND (CR.START_DATE IS NULL OR CR.START_DATE < now()) AND (CR.END_DATE IS NULL OR CR.END_DATE > now()) ]]> 
+	AND CR.CID = #{cid,jdbcType=VARCHAR}
+  </select>
 </mapper>

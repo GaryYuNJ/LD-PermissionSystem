@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ldps.dao.CusGrpResourceRelModelMapper" >
+  <cache 
+  	eviction="LRU" 
+  	flushInterval="36000000" 
+  	size="1024" 
+  	readOnly="true" >
+  </cache>
   <resultMap id="BaseResultMap" type="com.ldps.model.CusGrpResourceRelModel" >
     <result column="CGROUP_ID" property="cgroupId" jdbcType="INTEGER" />
     <result column="RESOURCE_ID" property="resourceId" jdbcType="INTEGER" />
@@ -8,18 +14,21 @@
     <result column="CREATE_DATE" property="createDate" jdbcType="DATE" />
     <result column="UPDATE_DATE" property="updateDate" jdbcType="DATE" />
     <result column="CREATE_USER" property="createUser" jdbcType="INTEGER" />
+    <result column="START_DATE" property="startDate" jdbcType="DATE" />
+    <result column="END_DATE" property="endDate" jdbcType="DATE" />
   </resultMap>
   
   <sql id="Base_Column_List" >
-    CGROUP_ID, RESOURCE_ID, ENABLE, CREATE_DATE, UPDATE_DATE, CREATE_USER
+    CGROUP_ID, RESOURCE_ID, ENABLE, CREATE_DATE, UPDATE_DATE, CREATE_USER, START_DATE, END_DATE
   </sql>
   
   <insert id="insert" parameterType="com.ldps.model.CusGrpResourceRelModel" >
     insert into CGROUP_RESOURCE_REL (CGROUP_ID, RESOURCE_ID, ENABLE, 
-      CREATE_DATE, UPDATE_DATE, CREATE_USER
+      CREATE_DATE, UPDATE_DATE, CREATE_USER,START_DATE, END_DATE
       )
     values (#{cgroupId,jdbcType=INTEGER}, #{resourceId,jdbcType=INTEGER}, #{enable,jdbcType=CHAR}, 
-      #{createDate,jdbcType=DATE}, #{updateDate,jdbcType=DATE}, #{createUser,jdbcType=INTEGER}
+      #{createDate,jdbcType=DATE}, #{updateDate,jdbcType=DATE}, #{createUser,jdbcType=INTEGER}, 
+      #{startDate,jdbcType=DATE}, #{endDate,jdbcType=DATE}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.ldps.model.CusGrpResourceRelModel" >
@@ -43,6 +52,12 @@
       <if test="createUser != null" >
         CREATE_USER,
       </if>
+      <if test="startDate != null" >
+        START_DATE,
+      </if>
+      <if test="endDate != null" >
+        END_DATE,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="cgroupId != null" >
@@ -63,14 +78,30 @@
       <if test="createUser != null" >
         #{createUser,jdbcType=INTEGER},
       </if>
+      <if test="startDate != null" >
+        #{startDate,jdbcType=INTEGER},
+      </if>
+      <if test="endDate != null" >
+        #{endDate,jdbcType=INTEGER},
+      </if>
     </trim>
   </insert>
   <select id="selectByGrpIdAndResId" resultMap="BaseResultMap" parameterType="com.ldps.model.CusGrpResourceRelModel" >
     select 
     <include refid="Base_Column_List" />
-    from RESOURCE
+    from CGROUP_RESOURCE_REL
     where CGROUP_ID = #{cgroupId,jdbcType=INTEGER}
    	and RESOURCE_ID=#{resourceId,jdbcType=INTEGER}
   </select>
   
+  <select id="selectByGroupIdListAndResId" resultMap="BaseResultMap" parameterType="com.ldps.model.CusGrpResourceRelModel" >
+    select 
+    <include refid="Base_Column_List" />
+    from CGROUP_RESOURCE_REL
+    where RESOURCE_ID=#{resourceId,jdbcType=INTEGER}
+   	and CGROUP_ID in 
+   	<foreach item="item" index="index" collection="groupIds" open="(" separator="," close=")">
+   		#{item,jdbcType=INTEGER}
+   	</foreach>
+  </select>
 </mapper>

@@ -1,6 +1,7 @@
 package com.ldps.dao;
 
-import com.ldps.model.CusGroupRelModel;
+import java.util.List;
+
 import com.ldps.model.CusResourceRelModel;
 
 public interface CusResourceRelModelMapper {
@@ -8,5 +9,7 @@ public interface CusResourceRelModelMapper {
 
     int insertSelective(CusResourceRelModel record);
     
-    CusResourceRelModel selectByCidAndGroupId(CusResourceRelModel record);
+    CusResourceRelModel selectByCidAndResourceId(CusResourceRelModel record);
+    
+	List<CusResourceRelModel> selectByShareCustomerId(String sharedUser);
 }

@@ -1,16 +1,14 @@
 package com.ldps.service.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import com.ldps.dao.CusResourceRelModelMapper;
-import com.ldps.dao.CustomerModelMapper;
 import com.ldps.model.CusResourceRelModel;
-import com.ldps.model.CustomerModel;
 import com.ldps.service.ICusResourceRelService;
-import com.ldps.service.ICustomerService;
 
 @Service("iCusResourceRelService")
 public class CusResourceRelServiceImpl implements ICusResourceRelService {
@@ -21,7 +19,14 @@ public class CusResourceRelServiceImpl implements ICusResourceRelService {
 	@Override
 	public CusResourceRelModel queryModelByCidAndResId(CusResourceRelModel model) {
 		// TODO Auto-generated method stub
-		return customerResourceRelDao.selectByCidAndGroupId(model);
+		return customerResourceRelDao.selectByCidAndResourceId(model);
+	}
+
+	@Override
+	public List<CusResourceRelModel> queryByShareCustomerId(
+			String customerId) {
+		// TODO Auto-generated method stub
+		return  customerResourceRelDao.selectByShareCustomerId(customerId);
 	}
 
 }

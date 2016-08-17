@@ -1,5 +1,7 @@
 package com.ldps.controller;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
@@ -14,9 +16,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONException;
 import com.ldps.data.APIMessage;
-import com.ldps.facade.PermissionCheckFacade;
-import com.ldps.model.CustomerModel;
-import com.ldps.service.ICustomerService;
+import com.ldps.data.CusResourceRelData;
+import com.ldps.data.ResourceData;
+import com.ldps.facade.CustomerFacade;
 
 @Controller
 @RequestMapping(value = "appApi")
@@ -24,9 +26,7 @@ public class CustomerAPPAPIController {
 	private static Logger logger = Logger
 			.getLogger(CustomerAPPAPIController.class);
 	@Resource
-	private ICustomerService iCustomerSevice;
-	@Resource
-	private PermissionCheckFacade permissionCheckFacade;
+	private CustomerFacade customerFacade;
 
 	@RequestMapping(value="/permissionVerfy",method = { RequestMethod.GET,
 			RequestMethod.POST })
@@ -36,7 +36,7 @@ public class CustomerAPPAPIController {
 			Model model){
 		APIMessage apiMessage = new APIMessage();
 		
-		String result = permissionCheckFacade.verification(cId, resourceKey);
+		String result = customerFacade.verification(cId, resourceKey);
 		
 		if("0".equals(result)){
 			apiMessage.setStatus(1);
@@ -47,5 +47,23 @@ public class CustomerAPPAPIController {
 		}
 		
 		return JSON.toJSONString(apiMessage);
+	}
+	
+	@RequestMapping(value="/querySharableResource",method = { RequestMethod.GET,
+			RequestMethod.POST },  produces = {"application/json;charset=UTF-8"})
+	@ResponseBody
+	public String querySharableResource(@RequestParam("cId")String cId,
+			Model model){
+		List<ResourceData> resourceDatas = customerFacade.querySharableResource(cId);
+		return JSON.toJSONString(resourceDatas);
+	}
+	
+	@RequestMapping(value="/queryResByShareCId",method = { RequestMethod.GET,
+			RequestMethod.POST })
+	@ResponseBody
+	public String queryResByShareCId(@RequestParam("cId")String cId,
+			Model model){
+		List<CusResourceRelData> cusResourceRelData = customerFacade.queryResourceRelByShareCustomerId(cId);
+		return JSON.toJSONString(cusResourceRelData);
 	}
 }
