@@ -10,6 +10,8 @@ public interface IResourceService {
 	ResourceModel queryWithGroupsByMAC(String mac);
 
 	//根据MAC查找资源(mac不为空时使用)
-	ResourceModel queryResourceByMAC(String mac); 
+	ResourceModel queryResourceByMAC(String mac);
+
+	ResourceModel queryModelById(Integer sourceKeyId); 
 	 
 }

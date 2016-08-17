@@ -150,4 +150,12 @@
     where SHARED_USER=#{sharedUser,jdbcType=VARCHAR}
   </select>
   
+  <delete id="deleteSharedResource" >
+    delete from CUSTOMER_RESOURCE_REL 
+    where RESOURCE_ID=#{resourceId,jdbcType=INTEGER}  
+    AND FROM_SHARED = 'Y' 
+    ADN CID =#{toCId,jdbcType=VARCHAR} 
+    AND SHARED_USER =#{fromCId,jdbcType=VARCHAR}
+  </delete>
+  
 </mapper>

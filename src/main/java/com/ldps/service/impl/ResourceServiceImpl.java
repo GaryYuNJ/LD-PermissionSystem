@@ -23,5 +23,10 @@ public class ResourceServiceImpl implements IResourceService {
 	public ResourceModel queryWithGroupsByMAC(String mac) {
 		return resourceDao.selectWithGroupsByMAC(mac);
 	}
+
+	@Override
+	public ResourceModel queryModelById(Integer sourceKeyId) {
+		return resourceDao.selectByPrimaryKey(sourceKeyId);
+	}
 	
 }

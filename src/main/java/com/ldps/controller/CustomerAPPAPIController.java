@@ -66,4 +66,47 @@ public class CustomerAPPAPIController {
 		List<CusResourceRelData> cusResourceRelData = customerFacade.queryResourceRelByShareCustomerId(cId);
 		return JSON.toJSONString(cusResourceRelData);
 	}
+	
+	//用户分享资源给其他人的权限
+	@RequestMapping(value="/shareResource",method = { RequestMethod.GET,
+			RequestMethod.POST })
+	@ResponseBody
+	public String shareResource(@RequestParam("fromCId")String fromCId,
+			@RequestParam("toCId")String toCId, @RequestParam("sourceKeyId")Integer sourceKeyId,
+			@RequestParam("startDate")String startDate,@RequestParam("endDate")String endDate,
+			Model model){
+
+		String result = customerFacade.shareResource(fromCId,toCId,sourceKeyId,startDate,endDate);
+		APIMessage apiMessage = new APIMessage();
+		if("0".equals(result)){
+			apiMessage.setStatus(1);
+			apiMessage.setMessage("");
+		}else{
+			apiMessage.setStatus(0);
+			apiMessage.setMessage(result);
+		}
+		
+		return JSON.toJSONString(apiMessage);
+		
+	}
+	
+	//用户删除分享给其他人的权限
+	@RequestMapping(value="/removeSharedResource",method = { RequestMethod.GET,
+			RequestMethod.POST })
+	@ResponseBody
+	public String removeSharedResource(@RequestParam("fromCId")String fromCId,
+			@RequestParam("toCId")String toCId,@RequestParam("sourceKeyId")Integer sourceKeyId,
+			Model model){
+		String result = customerFacade.removeSharedResource(fromCId,toCId,sourceKeyId);
+		
+		APIMessage apiMessage = new APIMessage();
+		if("0".equals(result)){
+			apiMessage.setStatus(1);
+			apiMessage.setMessage("");
+		}else{
+			apiMessage.setStatus(0);
+			apiMessage.setMessage(result);
+		}
+		return JSON.toJSONString(apiMessage);
+	}
 }

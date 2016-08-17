@@ -16,4 +16,9 @@ public interface CustomerFacade {
 	public List<ResourceData> querySharableResource(String cid);
 
 	List<CusResourceRelData> queryResourceRelByShareCustomerId(String customerId);
+
+	public String removeSharedResource(String fromCId, String toCId,
+			Integer sourceKeyId);
+
+	public String shareResource(String fromCId, String toCId, Integer sourceKeyId, String startDate, String endDate);
 }

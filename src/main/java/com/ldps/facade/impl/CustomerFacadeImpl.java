@@ -2,6 +2,7 @@ package com.ldps.facade.impl;
 
 import javax.annotation.Resource;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -21,6 +22,7 @@ import com.ldps.service.ICusResourceRelService;
 import com.ldps.service.ICustomerService;
 import com.ldps.service.IResourceService;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -29,6 +31,9 @@ import java.util.List;
 @Service("customerFacade")
 public class CustomerFacadeImpl implements CustomerFacade {
 
+	private static Logger logger = Logger
+			.getLogger(CustomerFacadeImpl.class);
+	
 	@Resource
 	private ICustomerService iCustomerSevice;
 	@Resource
@@ -139,6 +144,117 @@ public class CustomerFacadeImpl implements CustomerFacade {
 	}
 
 
+	//用户删除分享给其他人的权限
+	@Override
+	public String removeSharedResource(String fromCId, String toCId,
+			Integer sourceKeyId) {
+		// TODO Auto-generated method stub
+		String message = "0";
+		//check params
+		//fromCId exist?
+		//sourceKeyId exist?
+		try{
+			if(StringUtils.isEmpty(fromCId) || StringUtils.isEmpty(toCId)|| StringUtils.isEmpty(sourceKeyId)){
+				message = "E001"; //入参有空值
+			}else{
+				CustomerModel customerModel = iCustomerSevice.getUserByCId(fromCId);
+				if(null == customerModel){
+					message = "E002"; //分享用户不存在
+				}else{
+					//先判断设备状态
+					ResourceModel rModel = iResourceService.queryModelById(sourceKeyId);
+					if(null == rModel ){
+						message = "E003"; //设备不存在
+					}else {
+						iCusResourceRelService.removeSharedResource(fromCId,toCId,sourceKeyId);
+					}
+				}
+			}
+		}catch(Exception e){
+			logger.error("removeSharedResource exception. ", e);
+			message = "-1"; //delete记录异常
+		}
+		
+		return message;
+	}
+	
+	//用户分享资源给其他人的权限
+	@Override
+	public String shareResource(String fromCId, String toCId,
+			Integer sourceKeyId, String startDateStr, String endDateStr) {
+		
+		String message = "0";
+		//check params
+		//fromCId exist?
+		//toCId exist?
+		//sourceKeyId exist? resource sharable?
+		//startDateStr valid?
+		//endDateStr valid?
+		//toCId already have relationship with sourceKeyId?
+		
+		//如果起、止时间如果为null，表示起、止无限制
+		Date startDate = null;
+		Date endDate = null;
+		try{
+			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			if(!StringUtils.isEmpty(startDate)){
+				startDate = df.parse(startDateStr);
+			}
+			if(!StringUtils.isEmpty(endDateStr)){
+				endDate = df.parse(endDateStr);
+			}
+		}catch(Exception e){
+			message = "E008"; //权限起、至时间格式有问题
+		}
+		
+		if("0".equals(message)){
+			try{
+				if(StringUtils.isEmpty(fromCId) || StringUtils.isEmpty(toCId)|| StringUtils.isEmpty(sourceKeyId)){
+					message = "E001"; //入参有空值
+				}else{
+					CustomerModel customerModel = iCustomerSevice.getUserByCId(fromCId);
+					if(null == customerModel){
+						message = "E002"; //分享用户不存在
+					}else{
+						customerModel = iCustomerSevice.getUserByCId(toCId);
+						if(null == customerModel){
+							message = "E004"; //被分享用户不存在
+						}else{
+							//先判断设备状态
+							ResourceModel rModel = iResourceService.queryModelById(sourceKeyId);
+							if(null == rModel || "N".equals(rModel.getStatus())){
+								message = "E003"; //设备不可用
+							}else if("N".equals(rModel.getShareEnable())){
+								message = "E005"; //该设备权限不可分享
+							}else{
+								//toCId already have relationship with sourceKeyId?
+								CusResourceRelModel cusRRModel = new CusResourceRelModel();
+								cusRRModel.setCid(toCId);
+								cusRRModel.setResourceId(rModel.getId());
+								cusRRModel = iCusResourceRelService.queryModelByCidAndResId(cusRRModel);
+								//没有记录，直接创建
+								if(cusRRModel == null){
+									iCusResourceRelService.shareResource(fromCId,toCId,sourceKeyId,startDate, endDate);
+									
+								//有记录，已被授权；
+								}else if ("Y".equals(cusRRModel.getEnable())){
+									message = "E006"; //被分享用户已经有权限使用该资源
+								//有记录被取消权限.
+								}else{
+									message = "E007"; //被分享用户被管理员设为无权使用该资源
+								}
+							}
+						}
+					}
+				}
+			}catch(Exception e){
+				logger.error("shareResource exception. ", e);
+				message = "-1"; //创建记录异常
+			}
+		}
+		
+		return message;
+	}
 
 	public ICustomerService getiCustomerSevice() {
 		return iCustomerSevice;
@@ -182,6 +298,5 @@ public class CustomerFacadeImpl implements CustomerFacade {
 			ResourceModelConverter resourceModelConverter) {
 		this.resourceModelConverter = resourceModelConverter;
 	}
-
 
 }
