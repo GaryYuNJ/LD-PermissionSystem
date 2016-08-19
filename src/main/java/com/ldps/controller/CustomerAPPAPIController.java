@@ -32,11 +32,11 @@ public class CustomerAPPAPIController {
 			RequestMethod.POST })
 	@ResponseBody
 	public String permissionVerfy(@RequestParam("cId")String cId,
-			@RequestParam("resourceKey")String resourceKey,
+			@RequestParam("resourceKeyId")String resourceKeyId,
 			Model model){
 		APIMessage apiMessage = new APIMessage();
 		
-		String result = customerFacade.verification(cId, resourceKey);
+		String result = customerFacade.verification(cId, resourceKeyId);
 		
 		if("0".equals(result)){
 			apiMessage.setStatus(1);
@@ -49,6 +49,7 @@ public class CustomerAPPAPIController {
 		return JSON.toJSONString(apiMessage);
 	}
 	
+	//查询用户可分享使用权限的资源
 	@RequestMapping(value="/querySharableResource",method = { RequestMethod.GET,
 			RequestMethod.POST },  produces = {"application/json;charset=UTF-8"})
 	@ResponseBody
@@ -58,12 +59,13 @@ public class CustomerAPPAPIController {
 		return JSON.toJSONString(resourceDatas);
 	}
 	
+	//查询用户已分享的资源数据
 	@RequestMapping(value="/queryResByShareCId",method = { RequestMethod.GET,
 			RequestMethod.POST })
 	@ResponseBody
-	public String queryResByShareCId(@RequestParam("cId")String cId,
+	public String queryResByShareCId(@RequestParam("sharedFromUserId")String sharedFromUserId,
 			Model model){
-		List<CusResourceRelData> cusResourceRelData = customerFacade.queryResourceRelByShareCustomerId(cId);
+		List<CusResourceRelData> cusResourceRelData = customerFacade.queryResourceRelByShareCustomerId(sharedFromUserId);
 		return JSON.toJSONString(cusResourceRelData);
 	}
 	

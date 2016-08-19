@@ -10,13 +10,14 @@ public interface ICusResourceRelService {
 	//查找用户与资源的关系
 	CusResourceRelModel queryModelByCidAndResId(CusResourceRelModel model); 
 
-	//查询用户分享出去的资源信息
-	List<CusResourceRelModel> queryByShareCustomerId(String customerId);
-
 	//用户删除分享给其他人的权限
-	int removeSharedResource(String fromCId, String toCId, Integer sourceKeyId);
+	int removeSharedResource(Long fromCustomerId, Long toCustomerId,
+			Integer sourceKeyId);
+
+	//查询用户分享出去的资源信息
+	List<CusResourceRelModel> queryByShareCustomerId(Long customerId);
 
 	//分享给其他人的权限
-	int shareResource(String fromCId, String toCId, Integer sourceKeyId,
+	int shareResource(Long fromCId, Long toCId, Integer sourceKeyId,
 			Date startDate, Date endDate); 
 }

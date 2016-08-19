@@ -9,14 +9,14 @@
   </cache>
   <resultMap id="BaseResultMap" type="com.ldps.model.CusGroupRelModel" >
     <result column="CGROUP_ID" property="cgroupId" jdbcType="INTEGER" />
-    <result column="CID" property="cid" jdbcType="VARCHAR" />
+    <result column="CUSTOMER_ID" property="customerId" jdbcType="BIGINT" />
     <result column="CREATE_DATE" property="createDate" jdbcType="DATE" />
     <result column="CREATE_USER" property="createUser" jdbcType="INTEGER" />
   </resultMap>
   <insert id="insert" parameterType="com.ldps.model.CusGroupRelModel" >
-    insert into CGROUP_REL (CGROUP_ID, CID, CREATE_DATE, 
+    insert into CGROUP_REL (CGROUP_ID, CUSTOMER_ID, CREATE_DATE, 
       CREATE_USER)
-    values (#{cgroupId,jdbcType=INTEGER}, #{cid,jdbcType=VARCHAR}, #{createDate,jdbcType=DATE}, 
+    values (#{cgroupId,jdbcType=INTEGER}, #{customerId,jdbcType=BIGINT}, #{createDate,jdbcType=DATE}, 
       #{createUser,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.ldps.model.CusGroupRelModel" >
@@ -25,8 +25,8 @@
       <if test="cgroupId != null" >
         CGROUP_ID,
       </if>
-      <if test="cid != null" >
-        CID,
+      <if test="customerId != null" >
+        CUSTOMER_ID,
       </if>
       <if test="createDate != null" >
         CREATE_DATE,
@@ -39,8 +39,8 @@
       <if test="cgroupId != null" >
         #{cgroupId,jdbcType=INTEGER},
       </if>
-      <if test="cid != null" >
-        #{cid,jdbcType=VARCHAR},
+      <if test="customerId != null" >
+        #{customerId,jdbcType=BIGINT},
       </if>
       <if test="createDate != null" >
         #{createDate,jdbcType=DATE},

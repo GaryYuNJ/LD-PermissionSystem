@@ -20,6 +20,11 @@
     <result column="PASSWORD" property="password" jdbcType="CHAR" />
     <result column="SEQUENCE" property="sequence" jdbcType="INTEGER" />
     <result column="SHARE_ENABLE" property="shareEnable" jdbcType="CHAR" />
+    <result column="NODE_PATH" property="nodePath" jdbcType="VARCHAR" />
+    <result column="IS_VIRTUAL_RESOURCE" property="isVirtualResource" jdbcType="CHAR" />
+    <result column="PERMISSION_ATTR_ID" property="permissionAttrId" jdbcType="INTEGER" />
+    <result column="DEVICE_TYPE" property="deviceType" jdbcType="INTEGER" />
+    <result column="MANUFACTURER_ID" property="manufacturerId" jdbcType="INTEGER" />
     <result column="R_INT1" property="rInt1" jdbcType="INTEGER" />
     <result column="R_INT2" property="rInt2" jdbcType="INTEGER" />
     <result column="NUM1" property="num1" jdbcType="DECIMAL" />
@@ -85,7 +90,8 @@
   
   <sql id="Base_Column_List" >
     ID, NAME, TYPE_ID, STATUS, CREATE_DATE, CREATE_USER, MAC, BUILDING_ID, FLOOR, PASSWORD, 
-    SEQUENCE, SHARE_ENABLE, R_INT1, R_INT2, NUM1, NUM2, VC1, VC2, CHR1, CHR2
+    SEQUENCE, SHARE_ENABLE, NODE_PATH, IS_VIRTUAL_RESOURCE, PERMISSION_ATTR_ID, DEVICE_TYPE, 
+    MANUFACTURER_ID, R_INT1, R_INT2, NUM1, NUM2, VC1, VC2, CHR1, CHR2
   </sql>
   
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -111,16 +117,20 @@
       STATUS, CREATE_DATE, CREATE_USER, 
       MAC, BUILDING_ID, FLOOR, 
       PASSWORD, SEQUENCE, SHARE_ENABLE, 
-      R_INT1, R_INT2, NUM1, 
-      NUM2, VC1, VC2, CHR1, 
-      CHR2)
+      NODE_PATH, IS_VIRTUAL_RESOURCE, PERMISSION_ATTR_ID, 
+      DEVICE_TYPE, MANUFACTURER_ID, R_INT1, 
+      R_INT2, NUM1, NUM2, 
+      VC1, VC2, CHR1, CHR2
+      )
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{typeId,jdbcType=INTEGER}, 
       #{status,jdbcType=CHAR}, #{createDate,jdbcType=DATE}, #{createUser,jdbcType=INTEGER}, 
       #{mac,jdbcType=CHAR}, #{buildingId,jdbcType=INTEGER}, #{floor,jdbcType=INTEGER}, 
       #{password,jdbcType=CHAR}, #{sequence,jdbcType=INTEGER}, #{shareEnable,jdbcType=CHAR}, 
-      #{rInt1,jdbcType=INTEGER}, #{rInt2,jdbcType=INTEGER}, #{num1,jdbcType=DECIMAL}, 
-      #{num2,jdbcType=DECIMAL}, #{vc1,jdbcType=VARCHAR}, #{vc2,jdbcType=VARCHAR}, #{chr1,jdbcType=CHAR}, 
-      #{chr2,jdbcType=CHAR})
+      #{nodePath,jdbcType=VARCHAR}, #{isVirtualResource,jdbcType=CHAR}, #{permissionAttrId,jdbcType=INTEGER}, 
+      #{deviceType,jdbcType=INTEGER}, #{manufacturerId,jdbcType=INTEGER}, #{rInt1,jdbcType=INTEGER}, 
+      #{rInt2,jdbcType=INTEGER}, #{num1,jdbcType=DECIMAL}, #{num2,jdbcType=DECIMAL}, 
+      #{vc1,jdbcType=VARCHAR}, #{vc2,jdbcType=VARCHAR}, #{chr1,jdbcType=CHAR}, #{chr2,jdbcType=CHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.ldps.model.ResourceModel" >
     insert into RESOURCE
@@ -160,6 +170,21 @@
       </if>
       <if test="shareEnable != null" >
         SHARE_ENABLE,
+      </if>
+      <if test="nodePath != null" >
+        NODE_PATH,
+      </if>
+      <if test="isVirtualResource != null" >
+        IS_VIRTUAL_RESOURCE,
+      </if>
+      <if test="permissionAttrId != null" >
+        PERMISSION_ATTR_ID,
+      </if>
+      <if test="deviceType != null" >
+        DEVICE_TYPE,
+      </if>
+      <if test="manufacturerId != null" >
+        MANUFACTURER_ID,
       </if>
       <if test="rInt1 != null" >
         R_INT1,
@@ -223,6 +248,21 @@
       <if test="shareEnable != null" >
         #{shareEnable,jdbcType=CHAR},
       </if>
+      <if test="nodePath != null" >
+        #{nodePath,jdbcType=VARCHAR},
+      </if>
+      <if test="isVirtualResource != null" >
+        #{isVirtualResource,jdbcType=CHAR},
+      </if>
+      <if test="permissionAttrId != null" >
+        #{permissionAttrId,jdbcType=INTEGER},
+      </if>
+      <if test="deviceType != null" >
+        #{deviceType,jdbcType=INTEGER},
+      </if>
+      <if test="manufacturerId != null" >
+        #{manufacturerId,jdbcType=INTEGER},
+      </if>
       <if test="rInt1 != null" >
         #{rInt1,jdbcType=INTEGER},
       </if>
@@ -285,6 +325,21 @@
       <if test="shareEnable != null" >
         SHARE_ENABLE = #{shareEnable,jdbcType=CHAR},
       </if>
+      <if test="nodePath != null" >
+        NODE_PATH = #{nodePath,jdbcType=VARCHAR},
+      </if>
+      <if test="isVirtualResource != null" >
+        IS_VIRTUAL_RESOURCE = #{isVirtualResource,jdbcType=CHAR},
+      </if>
+      <if test="permissionAttrId != null" >
+        PERMISSION_ATTR_ID = #{permissionAttrId,jdbcType=INTEGER},
+      </if>
+      <if test="deviceType != null" >
+        DEVICE_TYPE = #{deviceType,jdbcType=INTEGER},
+      </if>
+      <if test="manufacturerId != null" >
+        MANUFACTURER_ID = #{manufacturerId,jdbcType=INTEGER},
+      </if>
       <if test="rInt1 != null" >
         R_INT1 = #{rInt1,jdbcType=INTEGER},
       </if>
@@ -325,6 +380,11 @@
       PASSWORD = #{password,jdbcType=CHAR},
       SEQUENCE = #{sequence,jdbcType=INTEGER},
       SHARE_ENABLE = #{shareEnable,jdbcType=CHAR},
+      NODE_PATH = #{nodePath,jdbcType=VARCHAR},
+      IS_VIRTUAL_RESOURCE = #{isVirtualResource,jdbcType=CHAR},
+      PERMISSION_ATTR_ID = #{permissionAttrId,jdbcType=INTEGER},
+      DEVICE_TYPE = #{deviceType,jdbcType=INTEGER},
+      MANUFACTURER_ID = #{manufacturerId,jdbcType=INTEGER},
       R_INT1 = #{rInt1,jdbcType=INTEGER},
       R_INT2 = #{rInt2,jdbcType=INTEGER},
       NUM1 = #{num1,jdbcType=DECIMAL},
@@ -341,12 +401,12 @@
     R.SEQUENCE, R.SHARE_ENABLE, R.R_INT1, R.R_INT2, R.NUM1, R.NUM2, R.VC1, R.VC2, R.CHR1, R.CHR2 
   </sql>
   
-  <select id="selectSharableResourceByCID" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="selectSharableResourceById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List_WithLable" /> 
     FROM RESOURCE R, CUSTOMER_RESOURCE_REL CR 
 	WHERE CR.RESOURCE_ID=R.ID AND R.SHARE_ENABLE='Y' 
 	<![CDATA[ AND (CR.START_DATE IS NULL OR CR.START_DATE < now()) AND (CR.END_DATE IS NULL OR CR.END_DATE > now()) ]]> 
-	AND CR.CID = #{cid,jdbcType=VARCHAR}
+	AND CR.CUSTOMER_ID = #{customerId,jdbcType=BIGINT}
   </select>
 </mapper>

@@ -15,19 +15,19 @@
 			<property name="forceBigDecimals" value="false"/> 
 		</javaTypeResolver> 
 		
-		<javaModelGenerator targetPackage="com.ldps.model" targetProject="LD-PermissionSystem\src\main\java"> 
+		<javaModelGenerator targetPackage="com.ldps.model1" targetProject="LD-PermissionSystem\src\main\java"> 
 			<property name="enableSubPackages" value="true"/> 
 			<property name="trimStrings" value="true"/> 
 		</javaModelGenerator> 
 		
-		<sqlMapGenerator targetPackage="mapping" targetProject="LD-PermissionSystem\src\main\resources"> 
+		<sqlMapGenerator targetPackage="mapping1" targetProject="LD-PermissionSystem\src\main\resources"> 
 			<property name="enableSubPackages" value="true"/> 
 		</sqlMapGenerator> 
 		
-		<javaClientGenerator type="XMLMAPPER" targetPackage="com.ldps.dao" targetProject="LD-PermissionSystem\src\main\java"> 
+		<javaClientGenerator type="XMLMAPPER" targetPackage="com.ldps.dao1" targetProject="LD-PermissionSystem\src\main\java"> 
 			<property name="enableSubPackages" value="true"/> 
 		</javaClientGenerator> 
-		
+		<table tableName="PERMISSION_RECORD" domainObjectName="PERMISSION_RECORDModel" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
 		<!-- 
 		<table tableName="BACKEND_USER" domainObjectName="UserModel" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
 		<table tableName="CUSTOMER" domainObjectName="CustomerModel" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>

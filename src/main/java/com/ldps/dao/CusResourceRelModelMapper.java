@@ -11,10 +11,10 @@ public interface CusResourceRelModelMapper {
 
     int insertSelective(CusResourceRelModel record);
     
-    CusResourceRelModel selectByCidAndResourceId(CusResourceRelModel record);
+    CusResourceRelModel selectByCusIdAndResourceId(CusResourceRelModel record);
     
-	List<CusResourceRelModel> selectByShareCustomerId(String sharedUser);
+	List<CusResourceRelModel> selectByShareCustomerId(Long createUser);
 
-	int deleteSharedResource(@Param("fromCId")String fromCId, @Param("toCId")String toCId, @Param("resourceId")Integer resourceId);
+	int deleteSharedResource(@Param("fromCustomerId")Long fromCustomerId, @Param("toCustomerId")Long toCustomerId, @Param("resourceId")Integer resourceId);
 
 }

@@ -10,6 +10,19 @@
   <resultMap id="BaseResultMap" type="com.ldps.model.CustomerModel" >
     <id column="ID" property="id" jdbcType="BIGINT" />
     <result column="CID" property="cid" jdbcType="VARCHAR" />
+    <result column="MOBILE" property="mobile" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="PASSWORD" property="password" jdbcType="VARCHAR" />
+    <result column="SEX" property="sex" jdbcType="CHAR" />
+    <result column="BIRTHDAY" property="birthday" jdbcType="DATE" />
+    <result column="ADDRESS" property="address" jdbcType="VARCHAR" />
+    <result column="EMAIL" property="email" jdbcType="VARCHAR" />
+    <result column="PIC_NAME" property="picName" jdbcType="VARCHAR" />
+    <result column="ID_TYPE" property="idType" jdbcType="CHAR" />
+    <result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+    <result column="MEMBER_ID" property="memberId" jdbcType="VARCHAR" />
+    <result column="REFEREE" property="referee" jdbcType="VARCHAR" />
+    <result column="RELATION" property="relation" jdbcType="CHAR" />
     <result column="CTYPE" property="ctype" jdbcType="VARCHAR" />
     <result column="CSTATUS" property="cstatus" jdbcType="CHAR" />
     <result column="CCURJFYE" property="ccurjfye" jdbcType="DECIMAL" />
@@ -83,11 +96,12 @@
   </resultMap>
   
   <sql id="Base_Column_List" >
-    ID, CID, CTYPE, CSTATUS, CCURJFYE, CHISJFYE, CTOTJFYE, CCURXFJE, CHISXFJE, CTOTXFJE, 
-    CVIPNO, CNAME, CCREATOR, CCREATDATE, CMAINTOR, CMAINTDATE, CDATE1, CDATE2, CDATE3, 
-    CDATE4, CDATE5, CNUM1, CNUM2, CNUM3, CNUM4, CNUM5, CNUM6, CNUM7, CNUM8, CNUM9, CNUM10, 
-    CVC1, CVC2, CVC3, CVC4, CVC5, CVC6, CVC7, CVC8, CCHR1, CCHR2, CCHR3, CCHR4, CCHR5, 
-    CCHR6
+    ID, CID, MOBILE, NAME, PASSWORD, SEX, BIRTHDAY, ADDRESS, EMAIL, PIC_NAME, ID_TYPE, 
+    ID_NO, MEMBER_ID, REFEREE, RELATION, CTYPE, CSTATUS, CCURJFYE, CHISJFYE, CTOTJFYE, 
+    CCURXFJE, CHISXFJE, CTOTXFJE, CVIPNO, CNAME, CCREATOR, CCREATDATE, CMAINTOR, CMAINTDATE, 
+    CDATE1, CDATE2, CDATE3, CDATE4, CDATE5, CNUM1, CNUM2, CNUM3, CNUM4, CNUM5, CNUM6, 
+    CNUM7, CNUM8, CNUM9, CNUM10, CVC1, CVC2, CVC3, CVC4, CVC5, CVC6, CVC7, CVC8, CCHR1, 
+    CCHR2, CCHR3, CCHR4, CCHR5, CCHR6
   </sql>
   
   <sql id="Simple_Column_List" >
@@ -114,12 +128,41 @@
     where CID = #{cid,jdbcType=VARCHAR}
   </select>
   
+    <select id="simpleSelectById" resultMap="SimpleResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Simple_Column_List" />
+    from CUSTOMER
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  
   <select id="simpleSelectWithGroupsByCID" resultMap="SimpleWithGroupsResultMap" parameterType="java.lang.String" >
 	SELECT 
 	<include refid="Simple_Column_WithGroups" />
 	FROM CUSTOMER C LEFT JOIN CGROUP_REL CGR ON CGR.CID=C.CID 
 	LEFT JOIN CGROUP CG ON CG.ID=CGR.CGROUP_ID 
 	where C.CID = #{cid,jdbcType=VARCHAR}
+  </select>
+  
+   <select id="simpleSelectWithGroupsById" resultMap="SimpleWithGroupsResultMap" parameterType="java.lang.Long" >
+	SELECT 
+	<include refid="Simple_Column_WithGroups" />
+	FROM CUSTOMER C LEFT JOIN CGROUP_REL CGR ON CGR.CID=C.CID 
+	LEFT JOIN CGROUP CG ON CG.ID=CGR.CGROUP_ID 
+	where C.ID = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="simpleSelectByMobile" resultMap="SimpleResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Simple_Column_List" />
+    from CUSTOMER
+    where MOBILE = #{mobile,jdbcType=VARCHAR}
+  </select>
+  
+   <select id="queryIdByMobile" parameterType="java.lang.String" >
+    select 
+    ID 
+    from CUSTOMER
+    where MOBILE = #{mobile,jdbcType=VARCHAR}
   </select>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
@@ -133,7 +176,11 @@
   </delete>
   
   <insert id="insert" parameterType="com.ldps.model.CustomerModel" >
-    insert into CUSTOMER ( CID, CTYPE, 
+      insert into CUSTOMER (ID, CID, MOBILE, 
+      NAME, PASSWORD, SEX, BIRTHDAY, 
+      ADDRESS, EMAIL, PIC_NAME, 
+      ID_TYPE, ID_NO, MEMBER_ID, 
+      REFEREE, RELATION, CTYPE, 
       CSTATUS, CCURJFYE, CHISJFYE, 
       CTOTJFYE, CCURXFJE, CHISXFJE, 
       CTOTXFJE, CVIPNO, CNAME, 
@@ -147,7 +194,11 @@
       CVC5, CVC6, CVC7, CVC8, 
       CCHR1, CCHR2, CCHR3, CCHR4, 
       CCHR5, CCHR6)
-    values (#{cid,jdbcType=VARCHAR}, #{ctype,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=BIGINT}, #{cid,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{sex,jdbcType=CHAR}, #{birthday,jdbcType=DATE}, 
+      #{address,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{picName,jdbcType=VARCHAR}, 
+      #{idType,jdbcType=CHAR}, #{idNo,jdbcType=VARCHAR}, #{memberId,jdbcType=VARCHAR}, 
+      #{referee,jdbcType=VARCHAR}, #{relation,jdbcType=CHAR}, #{ctype,jdbcType=VARCHAR}, 
       #{cstatus,jdbcType=CHAR}, #{ccurjfye,jdbcType=DECIMAL}, #{chisjfye,jdbcType=DECIMAL}, 
       #{ctotjfye,jdbcType=DECIMAL}, #{ccurxfje,jdbcType=DECIMAL}, #{chisxfje,jdbcType=DECIMAL}, 
       #{ctotxfje,jdbcType=DECIMAL}, #{cvipno,jdbcType=VARCHAR}, #{cname,jdbcType=VARCHAR}, 
@@ -171,6 +222,45 @@
       </if>
       <if test="cid != null" >
         CID,
+      </if>
+      <if test="mobile != null" >
+        MOBILE,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="password != null" >
+        PASSWORD,
+      </if>
+      <if test="sex != null" >
+        SEX,
+      </if>
+      <if test="birthday != null" >
+        BIRTHDAY,
+      </if>
+      <if test="address != null" >
+        ADDRESS,
+      </if>
+      <if test="email != null" >
+        EMAIL,
+      </if>
+      <if test="picName != null" >
+        PIC_NAME,
+      </if>
+      <if test="idType != null" >
+        ID_TYPE,
+      </if>
+      <if test="idNo != null" >
+        ID_NO,
+      </if>
+      <if test="memberId != null" >
+        MEMBER_ID,
+      </if>
+      <if test="referee != null" >
+        REFEREE,
+      </if>
+      <if test="relation != null" >
+        RELATION,
       </if>
       <if test="ctype != null" >
         CTYPE,
@@ -308,6 +398,45 @@
       </if>
       <if test="cid != null" >
         #{cid,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=CHAR},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=DATE},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="picName != null" >
+        #{picName,jdbcType=VARCHAR},
+      </if>
+      <if test="idType != null" >
+        #{idType,jdbcType=CHAR},
+      </if>
+      <if test="idNo != null" >
+        #{idNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memberId != null" >
+        #{memberId,jdbcType=VARCHAR},
+      </if>
+      <if test="referee != null" >
+        #{referee,jdbcType=VARCHAR},
+      </if>
+      <if test="relation != null" >
+        #{relation,jdbcType=CHAR},
       </if>
       <if test="ctype != null" >
         #{ctype,jdbcType=VARCHAR},
@@ -447,6 +576,45 @@
       <if test="cid != null" >
         CID = #{cid,jdbcType=VARCHAR},
       </if>
+      <if test="mobile != null" >
+        MOBILE = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        PASSWORD = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        SEX = #{sex,jdbcType=CHAR},
+      </if>
+      <if test="birthday != null" >
+        BIRTHDAY = #{birthday,jdbcType=DATE},
+      </if>
+      <if test="address != null" >
+        ADDRESS = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="picName != null" >
+        PIC_NAME = #{picName,jdbcType=VARCHAR},
+      </if>
+      <if test="idType != null" >
+        ID_TYPE = #{idType,jdbcType=CHAR},
+      </if>
+      <if test="idNo != null" >
+        ID_NO = #{idNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memberId != null" >
+        MEMBER_ID = #{memberId,jdbcType=VARCHAR},
+      </if>
+      <if test="referee != null" >
+        REFEREE = #{referee,jdbcType=VARCHAR},
+      </if>
+      <if test="relation != null" >
+        RELATION = #{relation,jdbcType=CHAR},
+      </if>
       <if test="ctype != null" >
         CTYPE = #{ctype,jdbcType=VARCHAR},
       </if>
@@ -583,6 +751,19 @@
   <update id="updateByPrimaryKey" parameterType="com.ldps.model.CustomerModel" >
     update CUSTOMER
     set CID = #{cid,jdbcType=VARCHAR},
+      MOBILE = #{mobile,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      PASSWORD = #{password,jdbcType=VARCHAR},
+      SEX = #{sex,jdbcType=CHAR},
+      BIRTHDAY = #{birthday,jdbcType=DATE},
+      ADDRESS = #{address,jdbcType=VARCHAR},
+      EMAIL = #{email,jdbcType=VARCHAR},
+      PIC_NAME = #{picName,jdbcType=VARCHAR},
+      ID_TYPE = #{idType,jdbcType=CHAR},
+      ID_NO = #{idNo,jdbcType=VARCHAR},
+      MEMBER_ID = #{memberId,jdbcType=VARCHAR},
+      REFEREE = #{referee,jdbcType=VARCHAR},
+      RELATION = #{relation,jdbcType=CHAR},
       CTYPE = #{ctype,jdbcType=VARCHAR},
       CSTATUS = #{cstatus,jdbcType=CHAR},
       CCURJFYE = #{ccurjfye,jdbcType=DECIMAL},

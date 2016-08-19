@@ -28,6 +28,16 @@ public class ResourceModel {
 
     private String shareEnable;
 
+    private String nodePath;
+
+    private String isVirtualResource;
+
+    private Integer permissionAttrId;
+
+    private Integer deviceType;
+
+    private Integer manufacturerId;
+
     private Integer rInt1;
 
     private Integer rInt2;
@@ -148,6 +158,46 @@ public class ResourceModel {
 
     public void setShareEnable(String shareEnable) {
         this.shareEnable = shareEnable == null ? null : shareEnable.trim();
+    }
+
+    public String getNodePath() {
+        return nodePath;
+    }
+
+    public void setNodePath(String nodePath) {
+        this.nodePath = nodePath == null ? null : nodePath.trim();
+    }
+
+    public String getIsVirtualResource() {
+        return isVirtualResource;
+    }
+
+    public void setIsVirtualResource(String isVirtualResource) {
+        this.isVirtualResource = isVirtualResource == null ? null : isVirtualResource.trim();
+    }
+
+    public Integer getPermissionAttrId() {
+        return permissionAttrId;
+    }
+
+    public void setPermissionAttrId(Integer permissionAttrId) {
+        this.permissionAttrId = permissionAttrId;
+    }
+
+    public Integer getDeviceType() {
+        return deviceType;
+    }
+
+    public void setDeviceType(Integer deviceType) {
+        this.deviceType = deviceType;
+    }
+
+    public Integer getManufacturerId() {
+        return manufacturerId;
+    }
+
+    public void setManufacturerId(Integer manufacturerId) {
+        this.manufacturerId = manufacturerId;
     }
 
     public Integer getrInt1() {

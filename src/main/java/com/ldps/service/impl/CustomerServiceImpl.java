@@ -63,13 +63,31 @@ public class CustomerServiceImpl implements ICustomerService {
 	public CustomerModel getModelWithGroupsByCID(String cid) {
 		return customerDao.simpleSelectWithGroupsByCID(cid);
 	}
+	
+	@Override
+	public CustomerModel simpleSelectWithGroupsById(Long customerId) {
+		return customerDao.simpleSelectWithGroupsById(customerId);
+	}
+
 
 	//获取用户可分享权限的资源列表
 	/*
 		不包含公共资源，不包含用户组授权，只针对用户与资源的可用关系
 	*/
 	@Override
-	public List<ResourceModel> querySharableResource(String cid) {
-		return resourceDao.selectSharableResourceByCID(cid);
+	public List<ResourceModel> querySharableResource(Long customerId) {
+		return resourceDao.selectSharableResourceById(customerId);
+	}
+
+	@Override
+	public Long getCustomerIdByMobile(String mobile) {
+		// TODO Auto-generated method stub
+		return customerDao.queryIdByMobile(mobile);
+	}
+	
+	@Override
+	public CustomerModel getCustomerModelByMobile(String mobile) {
+		// TODO Auto-generated method stub
+		return customerDao.simpleSelectByMobile(mobile);
 	}
 }

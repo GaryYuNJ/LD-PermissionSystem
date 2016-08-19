@@ -20,35 +20,34 @@ public class CusResourceRelServiceImpl implements ICusResourceRelService {
 	@Override
 	public CusResourceRelModel queryModelByCidAndResId(CusResourceRelModel model) {
 		// TODO Auto-generated method stub
-		return customerResourceRelDao.selectByCidAndResourceId(model);
+		return customerResourceRelDao.selectByCusIdAndResourceId(model);
 	}
 
 	@Override
 	public List<CusResourceRelModel> queryByShareCustomerId(
-			String customerId) {
+			Long customerId) {
 		// TODO Auto-generated method stub
 		return  customerResourceRelDao.selectByShareCustomerId(customerId);
 	}
 
 	//用户删除分享给其他人的权限
 	@Override
-	public int removeSharedResource(String fromCId, String toCId,
+	public int removeSharedResource(Long fromCustomerId, Long toCustomerId,
 			Integer sourceKeyId) {
-		return  customerResourceRelDao.deleteSharedResource(fromCId,toCId,sourceKeyId);
+		return  customerResourceRelDao.deleteSharedResource(fromCustomerId,fromCustomerId,sourceKeyId);
 	}
 
 	//分享给其他人的权限
 	@Override
-	public int shareResource(String fromCId, String toCId, Integer sourceKeyId,
+	public int shareResource(Long fromCId, Long toCId, Integer sourceKeyId,
 			Date startDate, Date endDate) {
 		CusResourceRelModel model = new CusResourceRelModel();
-		model.setCid(toCId);
+		model.setCustomerId(toCId);
 		model.setFromShared("Y");
 		model.setResourceId(sourceKeyId);
 		model.setEnable("Y");
-		model.setSharedUser(fromCId);
 		model.setCreateDate(new Date());
-		//model.setCreateUser(createUser);
+		model.setCreateUser(fromCId);
 		model.setStartDate(startDate);
 		model.setEndDate(endDate);
 		return  customerResourceRelDao.insertSelective(model);

@@ -52,29 +52,37 @@ public class CustomerFacadeImpl implements CustomerFacade {
 		不包含公共资源，不包含用户组授权，只针对用户与资源的可用关系
 	*/
 	@Override
-	public List<ResourceData> querySharableResource(String cid) {
-		List<ResourceModel> resourceModel = iCustomerSevice.querySharableResource(cid);
+	public List<ResourceData> querySharableResource(String mobile) {
+		
+		Long customerId = iCustomerSevice.getCustomerIdByMobile(mobile);
+		
+		List<ResourceModel> resourceModel = iCustomerSevice.querySharableResource(customerId);
 		return resourceModelConverter.processList(resourceModel);
 	}
 	/*
 		查看用户分享出去的资源
 	*/
 	@Override
-	public List<CusResourceRelData> queryResourceRelByShareCustomerId(String customerId) {
+	public List<CusResourceRelData> queryResourceRelByShareCustomerId(String mobile) {
+		
+		Long customerId = iCustomerSevice.getCustomerIdByMobile(mobile);
+		
 		List<CusResourceRelModel> cusResourceRelModel = iCusResourceRelService.queryByShareCustomerId(customerId);
 		return cusResourceRelModelConverter.processList(cusResourceRelModel);
 	}
 	
 	//验证用户是否有权限操作资源
 	@Override
-	public String verification(String cid, String mac) {
+	public String verification(String mobile, String mac) {
+
 		
 		String verifiMessage = "0";
-		if(StringUtils.isEmpty(cid) || StringUtils.isEmpty(mac)){
+		if(StringUtils.isEmpty(mobile) || StringUtils.isEmpty(mac)){
 			verifiMessage = "E001"; //入参有空值
 		}else{
-			CustomerModel customerModel = iCustomerSevice.getModelWithGroupsByCID(cid);
-			if(null == customerModel){
+			Long customerId = iCustomerSevice.getCustomerIdByMobile(mobile);
+			
+			if(null == customerId){
 				verifiMessage = "E002"; //用户不存在
 			}else{
 				//先判断设备状态
@@ -99,11 +107,12 @@ public class CustomerFacadeImpl implements CustomerFacade {
 					//非公共资源，继续验证权限
 					if(publicFlag == 0){
 						CusResourceRelModel cusRRModel = new CusResourceRelModel();
-						cusRRModel.setCid(cid);
+						cusRRModel.setCustomerId(customerId);
 						cusRRModel.setResourceId(rModel.getId());
 						cusRRModel = iCusResourceRelService.queryModelByCidAndResId(cusRRModel);
 						//没有资源与用户的绑定记录，需要验证用户组与资源的关系
 						if(null == cusRRModel){
+							CustomerModel customerModel = iCustomerSevice.simpleSelectWithGroupsById(customerId);
 							//用户没有绑定任何用户组
 							if(null == customerModel.getCustomerGroups() || customerModel.getCustomerGroups().size() ==0){
 								verifiMessage = "E006"; //该用户&所属用户组没有配置权限使用该资源
@@ -146,19 +155,21 @@ public class CustomerFacadeImpl implements CustomerFacade {
 
 	//用户删除分享给其他人的权限
 	@Override
-	public String removeSharedResource(String fromCId, String toCId,
+	public String removeSharedResource(String fromMobile, String toMobile,
 			Integer sourceKeyId) {
+		
 		// TODO Auto-generated method stub
 		String message = "0";
 		//check params
 		//fromCId exist?
 		//sourceKeyId exist?
 		try{
-			if(StringUtils.isEmpty(fromCId) || StringUtils.isEmpty(toCId)|| StringUtils.isEmpty(sourceKeyId)){
+			if(StringUtils.isEmpty(fromMobile) || StringUtils.isEmpty(toMobile)|| StringUtils.isEmpty(sourceKeyId)){
 				message = "E001"; //入参有空值
 			}else{
-				CustomerModel customerModel = iCustomerSevice.getUserByCId(fromCId);
-				if(null == customerModel){
+				CustomerModel fromCustomerModel = iCustomerSevice.getCustomerModelByMobile(fromMobile);
+				//CustomerModel customerModel = iCustomerSevice.getUserByCId(fromCId);
+				if(null == fromCustomerModel){
 					message = "E002"; //分享用户不存在
 				}else{
 					//先判断设备状态
@@ -166,7 +177,8 @@ public class CustomerFacadeImpl implements CustomerFacade {
 					if(null == rModel ){
 						message = "E003"; //设备不存在
 					}else {
-						iCusResourceRelService.removeSharedResource(fromCId,toCId,sourceKeyId);
+						Long toCustomerId = iCustomerSevice.getCustomerIdByMobile(toMobile);
+						iCusResourceRelService.removeSharedResource(fromCustomerModel.getId(),toCustomerId,sourceKeyId);
 					}
 				}
 			}
@@ -180,7 +192,7 @@ public class CustomerFacadeImpl implements CustomerFacade {
 	
 	//用户分享资源给其他人的权限
 	@Override
-	public String shareResource(String fromCId, String toCId,
+	public String shareResource(String fromMobile, String toMobile,
 			Integer sourceKeyId, String startDateStr, String endDateStr) {
 		
 		String message = "0";
@@ -209,15 +221,15 @@ public class CustomerFacadeImpl implements CustomerFacade {
 		
 		if("0".equals(message)){
 			try{
-				if(StringUtils.isEmpty(fromCId) || StringUtils.isEmpty(toCId)|| StringUtils.isEmpty(sourceKeyId)){
+				if(StringUtils.isEmpty(fromMobile) || StringUtils.isEmpty(toMobile)|| StringUtils.isEmpty(sourceKeyId)){
 					message = "E001"; //入参有空值
 				}else{
-					CustomerModel customerModel = iCustomerSevice.getUserByCId(fromCId);
-					if(null == customerModel){
+					CustomerModel fromCustomerModel = iCustomerSevice.getCustomerModelByMobile(fromMobile);
+					if(null == fromCustomerModel){
 						message = "E002"; //分享用户不存在
 					}else{
-						customerModel = iCustomerSevice.getUserByCId(toCId);
-						if(null == customerModel){
+						CustomerModel toCustomerModel = iCustomerSevice.getCustomerModelByMobile(fromMobile);
+						if(null == toCustomerModel){
 							message = "E004"; //被分享用户不存在
 						}else{
 							//先判断设备状态
@@ -229,12 +241,12 @@ public class CustomerFacadeImpl implements CustomerFacade {
 							}else{
 								//toCId already have relationship with sourceKeyId?
 								CusResourceRelModel cusRRModel = new CusResourceRelModel();
-								cusRRModel.setCid(toCId);
+								cusRRModel.setCustomerId(toCustomerModel.getId());
 								cusRRModel.setResourceId(rModel.getId());
 								cusRRModel = iCusResourceRelService.queryModelByCidAndResId(cusRRModel);
 								//没有记录，直接创建
 								if(cusRRModel == null){
-									iCusResourceRelService.shareResource(fromCId,toCId,sourceKeyId,startDate, endDate);
+									iCusResourceRelService.shareResource(fromCustomerModel.getId(),toCustomerModel.getId(),sourceKeyId,startDate, endDate);
 									
 								//有记录，已被授权；
 								}else if ("Y".equals(cusRRModel.getEnable())){

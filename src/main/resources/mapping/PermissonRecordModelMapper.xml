@@ -11,18 +11,18 @@
     <result column="OBJECT_TYPE" property="objectType" jdbcType="INTEGER" />
     <result column="CGROUP_NAME" property="cgroupName" jdbcType="VARCHAR" />
     <result column="RESOURCE_NAME" property="resourceName" jdbcType="VARCHAR" />
-    <result column="CID" property="cid" jdbcType="VARCHAR" />
+    <result column="CUSTOMER_ID" property="customerId" jdbcType="BIGINT" />
     <result column="ACTION_TYPE" property="actionType" jdbcType="INTEGER" />
     <result column="CREATE_DATE" property="createDate" jdbcType="DATE" />
-    <result column="CREATE_USER" property="createUser" jdbcType="VARCHAR" />
+    <result column="CREATE_USER" property="createUser" jdbcType="BIGINT" />
   </resultMap>
   <insert id="insert" parameterType="com.ldps.model.PermissonRecordModel" >
     insert into PERMISSION_RECORD (OBJECT_TYPE, CGROUP_NAME, RESOURCE_NAME, 
-      CID, ACTION_TYPE, CREATE_DATE, 
+      CUSTOMER_ID, ACTION_TYPE, CREATE_DATE, 
       CREATE_USER)
     values (#{objectType,jdbcType=INTEGER}, #{cgroupName,jdbcType=VARCHAR}, #{resourceName,jdbcType=VARCHAR}, 
-      #{cid,jdbcType=VARCHAR}, #{actionType,jdbcType=INTEGER}, #{createDate,jdbcType=DATE}, 
-      #{createUser,jdbcType=VARCHAR})
+      #{customerId,jdbcType=BIGINT}, #{actionType,jdbcType=INTEGER}, #{createDate,jdbcType=DATE}, 
+      #{createUser,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="com.ldps.model.PermissonRecordModel" >
     insert into PERMISSION_RECORD
@@ -36,8 +36,8 @@
       <if test="resourceName != null" >
         RESOURCE_NAME,
       </if>
-      <if test="cid != null" >
-        CID,
+      <if test="customerId != null" >
+        CUSTOMER_ID,
       </if>
       <if test="actionType != null" >
         ACTION_TYPE,
@@ -59,8 +59,8 @@
       <if test="resourceName != null" >
         #{resourceName,jdbcType=VARCHAR},
       </if>
-      <if test="cid != null" >
-        #{cid,jdbcType=VARCHAR},
+      <if test="customerId != null" >
+        #{customerId,jdbcType=BIGINT},
       </if>
       <if test="actionType != null" >
         #{actionType,jdbcType=INTEGER},
@@ -69,7 +69,7 @@
         #{createDate,jdbcType=DATE},
       </if>
       <if test="createUser != null" >
-        #{createUser,jdbcType=VARCHAR},
+        #{createUser,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>
