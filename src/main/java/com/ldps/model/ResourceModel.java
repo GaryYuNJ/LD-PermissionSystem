@@ -37,6 +37,8 @@ public class ResourceModel {
     private Integer deviceType;
 
     private Integer manufacturerId;
+    
+    private Integer nodeId;
 
     private Integer rInt1;
 
@@ -54,7 +56,15 @@ public class ResourceModel {
 
     private String chr2;
     
-    private List<ResourceGroupModel> resourceGroups;  
+    public Integer getNodeId() {
+		return nodeId;
+	}
+
+	public void setNodeId(Integer nodeId) {
+		this.nodeId = nodeId;
+	}
+
+	private List<ResourceGroupModel> resourceGroups;  
     
     public List<ResourceGroupModel> getResourceGroups() {
 		return resourceGroups;

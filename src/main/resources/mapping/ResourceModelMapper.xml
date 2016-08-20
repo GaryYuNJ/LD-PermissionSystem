@@ -25,6 +25,7 @@
     <result column="PERMISSION_ATTR_ID" property="permissionAttrId" jdbcType="INTEGER" />
     <result column="DEVICE_TYPE" property="deviceType" jdbcType="INTEGER" />
     <result column="MANUFACTURER_ID" property="manufacturerId" jdbcType="INTEGER" />
+    <result column="NODE_ID" property="nodeId" jdbcType=INTEGER />
     <result column="R_INT1" property="rInt1" jdbcType="INTEGER" />
     <result column="R_INT2" property="rInt2" jdbcType="INTEGER" />
     <result column="NUM1" property="num1" jdbcType="DECIMAL" />
@@ -48,6 +49,12 @@
     <result column="PASSWORD" property="password" jdbcType="CHAR" />
     <result column="SEQUENCE" property="sequence" jdbcType="INTEGER" />
     <result column="SHARE_ENABLE" property="shareEnable" jdbcType="CHAR" />
+    <result column="NODE_PATH" property="nodePath" jdbcType="VARCHAR" />
+    <result column="IS_VIRTUAL_RESOURCE" property="isVirtualResource" jdbcType="CHAR" />
+    <result column="PERMISSION_ATTR_ID" property="permissionAttrId" jdbcType="INTEGER" />
+    <result column="DEVICE_TYPE" property="deviceType" jdbcType="INTEGER" />
+    <result column="MANUFACTURER_ID" property="manufacturerId" jdbcType="INTEGER" />
+    <result column="NODE_ID" property="nodeId" jdbcType=INTEGER />
     <result column="R_INT1" property="rInt1" jdbcType="INTEGER" />
     <result column="R_INT2" property="rInt2" jdbcType="INTEGER" />
     <result column="NUM1" property="num1" jdbcType="DECIMAL" />
@@ -75,7 +82,8 @@
   
   <sql id="With_Groups_Column_List" >
     R.ID, R.NAME, R.TYPE_ID, R.STATUS, R.CREATE_DATE, R.CREATE_USER, R.MAC, R.BUILDING_ID, R.FLOOR, R.PASSWORD, 
-    R.SEQUENCE, R.SHARE_ENABLE, R.R_INT1, R.R_INT2, R.NUM1, R.NUM2, R.VC1, R.VC2, R.CHR1, R.CHR2,
+    R.SEQUENCE, R.SHARE_ENABLE, R.NODE_PATH, R.IS_VIRTUAL_RESOURCE, R.PERMISSION_ATTR_ID, R.DEVICE_TYPE, 
+    R.MANUFACTURER_ID, R.NODE_ID,  R.R_INT1, R.R_INT2, R.NUM1, R.NUM2, R.VC1, R.VC2, R.CHR1, R.CHR2,
     G.ID G_ID, G.NAME G_NAME , G.STATUS G_STATUS , G.IS_PUBLIC G_IS_PUBLIC , G.CREATE_DATE G_CREATE_DATE , 
     G.CREATE_USER G_CREATE_USER , G.NUM1 G_NUM1 , G.NUM2 G_NUM2 , G.VC1 G_VC1 , G.VC2 G_VC2 , G.CHR1 G_CHR1 , G.CHR2 G_CHR2
   </sql>
@@ -91,7 +99,7 @@
   <sql id="Base_Column_List" >
     ID, NAME, TYPE_ID, STATUS, CREATE_DATE, CREATE_USER, MAC, BUILDING_ID, FLOOR, PASSWORD, 
     SEQUENCE, SHARE_ENABLE, NODE_PATH, IS_VIRTUAL_RESOURCE, PERMISSION_ATTR_ID, DEVICE_TYPE, 
-    MANUFACTURER_ID, R_INT1, R_INT2, NUM1, NUM2, VC1, VC2, CHR1, CHR2
+    MANUFACTURER_ID, NODE_ID, R_INT1, R_INT2, NUM1, NUM2, VC1, VC2, CHR1, CHR2
   </sql>
   
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -118,7 +126,7 @@
       MAC, BUILDING_ID, FLOOR, 
       PASSWORD, SEQUENCE, SHARE_ENABLE, 
       NODE_PATH, IS_VIRTUAL_RESOURCE, PERMISSION_ATTR_ID, 
-      DEVICE_TYPE, MANUFACTURER_ID, R_INT1, 
+      DEVICE_TYPE, MANUFACTURER_ID, NODE_ID R_INT1, 
       R_INT2, NUM1, NUM2, 
       VC1, VC2, CHR1, CHR2
       )
@@ -127,7 +135,7 @@
       #{mac,jdbcType=CHAR}, #{buildingId,jdbcType=INTEGER}, #{floor,jdbcType=INTEGER}, 
       #{password,jdbcType=CHAR}, #{sequence,jdbcType=INTEGER}, #{shareEnable,jdbcType=CHAR}, 
       #{nodePath,jdbcType=VARCHAR}, #{isVirtualResource,jdbcType=CHAR}, #{permissionAttrId,jdbcType=INTEGER}, 
-      #{deviceType,jdbcType=INTEGER}, #{manufacturerId,jdbcType=INTEGER}, #{rInt1,jdbcType=INTEGER}, 
+      #{deviceType,jdbcType=INTEGER}, #{manufacturerId,jdbcType=INTEGER}, #{nodeId,jdbcType=INTEGER}, #{rInt1,jdbcType=INTEGER}, 
       #{rInt2,jdbcType=INTEGER}, #{num1,jdbcType=DECIMAL}, #{num2,jdbcType=DECIMAL}, 
       #{vc1,jdbcType=VARCHAR}, #{vc2,jdbcType=VARCHAR}, #{chr1,jdbcType=CHAR}, #{chr2,jdbcType=CHAR}
       )
@@ -185,6 +193,9 @@
       </if>
       <if test="manufacturerId != null" >
         MANUFACTURER_ID,
+      </if>
+      <if test="nodeId != null" >
+        NODE_ID,
       </if>
       <if test="rInt1 != null" >
         R_INT1,
@@ -263,6 +274,9 @@
       <if test="manufacturerId != null" >
         #{manufacturerId,jdbcType=INTEGER},
       </if>
+      <if test="nodeId != null" >
+        #{nodeId,jdbcType=INTEGER},
+      </if>
       <if test="rInt1 != null" >
         #{rInt1,jdbcType=INTEGER},
       </if>
@@ -340,6 +354,9 @@
       <if test="manufacturerId != null" >
         MANUFACTURER_ID = #{manufacturerId,jdbcType=INTEGER},
       </if>
+      <if test="nodeId != null" >
+     	 NODE_ID = #{nodeId,jdbcType=INTEGER},
+      </if>
       <if test="rInt1 != null" >
         R_INT1 = #{rInt1,jdbcType=INTEGER},
       </if>
@@ -385,6 +402,7 @@
       PERMISSION_ATTR_ID = #{permissionAttrId,jdbcType=INTEGER},
       DEVICE_TYPE = #{deviceType,jdbcType=INTEGER},
       MANUFACTURER_ID = #{manufacturerId,jdbcType=INTEGER},
+      NODE_ID = #{nodeId,jdbcType=INTEGER},
       R_INT1 = #{rInt1,jdbcType=INTEGER},
       R_INT2 = #{rInt2,jdbcType=INTEGER},
       NUM1 = #{num1,jdbcType=DECIMAL},
@@ -398,7 +416,8 @@
   
   <sql id="Base_Column_List_WithLable" >
     R.ID, R.NAME, R.TYPE_ID, R.STATUS, R.CREATE_DATE, R.CREATE_USER, R.MAC, R.BUILDING_ID, R.FLOOR, R.PASSWORD, 
-    R.SEQUENCE, R.SHARE_ENABLE, R.R_INT1, R.R_INT2, R.NUM1, R.NUM2, R.VC1, R.VC2, R.CHR1, R.CHR2 
+    R.SEQUENCE, R.SHARE_ENABLE, R.R_INT1, R.R_INT2, R.NUM1, R.NUM2, R.VC1, R.VC2, R.CHR1, R.CHR2, 
+    R.NODE_PATH, R.IS_VIRTUAL_RESOURCE, R.PERMISSION_ATTR_ID, R.DEVICE_TYPE, R.MANUFACTURER_ID,R.NODE_ID
   </sql>
   
   <select id="selectSharableResourceById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
@@ -409,4 +428,33 @@
 	<![CDATA[ AND (CR.START_DATE IS NULL OR CR.START_DATE < now()) AND (CR.END_DATE IS NULL OR CR.END_DATE > now()) ]]> 
 	AND CR.CUSTOMER_ID = #{customerId,jdbcType=BIGINT}
   </select>
+  
+  <select id="selectValidPubResByBuildingId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from RESOURCE 
+    where STATUS = 'Y' and BUILDING_ID = #{buildingId,jdbcType=INTEGER}
+  </select>
+  
+  <select id="queryPrivateResByBIdAndCusId" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List_WithLable" /> 
+    FROM RESOURCE R, CUSTOMER_RESOURCE_REL CR 
+	WHERE CR.RESOURCE_ID=R.ID AND R.STATUS='Y' 
+	<![CDATA[ AND (CR.START_DATE IS NULL OR CR.START_DATE < now()) AND (CR.END_DATE IS NULL OR CR.END_DATE > now()) ]]> 
+	AND CR.CUSTOMER_ID = #{customerId,jdbcType=BIGINT}
+	AND R.BUILDING_ID = #{buildingId,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectBasicResByNodeIdList" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from RESOURCE 
+    where PERMISSION_ATTR_ID = 1 
+    and NODE_ID in 
+   	<foreach item="item" index="index" collection="nodeIds" open="(" separator="," close=")">
+   		#{item,jdbcType=INTEGER}
+   	</foreach>
+  </select>
+  
 </mapper>

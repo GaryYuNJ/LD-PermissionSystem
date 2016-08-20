@@ -46,6 +46,36 @@ public class CustomerFacadeImpl implements CustomerFacade {
 	ResourceModelConverter resourceModelConverter;
 	@Resource
 	CusResourceRelModelConverter cusResourceRelModelConverter;
+	
+	
+	/*
+		获取building里的公共资源
+	 */
+	@Override
+	public List<ResourceData> queryPubResByBuildingId(Integer buildingId) {
+
+		List<ResourceModel> rModels = iResourceService.selectValidPubResByBuildingId(buildingId);
+		
+		return resourceModelConverter.processList(rModels);
+	}
+	
+	/*
+	获取building里用户有权限设备
+	 */
+	@Override
+	public List<ResourceData> queryPrivateResByBIdAndMobile(Integer buildingId,
+			String mobile) {
+		
+		Long customerId = iCustomerSevice.getCustomerIdByMobile(mobile);
+		if(null == customerId){ 
+			return null;
+		}
+		List<ResourceModel> rModels = iResourceService.queryPrivateResByBIdAndCusId(buildingId,customerId);
+		
+		return resourceModelConverter.processList(rModels);
+	}
+
+
 
 	//获取用户可分享权限的资源列表
 	/*
@@ -106,10 +136,8 @@ public class CustomerFacadeImpl implements CustomerFacade {
 					}
 					//非公共资源，继续验证权限
 					if(publicFlag == 0){
-						CusResourceRelModel cusRRModel = new CusResourceRelModel();
-						cusRRModel.setCustomerId(customerId);
-						cusRRModel.setResourceId(rModel.getId());
-						cusRRModel = iCusResourceRelService.queryModelByCidAndResId(cusRRModel);
+						
+						CusResourceRelModel cusRRModel = iCusResourceRelService.queryModelByCustomerIdAndResId(customerId,rModel.getId());
 						//没有资源与用户的绑定记录，需要验证用户组与资源的关系
 						if(null == cusRRModel){
 							CustomerModel customerModel = iCustomerSevice.simpleSelectWithGroupsById(customerId);
@@ -240,10 +268,7 @@ public class CustomerFacadeImpl implements CustomerFacade {
 								message = "E005"; //该设备权限不可分享
 							}else{
 								//toCId already have relationship with sourceKeyId?
-								CusResourceRelModel cusRRModel = new CusResourceRelModel();
-								cusRRModel.setCustomerId(toCustomerModel.getId());
-								cusRRModel.setResourceId(rModel.getId());
-								cusRRModel = iCusResourceRelService.queryModelByCidAndResId(cusRRModel);
+								CusResourceRelModel cusRRModel = iCusResourceRelService.queryModelByCustomerIdAndResId(toCustomerModel.getId(),rModel.getId());
 								//没有记录，直接创建
 								if(cusRRModel == null){
 									iCusResourceRelService.shareResource(fromCustomerModel.getId(),toCustomerModel.getId(),sourceKeyId,startDate, endDate);
@@ -310,5 +335,6 @@ public class CustomerFacadeImpl implements CustomerFacade {
 			ResourceModelConverter resourceModelConverter) {
 		this.resourceModelConverter = resourceModelConverter;
 	}
+
 
 }

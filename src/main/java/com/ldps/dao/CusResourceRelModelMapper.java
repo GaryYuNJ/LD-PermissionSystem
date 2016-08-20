@@ -17,4 +17,5 @@ public interface CusResourceRelModelMapper {
 
 	int deleteSharedResource(@Param("fromCustomerId")Long fromCustomerId, @Param("toCustomerId")Long toCustomerId, @Param("resourceId")Integer resourceId);
 
+	int updateByPrimaryKeySelective(CusResourceRelModel record);
 }

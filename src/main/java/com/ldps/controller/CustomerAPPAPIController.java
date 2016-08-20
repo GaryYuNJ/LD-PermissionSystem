@@ -31,12 +31,12 @@ public class CustomerAPPAPIController {
 	@RequestMapping(value="/permissionVerfy",method = { RequestMethod.GET,
 			RequestMethod.POST })
 	@ResponseBody
-	public String permissionVerfy(@RequestParam("cId")String cId,
+	public String permissionVerfy(@RequestParam("mobile")String mobile,
 			@RequestParam("resourceKeyId")String resourceKeyId,
 			Model model){
 		APIMessage apiMessage = new APIMessage();
 		
-		String result = customerFacade.verification(cId, resourceKeyId);
+		String result = customerFacade.verification(mobile, resourceKeyId);
 		
 		if("0".equals(result)){
 			apiMessage.setStatus(1);
@@ -47,6 +47,67 @@ public class CustomerAPPAPIController {
 		}
 		
 		return JSON.toJSONString(apiMessage);
+	}
+	
+	/*
+	获取building里的公共资源
+	 */
+	@RequestMapping(value="/queryPubResByBuildingId",method = { RequestMethod.GET,
+			RequestMethod.POST })
+	@ResponseBody
+	public String queryPubResByBuildingId(@RequestParam("buildingId")Integer buildingId,
+			Model model){
+		
+		APIMessage apiMessage = new APIMessage();
+		List<ResourceData> rDatas = null;
+		
+		try{
+			rDatas = customerFacade.queryPubResByBuildingId(buildingId);
+		}catch(Exception e){
+			
+			apiMessage.setStatus(-1);
+			apiMessage.setMessage("系统异常");
+		}
+		if(null== rDatas || rDatas.size() == 0){
+			apiMessage.setStatus(0);
+			apiMessage.setMessage("没有公共资源数据");
+		}else{
+			apiMessage.setStatus(1);
+			apiMessage.setMessage("");
+			apiMessage.setContent(rDatas);
+		}
+		
+		return JSON.toJSONString(apiMessage);
+	}
+	
+	/*
+	获取building里用户有权限设备
+	 */
+	@RequestMapping(value="/queryPrivateResByBIdAndMobile",method = { RequestMethod.GET,
+			RequestMethod.POST })
+	@ResponseBody
+	public String queryPubResByBuildingId(@RequestParam("buildingId")Integer buildingId,
+			@RequestParam("mobile")String mobile, Model model){
+		
+		APIMessage apiMessage = new APIMessage();
+		List<ResourceData> rDatas = null;
+		
+		try{
+			rDatas = customerFacade.queryPrivateResByBIdAndMobile(buildingId, mobile);
+		}catch(Exception e){
+			apiMessage.setStatus(-1);
+			apiMessage.setMessage("系统异常");
+		}
+		if(null== rDatas || rDatas.size() == 0){
+			apiMessage.setStatus(0);
+			apiMessage.setMessage("没有资源数据");
+		}else{
+			apiMessage.setStatus(1);
+			apiMessage.setMessage("");
+			apiMessage.setContent(rDatas);
+		}
+		
+		return JSON.toJSONString(rDatas);
 	}
 	
 	//查询用户可分享使用权限的资源
