@@ -14,13 +14,19 @@ public interface CustomerModelMapper {
     CustomerModel simpleSelectByCID(String cid);
     
     CustomerModel simpleSelectWithGroupsByCID(String cid);
-
+    
+    CustomerModel simpleSelectWithGroupsById(Long customerId);
+    
     int updateByPrimaryKeySelective(CustomerModel record);
 
     int updateByPrimaryKey(CustomerModel record);
     
     int deleteByCID(String cid);
     
-    int updateByCIDSelective(CustomerModel record);  
+    int updateByCIDSelective(CustomerModel record);
+
+	Long queryIdByMobile(String mobile);
+
+	CustomerModel simpleSelectByMobile(String mobile);  
 
 }

@@ -2,6 +2,8 @@ package com.ldps.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.ldps.model.CusResourceRelModel;
 
 public interface CusResourceRelModelMapper {
@@ -9,7 +11,11 @@ public interface CusResourceRelModelMapper {
 
     int insertSelective(CusResourceRelModel record);
     
-    CusResourceRelModel selectByCidAndResourceId(CusResourceRelModel record);
+    CusResourceRelModel selectByCusIdAndResourceId(CusResourceRelModel record);
     
-	List<CusResourceRelModel> selectByShareCustomerId(String sharedUser);
+	List<CusResourceRelModel> selectByShareCustomerId(Long createUser);
+
+	int deleteSharedResource(@Param("fromCustomerId")Long fromCustomerId, @Param("toCustomerId")Long toCustomerId, @Param("resourceId")Integer resourceId);
+
+	int updateByPrimaryKeySelective(CusResourceRelModel record);
 }

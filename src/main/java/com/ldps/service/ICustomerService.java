@@ -26,6 +26,12 @@ public interface ICustomerService {
 	/*
 		不包含公共资源，不包含用户组授权，只针对用户与资源的可用关系
 	*/
-	List<ResourceModel> querySharableResource(String cid);
+	List<ResourceModel> querySharableResource(Long customerId);
+	
+	Long getCustomerIdByMobile(String mobile);
+
+	CustomerModel simpleSelectWithGroupsById(Long customerId);
+
+	CustomerModel getCustomerModelByMobile(String mobile);
 	 
 }

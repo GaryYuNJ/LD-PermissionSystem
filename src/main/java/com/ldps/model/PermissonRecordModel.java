@@ -9,13 +9,13 @@ public class PermissonRecordModel {
 
     private String resourceName;
 
-    private String cid;
+    private Long customerId;
 
     private Integer actionType;
 
     private Date createDate;
 
-    private String createUser;
+    private Long createUser;
 
     public Integer getObjectType() {
         return objectType;
@@ -41,12 +41,12 @@ public class PermissonRecordModel {
         this.resourceName = resourceName == null ? null : resourceName.trim();
     }
 
-    public String getCid() {
-        return cid;
+    public Long getCustomerId() {
+        return customerId;
     }
 
-    public void setCid(String cid) {
-        this.cid = cid == null ? null : cid.trim();
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
     }
 
     public Integer getActionType() {
@@ -65,11 +65,11 @@ public class PermissonRecordModel {
         this.createDate = createDate;
     }
 
-    public String getCreateUser() {
+    public Long getCreateUser() {
         return createUser;
     }
 
-    public void setCreateUser(String createUser) {
-        this.createUser = createUser == null ? null : createUser.trim();
+    public void setCreateUser(Long createUser) {
+        this.createUser = createUser;
     }
 }

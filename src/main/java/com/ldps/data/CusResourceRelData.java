@@ -3,7 +3,7 @@ package com.ldps.data;
 import java.util.Date;
 
 public class CusResourceRelData {
-    private String cid;
+    private Long customerId;
 
     private Integer resourceId;
 
@@ -11,11 +11,9 @@ public class CusResourceRelData {
 
     private String fromShared;
 
-    private String sharedUser;
-
     private Date createDate;
 
-    private Integer createUser;
+    private Long createUser;
     
     private ResourceData resourceData;
     
@@ -47,15 +45,16 @@ public class CusResourceRelData {
 		this.resourceData = resourceData;
 	}
 
-	public String getCid() {
-        return cid;
-    }
 
-    public void setCid(String cid) {
-        this.cid = cid == null ? null : cid.trim();
-    }
+    public Long getCustomerId() {
+		return customerId;
+	}
 
-    public Integer getResourceId() {
+	public void setCustomerId(Long customerId) {
+		this.customerId = customerId;
+	}
+
+	public Integer getResourceId() {
         return resourceId;
     }
 
@@ -79,14 +78,6 @@ public class CusResourceRelData {
         this.fromShared = fromShared == null ? null : fromShared.trim();
     }
 
-    public String getSharedUser() {
-        return sharedUser;
-    }
-
-    public void setSharedUser(String sharedUser) {
-        this.sharedUser = sharedUser == null ? null : sharedUser.trim();
-    }
-
     public Date getCreateDate() {
         return createDate;
     }
@@ -95,11 +86,12 @@ public class CusResourceRelData {
         this.createDate = createDate;
     }
 
-    public Integer getCreateUser() {
-        return createUser;
-    }
+	public Long getCreateUser() {
+		return createUser;
+	}
 
-    public void setCreateUser(Integer createUser) {
-        this.createUser = createUser;
-    }
+	public void setCreateUser(Long createUser) {
+		this.createUser = createUser;
+	}
+
 }

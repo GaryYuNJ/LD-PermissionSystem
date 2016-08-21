@@ -33,6 +33,20 @@ public class ResourceData {
 
     private String shareEnable;
 
+    private String nodePath;
+
+    private String isVirtualResource;
+
+    private Integer permissionAttrId;
+
+    private Integer deviceType;
+
+    private Integer manufacturerId;
+    
+    private Integer nodeId;
+
+    private Integer nodeName;
+    
     private Integer rInt1;
 
     private Integer rInt2;
@@ -51,7 +65,64 @@ public class ResourceData {
     
     private List<ResourceGroupData> resourceGroups;  
     
-    public String getTypeName() {
+    
+    public Integer getNodeId() {
+		return nodeId;
+	}
+
+	public void setNodeId(Integer nodeId) {
+		this.nodeId = nodeId;
+	}
+
+	public Integer getNodeName() {
+		return nodeName;
+	}
+
+	public void setNodeName(Integer nodeName) {
+		this.nodeName = nodeName;
+	}
+
+	public String getNodePath() {
+		return nodePath;
+	}
+
+	public void setNodePath(String nodePath) {
+		this.nodePath = nodePath;
+	}
+
+	public String getIsVirtualResource() {
+		return isVirtualResource;
+	}
+
+	public void setIsVirtualResource(String isVirtualResource) {
+		this.isVirtualResource = isVirtualResource;
+	}
+
+	public Integer getPermissionAttrId() {
+		return permissionAttrId;
+	}
+
+	public void setPermissionAttrId(Integer permissionAttrId) {
+		this.permissionAttrId = permissionAttrId;
+	}
+
+	public Integer getDeviceType() {
+		return deviceType;
+	}
+
+	public void setDeviceType(Integer deviceType) {
+		this.deviceType = deviceType;
+	}
+
+	public Integer getManufacturerId() {
+		return manufacturerId;
+	}
+
+	public void setManufacturerId(Integer manufacturerId) {
+		this.manufacturerId = manufacturerId;
+	}
+
+	public String getTypeName() {
 		return typeName;
 	}
 

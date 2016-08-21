@@ -88,6 +88,12 @@ public class ResourceModelConverter {
 			}
 			data.setVc1(source.getVc1());
 			data.setVc2(source.getVc2());		
+			
+		    data.setNodePath(source.getNodePath());
+		    data.setIsVirtualResource(source.getIsVirtualResource());
+		    data.setPermissionAttrId(source.getPermissionAttrId());
+		    data.setDeviceType(source.getDeviceType());
+		    data.setManufacturerId(source.getManufacturerId());
 		}
 		
 		

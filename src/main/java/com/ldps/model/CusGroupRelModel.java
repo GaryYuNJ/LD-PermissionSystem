@@ -5,7 +5,7 @@ import java.util.Date;
 public class CusGroupRelModel {
     private Integer cgroupId;
 
-    private String cid;
+    private Long customerId;
 
     private Date createDate;
 
@@ -19,12 +19,12 @@ public class CusGroupRelModel {
         this.cgroupId = cgroupId;
     }
 
-    public String getCid() {
-        return cid;
+    public Long getCustomerId() {
+        return customerId;
     }
 
-    public void setCid(String cid) {
-        this.cid = cid == null ? null : cid.trim();
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
     }
 
     public Date getCreateDate() {

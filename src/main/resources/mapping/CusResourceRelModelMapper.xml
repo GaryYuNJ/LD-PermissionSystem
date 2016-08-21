@@ -8,19 +8,18 @@
   	readOnly="true" >
   </cache>
   <resultMap id="BaseResultMap" type="com.ldps.model.CusResourceRelModel" >
-    <result column="CID" property="cid" jdbcType="VARCHAR" />
+    <result column="CUSTOMER_ID" property="customerId" jdbcType="BIGINT" />
     <result column="RESOURCE_ID" property="resourceId" jdbcType="INTEGER" />
     <result column="ENABLE" property="enable" jdbcType="CHAR" />
     <result column="FROM_SHARED" property="fromShared" jdbcType="CHAR" />
-    <result column="SHARED_USER" property="sharedUser" jdbcType="VARCHAR" />
-    <result column="CREATE_DATE" property="createDate" jdbcType="DATE" />
-    <result column="CREATE_USER" property="createUser" jdbcType="INTEGER" />
     <result column="START_DATE" property="startDate" jdbcType="DATE" />
     <result column="END_DATE" property="endDate" jdbcType="DATE" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="DATE" />
+    <result column="CREATE_USER" property="createUser" jdbcType="BIGINT" />
   </resultMap>
   
   <resultMap id="ResultWithResourceModelMap" type="com.ldps.model.CusResourceRelModel" >
-    <result column="CID" property="cid" jdbcType="VARCHAR" />
+    <result column="CUSTOMER_ID" property="customerId" jdbcType="BIGINT" />
     <result column="RESOURCE_ID" property="resourceId" jdbcType="INTEGER" />
     <result column="ENABLE" property="enable" jdbcType="CHAR" />
     <result column="FROM_SHARED" property="fromShared" jdbcType="CHAR" />
@@ -55,29 +54,30 @@
   </resultMap>
   
   <sql id="Column_WithResourceModel_List" >
-    CR.CID, CR.RESOURCE_ID, CR.ENABLE, CR.FROM_SHARED, CR.SHARED_USER, CR.CREATE_DATE, 
+    CR.CUSTOMER_ID, CR.RESOURCE_ID, CR.ENABLE, CR.FROM_SHARED, CR.SHARED_USER, CR.CREATE_DATE, 
     CR.CREATE_USER,CR.START_DATE,CR.END_DATE,
     R.ID, R.NAME, R.TYPE_ID, R.STATUS, R.CREATE_DATE, R.CREATE_USER, R.MAC, R.BUILDING_ID, R.FLOOR, R.PASSWORD, 
     R.SEQUENCE, R.SHARE_ENABLE, R.R_INT1, R.R_INT2, R.NUM1, R.NUM2, R.VC1, R.VC2, R.CHR1, R.CHR2
   </sql>
   
     <sql id="Base_Column_List" >
-    CID, RESOURCE_ID, ENABLE, FROM_SHARED, SHARED_USER, CREATE_DATE, CREATE_USER, START_DATE, END_DATE
+    CUSTOMER_ID, RESOURCE_ID, ENABLE, FROM_SHARED, SHARED_USER, CREATE_DATE, CREATE_USER, START_DATE, END_DATE
   </sql>
   
   <insert id="insert" parameterType="com.ldps.model.CusResourceRelModel" >
-    insert into CUSTOMER_RESOURCE_REL (CID, RESOURCE_ID, ENABLE, 
-      FROM_SHARED, SHARED_USER, CREATE_DATE, 
-      CREATE_USER, START_DATE, END_DATE)
-    values (#{cid,jdbcType=VARCHAR}, #{resourceId,jdbcType=INTEGER}, #{enable,jdbcType=CHAR}, 
-      #{fromShared,jdbcType=CHAR}, #{sharedUser,jdbcType=VARCHAR}, #{createDate,jdbcType=DATE}, 
-      #{createUser,jdbcType=INTEGER},#{startDate,jdbcType=DATE},#{endDate,jdbcType=DATE})
+    insert into CUSTOMER_RESOURCE_REL (CUSTOMER_ID, RESOURCE_ID, ENABLE, 
+      FROM_SHARED, START_DATE, END_DATE, 
+      CREATE_DATE, CREATE_USER)
+    values (#{customerId,jdbcType=BIGINT}, #{resourceId,jdbcType=INTEGER}, #{enable,jdbcType=CHAR}, 
+      #{fromShared,jdbcType=CHAR}, #{startDate,jdbcType=DATE}, #{endDate,jdbcType=DATE}, 
+      #{createDate,jdbcType=DATE}, #{createUser,jdbcType=BIGINT})
   </insert>
-  <insert id="insertSelective" parameterType="com.ldps.model.CusResourceRelModel" >
+  
+   <insert id="insertSelective" parameterType="com.ldps.model.CusResourceRelModel" >
     insert into CUSTOMER_RESOURCE_REL
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="cid != null" >
-        CID,
+      <if test="customerId != null" >
+        CUSTOMER_ID,
       </if>
       <if test="resourceId != null" >
         RESOURCE_ID,
@@ -88,8 +88,11 @@
       <if test="fromShared != null" >
         FROM_SHARED,
       </if>
-      <if test="sharedUser != null" >
-        SHARED_USER,
+      <if test="startDate != null" >
+        START_DATE,
+      </if>
+      <if test="endDate != null" >
+        END_DATE,
       </if>
       <if test="createDate != null" >
         CREATE_DATE,
@@ -97,16 +100,10 @@
       <if test="createUser != null" >
         CREATE_USER,
       </if>
-      <if test="startDate != null" >
-        START_DATE,
-      </if>
-      <if test="endDate != null" >
-        END_DATE,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="cid != null" >
-        #{cid,jdbcType=VARCHAR},
+      <if test="customerId != null" >
+        #{customerId,jdbcType=BIGINT},
       </if>
       <if test="resourceId != null" >
         #{resourceId,jdbcType=INTEGER},
@@ -117,29 +114,57 @@
       <if test="fromShared != null" >
         #{fromShared,jdbcType=CHAR},
       </if>
-      <if test="sharedUser != null" >
-        #{sharedUser,jdbcType=VARCHAR},
+      <if test="startDate != null" >
+        #{startDate,jdbcType=DATE},
+      </if>
+      <if test="endDate != null" >
+        #{endDate,jdbcType=DATE},
       </if>
       <if test="createDate != null" >
         #{createDate,jdbcType=DATE},
       </if>
       <if test="createUser != null" >
-        #{createUser,jdbcType=INTEGER},
-      </if>
-      <if test="startDate != null" >
-        #{startDate,jdbcType=INTEGER},
-      </if>
-      <if test="endDate != null" >
-        #{endDate,jdbcType=INTEGER},
+        #{createUser,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>
   
-  <select id="selectByCidAndResourceId" resultMap="BaseResultMap" parameterType="com.ldps.model.CusResourceRelModel" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.ldps.model.CusResourceRelModel" >
+    update CUSTOMER_RESOURCE_REL
+    <set>
+      <if test="customerId != null" >
+        CUSTOMER_ID = #{customerId,jdbcType=BIGINT},
+      </if>
+      <if test="resourceId != null" >
+        RESOURCE_ID = #{resourceId,jdbcType=INTEGER},
+      </if>
+      <if test="enable != null" >
+        ENABLE = #{enable,jdbcType=CHAR},
+      </if>
+      <if test="fromShared != null" >
+        FROM_SHARED = #{fromShared,jdbcType=CHAR},
+      </if>
+      <if test="startDate != null" >
+        START_DATE = #{startDate,jdbcType=DATE},
+      </if>
+      <if test="endDate != null" >
+        END_DATE = #{endDate,jdbcType=DATE},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=DATE},
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER = #{createUser,jdbcType=BIGINT},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="selectByCusIdAndResourceId" resultMap="BaseResultMap" parameterType="com.ldps.model.CusResourceRelModel" >
     select 
     <include refid="Base_Column_List" />
     from CUSTOMER_RESOURCE_REL
-    where CID = #{cid,jdbcType=VARCHAR}
+    where CUSTOMER_ID = #{customerId,jdbcType=BIGINT}
    	and RESOURCE_ID=#{resourceId,jdbcType=INTEGER}
   </select>
   
@@ -147,7 +172,15 @@
     select 
     <include refid="Column_WithResourceModel_List" />
     from RESOURCE R, CUSTOMER_RESOURCE_REL CR
-    where SHARED_USER=#{sharedUser,jdbcType=VARCHAR}
+    where FROM_SHARED = 'Y' and CREATE_USER=#{createUser,jdbcType=BIGINT}
   </select>
+  
+  <delete id="deleteSharedResource" >
+    delete from CUSTOMER_RESOURCE_REL 
+    where RESOURCE_ID=#{resourceId,jdbcType=INTEGER}  
+    AND FROM_SHARED = 'Y' 
+    ADN CUSTOMER_ID =#{toCustomerId,jdbcType=BIGINT} 
+    AND SHARED_USER =#{fromCustomerId,jdbcType=BIGINT}
+  </delete>
   
 </mapper>

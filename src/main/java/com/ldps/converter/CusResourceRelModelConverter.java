@@ -34,14 +34,13 @@ public class CusResourceRelModelConverter {
 		}
 		
 		if(null != source){
-			data.setCid(source.getCid());
+			data.setCustomerId(source.getCustomerId());
 			data.setCreateDate(source.getCreateDate());
 			data.setCreateUser(source.getCreateUser());
 			data.setEnable(source.getEnable());
 			data.setFromShared(source.getFromShared());
 			data.setResourceData(resourceModelConverter.process(source.getResourceModel(), null));
 			data.setResourceId(source.getResourceId());
-			data.setSharedUser(source.getSharedUser());
 			data.setStartDate(source.getStartDate());
 			data.setEndDate(source.getEndDate());
 		}

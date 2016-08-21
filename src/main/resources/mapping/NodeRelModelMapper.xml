@@ -7,6 +7,7 @@
   	size="1024" 
   	readOnly="true" >
   </cache>
+  
   <resultMap id="BaseResultMap" type="com.ldps.model.NodeRelModel" >
     <result column="ID_PARENT" property="idParent" jdbcType="INTEGER" />
     <result column="ID_CHILD" property="idChild" jdbcType="INTEGER" />
@@ -14,12 +15,14 @@
     <result column="VC1" property="vc1" jdbcType="VARCHAR" />
     <result column="CHR1" property="chr1" jdbcType="CHAR" />
   </resultMap>
+  
   <insert id="insert" parameterType="com.ldps.model.NodeRelModel" >
     insert into NODE_REL (ID_PARENT, ID_CHILD, N_INT1, 
       VC1, CHR1)
     values (#{idParent,jdbcType=INTEGER}, #{idChild,jdbcType=INTEGER}, #{nInt1,jdbcType=INTEGER}, 
       #{vc1,jdbcType=VARCHAR}, #{chr1,jdbcType=CHAR})
   </insert>
+  
   <insert id="insertSelective" parameterType="com.ldps.model.NodeRelModel" >
     insert into NODE_REL
     <trim prefix="(" suffix=")" suffixOverrides="," >
@@ -57,4 +60,29 @@
       </if>
     </trim>
   </insert>
+  
+  <sql id="Base_Column_List" >
+    ID_PARENT, ID_CHILD, N_INT1, VC1, CHR1
+  </sql>
+  
+  <sql id="Base_Column_List_withLabel" >
+    N.ID_PARENT, N.ID_CHILD, N.N_INT1, N.VC1, N.CHR1 
+  </sql>
+  
+  
+  <select id="selectParentNodeIdbyChildNodeId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from NODE_REL 
+    where ID_CHILD = #{idChild,jdbcType=INTEGER}
+  </select>
+    
+  <select id="selectParentNodeIdbyResourceId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List_withLabel" />
+    from NODE_REL N, RESOURCE R
+    where R.NODE_ID = N.ID_CHILD 
+    AND R.ID = #{resourceId,jdbcType=INTEGER}
+  </select>
+  
 </mapper>

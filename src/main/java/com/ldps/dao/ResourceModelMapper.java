@@ -2,6 +2,8 @@ package com.ldps.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.ldps.model.ResourceModel;
 
 public interface ResourceModelMapper {
@@ -21,6 +23,13 @@ public interface ResourceModelMapper {
     
     ResourceModel  selectWithGroupsByMAC(String mac);
     
-    List<ResourceModel>  selectSharableResourceByCID(String cid);
+    List<ResourceModel>  selectSharableResourceById(Long customerId);
+
+	List<ResourceModel> selectValidPubResByBuildingId(Integer buildingId);
+
+	List<ResourceModel> queryPrivateResByBIdAndCusId(@Param("buildingId") Integer buildingId,
+			@Param("customerId") Long customerId);
+
+	List<ResourceModel> selectBasicResByNodeIdList(@Param("nodeIds")List<Integer> nodeIds);
     
 }
