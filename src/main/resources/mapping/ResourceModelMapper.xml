@@ -457,4 +457,10 @@
    	</foreach>
   </select>
   
+  <select id="selectIdByMac" parameterType="java.lang.String" >
+    select 
+    ID 
+    from RESOURCE
+    where MAC = #{mac,jdbcType=VARCHAR}
+  </select>
 </mapper>

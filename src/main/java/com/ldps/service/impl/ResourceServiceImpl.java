@@ -74,5 +74,11 @@ public class ResourceServiceImpl implements IResourceService {
 	public List<ResourceModel> queryBasicResByNodeIdList(List<Integer> nodeIds) {
 		return resourceDao.selectBasicResByNodeIdList(nodeIds);
 	}
+
+	@Override
+	public Integer queryResourceIdByMAC(String mac) {
+		// TODO Auto-generated method stub
+		return resourceDao.selectIdByMac(mac);
+	}
 	
 }

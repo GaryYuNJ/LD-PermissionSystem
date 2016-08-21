@@ -115,8 +115,9 @@ public class CusResourceRelServiceImpl implements ICusResourceRelService {
 	
 	//联合授权-向用户授权指定的资源以及所有上层节点的所有基础资源
 	@Override
-	public void jointAuthorizeResPermission(Long customerId, Integer resourceId,
+	public int jointAuthorizeResPermission(Long customerId, Integer resourceId,
 			Date startDate, Date EndDate, String fromShared, Long createUser) {
+		int flag = 0;
 		//通过resourceId查找到直接对应的nodeId
 		ResourceModel rModel = iResourceService.queryModelById(resourceId);
 		//通过nodeId所有上层节点的nodeIdlist
@@ -134,9 +135,12 @@ public class CusResourceRelServiceImpl implements ICusResourceRelService {
 			try{
 				this.authorizeResPermission(customerId, rModel1.getId(), startDate, 
 						EndDate, fromShared, createUser);
+				flag = 1;
 			}catch(Exception e){
+				flag = -1;
 				e.printStackTrace();
 			}
 		}
+		return flag;
 	}
 }
