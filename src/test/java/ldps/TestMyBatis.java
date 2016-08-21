@@ -12,7 +12,7 @@ import com.alibaba.fastjson.JSON;
 import com.ldps.model.UserModel;
 import com.ldps.service.IUserService;
 
-@RunWith(SpringJUnit4ClassRunner.class)     //表示继承了SpringJUnit4ClassRunner类  
+@RunWith(SpringJUnit4ClassRunner.class)     //琛ㄧず缁ф壙浜哠pringJUnit4ClassRunner绫�  
 @ContextConfiguration(locations = {"classpath:spring-mybatis.xml"})  
    
 public class TestMyBatis {  
@@ -21,8 +21,9 @@ public class TestMyBatis {
     private IUserService userService = null;  
   
     @Test  
-    public void test1() {  
-        UserModel user = userService.getUserById(1);  
+    public void test1() { 
+        UserModel user = userService.getUserById(1); 
+        userService.getUserById(1); 
         logger.info(JSON.toJSONString(user));  
     }  
 }  

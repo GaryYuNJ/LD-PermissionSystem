@@ -25,7 +25,7 @@
     <result column="PERMISSION_ATTR_ID" property="permissionAttrId" jdbcType="INTEGER" />
     <result column="DEVICE_TYPE" property="deviceType" jdbcType="INTEGER" />
     <result column="MANUFACTURER_ID" property="manufacturerId" jdbcType="INTEGER" />
-    <result column="NODE_ID" property="nodeId" jdbcType=INTEGER />
+    <result column="NODE_ID" property="nodeId" jdbcType="INTEGER" />
     <result column="R_INT1" property="rInt1" jdbcType="INTEGER" />
     <result column="R_INT2" property="rInt2" jdbcType="INTEGER" />
     <result column="NUM1" property="num1" jdbcType="DECIMAL" />
@@ -54,7 +54,7 @@
     <result column="PERMISSION_ATTR_ID" property="permissionAttrId" jdbcType="INTEGER" />
     <result column="DEVICE_TYPE" property="deviceType" jdbcType="INTEGER" />
     <result column="MANUFACTURER_ID" property="manufacturerId" jdbcType="INTEGER" />
-    <result column="NODE_ID" property="nodeId" jdbcType=INTEGER />
+    <result column="NODE_ID" property="nodeId" jdbcType="INTEGER" />
     <result column="R_INT1" property="rInt1" jdbcType="INTEGER" />
     <result column="R_INT2" property="rInt2" jdbcType="INTEGER" />
     <result column="NUM1" property="num1" jdbcType="DECIMAL" />
