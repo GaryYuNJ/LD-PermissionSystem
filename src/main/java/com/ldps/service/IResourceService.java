@@ -11,6 +11,9 @@ public interface IResourceService {
 
 	//根据MAC查找资源(mac不为空时使用)
 	ResourceModel queryResourceByMAC(String mac);
+	
+	//根据MAC查找资源Id(mac不为空时使用)
+	Integer queryResourceIdByMAC(String mac);
 
 	ResourceModel queryModelById(Integer sourceId);
 

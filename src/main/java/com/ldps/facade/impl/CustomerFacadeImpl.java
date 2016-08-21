@@ -76,6 +76,47 @@ public class CustomerFacadeImpl implements CustomerFacade {
 	}
 
 
+	//连带资源授权接口(对一个资源授权，需要连带授权上层所有基础资源(要使用授权资源的前提资源)。
+	//by customerId、resourceId
+	@Override
+	public int jointAuthResPermissionByCusId(Long customerId,
+			Integer resourceId, Date startDate, Date endDate, Long createUserId) {
+		return iCusResourceRelService.jointAuthorizeResPermission(customerId, resourceId, startDate, 
+				endDate, "N", createUserId);
+	}
+
+	//连带资源授权接口(对一个资源授权，需要连带授权上层所有基础资源(要使用授权资源的前提资源)。
+	//by mobile、resourceKey
+	@Override
+	public int jointAuthResPermissionByMobile(String mobile,
+			String resourceKey, Date startDate, Date endDate, Long createUserId) {
+		Long customerId = iCustomerSevice.getCustomerIdByMobile(mobile);
+		Integer resourceId = iResourceService.queryResourceIdByMAC(resourceKey);
+		
+		return iCusResourceRelService.jointAuthorizeResPermission(customerId, resourceId, startDate, 
+				endDate, "N", createUserId);
+	}
+	
+	//单个资源授权接口.by customerId、resourceId
+	@Override
+	public int authResPermissionByCusId(Long customerId, Integer resourceId,
+			Date startDate, Date endDate, Long createUserId) {
+		return iCusResourceRelService.authorizeResPermission(customerId, resourceId, startDate, 
+				endDate, "N", createUserId);
+	}
+	
+	//单个资源授权接口
+	//by mobile、resourceKey
+	@Override
+	public int authResPermissionByMobile(String mobile, String resourceKey,
+			Date startDate, Date endDate, Long createUserId) {
+		Long customerId = iCustomerSevice.getCustomerIdByMobile(mobile);
+		Integer resourceId = iResourceService.queryResourceIdByMAC(resourceKey);
+		
+		return iCusResourceRelService.authorizeResPermission(customerId, resourceId, startDate, 
+				endDate, "N", createUserId);
+	}
+
 
 	//获取用户可分享权限的资源列表
 	/*

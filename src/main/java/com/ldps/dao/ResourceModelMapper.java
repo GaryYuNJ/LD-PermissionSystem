@@ -23,6 +23,8 @@ public interface ResourceModelMapper {
     
     ResourceModel  selectWithGroupsByMAC(String mac);
     
+    Integer selectIdByMac(String mac);
+    
     List<ResourceModel>  selectSharableResourceById(Long customerId);
 
 	List<ResourceModel> selectValidPubResByBuildingId(Integer buildingId);
