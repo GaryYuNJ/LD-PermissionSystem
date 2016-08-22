@@ -40,6 +40,11 @@ public interface IResourceService {
 	/*
 	根据节点ID list获取挂载的所有基础资源
 	 */
-	List<ResourceModel> queryBasicResByNodeIdList(List<Integer> nodeIds); 
+	List<ResourceModel> queryBasicResByNodeIdList(List<Integer> nodeIds);
+
+	int createResource(ResourceModel model);
+
+	int updateResource(ResourceModel model); 
 	 
+	int deleteResource(Integer primaryId);
 }

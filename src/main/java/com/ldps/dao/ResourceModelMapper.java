@@ -23,13 +23,13 @@ public interface ResourceModelMapper {
     
     ResourceModel  selectWithGroupsByMAC(String mac);
     
-    Integer selectIdByMac(String mac);
+    ResourceModel selectIdByMac(String mac);
     
     List<ResourceModel>  selectSharableResourceById(Long customerId);
 
 	List<ResourceModel> selectValidPubResByBuildingId(Integer buildingId);
 
-	List<ResourceModel> queryPrivateResByBIdAndCusId(@Param("buildingId") Integer buildingId,
+	List<ResourceModel> selectPrivateResByBIdAndCusId(@Param("buildingId") Integer buildingId,
 			@Param("customerId") Long customerId);
 
 	List<ResourceModel> selectBasicResByNodeIdList(@Param("nodeIds")List<Integer> nodeIds);

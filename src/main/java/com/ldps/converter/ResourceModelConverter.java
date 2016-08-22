@@ -1,5 +1,6 @@
 package com.ldps.converter;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,6 +59,10 @@ public class ResourceModelConverter {
 			data.setChr1(source.getChr1());
 			data.setChr2(source.getChr2());
 			data.setCreateDate(source.getCreateDate());
+			if(null != source.getCreateDate()){
+				SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				data.setCreateDateStr(sf.format(source.getCreateDate()));
+			}
 			data.setCreateUser(source.getCreateUser());
 			data.setFloor(source.getFloor());
 			data.setId(source.getId());

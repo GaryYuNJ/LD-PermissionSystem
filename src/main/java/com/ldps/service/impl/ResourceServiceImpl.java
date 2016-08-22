@@ -1,5 +1,6 @@
 package com.ldps.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -46,7 +47,7 @@ public class ResourceServiceImpl implements IResourceService {
 	@Override
 	public List<ResourceModel> queryPrivateResByBIdAndCusId(
 			Integer buildingId, Long customerId) {
-		return resourceDao.queryPrivateResByBIdAndCusId(buildingId,customerId);
+		return resourceDao.selectPrivateResByBIdAndCusId(buildingId,customerId);
 	}
 
 	/*
@@ -78,7 +79,32 @@ public class ResourceServiceImpl implements IResourceService {
 	@Override
 	public Integer queryResourceIdByMAC(String mac) {
 		// TODO Auto-generated method stub
-		return resourceDao.selectIdByMac(mac);
+		ResourceModel model = resourceDao.selectIdByMac(mac);
+		
+		if(null == model){
+			return null;
+		}else{
+			return model.getId();
+		}
 	}
 	
+	//新建资源
+	@Override
+	public int createResource(ResourceModel model) {
+		
+		return resourceDao.insertSelective(model);
+	}
+	
+	//更新资源
+	@Override
+	public int updateResource(ResourceModel model) {
+		
+		return resourceDao.updateByPrimaryKeySelective(model);
+	}
+
+	@Override
+	public int deleteResource(Integer primaryId) {
+
+		return resourceDao.deleteByPrimaryKey(primaryId);
+	}
 }

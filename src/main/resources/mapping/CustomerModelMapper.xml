@@ -95,6 +95,10 @@
     </collection>  
   </resultMap>
   
+  <resultMap id="IDResultMap" type="com.ldps.model.CustomerModel" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+  </resultMap>
+  
   <sql id="Base_Column_List" >
     ID, CID, MOBILE, NAME, PASSWORD, SEX, BIRTHDAY, ADDRESS, EMAIL, PIC_NAME, ID_TYPE, 
     ID_NO, MEMBER_ID, REFEREE, RELATION, CTYPE, CSTATUS, CCURJFYE, CHISJFYE, CTOTJFYE, 
@@ -158,7 +162,7 @@
     where MOBILE = #{mobile,jdbcType=VARCHAR}
   </select>
   
-   <select id="queryIdByMobile" parameterType="java.lang.String" >
+   <select id="queryIdByMobile" resultMap="IDResultMap" parameterType="java.lang.String" >
     select 
     ID 
     from CUSTOMER

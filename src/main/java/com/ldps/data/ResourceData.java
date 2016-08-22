@@ -17,6 +17,8 @@ public class ResourceData {
 
     private Date createDate;
     
+    private String createDateStr;
+    
     private Integer createUser;
 
     private String mac;
@@ -66,7 +68,15 @@ public class ResourceData {
     private List<ResourceGroupData> resourceGroups;  
     
     
-    public Integer getNodeId() {
+    public String getCreateDateStr() {
+		return createDateStr;
+	}
+
+	public void setCreateDateStr(String createDateStr) {
+		this.createDateStr = createDateStr;
+	}
+
+	public Integer getNodeId() {
 		return nodeId;
 	}
 

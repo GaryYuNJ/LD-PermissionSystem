@@ -82,7 +82,12 @@ public class CustomerServiceImpl implements ICustomerService {
 	@Override
 	public Long getCustomerIdByMobile(String mobile) {
 		// TODO Auto-generated method stub
-		return customerDao.queryIdByMobile(mobile);
+		CustomerModel model = customerDao.queryIdByMobile(mobile);
+		if(null == customerDao){
+			return null;
+		}else{
+			return model.getId();
+		}
 	}
 	
 	@Override

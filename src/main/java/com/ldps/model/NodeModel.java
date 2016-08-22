@@ -13,6 +13,8 @@ public class NodeModel {
 
     private String chr1;
 
+    private Integer parentId;
+
     public Integer getId() {
         return id;
     }
@@ -59,5 +61,13 @@ public class NodeModel {
 
     public void setChr1(String chr1) {
         this.chr1 = chr1 == null ? null : chr1.trim();
+    }
+
+    public Integer getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Integer parentId) {
+        this.parentId = parentId;
     }
 }
