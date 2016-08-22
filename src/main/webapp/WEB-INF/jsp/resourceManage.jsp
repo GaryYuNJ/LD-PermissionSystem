@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="/common/header.jsp"%>
 <%@ include file="/common/nav.jsp"%>
 <!-- Main bar -->
@@ -108,4 +109,44 @@
 	</div>
 </div>
 <%@ include file="/common/script.jsp"%>
+<script type="text/javascript">
+			$('#jstree_demo').jstree({
+				"core": {
+					"animation": 0,
+					"check_callback": true,
+					"themes": {
+						"stripes": true
+					},
+					'data': {
+						'url': "<c:url value="/manage/showNode.json" />",
+						'data': function(node) {
+							return {
+							};
+						}
+					}
+				},
+				"types": {
+					"#": {
+						"max_children": 1,
+						"max_depth": 4,
+						"valid_children": ["root"]
+					},
+					"root": {
+						"icon": "<c:url value="/js/themes/default/tree_icon.png" />",
+						"valid_children": ["default"]
+					},
+					"default": {
+						"valid_children": ["default", "file"]
+					},
+					"file": {
+						"icon": "glyphicon glyphicon-file",
+						"valid_children": []
+					}
+				},
+				"plugins": [
+					"contextmenu", "dnd", "search",
+					"state", "types", "wholerow"
+				]
+			});
+		</script>
 <%@ include file="/common/footer.html"%>

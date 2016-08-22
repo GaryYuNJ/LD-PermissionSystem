@@ -2,6 +2,8 @@ package com.ldps.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.ldps.model.NodeModel;
 
 public interface NodeModelMapper {
@@ -21,5 +23,5 @@ public interface NodeModelMapper {
   	List<NodeModel> selectNodeByGrade(Integer grade);
   	
   	//获取子节点
-  	List<NodeModel> selectChildNode(Integer nodeId,Integer grade);
+  	List<NodeModel> selectChildNode(@Param("nodeId")Integer nodeId,@Param("grade")Integer grade);
 }
