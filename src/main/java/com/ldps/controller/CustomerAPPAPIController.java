@@ -31,7 +31,7 @@ public class CustomerAPPAPIController {
 	private CustomerFacade customerFacade;
 
 	@RequestMapping(value="/permissionVerfy",method = { RequestMethod.GET,
-			RequestMethod.POST })
+			RequestMethod.POST },produces = "application/json; charset=utf-8")
 	@ResponseBody
 	public String permissionVerfy(@RequestParam("mobile")String mobile,
 			@RequestParam("resourceKeyId")String resourceKeyId,
@@ -55,7 +55,7 @@ public class CustomerAPPAPIController {
 	获取building里的公共资源
 	 */
 	@RequestMapping(value="/queryPubResByBuildingId",method = { RequestMethod.GET,
-			RequestMethod.POST })
+			RequestMethod.POST },produces = "application/json; charset=utf-8")
 	@ResponseBody
 	public String queryPubResByBuildingId(@RequestParam("buildingId")Integer buildingId,
 			Model model){
@@ -65,18 +65,19 @@ public class CustomerAPPAPIController {
 		
 		try{
 			rDatas = customerFacade.queryPubResByBuildingId(buildingId);
+			
+			if(null== rDatas || rDatas.size() == 0){
+				apiMessage.setStatus(0);
+				apiMessage.setMessage("没有公共资源数据");
+			}else{
+				apiMessage.setStatus(1);
+				apiMessage.setMessage("");
+				apiMessage.setContent(rDatas);
+			}
 		}catch(Exception e){
 			
 			apiMessage.setStatus(-1);
 			apiMessage.setMessage("系统异常");
-		}
-		if(null== rDatas || rDatas.size() == 0){
-			apiMessage.setStatus(0);
-			apiMessage.setMessage("没有公共资源数据");
-		}else{
-			apiMessage.setStatus(1);
-			apiMessage.setMessage("");
-			apiMessage.setContent(rDatas);
 		}
 		
 		return JSON.toJSONString(apiMessage);
@@ -86,7 +87,7 @@ public class CustomerAPPAPIController {
 	获取building里用户有权限设备(不含公共资源)
 	 */
 	@RequestMapping(value="/queryPrivateResByBIdAndMobile",method = { RequestMethod.GET,
-			RequestMethod.POST })
+			RequestMethod.POST },produces = "application/json; charset=utf-8")
 	@ResponseBody
 	public String queryPubResByBuildingId(@RequestParam("buildingId")Integer buildingId,
 			@RequestParam("mobile")String mobile, Model model){
@@ -96,20 +97,20 @@ public class CustomerAPPAPIController {
 		
 		try{
 			rDatas = customerFacade.queryPrivateResByBIdAndMobile(buildingId, mobile);
+			
+			if(null== rDatas || rDatas.size() == 0){
+				apiMessage.setStatus(0);
+				apiMessage.setMessage("没有资源数据");
+			}else{
+				apiMessage.setStatus(1);
+				apiMessage.setMessage("");
+				apiMessage.setContent(rDatas);
+			}
 		}catch(Exception e){
 			apiMessage.setStatus(-1);
 			apiMessage.setMessage("系统异常");
 		}
-		if(null== rDatas || rDatas.size() == 0){
-			apiMessage.setStatus(0);
-			apiMessage.setMessage("没有资源数据");
-		}else{
-			apiMessage.setStatus(1);
-			apiMessage.setMessage("");
-			apiMessage.setContent(rDatas);
-		}
-		
-		return JSON.toJSONString(rDatas);
+		return JSON.toJSONString(apiMessage);
 	}
 
 	//连带资源授权接口(对一个资源授权，需要连带授权上层所有基础资源(要使用授权资源的前提资源)。
@@ -307,7 +308,7 @@ public class CustomerAPPAPIController {
 	
 	//用户分享资源给其他人的权限
 	@RequestMapping(value="/shareResource",method = { RequestMethod.GET,
-			RequestMethod.POST })
+			RequestMethod.POST },produces = "application/json; charset=utf-8")
 	@ResponseBody
 	public String shareResource(@RequestParam("fromCId")String fromCId,
 			@RequestParam("toCId")String toCId, @RequestParam("sourceKeyId")Integer sourceKeyId,
@@ -330,7 +331,7 @@ public class CustomerAPPAPIController {
 	
 	//用户删除分享给其他人的权限
 	@RequestMapping(value="/removeSharedResource",method = { RequestMethod.GET,
-			RequestMethod.POST })
+			RequestMethod.POST },produces = "application/json; charset=utf-8")
 	@ResponseBody
 	public String removeSharedResource(@RequestParam("fromCId")String fromCId,
 			@RequestParam("toCId")String toCId,@RequestParam("sourceKeyId")Integer sourceKeyId,

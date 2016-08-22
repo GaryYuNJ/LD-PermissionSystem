@@ -25,7 +25,7 @@ public interface CustomerModelMapper {
     
     int updateByCIDSelective(CustomerModel record);
 
-	Long queryIdByMobile(String mobile);
+    CustomerModel queryIdByMobile(String mobile);
 
 	CustomerModel simpleSelectByMobile(String mobile);  
 

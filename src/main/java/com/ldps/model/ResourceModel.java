@@ -18,7 +18,7 @@ public class ResourceModel {
 
     private String mac;
 
-    private Integer buildingId;
+    private Integer buildingId; //设备类型资源的楼栋信息id
 
     private Integer floor;
 
@@ -26,19 +26,19 @@ public class ResourceModel {
 
     private Integer sequence;
 
-    private String shareEnable;
+    private String shareEnable; //资源是否可被用户分享权限
 
-    private String nodePath;
+    private String nodePath; //资源的节点路径
 
-    private String isVirtualResource;
+    private String isVirtualResource; //Y：虚拟资源、N：真实设备资源
 
-    private Integer permissionAttrId;
+    private Integer permissionAttrId; //资源权限属性：1：公共资源；2：基础资源(授权时用：针对下层节点的资源来说，如果要使用下层节点，必须使用的上层节点)；3：私有资源；
 
-    private Integer deviceType;
+    private Integer deviceType; //设备类型：1. 通行、2. 家居、3.其它
 
-    private Integer manufacturerId;
+    private Integer manufacturerId; //设备生产厂家，需要传给APP' ,
     
-    private Integer nodeId;
+    private Integer nodeId; //资源直接隶属的节点
 
     private Integer rInt1;
 

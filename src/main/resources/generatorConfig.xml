@@ -27,7 +27,7 @@
 		<javaClientGenerator type="XMLMAPPER" targetPackage="com.ldps.dao1" targetProject="LD-PermissionSystem\src\main\java"> 
 			<property name="enableSubPackages" value="true"/> 
 		</javaClientGenerator> 
-		<table tableName="PERMISSION_RECORD" domainObjectName="PERMISSION_RECORDModel" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+		<table tableName="NODE" domainObjectName="NODEModel" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
 		<!-- 
 		<table tableName="BACKEND_USER" domainObjectName="UserModel" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
 		<table tableName="CUSTOMER" domainObjectName="CustomerModel" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
