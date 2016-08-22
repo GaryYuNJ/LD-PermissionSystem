@@ -19,7 +19,7 @@ public class NodeServiceImpl implements INodeService {
 
 	@Resource
 	private NodeModelMapper nodeMapper;
-	
+
 	@Resource
 	IResourceService iResourceService;
 
@@ -48,37 +48,36 @@ public class NodeServiceImpl implements INodeService {
 		}
 		return nodes;
 	}
-	
-	private List<Integer> getParentNodeIds(Integer nodeId ) {
-		
+
+	private List<Integer> getParentNodeIds(Integer nodeId) {
+
 		List<Integer> list = new ArrayList<Integer>();
 		NodeModel model = nodeMapper.selectByPrimaryKey(nodeId);
-		
-		while(model.getGrade() != 0){
-			
+
+		while (model.getGrade() != 0) {
+
 			list.add(model.getId());
 			model = nodeMapper.selectByPrimaryKey(model.getParentId());
 		}
-		
+
 		return list;
 	}
 
-
 	// 递归获取所有父节点Id
-//	private void getParentNodeIds(Integer nodeId, List<Integer> list) {
-//		if (null == list) {
-//			list = new ArrayList<Integer>();
-//		}
-//		if (nodeId != 0) {
-//			Integer parentId = getParentNodeIdbyNodeId(nodeId);
-//			if (null != parentId) {
-//				getParentNodeIds(parentId, list);
-//				list.add(parentId); // 放在递归方法后面，这样第一个加入的就是根节点
-//			}
-//		} else {
-//			return;
-//		}
-//	}
+	// private void getParentNodeIds(Integer nodeId, List<Integer> list) {
+	// if (null == list) {
+	// list = new ArrayList<Integer>();
+	// }
+	// if (nodeId != 0) {
+	// Integer parentId = getParentNodeIdbyNodeId(nodeId);
+	// if (null != parentId) {
+	// getParentNodeIds(parentId, list);
+	// list.add(parentId); // 放在递归方法后面，这样第一个加入的就是根节点
+	// }
+	// } else {
+	// return;
+	// }
+	// }
 
 	// 获取所有父节点Model
 	@Override
@@ -93,36 +92,36 @@ public class NodeServiceImpl implements INodeService {
 		}
 		return nodeModels;
 	}
-	
-	private List<NodeModel> getParentNodeModels(Integer nodeId ) {
-		
+
+	private List<NodeModel> getParentNodeModels(Integer nodeId) {
+
 		List<NodeModel> list = new ArrayList<NodeModel>();
 		NodeModel model = nodeMapper.selectByPrimaryKey(nodeId);
-		
-		while(model.getGrade() != 0){
-			
+
+		while (model.getGrade() != 0) {
+
 			list.add(model);
 			model = nodeMapper.selectByPrimaryKey(model.getParentId());
 		}
-		
+
 		return list;
 	}
 
 	// 递归获取所有父节点Model
-//	private void getParentNodeModels(Integer nodeId, List<NodeModel> list) {
-//		if (null == list) {
-//			list = new ArrayList<NodeModel>();
-//		}
-//		if (nodeId != 0) {
-//			NodeModel model = getNodeById(nodeId);
-//			if (null != model) {
-//				getParentNodeModels(model.getId(), list);
-//				list.add(model); // 放在递归方法后面，这样第一个加入的就是根节点
-//			}
-//		} else {
-//			return;
-//		}
-//	}
+	// private void getParentNodeModels(Integer nodeId, List<NodeModel> list) {
+	// if (null == list) {
+	// list = new ArrayList<NodeModel>();
+	// }
+	// if (nodeId != 0) {
+	// NodeModel model = getNodeById(nodeId);
+	// if (null != model) {
+	// getParentNodeModels(model.getId(), list);
+	// list.add(model); // 放在递归方法后面，这样第一个加入的就是根节点
+	// }
+	// } else {
+	// return;
+	// }
+	// }
 
 	// 通过resourceId获取父节点Id.
 	@Override
@@ -169,15 +168,8 @@ public class NodeServiceImpl implements INodeService {
 			return 0;
 		} else {
 			nodeModel.setGrade(parentNode.getGrade() + 1);
-			nodeModel.setParentId(parentNodeId);
-			Integer nodeId = nodeMapper.insert(nodeModel);
-//			if (null != nodeId && null != parentNode.getId()) {
-//				NodeRelModel nodeRelMode = new NodeRelModel();
-//				nodeRelMode.setIdChild(nodeId);
-//				nodeRelMode.setIdParent(parentNode.getId());
-//				nodeRelMapper.insert(nodeRelMode);
-//			}
-			return 1;
+			nodeModel.setParentId(parentNode.getId());
+			return nodeMapper.insert(nodeModel);
 		}
 	}
 
@@ -196,7 +188,7 @@ public class NodeServiceImpl implements INodeService {
 	}
 
 	@Override
-	public List<NodeTree>  getAllNodeTree() {
+	public List<NodeTree> getAllNodeTree() {
 		return getAllChildNodeTree(nodeMapper.selectNodeByGrade(0));
 	}
 
@@ -212,12 +204,11 @@ public class NodeServiceImpl implements INodeService {
 			}
 			nodeTree.setChildren(getAllChildNodeTree(nodeMapper
 					.selectChildNode(listNode.get(i).getId(), listNode.get(i)
-							.getGrade()+1)));
+							.getGrade() + 1)));
 			listNodeTree.add(nodeTree);
 		}
 		return listNodeTree;
 
 	}
-
 
 }

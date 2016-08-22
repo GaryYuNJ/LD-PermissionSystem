@@ -23,5 +23,5 @@ public interface NodeModelMapper {
   	List<NodeModel> selectNodeByGrade(Integer grade);
   	
   	//获取子节点
-  	List<NodeModel> selectChildNode(@Param("nodeId")Integer nodeId,@Param("grade")Integer grade);
+  	List<NodeModel> selectChildNode(@Param("parentId")Integer parentId,@Param("grade")Integer grade);
 }
