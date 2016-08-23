@@ -10,6 +10,8 @@ public class CustomerGroupData {
     private String status;
 
     private Date createDate;
+    
+    private String createDateStr;
 
     private Integer createUser;
 
@@ -25,7 +27,15 @@ public class CustomerGroupData {
 
     private String chr2;
 
-    public Integer getId() {
+    public String getCreateDateStr() {
+		return createDateStr;
+	}
+
+	public void setCreateDateStr(String createDateStr) {
+		this.createDateStr = createDateStr;
+	}
+
+	public Integer getId() {
         return id;
     }
 

@@ -23,6 +23,11 @@ public class CustomerServiceImpl implements ICustomerService {
 	private ResourceModelMapper resourceDao;
 	
 	@Override
+	public List<CustomerModel> queryAllWithPageIndex(Integer startRow, Integer pageSize) {
+		return customerDao.selectAllWithPageIndex(startRow, pageSize);
+	}
+	
+	@Override
 	public String addVerification(CustomerModel custoemrModel) {
 		 String message="";
 		 if(StringUtils.isEmpty(custoemrModel.getCid())){
@@ -82,7 +87,7 @@ public class CustomerServiceImpl implements ICustomerService {
 	@Override
 	public Long getCustomerIdByMobile(String mobile) {
 		// TODO Auto-generated method stub
-		CustomerModel model = customerDao.queryIdByMobile(mobile);
+		CustomerModel model = customerDao.selectIdByMobile(mobile);
 		if(null == customerDao){
 			return null;
 		}else{
@@ -94,5 +99,11 @@ public class CustomerServiceImpl implements ICustomerService {
 	public CustomerModel getCustomerModelByMobile(String mobile) {
 		// TODO Auto-generated method stub
 		return customerDao.simpleSelectByMobile(mobile);
+	}
+
+	@Override
+	public Integer queryCustomerTotalCount() {
+		// TODO Auto-generated method stub
+		return customerDao.selectTotalCount();
 	}
 }

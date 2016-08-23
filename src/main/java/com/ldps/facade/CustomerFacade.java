@@ -4,6 +4,7 @@ package com.ldps.facade;
 import org.springframework.stereotype.Service;
 
 import com.ldps.data.CusResourceRelData;
+import com.ldps.data.CustomerData;
 import com.ldps.data.ResourceData;
 
 import java.util.Date;
@@ -44,4 +45,12 @@ public interface CustomerFacade {
 
 	int authResPermissionByMobile(String mobile, String resourceKey,
 			Date startDate, Date endDate, Long createUserId);
+
+	List<CustomerData> queryAllUserListWithPageIndex(Integer startRow,
+			Integer pageSize);
+
+	CustomerData searchUserByMobileWithPageIndex(String mobile, Integer pageNo,
+			Integer pageSize);
+
+	Integer queryCustomerTotalCount();
 }

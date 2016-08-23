@@ -7,8 +7,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.ldps.converter.CusResourceRelModelConverter;
+import com.ldps.converter.CustomerModelConverter;
 import com.ldps.converter.ResourceModelConverter;
 import com.ldps.data.CusResourceRelData;
+import com.ldps.data.CustomerData;
 import com.ldps.data.ResourceData;
 import com.ldps.facade.CustomerFacade;
 import com.ldps.model.CusGrpResourceRelModel;
@@ -46,7 +48,36 @@ public class CustomerFacadeImpl implements CustomerFacade {
 	ResourceModelConverter resourceModelConverter;
 	@Resource
 	CusResourceRelModelConverter cusResourceRelModelConverter;
+	@Resource
+	CustomerModelConverter customerModelConverter;
+
 	
+
+	@Override
+	public Integer queryCustomerTotalCount() {
+		// TODO Auto-generated method stub
+		return iCustomerSevice.queryCustomerTotalCount();
+	}
+	/*
+		分页查询用户列表
+	 */
+	@Override
+	public List<CustomerData> queryAllUserListWithPageIndex(Integer startRow, Integer pageSize) {
+	
+		List<CustomerModel> cModels = iCustomerSevice.queryAllWithPageIndex(startRow, pageSize);
+		
+		return customerModelConverter.processList(cModels);
+	}
+	/*
+		根据mobile搜索用户列表
+	 */
+	@Override
+	public CustomerData searchUserByMobileWithPageIndex(String mobile, Integer pageNo, Integer pageSize) {
+	
+		CustomerModel cModel = iCustomerSevice.getCustomerModelByMobile(mobile);
+	
+		return customerModelConverter.process(cModel,null);
+	}
 	
 	/*
 		获取building里的公共资源

@@ -33,5 +33,8 @@ public interface ICustomerService {
 	CustomerModel simpleSelectWithGroupsById(Long customerId);
 
 	CustomerModel getCustomerModelByMobile(String mobile);
-	 
+
+	List<CustomerModel> queryAllWithPageIndex(Integer startRow, Integer pageSize);
+	
+	Integer queryCustomerTotalCount();
 }
