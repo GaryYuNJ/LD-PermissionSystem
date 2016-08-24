@@ -1,5 +1,9 @@
 package com.ldps.dao;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.ldps.model.CustomerModel;
 
 public interface CustomerModelMapper {
@@ -24,9 +28,14 @@ public interface CustomerModelMapper {
     int deleteByCID(String cid);
     
     int updateByCIDSelective(CustomerModel record);
-
-    CustomerModel queryIdByMobile(String mobile);
+ 
+    CustomerModel selectIdByMobile(String mobile);
 
 	CustomerModel simpleSelectByMobile(String mobile);  
-
+	
+	List<CustomerModel> selectAllWithPageIndex(@Param("startRow") Integer startRow,
+			@Param("pageSize") Integer pageSize);
+	
+	Integer selectTotalCount();
+	
 }

@@ -20,6 +20,11 @@
     <result column="CHR1" property="chr1" jdbcType="CHAR" />
     <result column="CHR2" property="chr2" jdbcType="CHAR" />
   </resultMap>
+    
+   <resultMap id="ResultOfInteger" type="java.lang.Integer">  
+       <result column="totalCount" property="totalCount" jdbcType="INTEGER" />  
+   </resultMap>  
+   
   <sql id="Base_Column_List" >
     ID, NAME, STATUS, CREATE_DATE, CREATE_USER, NUM1, NUM2, VC1, VC2, CHR1, CHR2
   </sql>
@@ -29,10 +34,32 @@
     from CGROUP
     where ID = #{id,jdbcType=INTEGER}
   </select>
+  
+  <select id="selectByName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from CGROUP
+    where NAME = #{id,jdbcType=VARCHAR}
+  </select>  
+  
+  <select id="selectTotalCount" resultMap="ResultOfInteger" >
+    select 
+     COUNT(ID) totalCount  
+    from CGROUP
+  </select>
+  
+  <select id="selectAllWithPageIndex" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from CGROUP 
+    limit #{startRow,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from CGROUP
     where ID = #{id,jdbcType=INTEGER}
   </delete>
+  
   <insert id="insert" parameterType="com.ldps.model.CustomerGroupModel" >
     insert into CGROUP (ID, NAME, STATUS, 
       CREATE_DATE, CREATE_USER, NUM1, 

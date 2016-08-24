@@ -29,6 +29,7 @@
 <!-- Date picker -->
 <script src="<c:url value="/js/jstree.min.js" />"></script>
 <script src="<c:url value="/js/bootstrap-table.min.js" />"></script>
+<script src="<c:url value="/js/bootstrap-table-zh-CN.js" />"></script>
 <script type="text/javascript">
 $("#nav li:eq(${pageIndex}) a").addClass("open");
 </script>
