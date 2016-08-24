@@ -199,6 +199,7 @@ public class NodeServiceImpl implements INodeService {
 		for (int i = 0; i < listNode.size(); i++) {
 			NodeTree nodeTree = new NodeTree();
 			nodeTree.setId(listNode.get(i).getId());
+			nodeTree.setText(listNode.get(i).getName());
 			if (listNode.get(i).getGrade() == 0) {
 				nodeTree.setType("root");
 			}

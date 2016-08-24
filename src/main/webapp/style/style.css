@@ -942,7 +942,7 @@ header .header-data .hdata em{
   background-color: #337ab7;
 }
 
-.treeMinHeight ul{
+.treeMinHeight{
 	min-height: 600px;
 }
 

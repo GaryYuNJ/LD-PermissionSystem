@@ -33,5 +33,6 @@ public interface ResourceModelMapper {
 			@Param("customerId") Long customerId);
 
 	List<ResourceModel> selectBasicResByNodeIdList(@Param("nodeIds")List<Integer> nodeIds);
-    
+	
+	List<ResourceModel> selectResouceListByCondition(ResourceModel resourceModel);
 }

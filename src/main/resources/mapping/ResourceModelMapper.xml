@@ -90,7 +90,17 @@
     G.ID G_ID, G.NAME G_NAME , G.STATUS G_STATUS , G.IS_PUBLIC G_IS_PUBLIC , G.CREATE_DATE G_CREATE_DATE , 
     G.CREATE_USER G_CREATE_USER , G.NUM1 G_NUM1 , G.NUM2 G_NUM2 , G.VC1 G_VC1 , G.VC2 G_VC2 , G.CHR1 G_CHR1 , G.CHR2 G_CHR2
   </sql>
-  
+  <select id="selectResouceListByCondition" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from RESOURCE 
+    where PERMISSION_ATTR_ID = 1 
+    and NODE_ID in 
+   	<foreach item="item" index="index" collection="nodeIds" open="(" separator="," close=")">
+   		#{item,jdbcType=INTEGER}
+   	</foreach>
+  </select>
+ 
   <select id="selectWithGroupsByMAC" resultMap="queryWithGroupList" parameterType="java.lang.String" >
 	SELECT 
 	<include refid="With_Groups_Column_List" />  

@@ -107,4 +107,5 @@ public class ResourceServiceImpl implements IResourceService {
 
 		return resourceDao.deleteByPrimaryKey(primaryId);
 	}
+	
 }
