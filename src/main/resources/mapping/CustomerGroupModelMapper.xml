@@ -21,12 +21,30 @@
     <result column="CHR2" property="chr2" jdbcType="CHAR" />
   </resultMap>
     
+  <resultMap id="BaseResultMapWithExtendPara" type="com.ldps.model.CustomerGroupModel" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="CHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="DATE" />
+    <result column="CREATE_USER" property="createUser" jdbcType="INTEGER" />
+    <result column="NUM1" property="num1" jdbcType="DECIMAL" />
+    <result column="NUM2" property="num2" jdbcType="DECIMAL" />
+    <result column="VC1" property="vc1" jdbcType="VARCHAR" />
+    <result column="VC2" property="vc2" jdbcType="VARCHAR" />
+    <result column="CHR1" property="chr1" jdbcType="CHAR" />
+    <result column="CHR2" property="chr2" jdbcType="CHAR" />
+    <result column="EXTEND_LONG1" property="extendLong1" jdbcType="BIGINT" />
+  </resultMap>
+  
    <resultMap id="ResultOfInteger" type="java.lang.Integer">  
        <result column="totalCount" property="totalCount" jdbcType="INTEGER" />  
    </resultMap>  
    
   <sql id="Base_Column_List" >
     ID, NAME, STATUS, CREATE_DATE, CREATE_USER, NUM1, NUM2, VC1, VC2, CHR1, CHR2
+  </sql>
+   <sql id="Base_Column_List_withlabel" >
+    CG.ID, CG.NAME, CG.STATUS, CG.CREATE_DATE, CG.CREATE_USER, CG.NUM1, CG.NUM2, CG.VC1, CG.VC2, CG.CHR1, CG.CHR2
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -39,7 +57,7 @@
     select 
     <include refid="Base_Column_List" />
     from CGROUP
-    where NAME = #{id,jdbcType=VARCHAR}
+    where NAME = #{name,jdbcType=VARCHAR}
   </select>  
   
   <select id="selectTotalCount" resultMap="ResultOfInteger" >
@@ -53,6 +71,24 @@
     <include refid="Base_Column_List" />
     from CGROUP 
     limit #{startRow,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectJoinCustomerIdWithPageIndex" resultMap="BaseResultMapWithExtendPara" >
+    select 
+    <include refid="Base_Column_List_withlabel" /> ,CRG.CUSTOMER_ID AS EXTEND_LONG1
+    FROM CGROUP CG 
+    left join CGROUP_REL CRG on CG.ID=CRG.CGROUP_ID and CRG.CUSTOMER_ID = #{customerId,jdbcType=BIGINT} 
+    order by CRG.CUSTOMER_ID desc 
+    limit #{startRow,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
+  </select>
+  
+    <select id="selectByNameJoinCusIdWithPageIndex" resultMap="BaseResultMapWithExtendPara" >
+    select 
+    <include refid="Base_Column_List_withlabel" /> ,CRG.CUSTOMER_ID AS EXTEND_LONG1
+    FROM CGROUP CG 
+    left join CGROUP_REL CRG on CG.ID=CRG.CGROUP_ID and CRG.CUSTOMER_ID = #{customerId,jdbcType=BIGINT}
+    where NAME = #{name,jdbcType=VARCHAR} 
+    order by CRG.CUSTOMER_ID desc 
   </select>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >

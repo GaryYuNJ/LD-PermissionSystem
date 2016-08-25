@@ -69,5 +69,21 @@ public class CustomerGroupFacadeImpl implements CustomerGroupFacade {
 		return customerGroupModelConverter.process(cModel,null);
 	}
 
-
+	@Override
+	public List<CustomerGroupData> queryJoinCustomerIdWithPageIndex(Long customerId,
+			Integer offset, Integer limit) {
+		List<CustomerGroupModel> cModels = 
+				iCustomerGroupService.queryJoinCusIdWithPageIndex(offset, limit, customerId);
+		
+		return customerGroupModelConverter.processList(cModels);
+	}
+	
+	@Override
+	public CustomerGroupData searchByNameJoinCusIdWithPageIndex(String name, Long customerId,
+			Integer offset, Integer limit) {
+		CustomerGroupModel cModel = 
+				iCustomerGroupService.queryByNameJoinCusIdWithPageIndex(name, customerId);
+		
+		return customerGroupModelConverter.process(cModel, null);
+	}
 }

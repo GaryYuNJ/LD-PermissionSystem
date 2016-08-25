@@ -51,7 +51,13 @@ public class CustomerFacadeImpl implements CustomerFacade {
 	@Resource
 	CustomerModelConverter customerModelConverter;
 
-	
+	@Override
+	public CustomerData getUserDataByPrimaryId(Long CustomerId) {
+		// TODO Auto-generated method stub
+		CustomerModel cModel = iCustomerSevice.UserDataByPrimaryId(CustomerId);
+		return customerModelConverter.process(cModel,null);
+	}
+
 
 	@Override
 	public Integer queryCustomerTotalCount() {

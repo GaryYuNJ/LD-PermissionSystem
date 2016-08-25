@@ -48,6 +48,7 @@ public class CustomerGroupModelConverter {
 				SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
 				data.setCreateDateStr(sf.format(source.getCreateDate()));
 			}
+			data.setExtendLong1(source.getExtendLong1());
 		}
 		return data;
 	}

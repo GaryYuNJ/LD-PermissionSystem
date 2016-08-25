@@ -41,7 +41,7 @@ public class CustomerController {
 		return "userManage";
 	}
 	
-	@RequestMapping(value="showUser.json",method = { RequestMethod.GET,
+	@RequestMapping(value="showUserList.json",method = { RequestMethod.GET,
 			RequestMethod.POST },produces = "application/json; charset=utf-8")
 	@ResponseBody
 	public String showUserList( String search, @RequestParam("limit") Integer limit, 
@@ -62,7 +62,7 @@ public class CustomerController {
 		}else{
 			CustomerData cData = customerFacade.searchUserByMobileWithPageIndex(search, offset, limit);
 			
-			if(null != cData){
+			if(null != cData && null != cData.getId()){
 				List<CustomerData> cDatas = new ArrayList<CustomerData> ();
 				cDatas.add(cData);
 				bData.setRows(cDatas);
@@ -70,7 +70,19 @@ public class CustomerController {
 				bData.setTotal(1);
 			}
 		}
+		if(null == bData.getRows()){
+			bData.setPage(0);
+			bData.setRows(new Object());
+			bData.setTotal(0);
+		}
 		return JSON.toJSONString(bData);
+	}
+	@RequestMapping(value="showUserDetail.json",method = { RequestMethod.GET,
+			RequestMethod.POST },produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public String showUserDetail( @RequestParam("userId") Long userId, ModelMap model){
+		CustomerData data = customerFacade.getUserDataByPrimaryId(userId);
+		return JSON.toJSONString(data);
 	}
 	
 	@RequestMapping(value="/queryCustomer1",method=RequestMethod.GET)

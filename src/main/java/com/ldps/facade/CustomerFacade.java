@@ -53,4 +53,6 @@ public interface CustomerFacade {
 			Integer pageSize);
 
 	Integer queryCustomerTotalCount();
+
+	public CustomerData getUserDataByPrimaryId(Long userId);
 }
