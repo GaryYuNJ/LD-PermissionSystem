@@ -369,9 +369,9 @@
 		                   align: 'center',
 		                   formatter:function(value,row,index){
 		                	   if(row.extendLong1 != null){
-		                		   var e = '<a href="javascript:void(0)" mce_href="#" onclick="delUserGroupRelation(\''+ row.id +'\')">移除</a> ';  
+		                		   var e = '<a href="javascript:void(0)" mce_href="#" onclick="delUserGroupRelation(this, \''+ row.id +'\')">移除</a> ';  
 		                	   }else{
-		                		   var e = '<a href="javascript:void(0)" mce_href="#" onclick="addUserGroupRelation(\''+ row.id + '\')">加入</a> ';  
+		                		   var e = '<a href="javascript:void(0)" mce_href="#" onclick="addUserGroupRelation(this, \''+ row.id + '\')">加入</a> ';  
 		                	   }
 		                    return e;  
 		                 } 
@@ -399,6 +399,52 @@
 	    };
 	    return temp;
 	  }
+	  
+	  //删除usergroup与user关系
+	 function delUserGroupRelation(obj, groupId) {
+		 var userId = $("#userId_hidden").val();
+		 $.ajax( {  
+			    url:"<c:url value='/user/delUserGroupRelation.json' />",
+			    data:{   groupId : groupId, userId : userId },  
+			    type:'get',  
+			    cache:false,  
+			    dataType:'json',  
+			    success:function(data) {
+			    	if(data.status == 1){
+				    	$(obj).attr("onclick", "addUserGroupRelation(this, "+groupId+")");
+				    	$(obj).html("加入");
+			    	}else{
+			    		alert("操作失败！");
+			    	}
+			     },  
+			     error : function() {  
+			          alert("系统异常！");  
+			     }  
+			});
+	  };
+	  
+		//删除usergroup与user关系
+		 function addUserGroupRelation(obj, groupId) {
+			 var userId = $("#userId_hidden").val();
+			 $.ajax( {  
+				    url:"<c:url value='/user/addUserGroupRelation.json' />",
+				    data:{   groupId : groupId, userId : userId },  
+				    type:'get',  
+				    cache:false,  
+				    dataType:'json',  
+				    success:function(data) {
+				    	if(data.status == 1){
+					    	$(obj).attr("onclick", "delUserGroupRelation(this, "+groupId+")");
+					    	$(obj).html("移除");
+				    	}else{
+				    		alert("操作失败！");
+				    	}
+				     },  
+				     error : function() {  
+				          alert("系统异常！");  
+				     }  
+				});
+		  };
 	  
 	 //tab 切换
     $(function () {

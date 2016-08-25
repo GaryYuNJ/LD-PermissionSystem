@@ -55,4 +55,8 @@ public interface CustomerFacade {
 	Integer queryCustomerTotalCount();
 
 	public CustomerData getUserDataByPrimaryId(Long userId);
+
+	public int delUserGroupRelation(Long userId, Integer groupId);
+
+	public int addUserGroupRelation(Long userId, Integer groupId);
 }

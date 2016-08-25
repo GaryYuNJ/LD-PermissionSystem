@@ -50,4 +50,10 @@
       </if>
     </trim>
   </insert>
+  
+  	<delete id="delUserGroupRelation" >
+		delete from CGROUP_REL 
+		where CGROUP_ID = #{groupId,jdbcType=INTEGER} and CUSTOMER_ID =  #{customerId, jdbcType=BIGINT}
+	</delete>
+  
 </mapper>
