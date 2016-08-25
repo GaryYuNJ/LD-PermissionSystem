@@ -106,4 +106,10 @@ public class CustomerServiceImpl implements ICustomerService {
 		// TODO Auto-generated method stub
 		return customerDao.selectTotalCount();
 	}
+
+	@Override
+	public CustomerModel UserDataByPrimaryId(Long customerId) {
+		// TODO Auto-generated method stub
+		return customerDao.selectByPrimaryKey(customerId);
+	}
 }

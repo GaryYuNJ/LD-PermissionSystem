@@ -24,8 +24,19 @@ public class CustomerGroupModel {
     private String chr1;
 
     private String chr2;
+    
+    private Long extendLong1;
 
-    public Integer getId() {
+    
+    public Long getExtendLong1() {
+		return extendLong1;
+	}
+
+	public void setExtendLong1(Long extendLong1) {
+		this.extendLong1 = extendLong1;
+	}
+
+	public Integer getId() {
         return id;
     }
 

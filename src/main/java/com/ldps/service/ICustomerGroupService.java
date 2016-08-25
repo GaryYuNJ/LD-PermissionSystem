@@ -14,4 +14,10 @@ public interface ICustomerGroupService {
 
 	CustomerGroupModel getCustomerGroupModelByName(String name);
 
+	List<CustomerGroupModel> queryJoinCusIdWithPageIndex(Integer startRow,
+			Integer pageSize, Long customerId);
+
+	CustomerGroupModel queryByNameJoinCusIdWithPageIndex(String name,
+			Long customerId);
+
 }

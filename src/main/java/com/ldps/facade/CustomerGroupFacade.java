@@ -17,5 +17,11 @@ public interface CustomerGroupFacade {
 	CustomerGroupData searchUserGroupByNameWithPageIndex(String name,
 			Integer startRow, Integer pageSize);
 
+	List<CustomerGroupData> queryJoinCustomerIdWithPageIndex(Long customerId,
+			Integer offset, Integer limit);
+
+	CustomerGroupData searchByNameJoinCusIdWithPageIndex(String name,
+			Long customerId, Integer offset, Integer limit);
+
 	
 }

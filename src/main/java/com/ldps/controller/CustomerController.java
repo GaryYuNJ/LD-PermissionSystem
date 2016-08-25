@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
+import com.ldps.data.APIMessage;
 import com.ldps.data.BootstrapTableData;
 import com.ldps.data.CustomerData;
 import com.ldps.facade.CustomerFacade;
@@ -41,7 +42,7 @@ public class CustomerController {
 		return "userManage";
 	}
 	
-	@RequestMapping(value="showUser.json",method = { RequestMethod.GET,
+	@RequestMapping(value="showUserList.json",method = { RequestMethod.GET,
 			RequestMethod.POST },produces = "application/json; charset=utf-8")
 	@ResponseBody
 	public String showUserList( String search, @RequestParam("limit") Integer limit, 
@@ -62,7 +63,7 @@ public class CustomerController {
 		}else{
 			CustomerData cData = customerFacade.searchUserByMobileWithPageIndex(search, offset, limit);
 			
-			if(null != cData){
+			if(null != cData && null != cData.getId()){
 				List<CustomerData> cDatas = new ArrayList<CustomerData> ();
 				cDatas.add(cData);
 				bData.setRows(cDatas);
@@ -70,7 +71,48 @@ public class CustomerController {
 				bData.setTotal(1);
 			}
 		}
+		if(null == bData.getRows()){
+			bData.setPage(0);
+			bData.setRows(new Object());
+			bData.setTotal(0);
+		}
 		return JSON.toJSONString(bData);
+	}
+	@RequestMapping(value="showUserDetail.json",method = { RequestMethod.GET,
+			RequestMethod.POST },produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public String showUserDetail( @RequestParam("userId") Long userId, ModelMap model){
+		CustomerData data = customerFacade.getUserDataByPrimaryId(userId);
+		return JSON.toJSONString(data);
+	}
+	
+	//删除用户与用户组关系
+	@RequestMapping(value="delUserGroupRelation.json",method = { RequestMethod.GET,
+			RequestMethod.POST },produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public String delUserGroupRelation( @RequestParam("userId") Long userId , @RequestParam("groupId") Integer groupId , ModelMap model){
+		
+		APIMessage apiMessage = new APIMessage();
+		
+		int flag = customerFacade.delUserGroupRelation(userId, groupId);
+		apiMessage.setStatus(flag);
+		
+		return JSON.toJSONString(apiMessage);
+	}
+	
+	//删除用户与用户组关系
+	@RequestMapping(value="addUserGroupRelation.json",method = { RequestMethod.GET,
+			RequestMethod.POST },produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public String addUserGroupRelation( @RequestParam("userId") Long userId , 
+			@RequestParam("groupId") Integer groupId , ModelMap model){
+		
+		APIMessage apiMessage = new APIMessage();
+		
+		int flag = customerFacade.addUserGroupRelation(userId, groupId);
+		apiMessage.setStatus(flag);
+		
+		return JSON.toJSONString(apiMessage);
 	}
 	
 	@RequestMapping(value="/queryCustomer1",method=RequestMethod.GET)

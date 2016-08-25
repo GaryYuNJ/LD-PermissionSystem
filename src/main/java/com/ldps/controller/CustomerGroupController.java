@@ -53,7 +53,7 @@ public class CustomerGroupController {
 		}else{
 			CustomerGroupData cData = customerGroupFacade.searchUserGroupByNameWithPageIndex(search, offset, limit);
 			
-			if(null != cData){
+			if(null != cData && null != cData.getId()){
 				List<CustomerGroupData> cDatas = new ArrayList<CustomerGroupData> ();
 				cDatas.add(cData);
 				bData.setRows(cDatas);
@@ -61,6 +61,51 @@ public class CustomerGroupController {
 				bData.setTotal(1);
 			}
 		}
+		if(null == bData.getRows()){
+			bData.setPage(0);
+			bData.setRows(new Object());
+			bData.setTotal(0);
+		}
+		return JSON.toJSONString(bData);
+	}
+	
+	@RequestMapping(value="showUserGroupJoinUserId.json",method = { RequestMethod.GET,
+			RequestMethod.POST },produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public String showUserGroupJoinUserId(@RequestParam("userId") Long userId, String search, 
+			@RequestParam("limit") Integer limit, 
+			@RequestParam("offset") Integer offset, ModelMap model){
+		//页面菜单样式需要
+		model.put("pageIndex", 3);
+		
+		BootstrapTableData bData = new BootstrapTableData();
+		
+		List<CustomerGroupData> cDatas = new ArrayList<CustomerGroupData> ();
+		
+		if(StringUtils.isEmpty(search)){
+			cDatas = customerGroupFacade.queryJoinCustomerIdWithPageIndex(userId, offset, limit);
+			
+			if(null != cDatas && cDatas.size()>0){
+				bData.setRows(cDatas);
+				bData.setPage(offset/limit +1);
+				//get total
+				bData.setTotal(customerGroupFacade.queryCusGroupTotalCount());
+			}
+		}else{
+			CustomerGroupData cData = customerGroupFacade.searchByNameJoinCusIdWithPageIndex(search, userId, offset, limit);
+			if(null != cData && null != cData.getId()){
+				cDatas.add(cData);
+				bData.setRows(cDatas);
+				bData.setPage(1);				
+				bData.setTotal(1);
+			}
+		}
+		if(null == bData.getRows()){
+			bData.setPage(0);
+			bData.setRows(new Object());
+			bData.setTotal(0);
+		}
+		
 		return JSON.toJSONString(bData);
 	}
 

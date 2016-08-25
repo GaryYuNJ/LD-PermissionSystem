@@ -37,4 +37,6 @@ public interface ICustomerService {
 	List<CustomerModel> queryAllWithPageIndex(Integer startRow, Integer pageSize);
 	
 	Integer queryCustomerTotalCount();
+
+	public CustomerModel UserDataByPrimaryId(Long customerId);
 }

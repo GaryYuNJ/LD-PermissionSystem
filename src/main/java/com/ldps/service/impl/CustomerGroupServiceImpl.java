@@ -12,7 +12,7 @@ import com.ldps.service.ICustomerGroupService;
 
 @Service("iCustomerGroupService")
 public class CustomerGroupServiceImpl implements ICustomerGroupService {
-
+ 
 
 	@Resource
 	private CustomerGroupModelMapper customerGroupDao;
@@ -36,4 +36,15 @@ public class CustomerGroupServiceImpl implements ICustomerGroupService {
 		return customerGroupDao.selectByName(name);
 	}
 
+	@Override
+	public List<CustomerGroupModel> queryJoinCusIdWithPageIndex(Integer startRow,
+			Integer pageSize, Long customerId) {
+
+		return customerGroupDao.selectJoinCustomerIdWithPageIndex(startRow, pageSize, customerId);
+	}
+
+	@Override
+	public CustomerGroupModel queryByNameJoinCusIdWithPageIndex(String name, Long customerId) {
+		return customerGroupDao.selectByNameJoinCusIdWithPageIndex(name, customerId);
+	}
 }

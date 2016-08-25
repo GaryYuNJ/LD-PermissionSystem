@@ -21,6 +21,8 @@ import com.ldps.model.CustomerGroupModel;
 import com.ldps.model.ResourceModel;
 import com.ldps.service.ICusGrpResourceRelService;
 import com.ldps.service.ICusResourceRelService;
+import com.ldps.service.ICustomerGroupRelService;
+import com.ldps.service.ICustomerGroupService;
 import com.ldps.service.ICustomerService;
 import com.ldps.service.IResourceService;
 
@@ -50,8 +52,33 @@ public class CustomerFacadeImpl implements CustomerFacade {
 	CusResourceRelModelConverter cusResourceRelModelConverter;
 	@Resource
 	CustomerModelConverter customerModelConverter;
-
+	@Resource
+	ICustomerGroupService iCustomerGroupService;
+	@Resource
+	ICustomerGroupRelService iCustomerGroupRelService;
 	
+
+	@Override
+	public int delUserGroupRelation(Long userId, Integer groupId) {
+		// TODO Auto-generated method stub
+		return iCustomerGroupRelService.delUserGroupRelation(userId, groupId);
+	}
+
+	@Override
+	public int addUserGroupRelation(Long userId, Integer groupId) {
+		// TODO Auto-generated method stub
+		return iCustomerGroupRelService.addUserGroupRelation(userId, groupId);
+	}
+
+
+
+	@Override
+	public CustomerData getUserDataByPrimaryId(Long CustomerId) {
+		// TODO Auto-generated method stub
+		CustomerModel cModel = iCustomerSevice.UserDataByPrimaryId(CustomerId);
+		return customerModelConverter.process(cModel,null);
+	}
+
 
 	@Override
 	public Integer queryCustomerTotalCount() {
