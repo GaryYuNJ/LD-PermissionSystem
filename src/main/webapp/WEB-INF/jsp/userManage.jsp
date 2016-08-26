@@ -30,12 +30,37 @@
 						<div class="widget-head">
 							<div class="pull-left">用户列表</div>
 							<div class="widget-icons pull-right">
-								<a href="javascript:void(0);"  onclick = "$('#userListTable').show();" id="icon_user_list" class="wminimize"><i class="icon-chevron-up"></i></a>
+								<a href="javascript:void(0);"  onclick = "$('#userListTable').hide();" id="icon_user_list1" class="wminimize">
+									<i class="icon-chevron-up"></i>
+								</a>
+								<a href="javascript:void(0);"  onclick = "$('#userListTable').show();" id="icon_user_list2" class="wminimize">
+									<i class="icon-chevron-down"></i>
+								</a>
 								<!-- <a href="#" class="wclose"><i class="icon-remove"></i></a> -->
 							</div>
 							<div class="clearfix"></div>
 						</div>
 						<div class="widget-content" id="userListTable">
+							<div class="col-lg-12">
+								<hr>
+								<form class="form-horizontal" role="form">
+									<div class="form-group">
+										<label class="col-lg-2 control-label" style="width: 120px">用户名称</label>
+										<div class="col-lg-3">
+											<input type="text" id="userNameSearch" class="form-control" placeholder="用户名称">
+										</div>
+										<label class="col-lg-2 control-label" style="width: 120px">手机号</label>
+										<div class="col-lg-3">
+											<input type="text" id="userMobileSearch" class="form-control" placeholder="手机号">
+										</div>
+										<div class="col-lg-3">
+											<button type="button" onclick = "$('#userListTableId').bootstrapTable('refresh');" class="btn btn-primary">
+												<i class="icon-search"></i> 查询
+											</button>
+										</div>
+									</div>
+								</form>
+							</div>
 							<div class="col-lg-12">
 								<table class="table table-striped table-bordered table-hover"
 									id="userListTableId">
@@ -58,8 +83,12 @@
 						<div class="widget-head">
 							<div class="pull-left">用户详情</div>
 							<div class="widget-icons pull-right">
-								<a href="#" class="wminimize"><i class="icon-chevron-up"></i></a>
-								<a href="#" class="wclose"><i class="icon-remove"></i></a>
+								<a href="javascript:void(0);"  onclick = "$('#userDetailsTable').hide();" id="icon_user_list1" class="wminimize">
+									<i class="icon-chevron-up"></i>
+								</a>
+								<a href="javascript:void(0);"  onclick = "$('#userDetailsTable').show();" id="icon_user_list2" class="wminimize">
+									<i class="icon-chevron-down"></i>
+								</a>
 							</div>
 							<div class="clearfix"></div>
 						</div>
@@ -77,79 +106,53 @@
 							      <div class="tab-pane active" id="home">
 							      		<!-- Bootstrap 表单 -->
 									  <form class="form-horizontal" role="form">
-									    <fieldset>
-										   	  <div class="control-group">
-										          <!-- Text input-->
-										          <label class="control-label" for="input01">ID</label>
-										          <div class="controls">
-										            <input type="text" placeholder="ID" id="userId_InForm" class="input-xlarge">
-										            <p class="help-block"></p>
-										          </div>
-										          
-										          <!-- Text input-->
-										          <label class="control-label" for="input01">用户名</label>
-										          <div class="controls">
-										            <input type="text" placeholder="用户名" id="userName_InForm" class="input-xlarge">
-										            <p class="help-block"></p>
-										          </div>
-										    </div>
-										    <div class="control-group">
-										          <!-- Text input-->
-										          <label class="control-label" for="input01">手机号</label>
-										          <div class="controls">
-										            <input type="text" placeholder="手机号" id="userMobile_InForm"  class="input-xlarge">
-										            <p class="help-block"></p>
-										          </div>
-										        </div>
-										    <div class="control-group">
-										          <!-- Text input-->
-										          <label class="control-label" for="input01">性别</label>
-										          <div class="controls">
-										            <input type="text" placeholder="性别" id="userSex_InForm" class="input-xlarge">
-										            <p class="help-block"></p>
-										          </div>
-										        </div>
-										    <div class="control-group">
-										
-										          <!-- Text input-->
-										          <label class="control-label" for="input01">邮箱</label>
-										          <div class="controls">
-										            <input type="text" placeholder="邮箱" id="userEmail_InForm" class="input-xlarge">
-										            <p class="help-block"></p>
-										          </div>
-										        </div>
-										
-										    <div class="control-group">
-										
-										          <!-- Appended input-->
-										          <label class="control-label">生日</label>
-										          <div class="controls">
-										            <div class="input-append">
-										              <input class="span2" placeholder="生日" id="userBirth_InForm" type="text">
-										              <span class="add-on"></span>
-										            </div>
-										            <p class="help-block"></p>
-										          </div>
-										        </div>
-										    <div class="control-group">
-										          <!-- Select Basic -->
-										          <label class="control-label">客户关系</label>
-										          <div class="controls">
-										              <select class="input-xlarge" id="userRelation_InForm">
-										              	  <option></option>
-													      <option>来访</option>
-													      <option>业主</option>
-												      </select>
-										          </div>
-										        </div>
-										    	<div class="control-group">
-										          <label class="control-label"></label>
-										          <!-- Button -->
-										          <div class="controls">
-										            <button class="btn btn-success disabled">保存</button>
-										          </div>
-										        </div>
-									    </fieldset>
+										    <div class="form-group">
+				                                  <label class="col-lg-2 control-label">ID</label>
+				                                  <div class="col-lg-3">
+				                                    <input type="text" class="form-control" placeholder="ID" id="userId_InForm">
+				                                  </div>
+				                                   <label class="col-lg-2 control-label">用户名</label>
+				                                  <div class="col-lg-3">
+				                                    <input type="text" class="form-control" id="userName_InForm" placeholder="用户名">
+				                                  </div>
+			                                </div>
+			                                <div class="form-group">
+				                                  <label class="col-lg-2 control-label">手机号</label>
+				                                  <div class="col-lg-3">
+				                                    <input type="text" class="form-control" placeholder="手机号" id="userMobile_InForm">
+				                                  </div>
+				                                   <label class="col-lg-2 control-label">性别</label>
+				                                  <div class="col-lg-3">
+				                                    <input type="text" class="form-control" id="userSex_InForm" placeholder="性别">
+				                                  </div>
+			                                </div>
+										    <div class="form-group">
+				                                  <label class="col-lg-2 control-label">邮箱</label>
+				                                  <div class="col-lg-3">
+				                                    <input type="text" class="form-control" placeholder="邮箱" id="userEmail_InForm">
+				                                  </div>
+				                                   <label class="col-lg-2 control-label">生日</label>
+				                                  <div class="col-lg-3">
+				                                    <input type="text" class="form-control" id="userBirth_InForm" placeholder="生日">
+				                                  </div>
+			                                </div>
+			                                <div class="form-group">
+			                                	  <label class="col-lg-2 control-label">客户关系</label>
+				                                  <div class="col-lg-3">
+				                                    <select class="form-control" id="userRelation_InForm">
+				                                      <option>资源类型</option>
+				                                      <option value="1">来访</option>
+				                                      <option value="2">业主</option>
+				                                    </select>
+				                                  </div>
+			                                </div>
+									    	<div class="control-group">
+									          <label class="control-label"></label>
+									          <!-- Button -->
+									          <div class="controls">
+									            <button class="btn btn-success disabled">保存</button>
+									          </div>
+									        </div>
 									  </form>
 								  </div>
 								  <!-- usergroup table -->
@@ -209,16 +212,17 @@
 		method: 'get',
 	    url: "<c:url value='/user/showUserList.json' />", 
 	    dataType: "json",
+	    queryParams: userQueryParams,
 	    pageSize: 10,
 	    pageList: [10, 25, 50],  //可供选择的每页的行数（*）
 	    pageNumber: 1, // 默认页面
 	    pagination: true, //分页
 	    singleSelect: false,
 	    idField: "id",  //标识哪个字段为id主键
-	    showColumns: true, //显示隐藏列  
-	    showRefresh: true,  //显示刷新按钮
+	    //showColumns: true, //显示隐藏列  
+	    //showRefresh: true,  //显示刷新按钮
 	    locale: "zh-CN", //表格汉化
-	    search: true, //显示搜索框
+	    //search: true, //显示搜索框
 	    sidePagination: "server", //服务端处理分页
        	columns: [
 			{
@@ -278,6 +282,21 @@
             return '无符合条件的记录';
         }
       });
+	
+	  //user table 入参
+	 function userQueryParams(params) {  //配置参数
+	    var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+	      pageNumber: params.pageNumber,  //页码
+	      limit: params.limit,   //页面行数大小
+	      offset: params.offset, //分页偏移量
+	      sort: params.sort,  //排序列名
+	      sortOrder: params.order ,//排位命令（desc，asc）
+	      search: params.search,
+	      userName: $("#userNameSearch").val(),
+	      mobile: $("#userMobileSearch").val()
+	    };
+	    return temp;
+	  }
 	  
       //显示用户详情内容
 	  var showUser = function (userId) {

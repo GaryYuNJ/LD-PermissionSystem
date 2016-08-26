@@ -39,4 +39,9 @@ public interface ICustomerService {
 	Integer queryCustomerTotalCount();
 
 	public CustomerModel UserDataByPrimaryId(Long customerId);
+
+	public List<CustomerModel> queryByMobileAndNameWithPageIndex(String mobile,
+			String userName, Integer startRow, Integer pageSize);
+
+	public Integer queryTotalCountByMobileAndName(String mobile, String userName);
 }

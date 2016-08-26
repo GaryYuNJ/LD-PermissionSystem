@@ -45,14 +45,14 @@ public class CustomerController {
 	@RequestMapping(value="showUserList.json",method = { RequestMethod.GET,
 			RequestMethod.POST },produces = "application/json; charset=utf-8")
 	@ResponseBody
-	public String showUserList( String search, @RequestParam("limit") Integer limit, 
+	public String showUserList( String mobile, String userName, @RequestParam("limit") Integer limit, 
 			@RequestParam("offset") Integer offset, ModelMap model){
 		//页面菜单样式需要
 		model.put("pageIndex", 3);
 		
 		BootstrapTableData bData = new BootstrapTableData();
 		
-		if(StringUtils.isEmpty(search)){
+		if(StringUtils.isEmpty(mobile) && StringUtils.isEmpty(userName)){
 			List<CustomerData> cDatas = customerFacade.queryAllUserListWithPageIndex(offset, limit);
 			if(null != cDatas && cDatas.size()>0){
 				bData.setRows(cDatas);
@@ -61,14 +61,13 @@ public class CustomerController {
 				bData.setTotal(customerFacade.queryCustomerTotalCount());
 			}
 		}else{
-			CustomerData cData = customerFacade.searchUserByMobileWithPageIndex(search, offset, limit);
+			List<CustomerData>  cDatas = customerFacade.searchByMobileAndNameWithPageIndex(mobile,userName , offset, limit);
 			
-			if(null != cData && null != cData.getId()){
-				List<CustomerData> cDatas = new ArrayList<CustomerData> ();
-				cDatas.add(cData);
+			if(null != cDatas && cDatas.size()>0){
 				bData.setRows(cDatas);
-				bData.setPage(1);				
-				bData.setTotal(1);
+				bData.setPage(offset/limit +1);
+				//get total
+				bData.setTotal(customerFacade.queryTotalCountByMobileAndName(mobile,userName));
 			}
 		}
 		if(null == bData.getRows()){
@@ -78,6 +77,8 @@ public class CustomerController {
 		}
 		return JSON.toJSONString(bData);
 	}
+	
+	
 	@RequestMapping(value="showUserDetail.json",method = { RequestMethod.GET,
 			RequestMethod.POST },produces = "application/json; charset=utf-8")
 	@ResponseBody

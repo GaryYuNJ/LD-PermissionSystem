@@ -12,7 +12,7 @@
     <result column="NAME" property="name" jdbcType="VARCHAR" />
     <result column="PASSWORD" property="password" jdbcType="VARCHAR" />
     <result column="STATUS" property="status" jdbcType="CHAR" />
-    <result column="CREATE_DATE" property="createDate" jdbcType="DATE" />
+    <result column="CREATE_DATE" property="createDate"  />
     <result column="CREATE_USER" property="createUser" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
@@ -33,7 +33,7 @@
       STATUS, CREATE_DATE, CREATE_USER
       )
     values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{status,jdbcType=CHAR}, #{createDate,jdbcType=DATE}, #{createUser,jdbcType=INTEGER}
+      #{status,jdbcType=CHAR}, #{createDate}, #{createUser,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.ldps.model.UserModel" >
@@ -72,7 +72,7 @@
         #{status,jdbcType=CHAR},
       </if>
       <if test="createDate != null" >
-        #{createDate,jdbcType=DATE},
+        #{createDate},
       </if>
       <if test="createUser != null" >
         #{createUser,jdbcType=INTEGER},
@@ -92,7 +92,7 @@
         STATUS = #{status,jdbcType=CHAR},
       </if>
       <if test="createDate != null" >
-        CREATE_DATE = #{createDate,jdbcType=DATE},
+        CREATE_DATE = #{createDate},
       </if>
       <if test="createUser != null" >
         CREATE_USER = #{createUser,jdbcType=INTEGER},
@@ -105,7 +105,7 @@
     set NAME = #{name,jdbcType=VARCHAR},
       PASSWORD = #{password,jdbcType=VARCHAR},
       STATUS = #{status,jdbcType=CHAR},
-      CREATE_DATE = #{createDate,jdbcType=DATE},
+      CREATE_DATE = #{createDate},
       CREATE_USER = #{createUser,jdbcType=INTEGER}
     where ID = #{id,jdbcType=BIGINT}
   </update>

@@ -4,14 +4,14 @@
   <cache 
   	eviction="LRU" 
   	flushInterval="36000000" 
-  	size="1024" 
+  	size="1024"  
   	readOnly="true" >
   </cache>
   <resultMap id="BaseResultMap" type="com.ldps.model.CustomerGroupModel" >
     <id column="ID" property="id" jdbcType="INTEGER" />
     <result column="NAME" property="name" jdbcType="VARCHAR" />
     <result column="STATUS" property="status" jdbcType="CHAR" />
-    <result column="CREATE_DATE" property="createDate" jdbcType="DATE" />
+    <result column="CREATE_DATE" property="createDate"  />
     <result column="CREATE_USER" property="createUser" jdbcType="INTEGER" />
     <result column="NUM1" property="num1" jdbcType="DECIMAL" />
     <result column="NUM2" property="num2" jdbcType="DECIMAL" />
@@ -25,7 +25,7 @@
     <id column="ID" property="id" jdbcType="INTEGER" />
     <result column="NAME" property="name" jdbcType="VARCHAR" />
     <result column="STATUS" property="status" jdbcType="CHAR" />
-    <result column="CREATE_DATE" property="createDate" jdbcType="DATE" />
+    <result column="CREATE_DATE" property="createDate"  />
     <result column="CREATE_USER" property="createUser" jdbcType="INTEGER" />
     <result column="NUM1" property="num1" jdbcType="DECIMAL" />
     <result column="NUM2" property="num2" jdbcType="DECIMAL" />
@@ -102,7 +102,7 @@
       NUM2, VC1, VC2, CHR1, 
       CHR2)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, 
-      #{createDate,jdbcType=DATE}, #{createUser,jdbcType=INTEGER}, #{num1,jdbcType=DECIMAL}, 
+      #{createDate}, #{createUser,jdbcType=INTEGER}, #{num1,jdbcType=DECIMAL}, 
       #{num2,jdbcType=DECIMAL}, #{vc1,jdbcType=VARCHAR}, #{vc2,jdbcType=VARCHAR}, #{chr1,jdbcType=CHAR}, 
       #{chr2,jdbcType=CHAR})
   </insert>
@@ -148,13 +148,13 @@
         #{id,jdbcType=INTEGER},
       </if>
       <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
+        #{name,jdbcType=VARCHAR}, 
       </if>
       <if test="status != null" >
         #{status,jdbcType=CHAR},
       </if>
       <if test="createDate != null" >
-        #{createDate,jdbcType=DATE},
+        #{createDate},
       </if>
       <if test="createUser != null" >
         #{createUser,jdbcType=INTEGER},
@@ -189,7 +189,7 @@
         STATUS = #{status,jdbcType=CHAR},
       </if>
       <if test="createDate != null" >
-        CREATE_DATE = #{createDate,jdbcType=DATE},
+        CREATE_DATE = #{createDate},
       </if>
       <if test="createUser != null" >
         CREATE_USER = #{createUser,jdbcType=INTEGER},
@@ -219,7 +219,7 @@
     update CGROUP
     set NAME = #{name,jdbcType=VARCHAR},
       STATUS = #{status,jdbcType=CHAR},
-      CREATE_DATE = #{createDate,jdbcType=DATE},
+      CREATE_DATE = #{createDate},
       CREATE_USER = #{createUser,jdbcType=INTEGER},
       NUM1 = #{num1,jdbcType=DECIMAL},
       NUM2 = #{num2,jdbcType=DECIMAL},

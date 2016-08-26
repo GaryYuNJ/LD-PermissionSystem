@@ -86,4 +86,23 @@ public class CustomerGroupFacadeImpl implements CustomerGroupFacade {
 		
 		return customerGroupModelConverter.process(cModel, null);
 	}
+
+	@Override
+	public int createNewUserGroup(String userGroupName) {
+		// TODO Auto-generated method stub
+		return iCustomerGroupService.createNewUserGroup(userGroupName);
+	}
+
+	@Override
+	public int deleteUserGroupById(Integer customerGroupId) {
+		// TODO Auto-generated method stub
+		return iCustomerGroupService.deleteUserGroupById(customerGroupId);
+	}
+
+	@Override
+	public CustomerGroupData showUserGroupDetail(Integer customerGroupId) {
+		CustomerGroupModel cModel = 
+				iCustomerGroupService.showUserGroupDetail(customerGroupId);
+		return customerGroupModelConverter.process(cModel, null);
+	}
 }

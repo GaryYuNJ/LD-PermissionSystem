@@ -12,7 +12,7 @@
     <result column="NAME" property="name" jdbcType="VARCHAR" />
     <result column="TYPE_ID" property="typeId" jdbcType="INTEGER" />
     <result column="STATUS" property="status" jdbcType="CHAR" />
-    <result column="CREATE_DATE" property="createDate" jdbcType="DATE" />
+    <result column="CREATE_DATE" property="createDate"  />
     <result column="CREATE_USER" property="createUser" jdbcType="INTEGER" />
     <result column="MAC" property="mac" jdbcType="CHAR" />
     <result column="BUILDING_ID" property="buildingId" jdbcType="INTEGER" />
@@ -41,7 +41,7 @@
     <result column="NAME" property="name" jdbcType="VARCHAR" />
     <result column="TYPE_ID" property="typeId" jdbcType="INTEGER" />
     <result column="STATUS" property="status" jdbcType="CHAR" />
-    <result column="CREATE_DATE" property="createDate" jdbcType="DATE" />
+    <result column="CREATE_DATE" property="createDate"  />
     <result column="CREATE_USER" property="createUser" jdbcType="INTEGER" />
     <result column="MAC" property="mac" jdbcType="CHAR" />
     <result column="BUILDING_ID" property="buildingId" jdbcType="INTEGER" />
@@ -68,7 +68,7 @@
 	    <result column="G_NAME" property="name" jdbcType="VARCHAR" />
 	    <result column="G_STATUS" property="status" jdbcType="CHAR" />
 	    <result column="G_IS_PUBLIC" property="isPublic" jdbcType="CHAR" />
-	    <result column="G_CREATE_DATE" property="createDate" jdbcType="DATE" />
+	    <result column="G_CREATE_DATE" property="createDate"  />
 	    <result column="G_CREATE_USER" property="createUser" jdbcType="INTEGER" />
 	    <result column="G_NUM1" property="num1" jdbcType="DECIMAL" />
 	    <result column="G_NUM2" property="num2" jdbcType="DECIMAL" />
@@ -161,7 +161,7 @@
       VC1, VC2, CHR1, CHR2
       )
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{typeId,jdbcType=INTEGER}, 
-      #{status,jdbcType=CHAR}, #{createDate,jdbcType=DATE}, #{createUser,jdbcType=INTEGER}, 
+      #{status,jdbcType=CHAR}, #{createDate}, #{createUser,jdbcType=INTEGER}, 
       #{mac,jdbcType=CHAR}, #{buildingId,jdbcType=INTEGER}, #{floor,jdbcType=INTEGER}, 
       #{password,jdbcType=CHAR}, #{sequence,jdbcType=INTEGER}, #{shareEnable,jdbcType=CHAR}, 
       #{nodePath,jdbcType=VARCHAR}, #{isVirtualResource,jdbcType=CHAR}, #{permissionAttrId,jdbcType=INTEGER}, 
@@ -266,7 +266,7 @@
         #{status,jdbcType=CHAR},
       </if>
       <if test="createDate != null" >
-        #{createDate,jdbcType=DATE},
+        #{createDate},
       </if>
       <if test="createUser != null" >
         #{createUser,jdbcType=INTEGER},
@@ -346,7 +346,7 @@
         STATUS = #{status,jdbcType=CHAR},
       </if>
       <if test="createDate != null" >
-        CREATE_DATE = #{createDate,jdbcType=DATE},
+        CREATE_DATE = #{createDate},
       </if>
       <if test="createUser != null" >
         CREATE_USER = #{createUser,jdbcType=INTEGER},
@@ -419,7 +419,7 @@
     set NAME = #{name,jdbcType=VARCHAR},
       TYPE_ID = #{typeId,jdbcType=INTEGER},
       STATUS = #{status,jdbcType=CHAR},
-      CREATE_DATE = #{createDate,jdbcType=DATE},
+      CREATE_DATE = #{createDate},
       CREATE_USER = #{createUser,jdbcType=INTEGER},
       MAC = #{mac,jdbcType=CHAR},
       BUILDING_ID = #{buildingId,jdbcType=INTEGER},

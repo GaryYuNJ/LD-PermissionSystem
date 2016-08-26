@@ -2,8 +2,8 @@ package com.ldps.service;
 
 import java.util.List;
 
+import com.ldps.data.CustomerGroupData;
 import com.ldps.model.CustomerGroupModel;
-import com.ldps.model.CustomerModel;
 
 
 public interface ICustomerGroupService {
@@ -19,5 +19,11 @@ public interface ICustomerGroupService {
 
 	CustomerGroupModel queryByNameJoinCusIdWithPageIndex(String name,
 			Long customerId);
+
+	public int createNewUserGroup(String userGroupName);
+
+	public int deleteUserGroupById(Integer customerGroupId);
+
+	public CustomerGroupModel showUserGroupDetail(Integer customerGroupId);
 
 }

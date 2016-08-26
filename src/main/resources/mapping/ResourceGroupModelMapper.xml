@@ -12,7 +12,7 @@
     <result column="NAME" property="name" jdbcType="VARCHAR" />
     <result column="STATUS" property="status" jdbcType="CHAR" />
     <result column="IS_PUBLIC" property="isPublic" jdbcType="CHAR" />
-    <result column="CREATE_DATE" property="createDate" jdbcType="DATE" />
+    <result column="CREATE_DATE" property="createDate"  />
     <result column="CREATE_USER" property="createUser" jdbcType="INTEGER" />
     <result column="NUM1" property="num1" jdbcType="DECIMAL" />
     <result column="NUM2" property="num2" jdbcType="DECIMAL" />
@@ -41,7 +41,7 @@
       NUM1, NUM2, VC1, VC2, 
       CHR1, CHR2)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, 
-      #{isPublic,jdbcType=CHAR}, #{createDate,jdbcType=DATE}, #{createUser,jdbcType=INTEGER}, 
+      #{isPublic,jdbcType=CHAR}, #{createDate}, #{createUser,jdbcType=INTEGER}, 
       #{num1,jdbcType=DECIMAL}, #{num2,jdbcType=DECIMAL}, #{vc1,jdbcType=VARCHAR}, #{vc2,jdbcType=VARCHAR}, 
       #{chr1,jdbcType=CHAR}, #{chr2,jdbcType=CHAR})
   </insert>
@@ -99,7 +99,7 @@
         #{isPublic,jdbcType=CHAR},
       </if>
       <if test="createDate != null" >
-        #{createDate,jdbcType=DATE},
+        #{createDate},
       </if>
       <if test="createUser != null" >
         #{createUser,jdbcType=INTEGER},
@@ -137,7 +137,7 @@
         IS_PUBLIC = #{isPublic,jdbcType=CHAR},
       </if>
       <if test="createDate != null" >
-        CREATE_DATE = #{createDate,jdbcType=DATE},
+        CREATE_DATE = #{createDate},
       </if>
       <if test="createUser != null" >
         CREATE_USER = #{createUser,jdbcType=INTEGER},
@@ -168,7 +168,7 @@
     set NAME = #{name,jdbcType=VARCHAR},
       STATUS = #{status,jdbcType=CHAR},
       IS_PUBLIC = #{isPublic,jdbcType=CHAR},
-      CREATE_DATE = #{createDate,jdbcType=DATE},
+      CREATE_DATE = #{createDate},
       CREATE_USER = #{createUser,jdbcType=INTEGER},
       NUM1 = #{num1,jdbcType=DECIMAL},
       NUM2 = #{num2,jdbcType=DECIMAL},

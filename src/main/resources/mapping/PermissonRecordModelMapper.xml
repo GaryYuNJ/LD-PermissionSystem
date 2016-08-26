@@ -13,7 +13,7 @@
     <result column="RESOURCE_NAME" property="resourceName" jdbcType="VARCHAR" />
     <result column="CUSTOMER_ID" property="customerId" jdbcType="BIGINT" />
     <result column="ACTION_TYPE" property="actionType" jdbcType="INTEGER" />
-    <result column="CREATE_DATE" property="createDate" jdbcType="DATE" />
+    <result column="CREATE_DATE" property="createDate"  />
     <result column="CREATE_USER" property="createUser" jdbcType="BIGINT" />
   </resultMap>
   <insert id="insert" parameterType="com.ldps.model.PermissonRecordModel" >
@@ -21,7 +21,7 @@
       CUSTOMER_ID, ACTION_TYPE, CREATE_DATE, 
       CREATE_USER)
     values (#{objectType,jdbcType=INTEGER}, #{cgroupName,jdbcType=VARCHAR}, #{resourceName,jdbcType=VARCHAR}, 
-      #{customerId,jdbcType=BIGINT}, #{actionType,jdbcType=INTEGER}, #{createDate,jdbcType=DATE}, 
+      #{customerId,jdbcType=BIGINT}, #{actionType,jdbcType=INTEGER}, #{createDate}, 
       #{createUser,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="com.ldps.model.PermissonRecordModel" >
@@ -66,7 +66,7 @@
         #{actionType,jdbcType=INTEGER},
       </if>
       <if test="createDate != null" >
-        #{createDate,jdbcType=DATE},
+        #{createDate},
       </if>
       <if test="createUser != null" >
         #{createUser,jdbcType=BIGINT},

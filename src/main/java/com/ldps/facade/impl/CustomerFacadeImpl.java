@@ -107,6 +107,24 @@ public class CustomerFacadeImpl implements CustomerFacade {
 	}
 	
 	/*
+	根据mobile,userName搜索用户列表
+ */
+	@Override
+	public List<CustomerData> searchByMobileAndNameWithPageIndex(String mobile,
+			String userName, Integer startRow, Integer pageSize) {
+		
+		List<CustomerModel> cModels = iCustomerSevice.queryByMobileAndNameWithPageIndex(mobile, userName, startRow, pageSize);
+		
+		return customerModelConverter.processList(cModels);
+	}
+
+	@Override
+	public Integer queryTotalCountByMobileAndName(String mobile, String userName) {
+		return iCustomerSevice.queryTotalCountByMobileAndName(mobile,userName);
+	}
+
+
+	/*
 		获取building里的公共资源
 	 */
 	@Override

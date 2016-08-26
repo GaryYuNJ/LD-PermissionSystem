@@ -59,4 +59,9 @@ public interface CustomerFacade {
 	public int delUserGroupRelation(Long userId, Integer groupId);
 
 	public int addUserGroupRelation(Long userId, Integer groupId);
+
+	public List<CustomerData> searchByMobileAndNameWithPageIndex(String mobile,
+			String userName, Integer offset, Integer limit);
+
+	public Integer queryTotalCountByMobileAndName(String mobile, String userName);
 }

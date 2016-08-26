@@ -10,13 +10,13 @@
   <resultMap id="BaseResultMap" type="com.ldps.model.ResourceGrpRelModel" >
     <result column="RGROUP_ID" property="rgroupId" jdbcType="INTEGER" />
     <result column="RESOURCE_ID" property="resourceId" jdbcType="INTEGER" />
-    <result column="CREATE_DATE" property="createDate" jdbcType="DATE" />
+    <result column="CREATE_DATE" property="createDate"  />
     <result column="CREATE_USER" property="createUser" jdbcType="INTEGER" />
   </resultMap>
   <insert id="insert" parameterType="com.ldps.model.ResourceGrpRelModel" >
     insert into RESOURCE_GROUP_REL (RGROUP_ID, RESOURCE_ID, CREATE_DATE, 
       CREATE_USER)
-    values (#{rgroupId,jdbcType=INTEGER}, #{resourceId,jdbcType=INTEGER}, #{createDate,jdbcType=DATE}, 
+    values (#{rgroupId,jdbcType=INTEGER}, #{resourceId,jdbcType=INTEGER}, #{createDate}, 
       #{createUser,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.ldps.model.ResourceGrpRelModel" >
@@ -43,7 +43,7 @@
         #{resourceId,jdbcType=INTEGER},
       </if>
       <if test="createDate != null" >
-        #{createDate,jdbcType=DATE},
+        #{createDate},
       </if>
       <if test="createUser != null" >
         #{createUser,jdbcType=INTEGER},

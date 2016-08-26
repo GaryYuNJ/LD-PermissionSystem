@@ -112,4 +112,18 @@ public class CustomerServiceImpl implements ICustomerService {
 		// TODO Auto-generated method stub
 		return customerDao.selectByPrimaryKey(customerId);
 	}
+
+	@Override
+	public List<CustomerModel> queryByMobileAndNameWithPageIndex(String mobile,
+			String userName, Integer startRow, Integer pageSize) {
+		// TODO Auto-generated method stub
+		return customerDao.simpleByMobileAndNameWithPageIndex(mobile,
+				userName, startRow, pageSize);
+	}
+
+	@Override
+	public Integer queryTotalCountByMobileAndName(String mobile, String userName) {
+		// TODO Auto-generated method stub
+		return customerDao.selectTotalCountByMobileAndName(mobile, userName);
+	}
 }

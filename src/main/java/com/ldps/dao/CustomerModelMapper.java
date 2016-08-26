@@ -37,5 +37,11 @@ public interface CustomerModelMapper {
 			@Param("pageSize") Integer pageSize);
 	
 	Integer selectTotalCount();
+
+	List<CustomerModel> simpleByMobileAndNameWithPageIndex(@Param("mobile")String mobile,
+			@Param("userName") String userName, @Param("startRow") Integer startRow,
+			@Param("pageSize") Integer pageSize);
 	
+	Integer selectTotalCountByMobileAndName(@Param("mobile")String mobile,
+			@Param("userName") String userName);
 }

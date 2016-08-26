@@ -12,9 +12,9 @@
     <result column="RESOURCE_ID" property="resourceId" jdbcType="INTEGER" />
     <result column="ENABLE" property="enable" jdbcType="CHAR" />
     <result column="FROM_SHARED" property="fromShared" jdbcType="CHAR" />
-    <result column="START_DATE" property="startDate" jdbcType="DATE" />
-    <result column="END_DATE" property="endDate" jdbcType="DATE" />
-    <result column="CREATE_DATE" property="createDate" jdbcType="DATE" />
+    <result column="START_DATE" property="startDate"  />
+    <result column="END_DATE" property="endDate"  />
+    <result column="CREATE_DATE" property="createDate"  />
     <result column="CREATE_USER" property="createUser" jdbcType="BIGINT" />
   </resultMap>
   
@@ -24,17 +24,17 @@
     <result column="ENABLE" property="enable" jdbcType="CHAR" />
     <result column="FROM_SHARED" property="fromShared" jdbcType="CHAR" />
     <result column="SHARED_USER" property="sharedUser" jdbcType="VARCHAR" />
-    <result column="CREATE_DATE" property="createDate" jdbcType="DATE" />
+    <result column="CREATE_DATE" property="createDate"  />
     <result column="CREATE_USER" property="createUser" jdbcType="INTEGER" />
-    <result column="START_DATE" property="startDate" jdbcType="DATE" />
-    <result column="END_DATE" property="endDate" jdbcType="DATE" />
+    <result column="START_DATE" property="startDate"  />
+    <result column="END_DATE" property="endDate"  />
     
     <association property="resourceModel" javaType="com.ldps.model.ResourceModel">
 	    <id column="R_ID" property="id" jdbcType="INTEGER" />
 	    <result column="R_NAME" property="name" jdbcType="VARCHAR" />
 	    <result column="R_TYPE_ID" property="typeId" jdbcType="INTEGER" />
 	    <result column="R_STATUS" property="status" jdbcType="CHAR" />
-	    <result column="R_CREATE_DATE" property="createDate" jdbcType="DATE" />
+	    <result column="R_CREATE_DATE" property="createDate"  />
 	    <result column="R_CREATE_USER" property="createUser" jdbcType="INTEGER" />
 	    <result column="R_MAC" property="mac" jdbcType="CHAR" />
 	    <result column="R_BUILDING_ID" property="buildingId" jdbcType="INTEGER" />
@@ -69,8 +69,8 @@
       FROM_SHARED, START_DATE, END_DATE, 
       CREATE_DATE, CREATE_USER)
     values (#{customerId,jdbcType=BIGINT}, #{resourceId,jdbcType=INTEGER}, #{enable,jdbcType=CHAR}, 
-      #{fromShared,jdbcType=CHAR}, #{startDate,jdbcType=DATE}, #{endDate,jdbcType=DATE}, 
-      #{createDate,jdbcType=DATE}, #{createUser,jdbcType=BIGINT})
+      #{fromShared,jdbcType=CHAR}, #{startDate}, #{endDate}, 
+      #{createDate}, #{createUser,jdbcType=BIGINT})
   </insert>
   
    <insert id="insertSelective" parameterType="com.ldps.model.CusResourceRelModel" >
@@ -115,13 +115,13 @@
         #{fromShared,jdbcType=CHAR},
       </if>
       <if test="startDate != null" >
-        #{startDate,jdbcType=DATE},
+        #{startDate},
       </if>
       <if test="endDate != null" >
-        #{endDate,jdbcType=DATE},
+        #{endDate},
       </if>
       <if test="createDate != null" >
-        #{createDate,jdbcType=DATE},
+        #{createDate},
       </if>
       <if test="createUser != null" >
         #{createUser,jdbcType=BIGINT},
@@ -145,13 +145,13 @@
         FROM_SHARED = #{fromShared,jdbcType=CHAR},
       </if>
       <if test="startDate != null" >
-        START_DATE = #{startDate,jdbcType=DATE},
+        START_DATE = #{startDate},
       </if>
       <if test="endDate != null" >
-        END_DATE = #{endDate,jdbcType=DATE},
+        END_DATE = #{endDate},
       </if>
       <if test="createDate != null" >
-        CREATE_DATE = #{createDate,jdbcType=DATE},
+        CREATE_DATE = #{createDate},
       </if>
       <if test="createUser != null" >
         CREATE_USER = #{createUser,jdbcType=BIGINT},

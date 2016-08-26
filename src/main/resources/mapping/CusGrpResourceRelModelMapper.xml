@@ -11,11 +11,11 @@
     <result column="CGROUP_ID" property="cgroupId" jdbcType="INTEGER" />
     <result column="RESOURCE_ID" property="resourceId" jdbcType="INTEGER" />
     <result column="ENABLE" property="enable" jdbcType="CHAR" />
-    <result column="CREATE_DATE" property="createDate" jdbcType="DATE" />
-    <result column="UPDATE_DATE" property="updateDate" jdbcType="DATE" />
+    <result column="CREATE_DATE" property="createDate"  />
+    <result column="UPDATE_DATE" property="updateDate"  />
     <result column="CREATE_USER" property="createUser" jdbcType="INTEGER" />
-    <result column="START_DATE" property="startDate" jdbcType="DATE" />
-    <result column="END_DATE" property="endDate" jdbcType="DATE" />
+    <result column="START_DATE" property="startDate"  />
+    <result column="END_DATE" property="endDate"  />
   </resultMap>
   
   <sql id="Base_Column_List" >
@@ -27,8 +27,8 @@
       CREATE_DATE, UPDATE_DATE, CREATE_USER,START_DATE, END_DATE
       )
     values (#{cgroupId,jdbcType=INTEGER}, #{resourceId,jdbcType=INTEGER}, #{enable,jdbcType=CHAR}, 
-      #{createDate,jdbcType=DATE}, #{updateDate,jdbcType=DATE}, #{createUser,jdbcType=INTEGER}, 
-      #{startDate,jdbcType=DATE}, #{endDate,jdbcType=DATE}
+      #{createDate}, #{updateDate}, #{createUser,jdbcType=INTEGER}, 
+      #{startDate}, #{endDate}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.ldps.model.CusGrpResourceRelModel" >
@@ -70,10 +70,10 @@
         #{enable,jdbcType=CHAR},
       </if>
       <if test="createDate != null" >
-        #{createDate,jdbcType=DATE},
+        #{createDate},
       </if>
       <if test="updateDate != null" >
-        #{updateDate,jdbcType=DATE},
+        #{updateDate},
       </if>
       <if test="createUser != null" >
         #{createUser,jdbcType=INTEGER},

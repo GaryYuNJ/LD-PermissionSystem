@@ -1,5 +1,6 @@
 package com.ldps.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -46,5 +47,28 @@ public class CustomerGroupServiceImpl implements ICustomerGroupService {
 	@Override
 	public CustomerGroupModel queryByNameJoinCusIdWithPageIndex(String name, Long customerId) {
 		return customerGroupDao.selectByNameJoinCusIdWithPageIndex(name, customerId);
+	}
+
+	@Override
+	public int createNewUserGroup(String userGroupName) {
+		CustomerGroupModel model = new CustomerGroupModel(); 
+		model.setName(userGroupName);
+		model.setCreateDate(new Date());
+		model.setStatus("Y");
+		model.setCreateUser(0);
+		
+		return customerGroupDao.insertSelective(model);
+	}
+
+	@Override
+	public int deleteUserGroupById(Integer customerGroupId) {
+		// TODO Auto-generated method stub
+		return customerGroupDao.deleteByPrimaryKey(customerGroupId);
+	}
+
+	@Override
+	public CustomerGroupModel showUserGroupDetail(Integer customerGroupId) {
+		// TODO Auto-generated method stub
+		return customerGroupDao.selectByPrimaryKey(customerGroupId);
 	}
 }
