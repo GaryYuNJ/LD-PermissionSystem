@@ -322,3 +322,30 @@
 			 $('#dosearch').click(function() {  
 			        var params = $('#resourceTableId').bootstrapTable('getOptions')  
 			        params.queryParams = function(params) {  
+			            //定义参数  
+			            var search = {};  
+			            //遍历form 组装json  
+			            $.each($("#searchform").serializeArray(), function(i, field) {  
+			                //console.info(field.name + ":" + field.value + " ");  
+			                //可以添加提交验证  
+			                search[field.name] = field.value;  
+			            });  
+			  
+			            //参数转为json字符串，并赋给search变量 ,JSON.stringify <ie7不支持，有第三方解决插件  
+			            params.search = JSON.stringify(search)  
+			            console.info(params);  
+			            return params;  
+			        }  
+			        $('#resourceTableId').bootstrapTable('refresh', params)  
+			        //console.info(params);  
+			    });  	
+			//添加资源
+			 $('#newResourceId').click(function() {  
+			            var search = {};
+			            $.each($("#newResourceFormId").serializeArray(), function(i, field) {  
+			                console.info(field.name + ":" + field.value + " ");  
+			                search[field.name] = field.value;  
+			            });  
+			    });
+		</script>
+<%@ include file="/common/footer.html"%>

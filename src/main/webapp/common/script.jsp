@@ -33,4 +33,5 @@
 <script src="<c:url value="/js/bootstrap-switch.min.js" />"></script>
 <script src="<c:url value="/js/custom.js" />"></script>
 <script type="text/javascript">
-$("
+$("#nav li:eq(${pageIndex}) a").addClass("open");
+</script>
