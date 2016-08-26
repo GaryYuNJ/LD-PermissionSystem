@@ -6,6 +6,8 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ldps.dao.CustomerGroupModelMapper;
 import com.ldps.model.CustomerGroupModel;
@@ -70,5 +72,17 @@ public class CustomerGroupServiceImpl implements ICustomerGroupService {
 	public CustomerGroupModel showUserGroupDetail(Integer customerGroupId) {
 		// TODO Auto-generated method stub
 		return customerGroupDao.selectByPrimaryKey(customerGroupId);
+	}
+
+	//防止资源死锁
+	@Transactional(propagation=Propagation.SUPPORTS)
+	@Override
+	public int updateUserGroup(Integer customerGroupId,
+			String customerGroupName) {
+		CustomerGroupModel model = new CustomerGroupModel(); 
+		model.setId(customerGroupId);
+		model.setName(customerGroupName);
+		
+		return customerGroupDao.updateByPrimaryKeySelective(model);
 	}
 }

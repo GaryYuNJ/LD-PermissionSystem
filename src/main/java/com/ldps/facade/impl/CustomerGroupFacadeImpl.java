@@ -105,4 +105,11 @@ public class CustomerGroupFacadeImpl implements CustomerGroupFacade {
 				iCustomerGroupService.showUserGroupDetail(customerGroupId);
 		return customerGroupModelConverter.process(cModel, null);
 	}
+
+	@Override
+	public int updateUserGroup(Integer customerGroupId,
+			String customerGroupName) {
+		
+		return iCustomerGroupService.updateUserGroup(customerGroupId,customerGroupName);
+	}
 }

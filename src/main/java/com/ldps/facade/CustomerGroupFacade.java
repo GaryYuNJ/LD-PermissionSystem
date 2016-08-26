@@ -28,5 +28,7 @@ public interface CustomerGroupFacade {
 
 	CustomerGroupData showUserGroupDetail(Integer customerGroupId);
 
+	int updateUserGroup(Integer customerGroupId, String customerGroupName);
+
 	
 }

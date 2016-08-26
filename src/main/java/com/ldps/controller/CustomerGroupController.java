@@ -128,6 +128,19 @@ public class CustomerGroupController {
 		return JSON.toJSONString(data);
 	}
 	
+	@RequestMapping(value="updateUserGroup.json",method = { RequestMethod.GET,
+			RequestMethod.POST }, produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public String updateUserGroup(@RequestParam("userGroupId") Integer userGroupId,
+			@RequestParam("userGroupName") String userGroupName, ModelMap model){
+		
+		int flag = customerGroupFacade.updateUserGroup(userGroupId, userGroupName);
+		
+		APIMessage apiMessage = new APIMessage();
+		apiMessage.setStatus(flag);
+		
+		return JSON.toJSONString(apiMessage);
+	}
 	
 	@RequestMapping(value="deleteUserGroupById.json",method = { RequestMethod.GET,
 			RequestMethod.POST },produces = "application/json; charset=utf-8")

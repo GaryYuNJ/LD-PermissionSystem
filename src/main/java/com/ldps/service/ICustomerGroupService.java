@@ -26,4 +26,6 @@ public interface ICustomerGroupService {
 
 	public CustomerGroupModel showUserGroupDetail(Integer customerGroupId);
 
+	public int updateUserGroup(Integer customerGroupId, String customerGroupName);
+
 }
