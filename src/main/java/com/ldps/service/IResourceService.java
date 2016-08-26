@@ -47,4 +47,7 @@ public interface IResourceService {
 	int updateResource(ResourceModel model); 
 	 
 	int deleteResource(Integer primaryId);
+	
+	List<ResourceModel> queryBasicResByCondition(ResourceModel model, Integer pageNo, Integer pageSize);
+	int queryCountByCondition(ResourceModel model);
 }

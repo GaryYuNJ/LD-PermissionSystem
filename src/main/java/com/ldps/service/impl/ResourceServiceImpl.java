@@ -1,11 +1,11 @@
 package com.ldps.service.impl;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.ldps.dao.ResourceModelMapper;
 import com.ldps.model.ResourceModel;
@@ -107,5 +107,18 @@ public class ResourceServiceImpl implements IResourceService {
 
 		return resourceDao.deleteByPrimaryKey(primaryId);
 	}
-	
+
+	@Override
+	public List<ResourceModel> queryBasicResByCondition(ResourceModel model, Integer pageNo, Integer pageSize) {
+		if(model!=null){
+			if(StringUtils.isEmpty(model.getName()))
+				model.setName(null);
+		}		
+		return resourceDao.selectResouceListByCondition(model, pageNo, pageSize);
+	}
+
+	@Override
+	public int queryCountByCondition(ResourceModel model) {
+		return resourceDao.selectCountByCondition(model);
+	}
 }
