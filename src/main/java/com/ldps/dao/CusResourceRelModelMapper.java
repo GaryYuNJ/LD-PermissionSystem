@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.ldps.model.CusResourceRelModel;
+import com.ldps.model.ResourceModel;
 
 public interface CusResourceRelModelMapper {
     int insert(CusResourceRelModel record);
@@ -18,4 +19,7 @@ public interface CusResourceRelModelMapper {
 	int deleteSharedResource(@Param("fromCustomerId")Long fromCustomerId, @Param("toCustomerId")Long toCustomerId, @Param("resourceId")Integer resourceId);
 
 	int updateByPrimaryKeySelective(CusResourceRelModel record);
+	
+	List<ResourceModel> selectResouceListWithSpecUserId(@Param("resourceModel")ResourceModel resourceModel,@Param("startRow") Integer startRow,
+			@Param("pageSize") Integer pageSize);
 }

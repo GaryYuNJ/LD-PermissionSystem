@@ -56,7 +56,28 @@ public class ResourceModel {
 
     private String chr2;
     
-    public Integer getNodeId() {
+    private Long specificUserId; //指定要查询关联情况的userId
+    
+    private CusResourceRelModel cusResRelModel; //指定要查询关联情况的relModel
+    
+    public Long getSpecificUserId() {
+		return specificUserId;
+	}
+
+	public void setSpecificUserId(Long specificUserId) {
+		this.specificUserId = specificUserId;
+	}
+
+
+	public CusResourceRelModel getCusResRelModel() {
+		return cusResRelModel;
+	}
+
+	public void setCusResRelModel(CusResourceRelModel cusResRelModel) {
+		this.cusResRelModel = cusResRelModel;
+	}
+
+	public Integer getNodeId() {
 		return nodeId;
 	}
 

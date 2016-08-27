@@ -103,6 +103,7 @@
 							    </ul>
 							       
 							    <div class="tab-content">
+							      <!-- 用户详情tab -->
 							      <div class="tab-pane active" id="home">
 							      		<!-- Bootstrap 表单 -->
 									  <form class="form-horizontal" role="form">
@@ -155,7 +156,8 @@
 									        </div>
 									  </form>
 								  </div>
-								  <!-- usergroup table -->
+								  
+								  <!-- usergroup tab -->
 							      <div class="tab-pane" id="userGroup">
 								      <div class="col-lg-9">
 											<hr>
@@ -176,12 +178,48 @@
 							      	<div class="col-lg-12">
 										<table class="table table-striped table-bordered table-hover"
 											id="userGroupListTableId">
-											
 										</table>
 									</div>
 								  </div>
 								  
-							      <div class="tab-pane" id="userResource">...</div>
+								  <!-- 用户与资源关系tab -->
+							      <div class="tab-pane" id="userResource">
+									  	<div class="col-lg-9">
+										<hr>
+										<form class="form-horizontal" role="form" id="resourceSearchform">
+											<div class="form-group">
+												<div class="col-lg-2">
+													<input type="text" class="form-control" placeholder="资源名称" name="name">
+												</div>
+												<div class="col-lg-2">
+													<select class="form-control" name="deviceType">
+													  <option value="">资源属性</option>
+													  <option value="1">公共资源</option>
+													  <option value="2">基础资源</option>
+													  <option value="3">私有资源</option>
+													</select>
+												</div>
+												<div class="col-lg-2">
+													<select class="form-control" name="buildingId" id="buildingId">
+													  <option value="">选择楼栋</option>
+													</select>
+												</div>
+												<div class="col-lg-3">
+													<button type="button" class="btn btn-primary" id="doSearchResource">
+														<i class="icon-search"></i> 查询
+													</button>
+												</div>
+											</div>
+											<input type="hidden" id="userId_hidden" name="specificUserId">
+										</form>
+										<table class="table table-striped table-bordered table-hover"
+											id="resourceTableId">
+		
+										</table>
+									</div>
+								  </div>
+								  
+								  <!-- 用户与资源组关系 -->
 							      <div class="tab-pane" id="userResourceGroup">...</div>
 							    </div>
 							</div>
@@ -218,8 +256,6 @@
 		</div>
 	</div>
 </div>
-
-<input type="hidden" id="userId_hidden" >
 
 <%@ include file="/common/script.jsp"%>
 <script type="text/javascript">
@@ -488,7 +524,200 @@
         	  userGroupListTableInit();
         	  //$("#userGroupListTableId").bootstrapTable('refresh');
           } 
+        //点击tab调用对应function
+          if($(this).attr("href") == "#userResource"){
+        	  resourceTableInit();
+        	  //$("#userGroupListTableId").bootstrapTable('refresh');
+          } 
         })
       })
 </script>
+
+
+<script type="text/javascript">
+	function resourceTableInit() {
+		$('#resourceTableId').bootstrapTable({
+			method: 'get',
+		    url: "<c:url value='/manage/resourceSearch.json' />", 
+		    dataType: "json",
+		    queryParams: resourceQueryParams,
+		    pageSize: 10,
+		    pageList: [10, 25, 50],  //可供选择的每页的行数（*）
+		    pageNumber: 1,
+		    pagination: true, //分页
+		    singleSelect: false,
+		    striped: true,
+		    idField: "id",  //标识哪个字段为id主键
+		    sidePagination: "server", //服务端处理分页
+	       	columns: [
+				{
+				    title: '名称',
+				      field: 'name',
+				      align: 'center',
+				      valign: 'middle'
+				  }, 
+	               {
+	                 title: '类型',
+	                   field: 'deviceType',
+	                   align: 'center',
+	                   valign: 'middle',
+	                   formatter:function (value, row, index) {
+	                	   if(value=="1") return "公共资源";
+	                	   if(value=="2") return "基础资源";
+	                	   if(value=="3") return "私有资源";
+                        }
+	               }, 
+	               {
+	                   title: '楼栋',
+	                   field: 'buildingId',
+	                   align: 'center',
+	                   valign: 'middle',
+	                   formatter:function (value, row, index) {
+	                	   return findBuildName(value);
+                        }
+	               }, 
+	               {
+	                   title: '有权访问',
+	                   field: 'cusResRelModel',
+	                   align: 'center',
+	                   formatter:function (value, row, index) {
+	                	   if(row.deviceType == "1"){
+	                		   return "-";
+	                	   }else{
+	                		   if(null != value 
+		                			   && value.enable=="Y"){
+		                		   if((null == row.cusResRelModel.startDate || new Date(row.cusResRelModel.startDate) < new Date() )
+			                			   &&  (null == row.cusResRelModel.endDate || new Date(row.cusResRelModel.endDate) > new Date() )){
+		                			   return '<span class="label label-success">有权限</span>';
+		                		   }else{
+		                			   return '<span class="label label-danger">已过期</span>';
+		                		   }
+		                	   }else{
+		                		   return '<span class="label label-danger">无权限</span>';
+		                	   }
+	                	   }
+	                	   
+                        }
+	               },
+	               {
+	                   title: '权限起始时间',
+	                   field: 'cusResRelModel',
+	                   align: 'center',
+	                   formatter:function(value,row,index){
+	                	   if(null != value){
+	                		   if(null == value.startDate){
+	                			   return "无限制";
+	                		   }else{
+	                			   return new Date(value.startDate).format("yyyy-MM-dd HH:mm:ss");
+	                		   }
+	                	   }else{
+	                		   return "-";
+	                	   }
+	                 } 
+	               },
+	               {
+	                   title: '权限截至时间',
+	                   field: 'cusResRelModel',
+	                   align: 'center',
+	                   formatter:function(value,row,index){
+	                	   if(null != value){
+	                		   if(null == value.endDate){
+	                			   return "无限制";
+	                		   }else{
+	                			   return new Date(value.endDate).format("yyyy-MM-dd HH:mm:ss"); 
+	                		   }
+	                	   }else{
+	                		   return "-";
+	                	   }
+	                 }
+	               },
+	               {
+	                   title: '操作',
+	                   field: 'id',
+	                   align: 'center',
+	                   formatter:function(value,row,index){
+	                	   if(row.deviceType == "1"){
+	                		   return "-";
+	                	   }else{
+		                	   if(null != row.cusResRelModel 
+		                			   && row.cusResRelModel.enable == "Y"
+		                			   && (null == row.cusResRelModel.startDate || new Date(row.cusResRelModel.startDate) < new Date() ) 
+		                			   &&  (null == row.cusResRelModel.endDate || new Date(row.cusResRelModel.endDate) > new Date() ) ){
+		                		   var e = '<a href="#" mce_href="#" onclick="removePermission(\''+ row.id +'\')">删除权限</a> ';  
+		                	   }else{
+		                		   var e = '<a href="#" mce_href="#" onclick="addPermmission(\''+ row.id + '\')">授权</a> ';  
+		                	   }
+		                    	return e;  
+	                	   }
+	                 } 
+	               }
+	           ],
+	           formatLoadingMessage: function () {
+			    	return "请稍等，正在加载中...";
+			  	},
+               formatNoMatches: function () {  //没有匹配的结果
+                   return '无符合条件的记录';
+               }
+	      });
+	};
+	
+	function resourceQueryParams(params) {
+        //定义参数  
+        var search = {};  
+        //遍历form 组装json  
+        $.each($("#resourceSearchform").serializeArray(), function(i, field) {  
+            //console.info(field.name + ":" + field.value + " ");  
+            //可以添加提交验证  
+            search[field.name] = field.value;  
+        });  
+
+        //参数转为json字符串，并赋给search变量 ,JSON.stringify <ie7不支持，有第三方解决插件  
+        params.search = JSON.stringify(search);
+        console.info(params);  
+        return params;  
+    }  
+	
+	//自定义resource查询
+	 $('#doSearchResource').click(function() {
+	        //var params = $('#resourceTableId').bootstrapTable('getOptions');  
+	        $('#resourceTableId').bootstrapTable('refresh');  
+	        //console.info(params);  
+    });  	
+
+	//给楼栋赋值Ajax
+	var buildings;
+	$.get("<c:url value="/manage/allBuildings.json" />",function(data,status){
+		if(status=4){
+			$.each(data, function (n,value) {
+				$("#buildingId").append("<option value='"+value.id+"'>"+value.name+"</option>");
+				$("#addbuildsId").append("<option value='"+value.id+"'>"+value.name+"</option>");
+				buildings=data;
+			});
+		}
+	});
+	
+	function findBuildName(id){
+		var tempvalue;
+		$.each(buildings, function (n,value) {
+			if(id==value.id) {
+				tempvalue=value.name;
+				return false;
+			}
+		});
+		return tempvalue;
+	}
+	
+   function findBuildName(id){
+		var tempvalue;
+		$.each(buildings, function (n,value) {
+			if(id==value.id) {
+				tempvalue=value.name;
+				return false;
+			}
+		});
+		return tempvalue;
+	}
+</script>
+
+
 <%@ include file="/common/footer.html"%>

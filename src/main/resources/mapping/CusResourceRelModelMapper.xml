@@ -42,6 +42,13 @@
 	    <result column="R_PASSWORD" property="password" jdbcType="CHAR" />
 	    <result column="R_SEQUENCE" property="sequence" jdbcType="INTEGER" />
 	    <result column="R_SHARE_ENABLE" property="shareEnable" jdbcType="CHAR" />
+	    <result column="NODE_PATH" property="nodePath" jdbcType="VARCHAR" />
+	    <result column="IS_VIRTUAL_RESOURCE" property="isVirtualResource" jdbcType="CHAR" />
+	    <result column="PERMISSION_ATTR_ID" property="permissionAttrId" jdbcType="INTEGER" />
+	    <result column="DEVICE_TYPE" property="deviceType" jdbcType="INTEGER" />
+	    <result column="MANUFACTURER_ID" property="manufacturerId" jdbcType="INTEGER" />
+	    <result column="NODE_ID" property="nodeId" jdbcType="INTEGER" />
+	    
 	    <result column="R_R_INT1" property="rInt1" jdbcType="INTEGER" />
 	    <result column="R_R_INT2" property="rInt2" jdbcType="INTEGER" />
 	    <result column="R_NUM1" property="num1" jdbcType="DECIMAL" />
@@ -53,11 +60,50 @@
     </association>
   </resultMap>
   
+  <resultMap id="ResourceModel_WithRelModelMap" type="com.ldps.model.ResourceModel" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="TYPE_ID" property="typeId" jdbcType="INTEGER" />
+    <result column="STATUS" property="status" jdbcType="CHAR" />
+    <result column="CREATE_DATE" property="createDate"  />
+    <result column="CREATE_USER" property="createUser" jdbcType="INTEGER" />
+    <result column="MAC" property="mac" jdbcType="CHAR" />
+    <result column="BUILDING_ID" property="buildingId" jdbcType="INTEGER" />
+    <result column="FLOOR" property="floor" jdbcType="INTEGER" />
+    <result column="PASSWORD" property="password" jdbcType="CHAR" />
+    <result column="SEQUENCE" property="sequence" jdbcType="INTEGER" />
+    <result column="SHARE_ENABLE" property="shareEnable" jdbcType="CHAR" />
+    <result column="NODE_PATH" property="nodePath" jdbcType="VARCHAR" />
+    <result column="IS_VIRTUAL_RESOURCE" property="isVirtualResource" jdbcType="CHAR" />
+    <result column="PERMISSION_ATTR_ID" property="permissionAttrId" jdbcType="INTEGER" />
+    <result column="DEVICE_TYPE" property="deviceType" jdbcType="INTEGER" />
+    <result column="MANUFACTURER_ID" property="manufacturerId" jdbcType="INTEGER" />
+    <result column="NODE_ID" property="nodeId" jdbcType="INTEGER" />
+    
+    <association property="cusResRelModel" javaType="com.ldps.model.CusResourceRelModel">
+	    <id column="CR_CUSTOMER_ID" property="customerId" jdbcType="BIGINT" />
+	    <result column="CR_RESOURCE_ID" property="resourceId" jdbcType="INTEGER" />
+	    <result column="CR_ENABLE" property="enable" jdbcType="CHAR" />
+	    <result column="CR_FROM_SHARED" property="fromShared" jdbcType="CHAR" />
+	    <result column="CR_CREATE_DATE" property="createDate"  />
+	    <result column="CR_CREATE_USER" property="createUser" jdbcType="BIGINT" />
+	    <result column="CR_START_DATE" property="startDate"  />
+	    <result column="CR_END_DATE" property="endDate"  />
+    </association>
+  </resultMap>
+  
   <sql id="Column_WithResourceModel_List" >
-    CR.CUSTOMER_ID, CR.RESOURCE_ID, CR.ENABLE, CR.FROM_SHARED, CR.SHARED_USER, CR.CREATE_DATE, 
-    CR.CREATE_USER,CR.START_DATE,CR.END_DATE,
+    CR.CUSTOMER_ID CR_CUSTOMER_ID, CR.RESOURCE_ID CR_RESOURCE_ID, CR.ENABLE CR_ENABLE, CR.FROM_SHARED CR_FROM_SHARED, CR.CREATE_DATE CR_CREATE_DATE, 
+    CR.CREATE_USER CR_CREATE_USER, CR.START_DATE CR_START_DATE, CR.END_DATE CR_END_DATE,
     R.ID, R.NAME, R.TYPE_ID, R.STATUS, R.CREATE_DATE, R.CREATE_USER, R.MAC, R.BUILDING_ID, R.FLOOR, R.PASSWORD, 
-    R.SEQUENCE, R.SHARE_ENABLE, R.R_INT1, R.R_INT2, R.NUM1, R.NUM2, R.VC1, R.VC2, R.CHR1, R.CHR2
+    R.SEQUENCE, R.SHARE_ENABLE,R.NODE_PATH,R.IS_VIRTUAL_RESOURCE, R.PERMISSION_ATTR_ID, R.DEVICE_TYPE, R.MANUFACTURER_ID, R.NODE_ID
+  </sql>
+  
+   <sql id="ResourceColumn_WithRelModel_List" >
+    R.ID, R.NAME, R.TYPE_ID, R.STATUS, R.CREATE_DATE, R.CREATE_USER, R.MAC, R.BUILDING_ID, R.FLOOR, R.PASSWORD, 
+    R.SEQUENCE, R.SHARE_ENABLE,R.NODE_PATH,R.IS_VIRTUAL_RESOURCE, R.PERMISSION_ATTR_ID, R.DEVICE_TYPE, R.MANUFACTURER_ID, R.NODE_ID,
+    CR.CUSTOMER_ID CR_CUSTOMER_ID, CR.RESOURCE_ID CR_RESOURCE_ID, CR.ENABLE CR_ENABLE, CR.FROM_SHARED CR_FROM_SHARED, CR.CREATE_DATE CR_CREATE_DATE, 
+    CR.CREATE_USER CR_CREATE_USER, CR.START_DATE CR_START_DATE, CR.END_DATE CR_END_DATE
   </sql>
   
     <sql id="Base_Column_List" >
@@ -182,5 +228,20 @@
     ADN CUSTOMER_ID =#{toCustomerId,jdbcType=BIGINT} 
     AND SHARED_USER =#{fromCustomerId,jdbcType=BIGINT}
   </delete>
+  
+  <select id="selectResouceListWithSpecUserId" resultMap="ResourceModel_WithRelModelMap" >
+    select 
+    <include refid="ResourceColumn_WithRelModel_List" /> 
+    from RESOURCE R LEFT JOIN CUSTOMER_RESOURCE_REL CR 
+    ON R.ID = CR.RESOURCE_ID AND CR.CUSTOMER_ID = #{resourceModel.specificUserId, jdbcType=BIGINT} 
+    <if test="resourceModel!=null">
+    	<where>
+    		<if test="resourceModel.name != null"><bind name="nameLike" value="'%' + resourceModel.name + '%'" /> name like #{nameLike}</if>
+    		<if test="resourceModel.buildingId != null"> AND  BUILDING_ID = #{resourceModel.buildingId}</if>
+    		<if test="resourceModel.deviceType != null"> AND  DEVICE_TYPE = #{resourceModel.deviceType}</if>
+    	</where>
+     </if>
+    limit #{startRow,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
+  </select>
   
 </mapper>

@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import com.ldps.dao.CusResourceRelModelMapper;
 import com.ldps.dao.ResourceModelMapper;
 import com.ldps.model.ResourceModel;
 import com.ldps.service.IResourceService;
@@ -16,6 +17,8 @@ public class ResourceServiceImpl implements IResourceService {
 
 	@Resource
 	private ResourceModelMapper resourceDao;
+	@Resource
+	private CusResourceRelModelMapper cusResourceRelDao;
 
 	@Override
 	public ResourceModel queryResourceByMAC(String mac) {
@@ -113,8 +116,13 @@ public class ResourceServiceImpl implements IResourceService {
 		if(model!=null){
 			if(StringUtils.isEmpty(model.getName()))
 				model.setName(null);
-		}		
-		return resourceDao.selectResouceListByCondition(model, pageNo, pageSize);
+		} 
+		if(null == model || null == model.getSpecificUserId()){
+			return resourceDao.selectResouceListByCondition(model, pageNo, pageSize);
+		}else{
+			return cusResourceRelDao.selectResouceListWithSpecUserId(model, pageNo, pageSize);
+		}
+		
 	}
 
 	@Override
