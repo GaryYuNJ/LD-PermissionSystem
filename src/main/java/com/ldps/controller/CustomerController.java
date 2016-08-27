@@ -47,8 +47,6 @@ public class CustomerController {
 	@ResponseBody
 	public String showUserList( String mobile, String userName, @RequestParam("limit") Integer limit, 
 			@RequestParam("offset") Integer offset, ModelMap model){
-		//页面菜单样式需要
-		model.put("pageIndex", 3);
 		
 		BootstrapTableData bData = new BootstrapTableData();
 		
@@ -70,6 +68,45 @@ public class CustomerController {
 				bData.setTotal(customerFacade.queryTotalCountByMobileAndName(mobile,userName));
 			}
 		}
+		if(null == bData.getRows()){
+			bData.setPage(0);
+			bData.setRows(new Object());
+			bData.setTotal(0);
+		}
+		return JSON.toJSONString(bData);
+	}
+	
+
+	@RequestMapping(value="showUserListWithGroupId.json",method = { RequestMethod.GET,
+			RequestMethod.POST },produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public String showUserListWithGroupId( @RequestParam("userGroupId") String userGroupId, @RequestParam("bindUserFlag") Integer bindUserFlag, 
+			String mobile, String userName, @RequestParam("limit") Integer limit, @RequestParam("offset") Integer offset, ModelMap model){
+		
+		BootstrapTableData bData = new BootstrapTableData();
+		List<CustomerData> cDatas = new ArrayList<CustomerData>();
+		
+		//标志位，只搜索与groupId绑定的用户
+		if(bindUserFlag == 1){
+			cDatas = customerFacade.searchWithBindGrpIdByNameAndMobile(userGroupId,mobile,userName,offset, limit);
+			if(null != cDatas && cDatas.size()>0){
+				bData.setRows(cDatas);
+				bData.setPage(offset/limit +1);
+				//get total
+				bData.setTotal(customerFacade.queryTotalCountWithBindGrpId(userGroupId,mobile,userName));
+			}
+			
+		}else{
+			//根据 mobile，name搜索用户列表，并加上与指定groupId的依赖关系
+			cDatas = customerFacade.searchWithGrpIdFlagByNameAndMobile(userGroupId, mobile, userName, offset, limit);
+			if(null != cDatas && cDatas.size()>0){
+				bData.setRows(cDatas);
+				bData.setPage(offset/limit +1);
+				//根据mobile，name 查用户总数
+				bData.setTotal(customerFacade.queryTotalCountByMobileAndUserName(mobile,userName));
+			}
+		}
+		
 		if(null == bData.getRows()){
 			bData.setPage(0);
 			bData.setRows(new Object());
@@ -116,25 +153,6 @@ public class CustomerController {
 		return JSON.toJSONString(apiMessage);
 	}
 	
-	@RequestMapping(value="/queryCustomer1",method=RequestMethod.GET)
-	public String demo(@ModelAttribute CustomerModel customer,Model model){
-		model.addAttribute("customer", customerService.getUserByCId(customer.getCid()));
-		return "demo";
-	}
-	
-	@RequestMapping(value="/queryCustomer2",method=RequestMethod.GET)
-	public String demo2(@RequestParam("id")String id,Model model){
-		CustomerModel cModel= customerService.getUserByCId(id);
-		model.addAttribute("customer", cModel);
-		return "demo";
-	}
-	
-	@RequestMapping(value="/queryCustomer3",method=RequestMethod.GET)
-	public String demo3(Model model){
-		model.addAttribute("customer", customerService.getUserByCId(customer.getCid()));
-		return "demo";
-	}
-
 	public CustomerModel getCustomer() {
 		return customer;
 	}

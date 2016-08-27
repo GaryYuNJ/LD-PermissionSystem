@@ -50,7 +50,7 @@ public class CustomerModelConverter {
 			data.setRelation(source.getRelation());
 			data.setPassword(source.getPassword());
 			data.setEmail(source.getEmail());
-			
+			data.setExtendSpecificFlag(source.getExtendSpecificFlag());
 		}
 		
 		

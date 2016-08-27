@@ -121,6 +121,16 @@ public class CustomerData {
 
     private String cchr6;
 
+    private Integer extendSpecificFlag;
+    
+	public Integer getExtendSpecificFlag() {
+		return extendSpecificFlag;
+	}
+
+	public void setExtendSpecificFlag(Integer extendSpecificFlag) {
+		this.extendSpecificFlag = extendSpecificFlag;
+	}
+
 	public Long getId() {
         return id;
     }

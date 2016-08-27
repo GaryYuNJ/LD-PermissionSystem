@@ -107,6 +107,50 @@ public class CustomerFacadeImpl implements CustomerFacade {
 	}
 	
 	/*
+	根据 指定的BindGrpId 绑定关系，mobile，name搜索用户列表
+	 */
+	@Override
+	public List<CustomerData> searchWithBindGrpIdByNameAndMobile(String userGroupId,
+			String mobile, String userName, Integer startRow, Integer pageSize) {
+		
+		List<CustomerModel> cModels = iCustomerSevice.searchWithBindGrpIdByNameAndMobile(userGroupId,mobile,userName,startRow,pageSize);
+		return customerModelConverter.processList(cModels);
+	}
+	
+	
+	/*
+	根据 指定的BindGrpId 绑定关系，mobile，name 查用户总数
+	 */
+	@Override
+	public Integer queryTotalCountWithBindGrpId(String userGroupId,
+			String mobile, String userName) {
+		
+		return iCustomerSevice.queryTotalCountWithBindGrpId(userGroupId, mobile, userName);
+		
+	}
+	/*
+		根据 mobile，name搜索用户列表，并加上与指定groupId的依赖关系
+	 */
+	@Override
+	public List<CustomerData> searchWithGrpIdFlagByNameAndMobile(String userGroupId,
+			String mobile, String userName, Integer startRow, Integer pageSize) {
+		
+		List<CustomerModel> cModels = iCustomerSevice.searchWithGrpIdFlagByNameAndMobile(userGroupId,mobile,userName,startRow,pageSize);
+		return customerModelConverter.processList(cModels);
+	}
+
+	/*
+		根据mobile，name 查用户总数
+	 */
+	@Override
+	public Integer queryTotalCountByMobileAndUserName(
+			String mobile, String userName) {
+		
+		return iCustomerSevice.queryTotalCountByMobileAndUserName(mobile, userName);
+		
+	}
+	
+	/*
 	根据mobile,userName搜索用户列表
  */
 	@Override
@@ -409,6 +453,7 @@ public class CustomerFacadeImpl implements CustomerFacade {
 		
 		return message;
 	}
+	
 
 	public ICustomerService getiCustomerSevice() {
 		return iCustomerSevice;
@@ -452,6 +497,7 @@ public class CustomerFacadeImpl implements CustomerFacade {
 			ResourceModelConverter resourceModelConverter) {
 		this.resourceModelConverter = resourceModelConverter;
 	}
+
 
 
 }

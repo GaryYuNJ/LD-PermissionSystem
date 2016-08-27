@@ -3,7 +3,7 @@
 <mapper namespace="com.ldps.dao.CustomerGroupModelMapper" >
   <cache 
   	eviction="LRU" 
-  	flushInterval="36000000" 
+  	flushInterval="6000" 
   	size="1024"  
   	readOnly="true" >
   </cache>

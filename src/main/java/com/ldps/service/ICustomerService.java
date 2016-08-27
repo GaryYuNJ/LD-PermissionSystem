@@ -44,4 +44,29 @@ public interface ICustomerService {
 			String userName, Integer startRow, Integer pageSize);
 
 	public Integer queryTotalCountByMobileAndName(String mobile, String userName);
+
+	/*
+	根据 指定的BindGrpId 绑定关系，mobile，name搜索用户列表
+	 */
+	public List<CustomerModel>  searchWithBindGrpIdByNameAndMobile(String userGroupId,
+			String mobile, String userName, Integer startRow, Integer pageSize);
+
+	/*
+	根据指定的BindGrpId 绑定关系，mobile，name 查用户总数
+	 */
+	Integer queryTotalCountWithBindGrpId(String userGroupId, String mobile,
+			String userName);
+
+	/*
+	根据 mobile，name搜索用户列表，并加上与指定groupId的依赖关系
+	 */
+	public List<CustomerModel> searchWithGrpIdFlagByNameAndMobile(
+			String userGroupId, String mobile, String userName,
+			Integer startRow, Integer pageSize);
+
+	/*
+	根据mobile，name 查用户总数
+	 */
+	public Integer queryTotalCountByMobileAndUserName(
+			String mobile, String userName);
 }

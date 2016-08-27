@@ -44,4 +44,5 @@ public interface CustomerModelMapper {
 	
 	Integer selectTotalCountByMobileAndName(@Param("mobile")String mobile,
 			@Param("userName") String userName);
+
 }

@@ -152,15 +152,23 @@
 									  <hr>
 										<form class="form-horizontal" role="form">
 											<div class="form-group">
+												<label class="col-lg-2 control-label">只看绑定</label>
+				                                  <div class="col-lg-1">
+				                                  	<div id="selectBindUserFlag" class="make-switch" data-on-label="<i class='icon-ok icon-white'></i>" data-off-label="<i class='icon-remove'></i>">
+													    <input type="checkbox" checked id="selectBindUserCheckBox"/>
+													</div>
+				                                  </div>
 												<label class="col-lg-2 control-label" style="width: 120px">用户名称</label>
-												<div class="col-lg-3">
+												<div class="col-lg-2">
 													<input type="text" id="userNameSearch" class="form-control" placeholder="用户名称">
 												</div>
+												
 												<label class="col-lg-2 control-label" style="width: 120px">手机号</label>
 												<div class="col-lg-3">
 													<input type="text" id="userMobileSearch" class="form-control" placeholder="手机号">
 												</div>
-												<div class="col-lg-3">
+												
+												<div class="col-lg-1">
 													<button type="button" onclick = "$('#userListTableId').bootstrapTable('refresh');" class="btn btn-primary">
 														<i class="icon-search"></i> 查询
 													</button>
@@ -224,6 +232,7 @@
 </div>
 
 <input type="hidden" id="userGroupId_hidden" >
+<input type="hidden" id="selectBindUserFlag_hidden" value="1">
 
 <%@ include file="/common/script.jsp"%>
 <script type="text/javascript">
@@ -258,12 +267,6 @@
                    field: 'name',
                    align: 'center',
                    valign: 'middle'
-               }, 
-               {
-                   title: '状态',
-                   field: 'status',
-                   align: 'center',
-                   valign: 'middle',
                }, 
                {
                    title: '创建时间',
@@ -355,6 +358,7 @@
 			});
 		  };
 		  
+		  
       //显示用户详情内容
 	  var showUserGroup = function (userGroupId) {
 		  $("#userGroupId_hidden").val(userGroupId);
@@ -363,6 +367,7 @@
 		  initUserGroupDetailForm(userGroupId);
 	  };
 
+	  
 	  //初始化 UserDetailForm 
 	  var initUserGroupDetailForm = function (userGroupId) {
 		  $.ajax( {  
@@ -383,6 +388,7 @@
 			     }  
 			});
 	  };
+	  
 	  
 	//更新 userGroup
 	 $('#updateUserGroup_Button').click(function() {
@@ -412,10 +418,22 @@
 		});
 	 });
 	
+	//关联用户组查询用户标识
+	 $('#selectBindUserFlag').on('switch-change', function (e, data) {
+		    var value = data.value;
+		    //启用
+		    if(value == true){
+		    	$("#selectBindUserFlag_hidden").val("1");
+		    }else{
+		    	$("#selectBindUserFlag_hidden").val("0");
+		    }
+		});
+	 
+	 var userListTableInit = function () {
 		//用户列表table
 		$('#userListTableId').bootstrapTable({
 			method: 'get',
-		    url: "<c:url value='/user/showUserList.json' />", 
+		    url: "<c:url value='/user/showUserListWithGroupId.json' />", 
 		    dataType: "json",
 		    queryParams: userQueryParams,
 		    pageSize: 10,
@@ -473,10 +491,12 @@
 	                   field: 'id',
 	                   align: 'center',
 	                   formatter:function(value,row,index){
-	                 var e = '<a href="javascript:void(0);" mce_href="#" onclick="showUser(\''+ row.id + '\')">详情</a> ';  
-	                 //var d = '<a href="#" mce_href="#" onclick="delete(\''+ row.id +'\')">删除</a> ';  
-	                 //   return e+d;
-	                 return e; 
+	                	   if(row.extendSpecificFlag != null){
+	                		   var e = '<a href="javascript:void(0)" mce_href="#" onclick="delUserGroupRelation(this, \''+ row.id +'\')">移除</a> ';  
+	                	   }else{
+	                		   var e = '<a href="javascript:void(0)" mce_href="#" onclick="addUserGroupRelation(this, \''+ row.id + '\')">加入</a> ';  
+	                	   }
+	                	   return e;
 	                 } 
 	               }
 	           ],
@@ -487,7 +507,7 @@
 	            return '无符合条件的记录';
 	        }
 	      });
-		
+	 	};
 		  //user table 入参
 		 function userQueryParams(params) {  //配置参数
 		    var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
@@ -498,10 +518,58 @@
 		      sortOrder: params.order ,//排位命令（desc，asc）
 		      search: params.search,
 		      userName: $("#userNameSearch").val(),
-		      mobile: $("#userMobileSearch").val()
+		      mobile: $("#userMobileSearch").val(),
+		      bindUserFlag: $("#selectBindUserFlag_hidden").val(), //关联用户组查询用户标识
+		      userGroupId: $("#userGroupId_hidden").val() //
 		    };
 		    return temp;
 		  }
+		  
+		 //删除usergroup与user关系
+		 function delUserGroupRelation(obj, userId) {
+			 var groupId = $("#userGroupId_hidden").val();
+			 $.ajax( {  
+				    url:"<c:url value='/user/delUserGroupRelation.json' />",
+				    data:{   groupId : groupId, userId : userId },  
+				    type:'get',  
+				    cache:false,  
+				    dataType:'json',  
+				    success:function(data) {
+				    	if(data.status == 1){
+					    	$(obj).attr("onclick", "addUserGroupRelation(this, "+userId+")");
+					    	$(obj).html("加入");
+				    	}else{
+				    		alert("操作失败！");
+				    	}
+				     },  
+				     error : function() {  
+				          alert("系统异常！");  
+				     }  
+				});
+		  };
+		  
+			//添加usergroup与user关系
+			 function addUserGroupRelation(obj, userId) {
+				 var  groupId = $("#userGroupId_hidden").val();
+				 $.ajax( {  
+					    url:"<c:url value='/user/addUserGroupRelation.json' />",
+					    data:{   groupId : groupId, userId : userId },  
+					    type:'get',  
+					    cache:false,  
+					    dataType:'json',  
+					    success:function(data) {
+					    	if(data.status == 1){
+						    	$(obj).attr("onclick", "delUserGroupRelation(this, "+userId+")");
+						    	$(obj).html("移除");
+					    	}else{
+					    		alert("操作失败！");
+					    	}
+					     },  
+					     error : function() {  
+					          alert("系统异常！");  
+					     }  
+					});
+			  };
 		  
 	 //tab 切换
     $(function () {
@@ -513,8 +581,8 @@
           
           //点击tab调用对应function
           if($(this).attr("href") == "#userAndUserGroup"){
-        	  //userGroupListTableInit();
-        	  $("#userListTableId").bootstrapTable('refresh');
+        	  userListTableInit();
+        	  //$("#userListTableId").bootstrapTable('refresh');
           } 
         })
       })

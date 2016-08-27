@@ -13,6 +13,31 @@
     <result column="CREATE_DATE" property="createDate"  />
     <result column="CREATE_USER" property="createUser" jdbcType="INTEGER" />
   </resultMap>
+  
+  <resultMap id="SimpleResultMap" type="com.ldps.model.CustomerModel" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="CID" property="cid" jdbcType="VARCHAR" />
+    <result column="CSTATUS" property="cstatus" jdbcType="CHAR" />
+    <result column="CNAME" property="cname" jdbcType="VARCHAR" />
+    <result column="MOBILE" property="mobile" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="PASSWORD" property="password" jdbcType="VARCHAR" />
+    <result column="SEX" property="sex" jdbcType="CHAR" />
+    <result column="BIRTHDAY" property="birthday"  jdbcType="DATE" />
+    <result column="ADDRESS" property="address" jdbcType="VARCHAR" />
+    <result column="EMAIL" property="email" jdbcType="VARCHAR" />
+    <result column="RELATION" property="relation" jdbcType="VARCHAR" />
+    <result column="EXTEND_SPECIF_GROUPID" property="extendSpecificFlag" jdbcType="INTEGER" />
+  </resultMap>
+  
+   <resultMap id="ResultOfInteger" type="java.lang.Integer">  
+       <result column="totalCount" property="totalCount" jdbcType="INTEGER" />  
+   </resultMap>  
+  
+  <sql id="Simple_Customer_Column_List" >
+  	C.ID, C.CID, C.CSTATUS, C.NAME, C.MOBILE, C.PASSWORD, C.SEX, C.BIRTHDAY, C.EMAIL, C.ADDRESS, C.RELATION
+  </sql>
+  
   <insert id="insert" parameterType="com.ldps.model.CusGroupRelModel" >
     insert into CGROUP_REL (CGROUP_ID, CUSTOMER_ID, CREATE_DATE, 
       CREATE_USER)
@@ -55,5 +80,83 @@
 		delete from CGROUP_REL 
 		where CGROUP_ID = #{groupId,jdbcType=INTEGER} and CUSTOMER_ID =  #{customerId, jdbcType=BIGINT}
 	</delete>
+  
+   
+    <!-- By BindGrpId, Mobile And Name 分页查询 -->
+  <select id="selectCusModelWithBindGrpId" resultMap="SimpleResultMap"  >
+    select 
+    <include refid="Simple_Customer_Column_List" /> , CR.CGROUP_ID EXTEND_SPECIF_GROUPID 
+    FROM CUSTOMER C,CGROUP_REL CR 
+	WHERE C.ID=CR.CUSTOMER_ID
+	AND CR.CGROUP_ID= #{userGroupId, jdbcType=INTEGER} 
+    <if test="mobile != null and mobile != ''" >
+        AND MOBILE =#{mobile,jdbcType=VARCHAR} 
+    </if>
+    <if test="userName != null and userName != '' " >
+        AND 
+    </if>
+    <if test="userName != null and userName != ''" >
+         NAME =#{userName,jdbcType=VARCHAR} 
+    </if>
+    limit #{startRow,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
+  </select>
+     
+    <!-- By BindGrpId, Mobile And Name 分页查询 -->
+  <select id="selectCusModelCountWithBindGrpId" resultMap="ResultOfInteger"  >
+    select 
+    COUNT(C.ID) totalCount 
+    FROM CUSTOMER C,CGROUP_REL CR 
+	WHERE C.ID=CR.CUSTOMER_ID
+	AND CR.CGROUP_ID= #{userGroupId, jdbcType=INTEGER} 
+    <if test="mobile != null and mobile != ''" >
+        AND MOBILE =#{mobile,jdbcType=VARCHAR} 
+    </if>
+    <if test="userName != null and userName != '' " >
+        AND 
+    </if>
+    <if test="userName != null and userName != ''" >
+         NAME =#{userName,jdbcType=VARCHAR} 
+    </if>
+  </select>
+  
+  
+    <!-- By Mobile And Name 分页查询 , 加上与指定groupId的绑定关系-->
+  <select id="selectWithGrpIdFlagByNameAndMobile" resultMap="SimpleResultMap"  >
+    select 
+    <include refid="Simple_Customer_Column_List" /> , CR.CGROUP_ID EXTEND_SPECIF_GROUPID 
+    FROM CUSTOMER C LEFT JOIN CGROUP_REL CR ON C.ID=CR.CUSTOMER_ID AND CR.CGROUP_ID= #{userGroupId, jdbcType=INTEGER} 
+    <if test="(mobile != null and mobile != '') or (userName != null and userName != '') " >
+        WHERE 
+    </if>
+    <if test="mobile != null and mobile != ''" >
+        MOBILE =#{mobile,jdbcType=VARCHAR} 
+    </if>
+    <if test="mobile != null and mobile != '' and userName != null and userName != '' " >
+        AND 
+    </if>
+    <if test="userName != null and userName != ''" >
+         NAME =#{userName,jdbcType=VARCHAR} 
+    </if>
+    limit #{startRow,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
+  </select>
+  
+    <!-- By  Mobile And Name 查询总数 -->
+  <select id="selectCusModelCountByMobileAndUserName" resultMap="ResultOfInteger"  >
+    select 
+    COUNT(C.ID) totalCount 
+    FROM CUSTOMER C
+	<if test="(mobile != null and mobile != '') or (userName != null and userName != '') " >
+        WHERE 
+    </if>
+    <if test="mobile != null and mobile != ''" >
+        AND MOBILE =#{mobile,jdbcType=VARCHAR} 
+    </if>
+    <if test="mobile != null and mobile != '' and userName != null and userName != '' " >
+        AND 
+    </if>
+    <if test="userName != null and userName != ''" >
+         NAME =#{userName,jdbcType=VARCHAR} 
+    </if>
+  </select>
   
 </mapper>

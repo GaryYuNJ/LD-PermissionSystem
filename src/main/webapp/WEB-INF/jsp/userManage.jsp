@@ -109,38 +109,38 @@
 										    <div class="form-group">
 				                                  <label class="col-lg-2 control-label">ID</label>
 				                                  <div class="col-lg-3">
-				                                    <input type="text" class="form-control" placeholder="ID" id="userId_InForm">
+				                                    <input type="text" class="form-control" disabled="true" placeholder="ID" id="userId_InForm">
 				                                  </div>
 				                                   <label class="col-lg-2 control-label">用户名</label>
 				                                  <div class="col-lg-3">
-				                                    <input type="text" class="form-control" id="userName_InForm" placeholder="用户名">
+				                                    <input type="text" class="form-control"  disabled="true" id="userName_InForm" placeholder="用户名">
 				                                  </div>
 			                                </div>
 			                                <div class="form-group">
 				                                  <label class="col-lg-2 control-label">手机号</label>
 				                                  <div class="col-lg-3">
-				                                    <input type="text" class="form-control" placeholder="手机号" id="userMobile_InForm">
+				                                    <input type="text" class="form-control"  disabled="true" placeholder="手机号" id="userMobile_InForm">
 				                                  </div>
 				                                   <label class="col-lg-2 control-label">性别</label>
 				                                  <div class="col-lg-3">
-				                                    <input type="text" class="form-control" id="userSex_InForm" placeholder="性别">
+				                                    <input type="text" class="form-control"  disabled="true" id="userSex_InForm" placeholder="性别">
 				                                  </div>
 			                                </div>
 										    <div class="form-group">
 				                                  <label class="col-lg-2 control-label">邮箱</label>
 				                                  <div class="col-lg-3">
-				                                    <input type="text" class="form-control" placeholder="邮箱" id="userEmail_InForm">
+				                                    <input type="text" class="form-control"  disabled="true" placeholder="邮箱" id="userEmail_InForm">
 				                                  </div>
 				                                   <label class="col-lg-2 control-label">生日</label>
 				                                  <div class="col-lg-3">
-				                                    <input type="text" class="form-control" id="userBirth_InForm" placeholder="生日">
+				                                    <input type="text" class="form-control"  disabled="true" id="userBirth_InForm" placeholder="生日">
 				                                  </div>
 			                                </div>
 			                                <div class="form-group">
 			                                	  <label class="col-lg-2 control-label">客户关系</label>
 				                                  <div class="col-lg-3">
-				                                    <select class="form-control" id="userRelation_InForm">
-				                                      <option>资源类型</option>
+				                                    <select class="form-control"  disabled="true"  id="userRelation_InForm">
+				                                      <option></option>
 				                                      <option value="1">来访</option>
 				                                      <option value="2">业主</option>
 				                                    </select>
@@ -157,6 +157,22 @@
 								  </div>
 								  <!-- usergroup table -->
 							      <div class="tab-pane" id="userGroup">
+								      <div class="col-lg-9">
+											<hr>
+											<form class="form-horizontal" role="form">
+												<div class="form-group">
+													<label class="col-lg-2 control-label" style="width: 120px">用户组名称</label>
+													<div class="col-lg-3">
+														<input type="text" id="userGroupNameSearch" class="form-control" placeholder="用户组名称">
+													</div>
+													<div class="col-lg-3">
+														<button type="button" onclick = "$('#userGroupListTableId').bootstrapTable('refresh');" class="btn btn-primary">
+															<i class="icon-search"></i> 查询
+														</button>
+													</div>
+												</div>
+											</form>
+										</div>
 							      	<div class="col-lg-12">
 										<table class="table table-striped table-bordered table-hover"
 											id="userGroupListTableId">
@@ -343,10 +359,10 @@
 			    pagination: true, //分页
 			    singleSelect: false,
 			    idField: "id",  //标识哪个字段为id主键
-			    showColumns: true, //显示隐藏列  
-			    showRefresh: true,  //显示刷新按钮
+			    //showColumns: true, //显示隐藏列  
+			    //showRefresh: true,  //显示刷新按钮
 			    locale: "zh-CN", //表格汉化
-			    search: true, //显示搜索框
+			    //search: true, //显示搜索框
 			    sidePagination: "server", //服务端处理分页
 			    height: 390, 
 			    cache: true,
@@ -365,12 +381,6 @@
 		                   field: 'name',
 		                   align: 'center',
 		                   valign: 'middle'
-		               }, 
-		               {
-		                   title: '状态',
-		                   field: 'status',
-		                   align: 'center',
-		                   valign: 'middle',
 		               }, 
 		               {
 		                   title: '创建时间',
@@ -413,7 +423,7 @@
 	      offset: params.offset, //分页偏移量
 	      sort: params.sort,  //排序列名
 	      sortOrder: params.order ,//排位命令（desc，asc）
-	      search: params.search,
+	      search: $("#userGroupNameSearch").val(),
 	      userId: $("#userId_hidden").val()
 	    };
 	    return temp;
@@ -442,7 +452,7 @@
 			});
 	  };
 	  
-		//删除usergroup与user关系
+		//添加usergroup与user关系
 		 function addUserGroupRelation(obj, groupId) {
 			 var userId = $("#userId_hidden").val();
 			 $.ajax( {  

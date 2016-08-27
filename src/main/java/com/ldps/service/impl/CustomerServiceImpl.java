@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import com.ldps.dao.CusGroupRelModelMapper;
 import com.ldps.dao.CustomerModelMapper;
 import com.ldps.dao.ResourceModelMapper;
 import com.ldps.model.CustomerModel;
@@ -21,6 +22,9 @@ public class CustomerServiceImpl implements ICustomerService {
 	
 	@Resource
 	private ResourceModelMapper resourceDao;
+	@Resource
+	private CusGroupRelModelMapper cusGroupRelDao;
+	
 	
 	@Override
 	public List<CustomerModel> queryAllWithPageIndex(Integer startRow, Integer pageSize) {
@@ -125,5 +129,44 @@ public class CustomerServiceImpl implements ICustomerService {
 	public Integer queryTotalCountByMobileAndName(String mobile, String userName) {
 		// TODO Auto-generated method stub
 		return customerDao.selectTotalCountByMobileAndName(mobile, userName);
+	} 
+
+	/*
+	根据 指定的BindGrpId 绑定关系，mobile，name搜索用户列表
+	 */
+	@Override
+	public List<CustomerModel> searchWithBindGrpIdByNameAndMobile(String userGroupId,
+			String mobile, String userName, Integer startRow, Integer pageSize) {
+
+		return cusGroupRelDao.selectCusModelWithBindGrpId(userGroupId, mobile, userName,startRow,pageSize);
 	}
+	
+	/*
+	根据指定的BindGrpId 绑定关系，mobile，name 查用户总数
+	 */
+	@Override
+	public Integer queryTotalCountWithBindGrpId(String userGroupId,
+			String mobile, String userName) {
+
+		return cusGroupRelDao.selectCusModelCountWithBindGrpId(userGroupId, mobile, userName);
+	}
+	/*
+	根据 mobile，name搜索用户列表，并加上与指定groupId的依赖关系
+	 */
+	@Override
+	public List<CustomerModel> searchWithGrpIdFlagByNameAndMobile(
+			String userGroupId, String mobile, String userName,
+			Integer startRow, Integer pageSize) {
+		
+		return cusGroupRelDao.selectWithGrpIdFlagByNameAndMobile(userGroupId, mobile, userName,startRow,pageSize);
+	}
+	/*
+	根据mobile，name 查用户总数
+	 */
+	@Override
+	public Integer queryTotalCountByMobileAndUserName(String mobile,
+			String userName) {
+		return cusGroupRelDao.selectCusModelCountByMobileAndUserName( mobile, userName);
+	}
+	
 }

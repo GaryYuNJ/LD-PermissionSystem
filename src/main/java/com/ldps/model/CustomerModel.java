@@ -120,7 +120,16 @@ public class CustomerModel {
 
     private String cchr6;
 
-    private List<CustomerGroupModel> customerGroups;
+    private Integer extendSpecificFlag;
+    
+	public Integer getExtendSpecificFlag() {
+		return extendSpecificFlag;
+	}
+
+	public void setExtendSpecificFlag(Integer extendSpecificFlag) {
+		this.extendSpecificFlag = extendSpecificFlag;
+	}
+	private List<CustomerGroupModel> customerGroups;
     
     public List<CustomerGroupModel> getCustomerGroups() {
 		return customerGroups;

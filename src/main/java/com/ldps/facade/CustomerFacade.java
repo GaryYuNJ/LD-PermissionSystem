@@ -1,8 +1,6 @@
 package com.ldps.facade;
 
 
-import org.springframework.stereotype.Service;
-
 import com.ldps.data.CusResourceRelData;
 import com.ldps.data.CustomerData;
 import com.ldps.data.ResourceData;
@@ -64,4 +62,17 @@ public interface CustomerFacade {
 			String userName, Integer offset, Integer limit);
 
 	public Integer queryTotalCountByMobileAndName(String mobile, String userName);
+
+	public List<CustomerData> searchWithBindGrpIdByNameAndMobile(String userGroupId,
+			String mobile, String userName, Integer startRow, Integer pageSize);
+
+	Integer queryTotalCountWithBindGrpId(String userGroupId, String mobile,
+			String userName);
+
+	public List<CustomerData> searchWithGrpIdFlagByNameAndMobile(
+			String userGroupId, String mobile, String userName, Integer offset,
+			Integer limit);
+
+	Integer queryTotalCountByMobileAndUserName(
+			String mobile, String userName);
 }
