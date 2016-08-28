@@ -237,7 +237,7 @@
 <!-- Content ends -->
 <!-- 弹窗 -->
 <!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+<div class="modal fade" id="addPermissionLayer" tabindex="-1" role="dialog"
 	aria-labelledby="myModalLabel">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
@@ -246,9 +246,58 @@
 					aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
-				<h4 class="modal-title" id="myModalLabel">添加用户</h4>
+				<h4 class="modal-title" id="myModalLabel">权限更新</h4>
 			</div>
-			<div class="modal-body"></div>
+			<div class="modal-body">
+				<form class="form-horizontal" role="form" id="newResourceFormId">
+	                   <div class="form-group">
+	                      <label class="col-lg-2 control-label">资源ID</label>
+	                     <div class="col-lg-4">
+	                       <input type="text" class="form-control" disabled="true" placeholder="资源ID">
+	                     </div>
+	                      <label class="col-lg-2 control-label">资源名称</label>
+	                     <div class="col-lg-4">
+	                       <input type="text" class="form-control"  disabled="true" placeholder="资源名称">
+	                     </div>
+	                   </div>
+	                   <div class="form-group">
+	                      <label class="col-lg-2 control-label">用户ID</label>
+	                     <div class="col-lg-4">
+	                       <input type="text" class="form-control" disabled="true" placeholder="资源ID">
+	                     </div>
+	                      <label class="col-lg-2 control-label">用户名</label>
+	                     <div class="col-lg-4">
+	                       <input type="text" class="form-control"  disabled="true" placeholder="用户名">
+	                     </div>
+	                   </div>
+	                    <div class="form-group">  
+	                    	<label class="col-lg-2 control-label">起始时间</label>
+			                <div class='input-group date col-lg-4 datetimepicker'  style='padding-left:15px;'>
+			                    <input type='text' class="form-control"  placeholder="无限制"/>
+			                    <span class="input-group-addon">
+			                        <span class="glyphicon glyphicon-calendar"></span>
+			                    </span>
+			                </div>
+                	   </div>  
+                	   <div class="form-group">  
+	                    	<label class="col-lg-2 control-label">过期时间</label>
+			                <div class='input-group date col-lg-4 datetimepicker'  style='padding-left:15px;' >
+			                    <input type='text' class="form-control" placeholder="无限制"/>
+			                    <span class="input-group-addon">
+			                        <span class="glyphicon glyphicon-calendar"></span>
+			                    </span>
+			                </div>
+                	   </div>
+	                   <div class="form-group">
+	                     <label class="col-lg-2 control-label">授权状态</label>
+	                     <div class="col-lg-4">
+	                      <div class="make-switch" data-on="success" data-off="warning" data-off="info" data-on-label="启用" data-off-label="禁用">
+	            					<input type="checkbox" checked>
+	        				  </div>
+	                     </div>
+	                  </div>
+	             </form>
+			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
 				<button type="button" class="btn btn-primary">保存</button>
@@ -259,6 +308,7 @@
 
 <%@ include file="/common/script.jsp"%>
 <script type="text/javascript">
+
 	//用户列表table
 	$('#userListTableId').bootstrapTable({
 		method: 'get',
@@ -531,6 +581,7 @@
           } 
         })
       })
+	 
 </script>
 
 
@@ -571,13 +622,19 @@
 	                   title: '楼栋',
 	                   field: 'buildingId',
 	                   align: 'center',
+	                   valign: 'middle'
+	               }, 
+	               {
+	                   title: '节点路径',
+	                   field: 'nodePath',
+	                   align: 'center',
 	                   valign: 'middle',
 	                   formatter:function (value, row, index) {
 	                	   return findBuildName(value);
                         }
 	               }, 
 	               {
-	                   title: '有权访问',
+	                   title: '权限',
 	                   field: 'cusResRelModel',
 	                   align: 'center',
 	                   formatter:function (value, row, index) {
@@ -643,9 +700,11 @@
 		                			   && row.cusResRelModel.enable == "Y"
 		                			   && (null == row.cusResRelModel.startDate || new Date(row.cusResRelModel.startDate) < new Date() ) 
 		                			   &&  (null == row.cusResRelModel.endDate || new Date(row.cusResRelModel.endDate) > new Date() ) ){
-		                		   var e = '<a href="#" mce_href="#" onclick="removePermission(\''+ row.id +'\')">删除权限</a> ';  
+		                		   //var e = '<a href="#" mce_href="#" onclick="removePermission(\''+ row.id +'\')">禁用</a> ';  
+		                		   var e ='<button type="button" class="btn btn-xs btn-warning"  onclick="removePermission(\''+ row.id +'\')" data-toggle="modal" >禁用</button>';
 		                	   }else{
-		                		   var e = '<a href="#" mce_href="#" onclick="addPermmission(\''+ row.id + '\')">授权</a> ';  
+		                		   //var e = '<a href="#" mce_href="#" onclick="addPermmissionPreProcess(\''+ row.id + '\')">授权</a> ';  
+		                		   var e ='<button type="button" class="btn btn-xs btn-success" data-toggle="modal" onclick="addPermmissionPreProcess(\''+ row.id +'\')" data-target="#addPermissionLayer">授权</button>';
 		                	   }
 		                    	return e;  
 	                	   }
@@ -717,7 +776,20 @@
 		});
 		return tempvalue;
 	}
+   
+   function addPermmissionPreProcess(id){
+	   
+   }
+    
 </script>
-
+<script type="text/javascript">
+	//时间选择器
+	$('.datetimepicker').datetimepicker({
+		format: "yyyy-mm-dd hh:ii",
+		language: 'zh-CN',
+		autoclose:true,
+		todayHighlight:true
+	});
+</script>            
 
 <%@ include file="/common/footer.html"%>

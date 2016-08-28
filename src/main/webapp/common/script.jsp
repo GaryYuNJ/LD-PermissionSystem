@@ -25,13 +25,18 @@
 <script src="<c:url value="/js/jquery-ui-1.9.2.custom.min.js" />"></script>
 <!-- jQuery UI -->
 <!-- jQuery Flot -->
-<script src="<c:url value="/js/bootstrap-datetimepicker.min.js" />"></script>
+
 <!-- Date picker -->
 <script src="<c:url value="/js/jstree.min.js" />"></script>
 <script src="<c:url value="/js/bootstrap-table.min.js" />"></script>
 <script src="<c:url value="/js/bootstrap-table-zh-CN.js" />"></script>
 <script src="<c:url value="/js/bootstrap-switch.min.js" />"></script>
 <script src="<c:url value="/js/custom.js" />"></script>
+
+<script src="<c:url value="/js/bootstrap-datetimepicker.min.js" />"></script>
+<script src="<c:url value="/js/bootstrap-datetimepicker.zh-CN.js" />"></script>
+
+
 <script type="text/javascript">
 $("#nav li:eq(${pageIndex}) a").addClass("open");
 </script>
