@@ -36,6 +36,11 @@
 						</div>
 						<div class="widget-content">
 							<div class="col-lg-3">
+							<hr>
+											<button type="button" class="btn btn-primary"><i class="icon-search"></i> 查询</button>
+											<button type="button" class="btn btn-primary"><i class="icon-search"></i> 查询</button>
+											<button type="button" class="btn btn-primary"><i class="icon-search"></i> 查询</button>
+											<hr>
 								<div class="widget treeMinHeight" id="jstree_resource"></div>
 							</div>
 							<div class="col-lg-9">
@@ -73,9 +78,9 @@
 								</form>
 								<table class="table table-striped table-bordered table-hover"
 									id="resourceTableId">
-
 								</table>
 							</div>
+							<div class="clearfix"></div>
 						</div>
 					</div>
 				</div>
@@ -106,30 +111,30 @@
                                 <div class="form-group">
                                   <label class="col-lg-2 control-label">资源名称</label>
                                   <div class="col-lg-4">
-                                    <input type="text" class="form-control" placeholder="资源名称">
+                                    <input type="text" class="form-control" placeholder="资源名称" name="name">
                                   </div>
                                    <label class="col-lg-2 control-label">Mac地址</label>
                                   <div class="col-lg-4">
-                                    <input type="text" class="form-control" placeholder="设备Mac地址">
+                                    <input type="text" class="form-control" placeholder="设备Mac地址" name="mac">
                                   </div>
                                 </div>
                                 <div class="form-group">
                                   <label class="col-lg-2 control-label">楼栋</label>
                                   <div class="col-lg-4">
-                                    <select class="form-control" id="addbuildsId">
-                                      <option>请选择楼栋</option>
+                                    <select class="form-control" id="addbuildsId"  name="buildingId">
+                                      <option value="">请选择楼栋</option>
                                     </select>
                                   </div>
                                    <label class="col-lg-2 control-label">楼层</label>
                                   <div class="col-lg-4">
-                                    <input type="text" class="form-control" placeholder="楼层(数字)">
+                                    <input type="text" class="form-control" placeholder="楼层(数字)"   name="floor">
                                   </div>
                                 </div>
                                 <div class="form-group">
                                   <label class="col-lg-2 control-label">资源类型</label>
                                   <div class="col-lg-4">
-                                    <select class="form-control">
-                                      <option>资源类型</option>
+                                    <select class="form-control" name="deviceType">
+                                      <option value="">资源类型</option>
                                       <option value="1">通行</option>
                                       <option value="2">家居</option>
                                       <option value="3">其它</option>
@@ -137,8 +142,7 @@
                                   </div>
                                    <label class="col-lg-2 control-label">资源属性</label>
                                   <div class="col-lg-4">
-                                    <select class="form-control">
-                                      <option>资源属性</option>
+                                    <select class="form-control" name="permissionAttrId">
                                       <option value="1">公共资源</option>
                                       <option value="2">基础资源</option>
                                       <option value="3">私有资源</option>
@@ -148,31 +152,33 @@
                                  <div class="form-group">
                                   <label class="col-lg-2 control-label">生产厂家</label>
                                   <div class="col-lg-4">
-	                                   <select class="form-control">
-	                                   	  <option>生产厂家</option>
+	                                   <select class="form-control" name="manufacturerId">
+	                                   	  <option value="">生产厂家</option>
 	                                      <option value="1">厂家1</option>
 	                                      <option value="2">厂家2</option>
 	                                    </select>
                                   </div>
                                    <label class="col-lg-2 control-label">显示顺序</label>
                                   <div class="col-lg-4">
-                                    <input type="text" class="form-control" placeholder="1">
+                                    <input type="text" class="form-control" placeholder="1000" name="sequence">
                                   </div>
                                 </div>
                                 <div class="form-group">
                                   <label class="col-lg-2 control-label">可用状态</label>
                                   <div class="col-lg-4">
 	                                  <div class="make-switch" data-on="primary" data-off="info">
-                         					<input type="checkbox" checked>
+                         					<input type="checkbox" checked  name="status">
                      				  </div>
                                   </div>
                                   <label class="col-lg-2 control-label">可分享</label>
                                   <div class="col-lg-4">
 	                                  <div class="make-switch" data-on="primary" data-off="info">
-                         					<input type="checkbox" checked>
+                         					<input type="checkbox" checked name="shareEnable">
                      				  </div>
                                   </div>
                                 </div>
+                                <input type="hidden" name="nodePath" value="根节点" id="newnodePath">
+                                <input type="hidden" name="nodeId" value="1"  id="newnodeId">
                               </form>
 			</div>
 			<div class="modal-footer">
@@ -182,8 +188,189 @@
 		</div>
 	</div>
 </div>
+
+<!-- 弹窗 -->
+<!-- Modal -->
+<div class="modal fade" id="updateModal" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document" style="width:800px;height:600px">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel">修改资源</h4>
+			</div>
+			<div class="modal-body">
+				<form class="form-horizontal" role="form" id="updateResourceFormId">
+                                <div class="form-group">
+                                  <label class="col-lg-2 control-label">资源名称</label>
+                                  <div class="col-lg-4">
+                                    <input type="text" class="form-control" placeholder="资源名称" name="name" id="updateResourceName">
+                                  </div>
+                                   <label class="col-lg-2 control-label">Mac地址</label>
+                                  <div class="col-lg-4">
+                                    <input type="text" class="form-control" placeholder="设备Mac地址" name="mac"  id="updateResourceMac">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label class="col-lg-2 control-label">楼栋</label>
+                                  <div class="col-lg-4">
+                                    <select class="form-control" id="updateResourceBuilding"  name="buildingId">
+                                      <option value="">请选择楼栋</option>
+                                    </select>
+                                  </div>
+                                   <label class="col-lg-2 control-label">楼层</label>
+                                  <div class="col-lg-4">
+                                    <input type="text" class="form-control" placeholder="楼层(数字)"   name="floor" id="updateResourceFloor">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label class="col-lg-2 control-label">资源类型</label>
+                                  <div class="col-lg-4">
+                                    <select class="form-control" name="deviceType" id="updateResourceDeviceType">
+                                      <option value="">资源类型</option>
+                                      <option value="1">通行</option>
+                                      <option value="2">家居</option>
+                                      <option value="3">其它</option>
+                                    </select>
+                                  </div>
+                                   <label class="col-lg-2 control-label">资源属性</label>
+                                  <div class="col-lg-4">
+                                    <select class="form-control" name="permissionAttrId" id="updateResourcePermissionAttrId">
+                                      <option value="1">公共资源</option>
+                                      <option value="2">基础资源</option>
+                                      <option value="3">私有资源</option>
+                                    </select>
+                                  </div>
+                                </div>
+                                 <div class="form-group">
+                                  <label class="col-lg-2 control-label">生产厂家</label>
+                                  <div class="col-lg-4">
+	                                   <select class="form-control" name="manufacturerId" id="updateResourceManufacturerId">
+	                                   	  <option value="">生产厂家</option>
+	                                      <option value="1">厂家1</option>
+	                                      <option value="2">厂家2</option>
+	                                    </select>
+                                  </div>
+                                   <label class="col-lg-2 control-label">显示顺序</label>
+                                  <div class="col-lg-4">
+                                    <input type="text" class="form-control" placeholder="1000" name="sequence" id="updateResourceSequenceId">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label class="col-lg-2 control-label">可用状态</label>
+                                  <div class="col-lg-4">
+	                                  <div class="make-switch" data-on="primary" data-off="info">
+                         					<input type="checkbox" checked  name="status" id="updateResourceStatus">
+                     				  </div>
+                                  </div>
+                                  <label class="col-lg-2 control-label">可分享</label>
+                                  <div class="col-lg-4">
+	                                  <div class="make-switch" data-on="primary" data-off="info">
+                         					<input type="checkbox" checked name="shareEnable"  id="updateResourceShareEnable">
+                     				  </div>
+                                  </div>
+                                </div>
+                                <input type="hidden" name="id" id="updateResourceId">
+                              </form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				<button type="button" class="btn btn-primary" id="updateResourceButtonId">保存</button>
+			</div>
+		</div>
+	</div>
+</div>
 <%@ include file="/common/script.jsp"%>
 <script type="text/javascript">
+		function demo_create() {
+			var ref = $('#jstree_demo').jstree(true),
+				sel = ref.get_selected();
+			if(!sel.length) { return false; }
+			sel = sel[0];
+			sel = ref.create_node(sel, {"type":"file"});
+			if(sel) {
+				ref.edit(sel);
+			}
+		};
+		function demo_rename() {
+			var ref = $('#jstree_demo').jstree(true),
+				sel = ref.get_selected();
+			if(!sel.length) { return false; }
+			sel = sel[0];
+			ref.edit(sel);
+		};
+		function demo_delete() {
+			var ref = $('#jstree_demo').jstree(true),
+				sel = ref.get_selected();
+			if(!sel.length) { return false; }
+			ref.delete_node(sel);
+		};
+		
+		function resourceEditPre(row){
+			$.post("<c:url value='/manage/getResourceById.json' />",{"id":row},function(data){
+				$("#updateResourceName").val(data.name);
+				$("#updateResourceMac").val(data.mac);
+				$("#updateResourceBuilding").val(data.buildingId);
+				$("#updateResourceFloor").val(data.floor);
+				$("#updateResourceDeviceType").val(data.deviceType);
+				$("#updateResourcePermissionAttrId").val(data.permissionAttrId);
+				$("#updateResourceManufacturerId").val(data.manufacturerId);
+				$("#updateResourceShareEnable").val(data.shareEnable);
+				$("#updateResourceStatus").val(data.status);
+				$("#updateResourceSequenceId").val(data.sequence);
+				$("#updateResourceId").val(data.id);
+			});
+		}
+		 $('#updateResourceButtonId').click(function() {
+		    	$("#updateResourceButtonId").attr('disabled',"true");
+		        $('#updateResourceFormId').bootstrapValidator('validate');
+		        if($('#updateResourceFormId').data('bootstrapValidator').isValid()){
+		        	 var resourceModel = {};
+			            $.each($("#updateResourceFormId").serializeArray(), function(i, field) {  
+			                resourceModel[field.name] = field.value;  
+			            });  
+			            console.log(JSON.stringify(resourceModel));
+			            var data=$("#updateResourceFormId").serializeArray();
+			            $.post("<c:url value='/manage/updateResource.json' />",data ,function(data){
+			            	console.log("1111");
+			             });
+		        }
+		        $("#updateResourceButtonId").removeAttr('disabled');
+		});
+		function refreshSearch(){
+				var params = $('#resourceTableId').bootstrapTable('getOptions')
+				params.queryParams = function(params) {  
+					    //定义参数  
+					    var search = {};  
+					    //遍历form 组装json  
+					    $.each($("#searchform").serializeArray(), function(i, field) {  
+					        //console.info(field.name + ":" + field.value + " ");  
+					        //可以添加提交验证  
+					        search[field.name] = field.value;  
+					    });  
+					    //参数转为json字符串，并赋给search变量 ,JSON.stringify <ie7不支持，有第三方解决插件  
+					    params.search = JSON.stringify(search)  
+					    
+					    return params;  
+				}  
+				console.info(params);  
+				$('#resourceTableId').bootstrapTable('refresh', params)
+		}
+
+			//删除
+			function resourceDel(resourceId){
+				
+				var data={"resourceId":resourceId};
+				$.post("<c:url value='/manage/delResource.json' />",data ,function(data){
+					if(data.status=="0"){
+						refreshSearch();
+					}
+	             });
+			}
+
 			//给楼栋赋值Ajax
 			var buildings;
 			$.get("<c:url value="/manage/allBuildings.json" />",function(data,status){
@@ -191,6 +378,7 @@
 					$.each(data, function (n,value) {
 						$("#buildingId").append("<option value='"+value.id+"'>"+value.name+"</option>");
 						$("#addbuildsId").append("<option value='"+value.id+"'>"+value.name+"</option>");
+						$("#updateResourceBuilding").append("<option value='"+value.id+"'>"+value.name+"</option>");
 						buildings=data;
 					});
 				}
@@ -207,6 +395,7 @@
 			}
 			$('#jstree_resource').jstree({
 				"core": {
+					"multiple" : false,
 					"animation": 0,
 					"check_callback": true,
 					"themes": {
@@ -215,11 +404,9 @@
 					'data': {
 						'url': "<c:url value="/manage/showNode.json" />",
 						'data': function(node) {
-							return {
-							};
 						}
 					}
-				},
+	            },
 				"types": {
 					"#": {
 						"max_children": 1,
@@ -239,10 +426,51 @@
 					}
 				},
 				"plugins": [
-					"contextmenu", "dnd", "search",
-					"state", "types", "wholerow"
-				]
+					"contextmenu",  "search","types", "wholerow"
+				],
+				"contextmenu": {    
+		            "items": {    
+		                "create": null,    
+		                "rename": null,    
+		                "remove": null,    
+		                "ccp": null,    
+		                "add": {    
+		                    "label": "add",    
+		                    "action": function (obj) {  
+		                        var inst = jQuery.jstree.reference(obj.reference);    
+		                        var clickedNode = inst.get_node(obj.reference);   
+		                        alert("add operation--clickedNode's id is:" + clickedNode.id);  
+		                    }    
+		                },    
+		                "delete": {    
+		                    "label": "delete",    
+		                    "action": function (obj) {  
+		                        var inst = jQuery.jstree.reference(obj.reference);    
+		                        var clickedNode = inst.get_node(obj.reference);   
+		                        alert("delete operation--clickedNode's id is:" + clickedNode.id);  
+		                    }    
+		                },
+		                "update": {    
+		                    "label": "update",    
+		                    "action": function (obj) {  
+		                        var inst = jQuery.jstree.reference(obj.reference);    
+		                        var clickedNode = inst.get_node(obj.reference);   
+		                        alert("delete operation--clickedNode's id is:" + clickedNode.id);  
+		                    }    
+		                }    
+		            }   
+		        }  
 			});
+			//JSTree 事件
+			$('#jstree_resource').on("changed.jstree", function (e, data) {
+				if(data.node!=null){
+					$("#newnodeId").val(data.node.id);
+					$("#newnodePath").val(data.instance.get_path(data.node,'/'));
+					//console.log($("#newnodeId").val());
+					//console.log($("#newnodePath").val());
+				}
+			 });
+			//分页
 			var pageNumber = 1;
 			$('#resourceTableId').bootstrapTable({
 				method: 'get',
@@ -308,8 +536,8 @@
 		                   field: 'id',
 		                   align: 'center',
 		                   formatter:function(value,row,index){
-		                 var e = '<a href="#" mce_href="#" onclick="edit(\''+ row.id + '\')">编辑</a> ';  
-		                 var d = '<a href="#" mce_href="#" onclick="del(\''+ row.id +'\')">删除</a> ';  
+		                 var e = '<button class="btn btn-xs btn-warning"  data-toggle="modal" data-target="#updateModal" onclick="resourceEditPre('+ value + ')"><i class="icon-pencil"></i> </button>  ';  
+		                 var d = '<button class="btn btn-xs btn-danger" onclick="resourceDel(\''+ row.id +'\')"><i class="icon-remove"></i> </button>';  
 		                    return e+d;  
 		                 } 
 		               }
@@ -320,32 +548,76 @@
 		      });
 			//自定义查询
 			 $('#dosearch').click(function() {  
-			        var params = $('#resourceTableId').bootstrapTable('getOptions')  
-			        params.queryParams = function(params) {  
-			            //定义参数  
-			            var search = {};  
-			            //遍历form 组装json  
-			            $.each($("#searchform").serializeArray(), function(i, field) {  
-			                //console.info(field.name + ":" + field.value + " ");  
-			                //可以添加提交验证  
-			                search[field.name] = field.value;  
-			            });  
-			  
-			            //参数转为json字符串，并赋给search变量 ,JSON.stringify <ie7不支持，有第三方解决插件  
-			            params.search = JSON.stringify(search)  
-			            console.info(params);  
-			            return params;  
-			        }  
-			        $('#resourceTableId').bootstrapTable('refresh', params)  
-			        //console.info(params);  
+				 	refreshSearch();
 			    });  	
+			 
 			//添加资源
-			 $('#newResourceId').click(function() {  
-			            var search = {};
-			            $.each($("#newResourceFormId").serializeArray(), function(i, field) {  
-			                console.info(field.name + ":" + field.value + " ");  
-			                search[field.name] = field.value;  
-			            });  
-			    });
+			$('#newResourceFormId').bootstrapValidator({
+				        message: '输入值错误',
+				        feedbackIcons: {
+				            valid: 'glyphicon glyphicon-ok',
+				            invalid: 'glyphicon glyphicon-remove',
+				            validating: 'glyphicon glyphicon-refresh'
+				        },
+				        fields: {
+				            name: {
+				                validators: {
+				                    notEmpty: {
+				                        message: '资源名称不能为空'
+				                    }
+				                }
+				            },
+				            mac: {
+				                validators: {
+				                	stringLength: {
+				                        min: 0,
+				                        max: 20,
+				                        message: 'Mac地址不能超过20位'
+				                    }
+				                }
+				            },
+				            floor: {
+				                validators: {
+				                	stringLength: {
+				                        min: 0,
+				                        max: 10,
+				                        message: '不能超过10位'
+				                    },
+				                    integer: {
+				                        message: '楼层只能输入数字'
+				                    }
+				                }
+				            },
+				            sequence: {
+				                validators: {
+				                	stringLength: {
+				                        min: 0,
+				                        max: 10,
+				                        message: '不能超过10位'
+				                    },
+				                    integer: {
+				                        message: '排序只能使用数字'
+				                    }
+				                }
+				            }
+				        }
+				    });
+				    $('#newResourceId').click(function() {
+				    	$("#newResourceId").attr('disabled',"true");
+				        $('#newResourceFormId').bootstrapValidator('validate');
+				        if($('#newResourceFormId').data('bootstrapValidator').isValid()){
+				        	 var resourceModel = {};
+					            $.each($("#newResourceFormId").serializeArray(), function(i, field) {  
+					                resourceModel[field.name] = field.value;  
+					            });  
+					            console.log(JSON.stringify(resourceModel));
+					            var data=$("#newResourceFormId").serializeArray();
+					            $.post("<c:url value='/manage/addResource.json' />",data ,function(data){
+					            	console.log("1111");
+					             });
+				        }
+				        $("#newResourceId").removeAttr('disabled');
+				    });
+				    
 		</script>
 <%@ include file="/common/footer.html"%>

@@ -26,3 +26,50 @@ Date.prototype.format = function(formatStr)
     return str;   
 }   
 
+$(document).ready(function(){
+	  $(".sidebar-dropdown a").on('click',function(e){
+	      e.preventDefault();
+
+	      if(!$(this).hasClass("open")) {
+	        // hide any open menus and remove all other classes
+	        $(".sidebar #nav").slideUp(350);
+	        $(".sidebar-dropdown a").removeClass("open");
+	        
+	        // open our new menu and add the open class
+	        $(".sidebar #nav").slideDown(350);
+	        $(this).addClass("open");
+	      }
+	      
+	      else if($(this).hasClass("open")) {
+	        $(this).removeClass("open");
+	        $(".sidebar #nav").slideUp(350);
+	      }
+	  });
+
+	});
+
+	/* Widget close */
+
+	$('.wclose').click(function(e){
+	  e.preventDefault();
+	  var $wbox = $(this).parent().parent().parent();
+	  $wbox.hide(100);
+	});
+
+	/* Widget minimize */
+
+	  $('.wminimize').click(function(e){
+	    e.preventDefault();
+	    var $wcontent = $(this).parent().parent().next('.widget-content');
+	    if($wcontent.is(':visible')) 
+	    {
+	      $(this).children('i').removeClass('icon-chevron-up');
+	      $(this).children('i').addClass('icon-chevron-down');
+	    }
+	    else 
+	    {
+	      $(this).children('i').removeClass('icon-chevron-down');
+	      $(this).children('i').addClass('icon-chevron-up');
+	    }            
+	    $wcontent.toggle(500);
+	  }); 

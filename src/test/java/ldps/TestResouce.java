@@ -25,8 +25,8 @@ public class TestResouce {
 	@Test
 	public void testAddNode(){
 		NodeModel nodeModel=new NodeModel();
-		nodeModel.setName("绿地大楼1-第4层-北区23");
-		iNodeService.addNode(28, nodeModel);
+		nodeModel.setName("绿地大楼2");
+		iNodeService.addNode(0, nodeModel);
 	}
 	@Test
 	public void testGetAllNode(){

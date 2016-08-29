@@ -20,6 +20,7 @@
 <link href="<c:url value="/js/themes/default/style.min.css" />" rel="stylesheet">
 <link href="<c:url value="/style/bootstrap-table.min.css" />" rel="stylesheet">
 <link href="<c:url value="/style/bootstrap-switch.css" />" rel="stylesheet">
+<link href="<c:url value="/style/bootstrapValidator.min.css" />" rel="stylesheet">
 <!-- HTML5 Support for IE -->
 <!--[if lt IE 9]>
   <script src="js/html5shim.js"></script>

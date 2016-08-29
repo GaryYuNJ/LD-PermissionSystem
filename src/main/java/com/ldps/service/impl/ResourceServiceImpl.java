@@ -1,5 +1,6 @@
 package com.ldps.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -101,7 +102,7 @@ public class ResourceServiceImpl implements IResourceService {
 	//更新资源
 	@Override
 	public int updateResource(ResourceModel model) {
-		
+		model.setCreateDate(new Date());
 		return resourceDao.updateByPrimaryKeySelective(model);
 	}
 

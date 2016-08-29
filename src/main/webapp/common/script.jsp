@@ -32,7 +32,7 @@
 <script src="<c:url value="/js/bootstrap-table-zh-CN.js" />"></script>
 <script src="<c:url value="/js/bootstrap-switch.min.js" />"></script>
 <script src="<c:url value="/js/custom.js" />"></script>
-
+<script src="<c:url value="/js/bootstrapValidator.min.js" />"></script>
 <script src="<c:url value="/js/bootstrap-datetimepicker.min.js" />"></script>
 <script src="<c:url value="/js/bootstrap-datetimepicker.zh-CN.js" />"></script>
 

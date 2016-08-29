@@ -12,7 +12,7 @@
 
 	<!-- 静态资源 -->
 	<mvc:resources mapping="/common/**" location="/common/" />
-	<mvc:resources mapping="/font/**" location="/font/" />
+	<mvc:resources mapping="/fonts/**" location="/fonts/" />
 	<mvc:resources mapping="/img/**" location="/img/" />
 	<mvc:resources mapping="/style/**" location="/style/" />
 	<mvc:resources mapping="/js/**" location="/js/" />
