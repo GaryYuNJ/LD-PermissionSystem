@@ -66,11 +66,11 @@ public class ResourceModelConverter {
 			data.setCreateUser(source.getCreateUser());
 			data.setFloor(source.getFloor());
 			data.setId(source.getId());
-			data.setMac(source.getMac());
+			//data.setMac(source.getMac());
 			data.setName(source.getName());
 			data.setNum1(source.getNum1());
 			data.setNum2(source.getNum2());
-			data.setPassword(source.getPassword());
+			//data.setPassword(source.getPassword());
 			try{
 				data.setResourceGroups(resourceGroupModelConverter.processList(source.getResourceGroups()));
 			}catch(Exception e){
@@ -98,7 +98,7 @@ public class ResourceModelConverter {
 		    data.setIsVirtualResource(source.getIsVirtualResource());
 		    data.setPermissionAttrId(source.getPermissionAttrId());
 		    data.setDeviceType(source.getDeviceType());
-		    data.setManufacturerId(source.getManufacturerId());
+		    //data.setManufacturerId(source.getManufacturerId());
 		}
 		
 		

@@ -147,18 +147,18 @@ INSERT INTO BUILDING(NAME) VALUES('绿地之窗1-1' );
 --drop table RESOURCE;
 CREATE TABLE RESOURCE    (
   	ID  int(12) NOT NULL AUTO_INCREMENT COMMENT '资源ID', 
-	NAME varchar(20) NOT NULL unique COMMENT '资源名称', 
+	NAME varchar(20) NOT NULL  COMMENT '资源名称', 
     TYPE_ID int(3) NOT NULL  COMMENT '资源类型id',
 	STATUS CHAR(1) DEFAULT 'Y' NOT NULL  COMMENT '资源可用状态', 
 	CREATE_DATE DATETIME  COMMENT '资源创建时间', 
 	CREATE_USER int NOT NULL  COMMENT '资源创建人', 
-    MAC CHAR(20)  COMMENT '设备类型资源的MAC地址', 
+    --MAC CHAR(20)  COMMENT '设备类型资源的MAC地址', 
     BUILDING_ID int(3) COMMENT '设备类型资源的楼栋信息id', 
     FLOOR int(5)  COMMENT '设备类型资源的楼层', 
-    PASSWORD  CHAR(20)  COMMENT '设备类型资源的密码', 
+    --PASSWORD  CHAR(20)  COMMENT '设备类型资源的密码', 
     SEQUENCE INT(10) NOT NULL DEFAULT 1 COMMENT '显示序列',
     SHARE_ENABLE CHAR(1) DEFAULT 'Y' NOT NULL  COMMENT '资源是否可被用户分享权限',
-    MANUFACTURER_ID int(3) COMMENT '设备生产厂家，需要传给APP' ,
+    --MANUFACTURER_ID int(3) COMMENT '设备生产厂家，需要传给APP' ,
 	DEVICE_TYPE int(2) COMMENT '设备类型：1. 通行、2. 家居、3.其它'  ,
 	IS_VIRTUAL_RESOURCE  char(1) DEFAULT 'N' NOT NULL COMMENT 'Y：虚拟资源、N：真实设备资源' ,
 	PERMISSION_ATTR_ID int(2) DEFAULT 3 NOT NULL comment '资源权限属性：1：公共资源；2：基础资源(授权时用：针对下层节点的资源来说，如果要使用下层节点，必须使用的上层节点)；3：私有资源；' ,
@@ -179,7 +179,26 @@ CREATE TABLE RESOURCE    (
     FOREIGN KEY (NODE_ID) REFERENCES NODE(ID)
 )ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8;
 
-
+--资源详情表
+--drop table RESOURCE_KEY;
+CREATE TABLE RESOURCE_KEY    (
+  	ID  int(12) NOT NULL AUTO_INCREMENT COMMENT '设备钥匙ID', 
+    MAC CHAR(20)  COMMENT '设备钥匙MAC地址', 
+    PASSWORD  CHAR(20)  COMMENT '设备钥匙的密码', 
+    MANUFACTURER_ID int(3) COMMENT '钥匙生产厂家' ,
+	RESOURCE_ID INT(10) default 0  COMMENT '资源ID',
+	R_INT1 int(10) , 
+	R_INT2 int(10) , 
+	NUM1 NUMERIC , 
+	NUM2 NUMERIC , 
+    VC1 varchar(40) , 
+	VC2 varchar(40), 
+	CHR1 CHAR(1), 
+	CHR2 CHAR(1),
+    INDEX (ID),
+    PRIMARY KEY(ID),
+    FOREIGN KEY (RESOURCE_ID) REFERENCES RESOURCE(ID)
+)ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8;
 
 --资源组详情表
 --drop table RESOURCE_GROUP;
