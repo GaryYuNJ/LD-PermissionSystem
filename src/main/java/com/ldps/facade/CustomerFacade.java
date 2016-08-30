@@ -4,6 +4,7 @@ package com.ldps.facade;
 import com.ldps.data.CusResourceRelData;
 import com.ldps.data.CustomerData;
 import com.ldps.data.ResourceData;
+import com.ldps.model.CusResourceRelModel;
 
 import java.util.Date;
 import java.util.List;
@@ -75,4 +76,11 @@ public interface CustomerFacade {
 
 	Integer queryTotalCountByMobileAndUserName(
 			String mobile, String userName);
+
+	public int disableResourcePermission(Long userId, Integer resourceId);
+
+	//更新\添加用户资源权限
+	int authCusResPermission(CusResourceRelModel cusResourceRelModel);
+
+	int jointAuthCusResPermission(CusResourceRelModel cusResourceRelModel);
 }

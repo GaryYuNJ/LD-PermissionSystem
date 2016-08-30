@@ -22,11 +22,15 @@ public interface ICusResourceRelService {
 	CusResourceRelModel queryModelByCustomerIdAndResId(Long customerId,
 			Integer resourceId); 
 	
-	//向用户授权指定的资源
-	int authorizeResPermission(Long customerId, Integer resourceId, Date startDate, 
-			Date endDate, String fromShared, Long createUserId);
 	
 	//联合授权-向用户授权指定的资源以及所有上层节点的所有基础资源
 	int jointAuthorizeResPermission(Long customerId, Integer resourceId, Date startDate, 
 			Date endDate, String fromShared, Long createUserId);
+
+	int updateByConditionSelective(CusResourceRelModel crModel);
+
+	//向用户授权指定的资源
+	int authorizeResPermission(CusResourceRelModel sourceModel);
+
+	int disableResourcePermission(CusResourceRelModel crModel);
 }

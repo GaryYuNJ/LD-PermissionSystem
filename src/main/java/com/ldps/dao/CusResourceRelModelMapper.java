@@ -18,8 +18,10 @@ public interface CusResourceRelModelMapper {
 
 	int deleteSharedResource(@Param("fromCustomerId")Long fromCustomerId, @Param("toCustomerId")Long toCustomerId, @Param("resourceId")Integer resourceId);
 
-	int updateByPrimaryKeySelective(CusResourceRelModel record);
+	int updateByConditionSelective(CusResourceRelModel record);
 	
 	List<ResourceModel> selectResouceListWithSpecUserId(@Param("resourceModel")ResourceModel resourceModel,@Param("startRow") Integer startRow,
 			@Param("pageSize") Integer pageSize);
+
+	int disableResourcePermission(CusResourceRelModel crModel);
 }

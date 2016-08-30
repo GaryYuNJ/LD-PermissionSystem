@@ -1,11 +1,14 @@
 package com.ldps.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ldps.dao.CusResourceRelModelMapper;
 import com.ldps.model.CusResourceRelModel;
@@ -68,55 +71,48 @@ public class CusResourceRelServiceImpl implements ICusResourceRelService {
 
 	//向用户针对一个资源授权
 	@Override
-	public int authorizeResPermission(Long customerId, Integer resourceId,
-			Date startDate, Date endDate, String fromShared, Long createUser) {
+	@Transactional(propagation=Propagation.SUPPORTS)
+	public int authorizeResPermission(CusResourceRelModel sourceModel) {
 		
+		int updateFlag = 0;
 		//如果已有权限，要看起止时间，取入参和已有时间中的最大范围时间保留或更新；
 		//如果有关联数据没有权限，更新；
 		//如果没有数据，插入
-		CusResourceRelModel cResRelModel = this.queryModelByCustomerIdAndResId(customerId, resourceId);
-		if(null == cResRelModel){
-			cResRelModel = new CusResourceRelModel();
-			cResRelModel.setCreateDate(new Date());
-			cResRelModel.setCreateUser(createUser);
-			cResRelModel.setCustomerId(customerId);
-			cResRelModel.setEnable("Y");
-			cResRelModel.setEndDate(endDate);
-			cResRelModel.setStartDate(startDate);
-			cResRelModel.setFromShared(fromShared);
-			cResRelModel.setResourceId(resourceId);
-			
-			this.customerResourceRelDao.insertSelective(cResRelModel);
+		CusResourceRelModel currentModel = this.queryModelByCustomerIdAndResId(sourceModel.getCustomerId(),
+				sourceModel.getResourceId());
+		if(null == currentModel){
+			updateFlag = this.customerResourceRelDao.insertSelective(sourceModel);
 		}else{
-			int updateFlag = 0;
-			cResRelModel.setFromShared(fromShared);
-			if("N".equals(cResRelModel.getEnable())){
-				cResRelModel.setEnable("Y");
-				updateFlag = 1;
-			}
-			if(null != cResRelModel.getStartDate() && cResRelModel.getStartDate().after(startDate)){
-				cResRelModel.setStartDate(startDate);
-				updateFlag = 1;
-			}
-			if(null != cResRelModel.getEndDate() && cResRelModel.getEndDate().before(endDate)){
-				cResRelModel.setEndDate(endDate);
-				updateFlag = 1;
-			}
 			
+			
+			//如果用户已有权限，并且操作来自分享，分享的时间配置不能覆盖已有的最大时间范围
+			if("Y".equals(sourceModel.getFromShared()) && "Y".equals(currentModel.getEnable()) ){
+				if(null == currentModel.getStartDate() || currentModel.getStartDate().before(sourceModel.getStartDate())){
+					sourceModel.setStartDate(currentModel.getStartDate());
+					updateFlag = 1;
+				}
+				if(null == currentModel.getEndDate() ||currentModel.getEndDate().before(sourceModel.getEndDate())){
+					sourceModel.setEndDate(currentModel.getEndDate());
+					updateFlag = 1;
+				}
+			}else{
+				updateFlag = 1;
+			}
+			sourceModel.setCreateDate(new Date());
+			sourceModel.setEnable("Y");
 			if(updateFlag == 1){
-				cResRelModel.setCreateUser(createUser);
-				this.customerResourceRelDao.updateByPrimaryKeySelective(cResRelModel);
+				updateFlag = this.customerResourceRelDao.updateByConditionSelective(sourceModel);
 			}
 		}
 		
-		return 0;
+		return updateFlag;
 	}
 	
 	
 	//联合授权-向用户授权指定的资源以及所有上层节点的所有基础资源
 	@Override
 	public int jointAuthorizeResPermission(Long customerId, Integer resourceId,
-			Date startDate, Date EndDate, String fromShared, Long createUser) {
+			Date startDate, Date endDate, String fromShared, Long createUser) {
 		int flag = 0;
 		//通过resourceId查找到直接对应的nodeId
 		ResourceModel rModel = iResourceService.queryModelById(resourceId);
@@ -126,15 +122,28 @@ public class CusResourceRelServiceImpl implements ICusResourceRelService {
 		
 		//根据nodeIdlist查找到所有要授权的基础资源id，并加上入参 resourceId
 		List<ResourceModel> rmodels = iResourceService.queryBasicResByNodeIdList(nodeIds);
-		if(!rmodels.contains(rModel)){
+		if(null == rmodels){
+			rmodels = new ArrayList<ResourceModel>();
+			rmodels.add(rModel);
+		
+		//当rModel不为基础资源时，rmodels里不会包含它，此处做添加
+		}else if(rModel.getPermissionAttrId() != 2){
 			rmodels.add(rModel);
 		}
 		
+		CusResourceRelModel cResRelModel = new CusResourceRelModel();
 		//调用 authorizeResPermission 循环授权
 		for(ResourceModel rModel1 : rmodels){
 			try{
-				this.authorizeResPermission(customerId, rModel1.getId(), startDate, 
-						EndDate, fromShared, createUser);
+				cResRelModel.setCreateUser(createUser);
+				cResRelModel.setCustomerId(customerId);
+				cResRelModel.setEndDate(endDate);
+				cResRelModel.setStartDate(startDate);
+				cResRelModel.setFromShared(fromShared);
+				cResRelModel.setResourceId(rModel1.getId());
+				cResRelModel.setCreateDate(new Date());
+				cResRelModel.setEnable("Y");
+				this.authorizeResPermission(cResRelModel);
 				flag = 1;
 			}catch(Exception e){
 				flag = -1;
@@ -143,4 +152,16 @@ public class CusResourceRelServiceImpl implements ICusResourceRelService {
 		}
 		return flag;
 	}
+
+	@Override
+	public int updateByConditionSelective(CusResourceRelModel crModel) {
+
+		return customerResourceRelDao.updateByConditionSelective(crModel);
+	}
+
+	@Override
+	public int disableResourcePermission(CusResourceRelModel crModel) {
+		return customerResourceRelDao.disableResourcePermission(crModel);
+	}
+
 }

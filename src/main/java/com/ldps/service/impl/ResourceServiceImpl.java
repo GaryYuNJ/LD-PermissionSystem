@@ -77,7 +77,11 @@ public class ResourceServiceImpl implements IResourceService {
 	 */
 	@Override
 	public List<ResourceModel> queryBasicResByNodeIdList(List<Integer> nodeIds) {
-		return resourceDao.selectBasicResByNodeIdList(nodeIds);
+		if(null != nodeIds && nodeIds.size() > 0){
+			return resourceDao.selectBasicResByNodeIdList(nodeIds);
+		}else{
+			return null;
+		}
 	}
 
 	@Override
@@ -127,6 +131,20 @@ public class ResourceServiceImpl implements IResourceService {
 			return cusResourceRelDao.selectResouceListWithSpecUserId(model, pageNo, pageSize);
 		}*/
 		
+	}
+
+	@Override
+	public List<ResourceModel> queryBasicResByConditionWithCusId(ResourceModel model, Integer pageNo, Integer pageSize) {
+		if(model!=null){
+			if(StringUtils.isEmpty(model.getName()))
+				model.setName(null);
+		} 
+		
+		if(null == model || null == model.getSpecificUserId()){
+			return resourceDao.selectResouceListByCondition(model, pageNo, pageSize);
+		}else{
+			return cusResourceRelDao.selectResouceListWithSpecUserId(model, pageNo, pageSize);
+		}
 	}
 
 	@Override

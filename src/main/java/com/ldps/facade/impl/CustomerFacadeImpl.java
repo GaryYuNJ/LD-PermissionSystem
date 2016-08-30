@@ -221,8 +221,17 @@ public class CustomerFacadeImpl implements CustomerFacade {
 	@Override
 	public int authResPermissionByCusId(Long customerId, Integer resourceId,
 			Date startDate, Date endDate, Long createUserId) {
-		return iCusResourceRelService.authorizeResPermission(customerId, resourceId, startDate, 
-				endDate, "N", createUserId);
+		CusResourceRelModel cResRelModel = new CusResourceRelModel();
+		cResRelModel.setCreateUser(createUserId);
+		cResRelModel.setCustomerId(customerId);
+		cResRelModel.setEndDate(endDate);
+		cResRelModel.setStartDate(startDate);
+		cResRelModel.setFromShared("N");
+		cResRelModel.setResourceId(resourceId);
+		cResRelModel.setCreateDate(new Date());
+		cResRelModel.setEnable("Y");
+		
+		return iCusResourceRelService.authorizeResPermission(cResRelModel);
 	}
 	
 	//单个资源授权接口
@@ -232,9 +241,16 @@ public class CustomerFacadeImpl implements CustomerFacade {
 			Date startDate, Date endDate, Long createUserId) {
 		Long customerId = iCustomerSevice.getCustomerIdByMobile(mobile);
 		Integer resourceId = iResourceService.queryResourceIdByMAC(resourceKey);
-		
-		return iCusResourceRelService.authorizeResPermission(customerId, resourceId, startDate, 
-				endDate, "N", createUserId);
+		CusResourceRelModel cResRelModel = new CusResourceRelModel();
+		cResRelModel.setCreateUser(createUserId);
+		cResRelModel.setCustomerId(customerId);
+		cResRelModel.setEndDate(endDate);
+		cResRelModel.setStartDate(startDate);
+		cResRelModel.setFromShared("N");
+		cResRelModel.setResourceId(resourceId);
+		cResRelModel.setCreateDate(new Date());
+		cResRelModel.setEnable("Y");
+		return iCusResourceRelService.authorizeResPermission(cResRelModel);
 	}
 
 
@@ -454,7 +470,34 @@ public class CustomerFacadeImpl implements CustomerFacade {
 		return message;
 	}
 	
+	//禁用资源
+	@Override
+	public int disableResourcePermission(Long customerId, Integer resourceId) {
+		// TODO Auto-generated method stub
+		CusResourceRelModel crModel = new CusResourceRelModel();
+		crModel.setCustomerId(customerId);
+		crModel.setResourceId(resourceId);
+		crModel.setEnable("N");
+		return iCusResourceRelService.disableResourcePermission(crModel);
+	}
 
+	//更新\添加用户资源权限
+	@Override
+	public int authCusResPermission(CusResourceRelModel cusResourceRelModel) {
+		// TODO Auto-generated method stub
+		return iCusResourceRelService.authorizeResPermission(cusResourceRelModel);
+	}
+	
+	//连带授权 
+	@Override
+	public int jointAuthCusResPermission(CusResourceRelModel cusResourceRelModel) {
+		// TODO Auto-generated method stub
+		return iCusResourceRelService.jointAuthorizeResPermission(cusResourceRelModel.getCustomerId(), cusResourceRelModel.getResourceId(),
+				cusResourceRelModel.getStartDate(), cusResourceRelModel.getEndDate(), 
+				cusResourceRelModel.getFromShared(), cusResourceRelModel.getCustomerId());
+	}
+
+	
 	public ICustomerService getiCustomerSevice() {
 		return iCustomerSevice;
 	}
@@ -497,7 +540,5 @@ public class CustomerFacadeImpl implements CustomerFacade {
 			ResourceModelConverter resourceModelConverter) {
 		this.resourceModelConverter = resourceModelConverter;
 	}
-
-
 
 }

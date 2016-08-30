@@ -40,7 +40,7 @@ public class NodeServiceImpl implements INodeService {
 	public List<Integer> getAllParentNodeIdsbyNodeId(Integer nodeId) {
 		List<Integer> nodes = new ArrayList<Integer>();
 		// 是根节点？
-		if (nodeId != 0) {
+		if (null != nodeId && nodeId != 0) {
 			NodeModel nModel = nodeMapper.selectByPrimaryKey(nodeId);
 			if (null != nModel) {
 				nodes = this.getParentNodeIds(nModel.getId());

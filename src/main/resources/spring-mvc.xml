@@ -29,6 +29,7 @@
 			</list>
 		</property>
 	</bean>
+	
 
 	<!-- 启动SpringMVC的注解功能，完成请求和注解POJO的映射 -->
 	<bean
@@ -68,7 +69,7 @@
 		<!-- 
 		<mvc:interceptor>
 			<mvc:mapping path="/manage/**" />
-			<!-- <mvc:exclude-mapping path="/login"/> 
+			<mvc:exclude-mapping path="/login"/> 
 			<mvc:exclude-mapping path="/appApi/*"/> 
 			<bean class="com.ldps.interceptor.LoginInterceptor" />
 		</mvc:interceptor>

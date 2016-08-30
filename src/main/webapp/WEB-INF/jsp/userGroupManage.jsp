@@ -183,7 +183,48 @@
 											</table>
 										</div>
 								  </div>
-							      <div class="tab-pane" id="userGroupResource">...</div>
+							      <div class="tab-pane" id="userGroupResource">
+								  	    <!-- 资源树节点 -->
+							      		<div class="col-lg-3">
+												<div class="widget treeMinHeight" id="jstree_resource"></div>
+										</div>
+										<!-- 资源table -->
+									  	<div class="col-lg-9">
+										<hr>
+										<form class="form-horizontal" role="form" id="resourceSearchform">
+											<div class="form-group">
+												<div class="col-lg-2">
+													<input type="text" class="form-control" placeholder="资源名称" name="name">
+												</div>
+												<div class="col-lg-2">
+													<select class="form-control" name="deviceType">
+													  <option value="">资源属性</option>
+													  <option value="1">公共资源</option>
+													  <option value="2">基础资源</option>
+													  <option value="3">私有资源</option>
+													</select>
+												</div>
+												<div class="col-lg-2">
+													<select class="form-control" name="buildingId" id="buildingId">
+													  <option value="">选择楼栋</option>
+													</select>
+												</div>
+												
+												<div class="col-lg-3">
+													<button type="button" class="btn btn-primary" id="doSearchResource">
+														<i class="icon-search"></i> 查询
+													</button>
+												</div>
+											</div>
+											<input type="hidden" id="resourceNodeId_hidden" name="nodeId">
+											<input type="hidden" id="userGroupId_hidden" name="specificUserGroupId">
+										</form>
+										<table class="table table-striped table-bordered table-hover"
+											id="resourceTableId">
+		
+										</table>
+   									</div>
+								  </div>
 							      <div class="tab-pane" id="userGroupResourceGroup">...</div>
 							</div>
 						</div>
@@ -231,7 +272,7 @@
 	</div>
 </div>
 
-<input type="hidden" id="userGroupId_hidden" >
+
 <input type="hidden" id="selectBindUserFlag_hidden" value="1">
 
 <%@ include file="/common/script.jsp"%>
@@ -587,4 +628,383 @@
         })
       })
 </script>
+
+
+<!-- resource tab js -->
+<script type="text/javascript">
+	function resourceTableInit() {
+		$('#resourceTableId').bootstrapTable({
+			method: 'get',
+		    url: "<c:url value='/manage/resourceSearchWithCusId.json' />", 
+		    dataType: "json",
+		    queryParams: resourceQueryParams,
+		    pageSize: 10,
+		    pageList: [10, 25, 50],  //可供选择的每页的行数（*）
+		    pageNumber: 1,
+		    pagination: true, //分页
+		    singleSelect: false,
+		    striped: true,
+		    idField: "id",  //标识哪个字段为id主键
+		    sidePagination: "server", //服务端处理分页
+	       	columns: [
+				{
+				    title: '名称',
+				      field: 'name',
+				      align: 'center',
+				      valign: 'middle'
+				  }, 
+	               {
+	                 title: '类型',
+	                   field: 'permissionAttrId',
+	                   align: 'center',
+	                   valign: 'middle',
+	                   formatter:function (value, row, index) {
+	                	   if(value=="1") return "公共资源";
+	                	   if(value=="2") return "基础资源";
+	                	   if(value=="3") return "私有资源";
+                        }
+	               }, 
+	               {
+	                   title: '楼栋',
+	                   field: 'buildingId',
+	                   align: 'center',
+	                   valign: 'middle'
+	               }, 
+	               {
+	                   title: '节点路径',
+	                   field: 'nodePath',
+	                   align: 'center',
+	                   valign: 'middle',
+	                   formatter:function (value, row, index) {
+	                	   return findBuildName(value);
+                        }
+	               }, 
+	               {
+	                   title: '权限',
+	                   field: 'cusResRelModel',
+	                   align: 'center',
+	                   formatter:function (value, row, index) {
+	                	   if(row.permissionAttrId == "1"){
+	                		   return "-";
+	                	   }else{
+	                		   if(null != value 
+		                			   && value.enable=="Y"){
+		                		   if((null == row.cusResRelModel.startDate || new Date(row.cusResRelModel.startDate) < new Date() )
+			                			   &&  (null == row.cusResRelModel.endDate || new Date(row.cusResRelModel.endDate) > new Date() )){
+		                			   return '<span class="label label-success">有权限</span>';
+		                		   }else{
+		                			   return '<span class="label label-danger">已过期</span>';
+		                		   }
+		                	   }else{
+		                		   return '<span class="label label-danger">无权限</span>';
+		                	   }
+	                	   }
+	                	   
+                        }
+	               },
+	               {
+	                   title: '权限起始时间',
+	                   field: 'cusResRelModel',
+	                   align: 'center',
+	                   formatter:function(value,row,index){
+	                	   if(row.permissionAttrId == "1"){
+	                		   return "-";
+	                	   }else{
+	                		   if(null != value){
+		                		   if(null == value.startDate){
+		                			   return "无限制";
+		                		   }else{
+		                			   return new Date(value.startDate).format("yyyy-MM-dd HH:mm");
+		                		   }
+		                	   }else{
+		                		   return "-";
+		                	   }
+	                	   }
+	                 } 
+	               },
+	               {
+	                   title: '权限截至时间',
+	                   field: 'cusResRelModel',
+	                   align: 'center',
+	                   formatter:function(value,row,index){
+	                	   if(row.permissionAttrId == "1"){
+	                		   return "-";
+	                	   }else{
+	                		   if(null != value){
+		                		   if(null == value.endDate){
+		                			   return "无限制";
+		                		   }else{
+		                			   return new Date(value.endDate).format("yyyy-MM-dd HH:mm"); 
+		                		   }
+		                	   }else{
+		                		   return "-";
+		                	   }
+	                	   }
+	                 }
+	               },
+	               {
+	                   title: '操作',
+	                   field: 'id',
+	                   align: 'center',
+	                   formatter:function(value,row,index){
+	                	   if(row.permissionAttrId == "1"){
+	                		   return "-";
+	                	   }else{
+		                	   if(null != row.cusResRelModel 
+		                			   && row.cusResRelModel.enable == "Y"
+		                			   && (null == row.cusResRelModel.startDate || new Date(row.cusResRelModel.startDate) < new Date() ) 
+		                			   &&  (null == row.cusResRelModel.endDate || new Date(row.cusResRelModel.endDate) > new Date() ) ){
+		                		   var e ='<button type="button" class="btn btn-xs btn-warning"  onclick="removePermission(\''+ row.id +'\')" data-toggle="modal" >禁用</button>';
+		                	   }else{
+		                		   var cusResRelModel = null;
+		                		   var startDate = null;
+		                		   var endDate = null;
+		                		   if(null != row.cusResRelModel ){
+		                			   if(null != row.cusResRelModel.startDate){
+		                				   startDate = new Date(row.cusResRelModel.startDate).format("yyyy-MM-dd HH:mm");
+		                			   }
+		                			   if(null != row.cusResRelModel.endDate){
+		                				   endDate = new Date(row.cusResRelModel.endDate).format("yyyy-MM-dd HH:mm");
+		                			   }
+		                		   }
+		                		   var e ='<button type="button" class="btn btn-xs btn-success" data-toggle="modal" onclick="addPermmissionPreProcess(\''+ row.id +'\',\''+ row.name +'\',\''+ startDate +'\',\''+ endDate +'\')" data-target="#addPermissionLayer">授权</button>';
+		                	   }
+		                    	return e;  
+	                	   }
+	                 } 
+	               }
+	           ],
+	           formatLoadingMessage: function () {
+			    	return "请稍等，正在加载中...";
+			  	},
+               formatNoMatches: function () {  //没有匹配的结果
+                   return '无符合条件的记录';
+               }
+	      });
+	};
+	
+	function resourceQueryParams(params) {
+        //定义参数  
+        var search = {};  
+        //遍历form 组装json  
+        $.each($("#resourceSearchform").serializeArray(), function(i, field) {  
+            //console.info(field.name + ":" + field.value + " ");  
+            //可以添加提交验证  
+            search[field.name] = field.value;  
+        });  
+
+        //参数转为json字符串，并赋给search变量 ,JSON.stringify <ie7不支持，有第三方解决插件  
+        params.search = JSON.stringify(search);
+        console.info(params);  
+        return params;  
+    }  
+	
+	//自定义resource查询
+	 $('#doSearchResource').click(function() {
+	        //var params = $('#resourceTableId').bootstrapTable('getOptions');  
+	        $("#resourceNodeId_hidden").val(null);
+	        $('#resourceTableId').bootstrapTable('refresh');  
+	        //console.info(params);  
+    });  	
+
+	//给楼栋赋值Ajax
+	var buildings;
+	$.get("<c:url value="/manage/allBuildings.json" />",function(data,status){
+		if(status=4){
+			$.each(data, function (n,value) {
+				$("#buildingId").append("<option value='"+value.id+"'>"+value.name+"</option>");
+				$("#addbuildsId").append("<option value='"+value.id+"'>"+value.name+"</option>");
+				buildings=data;
+			});
+		}
+	});
+	
+	function findBuildName(id){
+		var tempvalue;
+		$.each(buildings, function (n,value) {
+			if(id==value.id) {
+				tempvalue=value.name;
+				return false;
+			}
+		});
+		return tempvalue;
+	}
+	
+   function findBuildName(id){
+		var tempvalue;
+		$.each(buildings, function (n,value) {
+			if(id==value.id) {
+				tempvalue=value.name;
+				return false;
+			}
+		});
+		return tempvalue;
+	}
+ 	
+	
+	//更新用户权限
+	 $('#saveButton_addPer').click(function() {
+		 //button失效，防止重复提交
+		 //disabled="true"
+		 $('#saveButton_addPer').attr("disabled", true);
+
+		 //关联用户组查询用户标识
+		 var jointAuthFlag = null;
+        //定义参数  
+        var array = {};  
+        //遍历form 组装json  
+        $.each($("#addResPermissionForm").serializeArray(), function(i, field) {  
+            //可以添加提交验证  
+            if('' == field.value){
+            	array[field.name] = null;  
+            }else{
+            	array[field.name] = field.value;  
+            }
+            if(field.name == 'jointAuthFlag_addPer'){
+            	jointAuthFlag = field.value;
+            }
+        });  
+
+        //参数转为json字符串，并赋给变量 ,JSON.stringify <ie7不支持，有第三方解决插件  
+        var modelJsonStr = JSON.stringify(array);
+        
+        var startDateStr =$("#startDate_addPer").val();
+        var endDateStr =$("#endDate_addPer").val();
+ 	    $.ajax({
+ 		    url:"<c:url value='/user/authCusResPermission.json' />",
+ 		    data:{   modelJsonStr : modelJsonStr, jointAuthFlag : jointAuthFlag, startDateStr : startDateStr, endDateStr : endDateStr },  
+ 		    type:'get',  
+ 		    cache:false,  
+ 		    dataType:'json',  
+ 		    success:function(data) {
+ 		    	if(data.status == 1){
+ 		    		$('#resourceTableId').bootstrapTable('refresh');  
+ 		    		$("#closeButton_addPer").click();
+ 		    	}else{
+ 		    		alert("操作失败！");
+ 		    	}
+ 		    	$('#saveButton_addPer').attr("disabled", false);
+ 		     },  
+ 		     error : function() {  
+ 		          alert("系统异常！");  
+ 		         $('#saveButton_addPer').attr("disabled", false);
+ 		     }  
+ 		});
+        
+	 });  
+	
+	
+   function addPermmissionPreProcess(resourceId, resourceName, startDate, endDate){
+	   $('#resourceId_addPer').val(resourceId);
+	   $('#resourceName_addPer').val(resourceName);
+	   $('#userId_addPer').val($("#userId_hidden").val());
+	   $('#userName_addPer').val($("#userName_hidden").val());
+	   if(null != startDate && startDate != 'null'){
+		   $('#startDate_addPer').val(startDate);
+	   }
+	   if(null != endDate && endDate != 'null'){
+		   $('#endDate_addPer').val(endDate);
+	   }
+   }
+   
+   //禁用资源
+   function removePermission(resourceId){
+	   var userId = $("#userId_hidden").val();
+	   $.ajax({
+		    url:"<c:url value='/user/disableResourcePermission.json' />",
+		    data:{   resourceId : resourceId, userId : userId },  
+		    type:'get',  
+		    cache:false,  
+		    dataType:'json',  
+		    success:function(data) {
+		    	if(data.status == 1){
+		    		$('#resourceTableId').bootstrapTable('refresh');  
+		    	}else{
+		    		alert("操作失败！");
+		    	}
+		     },  
+		     error : function() {  
+		          alert("系统异常！");  
+		     }  
+		});
+   }
+   
+   //资源树
+   $('#jstree_resource').jstree({
+		"core": {
+			"multiple" : false,
+			"animation": 0,
+			"check_callback": true,
+			"themes": {
+				"stripes": true
+			},
+			'data': {
+				'url': "<c:url value="/manage/showNode.json" />",
+				'data': function(node) {
+				}
+			}
+       },
+		"types": {
+			"#": {
+				"max_children": 1,
+				"max_depth": 6,
+				"valid_children": ["root"]
+			},
+			"root": {
+				"icon": "<c:url value="/js/themes/default/tree_icon.png" />",
+				"valid_children": ["default"]
+			},
+			"default": {
+				"valid_children": ["default", "file"]
+			},
+			"file": {
+				"icon": "glyphicon glyphicon-file",
+				"valid_children": []
+			}
+		},
+		"plugins": [
+			"contextmenu",  "search","types", "wholerow"
+		],
+		"contextmenu": {    
+           "items": {    
+               "create": null,    
+               "rename": null,    
+               "remove": null,    
+               "ccp": null,    
+               "add": {    
+                   "label": "add",    
+                   "action": function (obj) {  
+                       var inst = jQuery.jstree.reference(obj.reference);    
+                       var clickedNode = inst.get_node(obj.reference);   
+                       nodeCreate();
+                   }    
+               },    
+               "delete": {    
+                   "label": "delete",    
+                   "action": function (obj) {  
+                       var inst = jQuery.jstree.reference(obj.reference);    
+                       var clickedNode = inst.get_node(obj.reference);   
+                       nodeDelete();
+                   }    
+               },
+               "update": {    
+                   "label": "update",    
+                   "action": function (obj) {  
+                       nodeRename();  
+                   }    
+               }    
+           }   
+       }  
+	});
+	//JSTree 点击事件
+	$('#jstree_resource').on("changed.jstree", function (e, data) {
+		console.log(data.node.id);
+		if(data.node!=null){
+			$("#resourceNodeId_hidden").val(data.node.id);
+			$('#resourceTableId').bootstrapTable('refresh');  
+		}
+	 });
+</script>
+
+
 <%@ include file="/common/footer.html"%>

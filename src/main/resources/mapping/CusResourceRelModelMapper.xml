@@ -23,7 +23,6 @@
     <result column="RESOURCE_ID" property="resourceId" jdbcType="INTEGER" />
     <result column="ENABLE" property="enable" jdbcType="CHAR" />
     <result column="FROM_SHARED" property="fromShared" jdbcType="CHAR" />
-    <result column="SHARED_USER" property="sharedUser" jdbcType="VARCHAR" />
     <result column="CREATE_DATE" property="createDate"  />
     <result column="CREATE_USER" property="createUser" jdbcType="INTEGER" />
     <result column="START_DATE" property="startDate"  />
@@ -107,7 +106,7 @@
   </sql>
   
     <sql id="Base_Column_List" >
-    CUSTOMER_ID, RESOURCE_ID, ENABLE, FROM_SHARED, SHARED_USER, CREATE_DATE, CREATE_USER, START_DATE, END_DATE
+    CUSTOMER_ID, RESOURCE_ID, ENABLE, FROM_SHARED, CREATE_DATE, CREATE_USER, START_DATE, END_DATE
   </sql>
   
   <insert id="insert" parameterType="com.ldps.model.CusResourceRelModel" >
@@ -175,27 +174,19 @@
     </trim>
   </insert>
   
-  <update id="updateByPrimaryKeySelective" parameterType="com.ldps.model.CusResourceRelModel" >
+  <update id="updateByConditionSelective" parameterType="com.ldps.model.CusResourceRelModel" >
     update CUSTOMER_RESOURCE_REL
     <set>
-      <if test="customerId != null" >
-        CUSTOMER_ID = #{customerId,jdbcType=BIGINT},
-      </if>
-      <if test="resourceId != null" >
-        RESOURCE_ID = #{resourceId,jdbcType=INTEGER},
-      </if>
       <if test="enable != null" >
         ENABLE = #{enable,jdbcType=CHAR},
       </if>
       <if test="fromShared != null" >
         FROM_SHARED = #{fromShared,jdbcType=CHAR},
       </if>
-      <if test="startDate != null" >
-        START_DATE = #{startDate},
-      </if>
-      <if test="endDate != null" >
-        END_DATE = #{endDate},
-      </if>
+      
+        START_DATE = #{startDate,jdbcType=BIGINT},
+        END_DATE = #{endDate,jdbcType=BIGINT},
+        
       <if test="createDate != null" >
         CREATE_DATE = #{createDate},
       </if>
@@ -203,7 +194,22 @@
         CREATE_USER = #{createUser,jdbcType=BIGINT},
       </if>
     </set>
-    where ID = #{id,jdbcType=INTEGER}
+    where CUSTOMER_ID = #{customerId,jdbcType=BIGINT}
+    AND RESOURCE_ID = #{resourceId,jdbcType=INTEGER}
+  </update>
+  
+    <update id="disableResourcePermission" parameterType="com.ldps.model.CusResourceRelModel" >
+    update CUSTOMER_RESOURCE_REL
+    <set>
+      <if test="enable != null" >
+        ENABLE = #{enable,jdbcType=CHAR},
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER = #{createUser,jdbcType=BIGINT},
+      </if>
+    </set>
+    where CUSTOMER_ID = #{customerId,jdbcType=BIGINT}
+    AND RESOURCE_ID = #{resourceId,jdbcType=INTEGER}
   </update>
   
   <select id="selectByCusIdAndResourceId" resultMap="BaseResultMap" parameterType="com.ldps.model.CusResourceRelModel" >
@@ -226,7 +232,7 @@
     where RESOURCE_ID=#{resourceId,jdbcType=INTEGER}  
     AND FROM_SHARED = 'Y' 
     ADN CUSTOMER_ID =#{toCustomerId,jdbcType=BIGINT} 
-    AND SHARED_USER =#{fromCustomerId,jdbcType=BIGINT}
+    AND CREATE_USER =#{fromCustomerId,jdbcType=BIGINT}
   </delete>
   
   <select id="selectResouceListWithSpecUserId" resultMap="ResourceModel_WithRelModelMap" >
@@ -239,6 +245,7 @@
     		<if test="resourceModel.name != null"><bind name="nameLike" value="'%' + resourceModel.name + '%'" /> name like #{nameLike}</if>
     		<if test="resourceModel.buildingId != null"> AND  BUILDING_ID = #{resourceModel.buildingId}</if>
     		<if test="resourceModel.deviceType != null"> AND  DEVICE_TYPE = #{resourceModel.deviceType}</if>
+    		<if test="resourceModel.nodeId != null"> AND  NODE_ID = #{resourceModel.nodeId}</if>
     	</where>
      </if>
     limit #{startRow,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}

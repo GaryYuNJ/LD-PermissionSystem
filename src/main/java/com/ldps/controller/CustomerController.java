@@ -1,4 +1,6 @@
 package com.ldps.controller;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +21,9 @@ import com.ldps.data.APIMessage;
 import com.ldps.data.BootstrapTableData;
 import com.ldps.data.CustomerData;
 import com.ldps.facade.CustomerFacade;
+import com.ldps.model.CusResourceRelModel;
 import com.ldps.model.CustomerModel;
+import com.ldps.model.ResourceModel;
 import com.ldps.service.ICustomerService;
 
 @Controller
@@ -137,8 +141,9 @@ public class CustomerController {
 		
 		return JSON.toJSONString(apiMessage);
 	}
+
 	
-	//删除用户与用户组关系
+	//用户组添加用户
 	@RequestMapping(value="addUserGroupRelation.json",method = { RequestMethod.GET,
 			RequestMethod.POST },produces = "application/json; charset=utf-8")
 	@ResponseBody
@@ -148,6 +153,62 @@ public class CustomerController {
 		APIMessage apiMessage = new APIMessage();
 		
 		int flag = customerFacade.addUserGroupRelation(userId, groupId);
+		apiMessage.setStatus(flag);
+		
+		return JSON.toJSONString(apiMessage);
+	}
+	
+	//后台页面上更新\添加用户资源权限
+	@RequestMapping(value="authCusResPermission.json",method = { RequestMethod.GET,
+			RequestMethod.POST },produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public String authCusResPermission( @RequestParam("modelJsonStr") String modelJsonStr ,
+			String jointAuthFlag, String startDateStr, String endDateStr, ModelMap model) throws ParseException{
+		APIMessage apiMessage = new APIMessage();
+		CusResourceRelModel cusResourceRelModel= JSON.parseObject(modelJsonStr, CusResourceRelModel.class);
+		
+		SimpleDateFormat sf = new SimpleDateFormat("yyy-MM-dd HH:mm");
+		
+		if(!StringUtils.isEmpty(startDateStr)){
+			cusResourceRelModel.setStartDate(sf.parse(startDateStr));
+		}
+		if(!StringUtils.isEmpty(endDateStr)){
+			cusResourceRelModel.setEndDate(sf.parse(endDateStr));
+		}
+		
+		if("on".equals(cusResourceRelModel.getEnable())){
+			cusResourceRelModel.setEnable("Y");
+		}else{
+			cusResourceRelModel.setEnable("N");
+		}
+		
+		cusResourceRelModel.setFromShared("N");
+		cusResourceRelModel.setCreateUser(0L);
+		
+		int flag = 0;
+		//联合授权
+		if("on".equals(jointAuthFlag)){
+			flag = customerFacade.jointAuthCusResPermission(cusResourceRelModel);
+		//单个资源授权
+		}else{
+			flag = customerFacade.authCusResPermission(cusResourceRelModel);
+		}
+		
+		apiMessage.setStatus(flag);
+		
+		return JSON.toJSONString(apiMessage);
+	}
+	
+	//禁用资源
+	@RequestMapping(value="disableResourcePermission.json",method = { RequestMethod.GET,
+			RequestMethod.POST },produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public String disableResourcePermission( @RequestParam("userId") Long userId , 
+			@RequestParam("resourceId") Integer resourceId , ModelMap model){
+		
+		APIMessage apiMessage = new APIMessage();
+		
+		int flag = customerFacade.disableResourcePermission(userId, resourceId);
 		apiMessage.setStatus(flag);
 		
 		return JSON.toJSONString(apiMessage);
