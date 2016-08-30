@@ -217,7 +217,7 @@
 												</div>
 											</div>
 											<input type="hidden" id="resourceNodeId_hidden" name="nodeId">
-											<input type="hidden" id="userGroupId_hidden" name="specificUserGroupId">
+											<input type="hidden" id="userGroupId_hidden" name="specificCusGroupId">
 										</form>
 										<table class="table table-striped table-bordered table-hover"
 											id="resourceTableId">

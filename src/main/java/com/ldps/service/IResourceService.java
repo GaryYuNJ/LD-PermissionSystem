@@ -51,6 +51,9 @@ public interface IResourceService {
 	List<ResourceModel> queryBasicResByCondition(ResourceModel model, Integer pageNo, Integer pageSize);
 	int queryCountByCondition(ResourceModel model);
 
-	List<ResourceModel> queryBasicResByConditionWithCusId(
+	List<ResourceModel> queryResByConditionWithCusId(
+			ResourceModel resourceModel, Integer offset, Integer limit);
+
+	List<ResourceModel> queryResByConditionWithCusGroupId(
 			ResourceModel resourceModel, Integer offset, Integer limit);
 }

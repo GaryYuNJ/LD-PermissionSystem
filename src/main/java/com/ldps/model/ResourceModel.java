@@ -54,7 +54,17 @@ public class ResourceModel {
     
     private CusResourceRelModel cusResRelModel; //指定要查询关联情况的relModel
     
-    public Long getSpecificUserId() {
+    private Integer specificCusGroupId; //指定要查询关联情况的CustomeGroupId
+    
+    public Integer getSpecificCusGroupId() {
+		return specificCusGroupId;
+	}
+
+	public void setSpecificCusGroupId(Integer specificCusGroupId) {
+		this.specificCusGroupId = specificCusGroupId;
+	}
+
+	public Long getSpecificUserId() {
 		return specificUserId;
 	}
 

@@ -134,7 +134,7 @@ public class ResourceServiceImpl implements IResourceService {
 	}
 
 	@Override
-	public List<ResourceModel> queryBasicResByConditionWithCusId(ResourceModel model, Integer pageNo, Integer pageSize) {
+	public List<ResourceModel> queryResByConditionWithCusId(ResourceModel model, Integer pageNo, Integer pageSize) {
 		if(model!=null){
 			if(StringUtils.isEmpty(model.getName()))
 				model.setName(null);
@@ -144,6 +144,20 @@ public class ResourceServiceImpl implements IResourceService {
 			return resourceDao.selectResouceListByCondition(model, pageNo, pageSize);
 		}else{
 			return cusResourceRelDao.selectResouceListWithSpecUserId(model, pageNo, pageSize);
+		}
+	}
+	
+	@Override
+	public List<ResourceModel> queryResByConditionWithCusGroupId(ResourceModel model, Integer pageNo, Integer pageSize) {
+		if(model!=null){
+			if(StringUtils.isEmpty(model.getName()))
+				model.setName(null);
+		} 
+		
+		if(null == model || null == model.getSpecificUserId()){
+			return resourceDao.selectResouceListByCondition(model, pageNo, pageSize);
+		}else{
+			return cusResourceRelDao.selectResouceListWithSpecCusGroupId(model, pageNo, pageSize);
 		}
 	}
 

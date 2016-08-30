@@ -139,7 +139,7 @@ public class ResourceControl {
 			ResourceModel resourceModel= JSON.parseObject(search,ResourceModel.class);
 			BootstrapTableData bData = new BootstrapTableData();
 
-			List<ResourceModel> resourceList = iResourceService.queryBasicResByConditionWithCusId(resourceModel, offset, limit);
+			List<ResourceModel> resourceList = iResourceService.queryResByConditionWithCusId(resourceModel, offset, limit);
 			if(null != resourceList && resourceList.size()>0){
 				bData.setRows(resourceList);
 				bData.setPage(offset/limit +1);
@@ -150,6 +150,27 @@ public class ResourceControl {
 		return JSON.toJSONString(bData);
 	}
 
+	//关联用户组查询资源，返回用户组是否有权限标识
+	@ResponseBody
+	@RequestMapping(value="resSearchWithCusGroupId.json")
+	public String resSearchWithCusGroupId(String search, @RequestParam("limit") Integer limit, 
+			@RequestParam("offset") Integer offset){
+
+			ResourceModel resourceModel= JSON.parseObject(search,ResourceModel.class);
+			BootstrapTableData bData = new BootstrapTableData();
+
+			List<ResourceModel> resourceList = iResourceService.queryResByConditionWithCusGroupId(resourceModel, offset, limit);
+			if(null != resourceList && resourceList.size()>0){
+				bData.setRows(resourceList);
+				bData.setPage(offset/limit +1);
+				bData.setTotal(iResourceService.queryCountByCondition(resourceModel));
+			}else{
+				bData.setTotal(0);
+			}
+		return JSON.toJSONString(bData);
+	}
+
+	
 	public IResourceService getiResourceService() {
 		return iResourceService;
 	}

@@ -24,4 +24,7 @@ public interface CusResourceRelModelMapper {
 			@Param("pageSize") Integer pageSize);
 
 	int disableResourcePermission(CusResourceRelModel crModel);
+
+	List<ResourceModel> selectResouceListWithSpecCusGroupId(@Param("resourceModel")ResourceModel resourceModel,@Param("startRow") Integer startRow,
+			@Param("pageSize") Integer pageSize);
 }
