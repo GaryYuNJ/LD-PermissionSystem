@@ -18,6 +18,14 @@
   <sql id="Base_Column_List" >
     ID, NAME, PASSWORD, STATUS, CREATE_DATE, CREATE_USER
   </sql>
+  
+   <select id="selectByUnamePword" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from BACKEND_USER
+    where NAME = #{userName,jdbcType=VARCHAR} and PASSWORD = #{password,jdbcType=VARCHAR} and STATUS=0
+  </select>
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />

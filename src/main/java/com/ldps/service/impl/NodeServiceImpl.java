@@ -162,26 +162,32 @@ public class NodeServiceImpl implements INodeService {
 	}
 
 	@Override
-	public Integer addNode(Integer parentNodeId, NodeModel nodeModel) {
-		NodeModel parentNode = nodeMapper.selectByPrimaryKey(parentNodeId);
+	//返回ID
+	public Integer addNode(NodeModel nodeModel) {
+		NodeModel parentNode = nodeMapper.selectByPrimaryKey(nodeModel.getParentId());
 		if (null == parentNode) {
-			return 0;
-		} else {
+			return -1;
+		} else{
+			if(nodeModel.getId()!=null){
+				NodeModel Node = nodeMapper.selectByPrimaryKey(nodeModel.getId());
+				if(Node!=null){
+					return nodeMapper.updateByPrimaryKeySelective(nodeModel);
+					
+				}
+			}
 			nodeModel.setGrade(parentNode.getGrade() + 1);
-			nodeModel.setParentId(parentNode.getId());
 			return nodeMapper.insert(nodeModel);
 		}
 	}
 
 	@Override
-	public Integer deleteNode(Integer grade) {
-		// TODO Auto-generated method stub
-		return null;
+	public Integer deleteNode(Integer nodeId) {
+		return nodeMapper.deleteByPrimaryKey(nodeId);
 	}
 
 	@Override
 	public Integer updateNode(NodeModel nodeModel) {
-		if (nodeModel != null) {
+		if (nodeModel != null&&nodeModel.getId() != null) {
 			return nodeMapper.updateByPrimaryKeySelective(nodeModel);
 		}
 		return null;

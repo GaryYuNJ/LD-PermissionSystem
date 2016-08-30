@@ -37,10 +37,10 @@
 						<div class="widget-content">
 							<div class="col-lg-3">
 							<hr>
-											<button type="button" class="btn btn-primary"><i class="icon-search"></i> 查询</button>
-											<button type="button" class="btn btn-primary"><i class="icon-search"></i> 查询</button>
-											<button type="button" class="btn btn-primary"><i class="icon-search"></i> 查询</button>
-											<hr>
+								<button type="button" class="btn btn-primary" onclick="nodeCreate()"><i class="icon-plus"></i> 添加</button>
+								<button type="button" class="btn btn-warning" onclick="nodeRename()"><i class="icon-pencil"></i> 修改</button>
+								<button type="button" class="btn btn-danger" onclick="nodeDelete()"><i class="icon-remove"></i> 删除</button>
+							<hr>
 								<div class="widget treeMinHeight" id="jstree_resource"></div>
 							</div>
 							<div class="col-lg-9">
@@ -285,25 +285,71 @@
 </div>
 <%@ include file="/common/script.jsp"%>
 <script type="text/javascript">
-		function demo_create() {
-			var ref = $('#jstree_demo').jstree(true),
+$('#jstree_resource').on("rename_node.jstree", function (e,node) {
+	console.log(node);
+	//console.log(node.node.id);
+	//console.log(node.node.parent);
+	//新建节点
+	if(node.node.id.indexOf("j")==0){
+		var nodeModel={
+				name:node.text,
+				parentId:node.node.parent
+		};
+		$.post("<c:url value='/manage/addorUpdateNode.json' />",nodeModel,function(data){
+			if(data.status=="0"){
+				node.instance.set_id(node.node, data.message);
+			}else{
+				node.instance.refresh();
+			}
+		});
+	}else{
+		if(node.text!=node.old){
+			var nodeModel={
+					id:node.node.id,
+					name:node.text,
+					parentId:node.node.parent
+			};
+			//更新节点
+			$.post("<c:url value='/manage/updateNode.json' />",nodeModel,function(data){
+				if(data.status=="1"){
+					node.instance.refresh();
+				}
+			});
+		}
+	}
+	//console.log(node);
+ });
+		$('#jstree_resource').on("delete_node.jstree", function (e,node) {
+			if(node.node.children.length>0){
+				alert("请先删除子节点");
+				node.instance.refresh();
+				return false;
+			}
+			$.post("<c:url value='/manage/deleteNode.json' />",{"nodeId":node.node.id},function(data){
+				if(data.status=="1"){
+					node.instance.refresh();
+				}
+			});
+		 });
+		function nodeCreate() {
+			var ref = $('#jstree_resource').jstree(true),
 				sel = ref.get_selected();
 			if(!sel.length) { return false; }
 			sel = sel[0];
-			sel = ref.create_node(sel, {"type":"file"});
+			sel = ref.create_node(sel);
 			if(sel) {
 				ref.edit(sel);
 			}
 		};
-		function demo_rename() {
-			var ref = $('#jstree_demo').jstree(true),
+		function nodeRename() {
+			var ref = $('#jstree_resource').jstree(true),
 				sel = ref.get_selected();
 			if(!sel.length) { return false; }
 			sel = sel[0];
 			ref.edit(sel);
 		};
-		function demo_delete() {
-			var ref = $('#jstree_demo').jstree(true),
+		function nodeDelete() {
+			var ref = $('#jstree_resource').jstree(true),
 				sel = ref.get_selected();
 			if(!sel.length) { return false; }
 			ref.delete_node(sel);
@@ -410,7 +456,7 @@
 				"types": {
 					"#": {
 						"max_children": 1,
-						"max_depth": 4,
+						"max_depth": 6,
 						"valid_children": ["root"]
 					},
 					"root": {
@@ -439,7 +485,7 @@
 		                    "action": function (obj) {  
 		                        var inst = jQuery.jstree.reference(obj.reference);    
 		                        var clickedNode = inst.get_node(obj.reference);   
-		                        alert("add operation--clickedNode's id is:" + clickedNode.id);  
+		                        nodeCreate();
 		                    }    
 		                },    
 		                "delete": {    
@@ -447,15 +493,13 @@
 		                    "action": function (obj) {  
 		                        var inst = jQuery.jstree.reference(obj.reference);    
 		                        var clickedNode = inst.get_node(obj.reference);   
-		                        alert("delete operation--clickedNode's id is:" + clickedNode.id);  
+		                        nodeDelete();
 		                    }    
 		                },
 		                "update": {    
 		                    "label": "update",    
 		                    "action": function (obj) {  
-		                        var inst = jQuery.jstree.reference(obj.reference);    
-		                        var clickedNode = inst.get_node(obj.reference);   
-		                        alert("delete operation--clickedNode's id is:" + clickedNode.id);  
+		                        nodeRename();  
 		                    }    
 		                }    
 		            }   
@@ -463,6 +507,7 @@
 			});
 			//JSTree 事件
 			$('#jstree_resource').on("changed.jstree", function (e, data) {
+				console.log(data.node.id);
 				if(data.node!=null){
 					$("#newnodeId").val(data.node.id);
 					$("#newnodePath").val(data.instance.get_path(data.node,'/'));

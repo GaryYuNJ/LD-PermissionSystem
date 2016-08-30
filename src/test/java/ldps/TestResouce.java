@@ -25,8 +25,25 @@ public class TestResouce {
 	@Test
 	public void testAddNode(){
 		NodeModel nodeModel=new NodeModel();
-		nodeModel.setName("绿地大楼2");
-		iNodeService.addNode(0, nodeModel);
+		nodeModel.setName("绿地大楼12");
+		nodeModel.setParentId(1);
+		logger.info(iNodeService.addNode(nodeModel));
+		logger.info(nodeModel.getId());
+	}
+	
+	@Test
+	public void updateAddNode(){
+		NodeModel nodeModel=new NodeModel();
+		nodeModel.setName("绿地大楼121");
+		nodeModel.setId(15);
+		nodeModel.setParentId(1);
+		logger.info(iNodeService.updateNode(nodeModel));
+		logger.info(nodeModel.getId());
+	}
+
+	@Test
+	public void deleteNode(){
+		logger.info(iNodeService.deleteNode(15));
 	}
 	@Test
 	public void testGetAllNode(){

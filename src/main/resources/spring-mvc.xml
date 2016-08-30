@@ -64,5 +64,14 @@
 			<mvc:mapping path="/appApi/*" />
 			<bean class="com.ldps.interceptor.APPInterceptor" />
 		</mvc:interceptor>
+		
+		<!-- 
+		<mvc:interceptor>
+			<mvc:mapping path="/manage/**" />
+			<!-- <mvc:exclude-mapping path="/login"/> 
+			<mvc:exclude-mapping path="/appApi/*"/> 
+			<bean class="com.ldps.interceptor.LoginInterceptor" />
+		</mvc:interceptor>
+		-->
 	</mvc:interceptors>
 </beans>  

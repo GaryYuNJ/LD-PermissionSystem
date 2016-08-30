@@ -1,5 +1,7 @@
 package com.ldps.dao;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.ldps.model.UserModel;
 
 public interface UserModelMapper {
@@ -10,6 +12,8 @@ public interface UserModelMapper {
     int insertSelective(UserModel record);
 
     UserModel selectByPrimaryKey(Long id);
+    
+    UserModel selectByUnamePword(@Param(value="userName")String userName,@Param(value="password")String password); 
 
     int updateByPrimaryKeySelective(UserModel record);
 

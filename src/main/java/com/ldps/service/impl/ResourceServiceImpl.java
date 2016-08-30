@@ -118,11 +118,14 @@ public class ResourceServiceImpl implements IResourceService {
 			if(StringUtils.isEmpty(model.getName()))
 				model.setName(null);
 		} 
+		return resourceDao.selectResouceListByCondition(model, pageNo, pageSize);
+		//这个我们讨论下
+		/*
 		if(null == model || null == model.getSpecificUserId()){
 			return resourceDao.selectResouceListByCondition(model, pageNo, pageSize);
 		}else{
 			return cusResourceRelDao.selectResouceListWithSpecUserId(model, pageNo, pageSize);
-		}
+		}*/
 		
 	}
 
