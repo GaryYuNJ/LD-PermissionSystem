@@ -478,10 +478,10 @@
   </select>
   
   <select id="selectBasicResByNodeIdList" resultMap="BaseResultMap" >
-    select 
+    select DISTINCT 
     <include refid="Base_Column_List" />
     from RESOURCE 
-    where PERMISSION_ATTR_ID = 1 
+    where PERMISSION_ATTR_ID = 2 
     and NODE_ID in 
    	<foreach item="item" index="index" collection="nodeIds" open="(" separator="," close=")">
    		#{item,jdbcType=INTEGER}
