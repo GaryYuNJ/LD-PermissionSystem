@@ -54,7 +54,7 @@ public class TestResouce {
 		ResourceModel rm=new ResourceModel();
 		rm.setName("闸机01");
 		rm.setTypeId(1);
-		rm.setMac("xxxx");
+		//rm.setMac("xxxx");
 		rm.setNodeId(1);
 		rm.setCreateUser(1000);
 		iResourceService.createResource(rm);

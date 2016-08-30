@@ -16,13 +16,9 @@ public class ResourceModel {
 
     private Integer createUser;
 
-    private String mac;
-
     private Integer buildingId; //设备类型资源的楼栋信息id
 
     private Integer floor;
-
-    private String password;
 
     private Integer sequence;
 
@@ -36,8 +32,6 @@ public class ResourceModel {
 
     private Integer deviceType; //设备类型：1. 通行、2. 家居、3.其它
 
-    private Integer manufacturerId; //设备生产厂家，需要传给APP' ,
-    
     private Integer nodeId; //资源直接隶属的节点
 
     private Integer rInt1;
@@ -143,13 +137,6 @@ public class ResourceModel {
         this.createUser = createUser;
     }
 
-    public String getMac() {
-        return mac;
-    }
-
-    public void setMac(String mac) {
-        this.mac = mac == null ? null : mac.trim();
-    }
 
     public Integer getBuildingId() {
         return buildingId;
@@ -167,13 +154,6 @@ public class ResourceModel {
         this.floor = floor;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password == null ? null : password.trim();
-    }
 
     public Integer getSequence() {
         return sequence;
@@ -223,13 +203,6 @@ public class ResourceModel {
         this.deviceType = deviceType;
     }
 
-    public Integer getManufacturerId() {
-        return manufacturerId;
-    }
-
-    public void setManufacturerId(Integer manufacturerId) {
-        this.manufacturerId = manufacturerId;
-    }
 
     public Integer getrInt1() {
         return rInt1;
