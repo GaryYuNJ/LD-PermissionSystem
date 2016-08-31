@@ -2,6 +2,7 @@ package com.ldps.service.impl;
 
 
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -35,6 +36,11 @@ public class CustomerGroupRelServiceImpl implements ICustomerGroupRelService {
 		model.setCreateDate(new Date());
 		model.setCreateUser(0); //session User
 		return customerGroupRelDao.insert(model);
+	}
+	
+	@Override
+	public List<CusGroupRelModel> queryByGroupId(Integer groupId) {
+		return customerGroupRelDao.selectByGroupId(groupId);
 	}
 	
 

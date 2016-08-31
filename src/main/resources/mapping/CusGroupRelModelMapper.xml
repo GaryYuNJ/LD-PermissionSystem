@@ -34,6 +34,10 @@
        <result column="totalCount" property="totalCount" jdbcType="INTEGER" />  
    </resultMap>  
   
+  <sql id="Base_Column_List" >
+  	CGROUP_ID,CUSTOMER_ID,CREATE_DATE,CREATE_USER
+  </sql>
+  
   <sql id="Simple_Customer_Column_List" >
   	C.ID, C.CID, C.CSTATUS, C.NAME, C.MOBILE, C.PASSWORD, C.SEX, C.BIRTHDAY, C.EMAIL, C.ADDRESS, C.RELATION
   </sql>
@@ -80,6 +84,13 @@
 		delete from CGROUP_REL 
 		where CGROUP_ID = #{groupId,jdbcType=INTEGER} and CUSTOMER_ID =  #{customerId, jdbcType=BIGINT}
 	</delete>
+	
+   <select id="selectByGroupId" resultMap="BaseResultMap"  >
+    select 
+    <include refid="Base_Column_List" />
+    from CGROUP_REL
+    where CGROUP_ID=#{userGroupId,jdbcType=INTEGER}
+  </select>
   
    
     <!-- By BindGrpId, Mobile And Name 分页查询 -->

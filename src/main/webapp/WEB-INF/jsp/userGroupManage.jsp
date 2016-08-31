@@ -55,7 +55,7 @@
 										</div>
 										<div class="col-lg-2">
 											<button type="button" class="btn btn-primary"
-												data-toggle="modal" data-target="#myModal">
+												data-toggle="modal" data-target="#createNewGroupModal">
 												<i class="icon-plus"></i> 新增用户组
 											</button>
 										</div>
@@ -197,7 +197,7 @@
 													<input type="text" class="form-control" placeholder="资源名称" name="name">
 												</div>
 												<div class="col-lg-2">
-													<select class="form-control" name="deviceType">
+													<select class="form-control" name="permissionAttrId">
 													  <option value="">资源属性</option>
 													  <option value="1">公共资源</option>
 													  <option value="2">基础资源</option>
@@ -241,10 +241,10 @@
 <div class="clearfix"></div>
 </div>
 <!-- Content ends -->
-<!-- 弹窗 -->
+<!--创建新用户组 弹窗 -->
 <!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-	aria-labelledby="myModalLabel">
+<div class="modal fade" id="createNewGroupModal" tabindex="-1" role="dialog"
+	aria-labelledby="createNewGroupModalModalLabel">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -252,7 +252,7 @@
 					aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
-				<h4 class="modal-title" id="myModalLabel">添加用户组</h4>
+				<h4 class="modal-title" id="createNewGroupModalLabel">添加用户组</h4>
 			</div>
 			<div class="modal-body">
 				<form class="form-horizontal" role="form">
@@ -272,8 +272,86 @@
 	</div>
 </div>
 
-
+<!--用户组授权 弹窗 -->
+<!-- Modal -->
+<div class="modal fade" id="addPermissionModal" tabindex="-1" role="dialog"
+	aria-labelledby="addPermissionModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="addPermissionModalLabel">权限更新</h4>
+			</div>
+			<div class="modal-body">
+				<form class="form-horizontal" role="form" id="addResPermissionForm">
+	                   <div class="form-group">
+	                      <label class="col-lg-2 control-label">资源ID</label>
+	                     <div class="col-lg-4">
+	                       <input type="text" class="form-control" id="resourceId_addPer" name="resourceId"  readonly="true" placeholder="资源ID">
+	                     </div>
+	                      <label class="col-lg-2 control-label">资源名称</label>
+	                     <div class="col-lg-4">
+	                       <input type="text" class="form-control"  id="resourceName_addPer" disabled="true" placeholder="资源名称">
+	                     </div>
+	                   </div>
+	                   <div class="form-group">
+	                      <label class="col-lg-2 control-label">用户组ID</label>
+	                     <div class="col-lg-4">
+	                       <input type="text" class="form-control" id="cusGrpId_addPer" name="customerId"  readonly="true" placeholder="资源ID">
+	                     </div>
+	                      <label class="col-lg-2 control-label">用户组名</label>
+	                     <div class="col-lg-4">
+	                       <input type="text" class="form-control"  id="cusGrpName_addPer" disabled="true" placeholder="用户名">
+	                     </div>
+	                   </div>
+	                   
+	                   <div class="form-group">
+	                     <label class="col-lg-2 control-label">授权状态</label>
+	                     <div class="col-lg-4">
+	                      <div class="make-switch" id="permissionStatus_addPer" data-on="success" data-off="warning" data-off="info" data-on-label="启用" data-off-label="禁用">
+	            					<input type="checkbox" checked name="enable">
+	        				  </div>
+	                     </div>
+	                     <label class="col-lg-2 control-label">连带授权</label>
+	                     <div class="col-lg-4">
+	                      	  <div class="make-switch" id="jointAuthFlagSwitch_addPer" data-on="success" data-off="warning" data-off="info" data-on-label="是" data-off-label="否">
+	            					<input type="checkbox" checked name="jointAuthFlag_addPer">
+	        				  </div>
+	                     </div>
+	                  </div>
+	                  
+	                    <div class="form-group">  
+	                    	<label class="col-lg-2 control-label">起始时间</label>
+			                <div class='input-group date col-lg-4 datetimepicker'  style='padding-left:15px;'>
+			                    <input type='text' class="form-control"  id="startDate_addPer" name="startDateStr"  placeholder="无限制"/>
+			                    <span class="input-group-addon">
+			                        <span class="glyphicon glyphicon-calendar"></span>
+			                    </span>
+			                </div>
+                	   </div>  
+                	   <div class="form-group">  
+	                    	<label class="col-lg-2 control-label">过期时间</label>
+			                <div class='input-group date col-lg-4 datetimepicker'  style='padding-left:15px;' >
+			                    <input type='text' class="form-control" id="endDate_addPer" name="endDateStr" placeholder="无限制"/>
+			                    <span class="input-group-addon">
+			                        <span class="glyphicon glyphicon-calendar"></span>
+			                    </span>
+			                </div>
+                	  </div>
+	             </form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="closeButton_addPer" class="btn btn-default" data-dismiss="modal">关闭</button>
+				<button type="button" id="saveButton_addPer" class="btn btn-primary">保存</button>
+			</div>
+		</div>
+	</div>
+</div>
 <input type="hidden" id="selectBindUserFlag_hidden" value="1">
+<input type="hidden" id="cusGrpName_hidden" value="1">
 
 <%@ include file="/common/script.jsp"%>
 <script type="text/javascript">
@@ -324,7 +402,7 @@
                    field: 'id',
                    align: 'center',
                    formatter:function(value,row,index){
-                 var e = '<a href="javascript:void(0);" mce_href="#" onclick="showUserGroup(\''+ row.id + '\')">详情</a> ';  
+                 var e = '<a href="javascript:void(0);" mce_href="#" onclick="showUserGroup(\''+ row.id + '\',\''+ row.name + '\')">详情</a> ';  
                  var d = '<a href="javascript:void(0);" mce_href="#" onclick="deleteUserGroupById(\''+ row.id +'\')">删除</a> ';  
                     return e+d;  
                  } 
@@ -401,15 +479,16 @@
 		  
 		  
       //显示用户详情内容
-	  var showUserGroup = function (userGroupId) {
+	  var showUserGroup = function (userGroupId, userGroupName) {
 		  $("#userGroupId_hidden").val(userGroupId);
+		  $("#cusGrpName_hidden").val(userGroupName);
 		  $("#userGroupListTable").hide();
 		  $("#userGroupDetailsTable").show();
 		  initUserGroupDetailForm(userGroupId);
 	  };
 
 	  
-	  //初始化 UserDetailForm 
+	  //初始化 UserGroupDetailForm 
 	  var initUserGroupDetailForm = function (userGroupId) {
 		  $.ajax( {  
 			    url:"<c:url value='/userGroup/showUserGroupDetail.json' />",
@@ -625,6 +704,11 @@
         	  userListTableInit();
         	  //$("#userListTableId").bootstrapTable('refresh');
           } 
+          //点击tab调用对应function
+          if($(this).attr("href") == "#userGroupResource"){
+        	  resourceTableInit();
+        	  //$("#userListTableId").bootstrapTable('refresh');
+          } 
         })
       })
 </script>
@@ -635,7 +719,7 @@
 	function resourceTableInit() {
 		$('#resourceTableId').bootstrapTable({
 			method: 'get',
-		    url: "<c:url value='/manage/resourceSearchWithCusId.json' />", 
+		    url: "<c:url value='/manage/resSearchWithCusGroupId.json' />", 
 		    dataType: "json",
 		    queryParams: resourceQueryParams,
 		    pageSize: 10,
@@ -681,7 +765,7 @@
 	               }, 
 	               {
 	                   title: '权限',
-	                   field: 'cusResRelModel',
+	                   field: 'cGrpResRelModel',
 	                   align: 'center',
 	                   formatter:function (value, row, index) {
 	                	   if(row.permissionAttrId == "1"){
@@ -689,8 +773,8 @@
 	                	   }else{
 	                		   if(null != value 
 		                			   && value.enable=="Y"){
-		                		   if((null == row.cusResRelModel.startDate || new Date(row.cusResRelModel.startDate) < new Date() )
-			                			   &&  (null == row.cusResRelModel.endDate || new Date(row.cusResRelModel.endDate) > new Date() )){
+		                		   if((null == row.cGrpResRelModel.startDate || new Date(row.cGrpResRelModel.startDate) < new Date() )
+			                			   &&  (null == row.cGrpResRelModel.endDate || new Date(row.cGrpResRelModel.endDate) > new Date() )){
 		                			   return '<span class="label label-success">有权限</span>';
 		                		   }else{
 		                			   return '<span class="label label-danger">已过期</span>';
@@ -704,7 +788,7 @@
 	               },
 	               {
 	                   title: '权限起始时间',
-	                   field: 'cusResRelModel',
+	                   field: 'cGrpResRelModel',
 	                   align: 'center',
 	                   formatter:function(value,row,index){
 	                	   if(row.permissionAttrId == "1"){
@@ -724,7 +808,7 @@
 	               },
 	               {
 	                   title: '权限截至时间',
-	                   field: 'cusResRelModel',
+	                   field: 'cGrpResRelModel',
 	                   align: 'center',
 	                   formatter:function(value,row,index){
 	                	   if(row.permissionAttrId == "1"){
@@ -750,24 +834,24 @@
 	                	   if(row.permissionAttrId == "1"){
 	                		   return "-";
 	                	   }else{
-		                	   if(null != row.cusResRelModel 
-		                			   && row.cusResRelModel.enable == "Y"
-		                			   && (null == row.cusResRelModel.startDate || new Date(row.cusResRelModel.startDate) < new Date() ) 
-		                			   &&  (null == row.cusResRelModel.endDate || new Date(row.cusResRelModel.endDate) > new Date() ) ){
+		                	   if(null != row.cGrpResRelModel 
+		                			   && row.cGrpResRelModel.enable == "Y"
+		                			   && (null == row.cGrpResRelModel.startDate || new Date(row.cGrpResRelModel.startDate) < new Date() ) 
+		                			   &&  (null == row.cGrpResRelModel.endDate || new Date(row.cGrpResRelModel.endDate) > new Date() ) ){
 		                		   var e ='<button type="button" class="btn btn-xs btn-warning"  onclick="removePermission(\''+ row.id +'\')" data-toggle="modal" >禁用</button>';
 		                	   }else{
-		                		   var cusResRelModel = null;
+		                		   var cGrpResRelModel = null;
 		                		   var startDate = null;
 		                		   var endDate = null;
-		                		   if(null != row.cusResRelModel ){
-		                			   if(null != row.cusResRelModel.startDate){
-		                				   startDate = new Date(row.cusResRelModel.startDate).format("yyyy-MM-dd HH:mm");
+		                		   if(null != row.cGrpResRelModel ){
+		                			   if(null != row.cGrpResRelModel.startDate){
+		                				   startDate = new Date(row.cGrpResRelModel.startDate).format("yyyy-MM-dd HH:mm");
 		                			   }
-		                			   if(null != row.cusResRelModel.endDate){
-		                				   endDate = new Date(row.cusResRelModel.endDate).format("yyyy-MM-dd HH:mm");
+		                			   if(null != row.cGrpResRelModel.endDate){
+		                				   endDate = new Date(row.cGrpResRelModel.endDate).format("yyyy-MM-dd HH:mm");
 		                			   }
 		                		   }
-		                		   var e ='<button type="button" class="btn btn-xs btn-success" data-toggle="modal" onclick="addPermmissionPreProcess(\''+ row.id +'\',\''+ row.name +'\',\''+ startDate +'\',\''+ endDate +'\')" data-target="#addPermissionLayer">授权</button>';
+		                		   var e ='<button type="button" class="btn btn-xs btn-success" data-toggle="modal" onclick="addPermmissionPreProcess(\''+ row.id +'\',\''+ row.name +'\',\''+ startDate +'\',\''+ endDate +'\')" data-target="#addPermissionModal">授权</button>';
 		                	   }
 		                    	return e;  
 	                	   }
@@ -842,7 +926,7 @@
 	}
  	
 	
-	//更新用户权限
+	//更新用户组权限
 	 $('#saveButton_addPer').click(function() {
 		 //button失效，防止重复提交
 		 //disabled="true"
@@ -871,7 +955,7 @@
         var startDateStr =$("#startDate_addPer").val();
         var endDateStr =$("#endDate_addPer").val();
  	    $.ajax({
- 		    url:"<c:url value='/user/authCusResPermission.json' />",
+ 		    url:"<c:url value='/userGroup/authCusGrpResPermission.json' />",
  		    data:{   modelJsonStr : modelJsonStr, jointAuthFlag : jointAuthFlag, startDateStr : startDateStr, endDateStr : endDateStr },  
  		    type:'get',  
  		    cache:false,  
@@ -897,8 +981,8 @@
    function addPermmissionPreProcess(resourceId, resourceName, startDate, endDate){
 	   $('#resourceId_addPer').val(resourceId);
 	   $('#resourceName_addPer').val(resourceName);
-	   $('#userId_addPer').val($("#userId_hidden").val());
-	   $('#userName_addPer').val($("#userName_hidden").val());
+	   $('#cusGrpId_addPer').val($("#userGroupId_hidden").val());
+	   $('#cusGrpName_addPer').val($("#cusGrpName_hidden").val());
 	   if(null != startDate && startDate != 'null'){
 		   $('#startDate_addPer').val(startDate);
 	   }
@@ -909,10 +993,10 @@
    
    //禁用资源
    function removePermission(resourceId){
-	   var userId = $("#userId_hidden").val();
+	   var cusGrpId = $("#userId_hidden").val();
 	   $.ajax({
-		    url:"<c:url value='/user/disableResourcePermission.json' />",
-		    data:{   resourceId : resourceId, userId : userId },  
+		    url:"<c:url value='/userGroup/disableCusGrpResPermission.json' />",
+		    data:{   resourceId : resourceId, cusGrpId : cusGrpId },  
 		    type:'get',  
 		    cache:false,  
 		    dataType:'json',  

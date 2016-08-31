@@ -39,4 +39,7 @@ public interface CusGroupRelModelMapper {
 	 */
 	Integer selectCusModelCountByMobileAndUserName(@Param("mobile")String mobile, 
 			@Param("userName")String userName);
+	
+	
+	List<CusGroupRelModel> selectByGroupId(@Param("userGroupId")Integer userGroupId);
 }

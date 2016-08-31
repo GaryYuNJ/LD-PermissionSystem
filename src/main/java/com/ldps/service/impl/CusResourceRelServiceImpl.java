@@ -164,4 +164,12 @@ public class CusResourceRelServiceImpl implements ICusResourceRelService {
 		return customerResourceRelDao.disableResourcePermission(crModel);
 	}
 
+	@Override
+	public int disableBatchResourcePermission(List<Long> customerIds,
+			Integer resourceId) {
+		String disableFlag = "N";
+		Integer user = 0;
+		return customerResourceRelDao.disableBatchResourcePermission(disableFlag,user,customerIds,resourceId);
+	}
+
 }

@@ -213,7 +213,7 @@ public class CustomerController {
 		
 		return JSON.toJSONString(apiMessage);
 	}
-	
+
 	public CustomerModel getCustomer() {
 		return customer;
 	}

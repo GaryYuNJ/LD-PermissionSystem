@@ -33,4 +33,7 @@ public interface ICusResourceRelService {
 	int authorizeResPermission(CusResourceRelModel sourceModel);
 
 	int disableResourcePermission(CusResourceRelModel crModel);
+
+	int disableBatchResourcePermission(List<Long> customerIds,
+			Integer resourceId);
 }

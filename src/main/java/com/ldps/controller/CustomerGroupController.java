@@ -1,4 +1,6 @@
 package com.ldps.controller;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +19,8 @@ import com.ldps.data.APIMessage;
 import com.ldps.data.BootstrapTableData;
 import com.ldps.data.CustomerGroupData;
 import com.ldps.facade.CustomerGroupFacade;
+import com.ldps.model.CusGrpResourceRelModel;
+import com.ldps.model.CusResourceRelModel;
 import com.ldps.model.CustomerModel;
 
 @Controller
@@ -162,6 +166,64 @@ public class CustomerGroupController {
 		model.put("pageIndex", 4);
 		return "userGroupManage";
 	}
+	
+	
+	//后台页面上更新\添加用户组资源权限
+	@RequestMapping(value="authCusGrpResPermission.json",method = { RequestMethod.GET,
+			RequestMethod.POST },produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public String authCusGrpResPermission( @RequestParam("modelJsonStr") String modelJsonStr ,
+			String jointAuthFlag, String startDateStr, String endDateStr, ModelMap model) throws ParseException{
+		APIMessage apiMessage = new APIMessage();
+		CusGrpResourceRelModel cusGrpResourceRelModel= JSON.parseObject(modelJsonStr, CusGrpResourceRelModel.class);
+		
+		SimpleDateFormat sf = new SimpleDateFormat("yyy-MM-dd HH:mm");
+		
+		if(!StringUtils.isEmpty(startDateStr)){
+			cusGrpResourceRelModel.setStartDate(sf.parse(startDateStr));
+		}
+		if(!StringUtils.isEmpty(endDateStr)){
+			cusGrpResourceRelModel.setEndDate(sf.parse(endDateStr));
+		}
+		
+		if("on".equals(cusGrpResourceRelModel.getEnable())){
+			cusGrpResourceRelModel.setEnable("Y");
+		}else{
+			cusGrpResourceRelModel.setEnable("N");
+		}
+		
+		cusGrpResourceRelModel.setCreateUser(0);
+		
+		int flag = 0;
+		//联合授权
+		if("on".equals(jointAuthFlag)){
+			flag = customerGroupFacade.jointAuthCusGrpResPermission(cusGrpResourceRelModel);
+		//单个资源授权
+		}else{
+			flag = customerGroupFacade.authCusGrpResPermission(cusGrpResourceRelModel);
+		}
+		
+		apiMessage.setStatus(flag);
+		
+		return JSON.toJSONString(apiMessage);
+	}
+	
+	
+	//禁止用户组访问资源
+	@RequestMapping(value="disableCusGrpResPermission.json",method = { RequestMethod.GET,
+			RequestMethod.POST },produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public String disableCusGrpResPermission( @RequestParam("cusGrpId") Integer cusGrpId , 
+			@RequestParam("resourceId") Integer resourceId , ModelMap model){
+		
+		APIMessage apiMessage = new APIMessage();
+		
+		int flag = customerGroupFacade.disableCusGrpResPermission(cusGrpId, resourceId);
+		apiMessage.setStatus(flag);
+		
+		return JSON.toJSONString(apiMessage);
+	}
+	
 
 	public CustomerModel getCustomer() {
 		return customer;

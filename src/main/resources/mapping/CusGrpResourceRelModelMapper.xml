@@ -25,24 +25,21 @@
     <result column="STATUS" property="status" jdbcType="CHAR" />
     <result column="CREATE_DATE" property="createDate"  />
     <result column="CREATE_USER" property="createUser" jdbcType="INTEGER" />
-    <result column="MAC" property="mac" jdbcType="CHAR" />
     <result column="BUILDING_ID" property="buildingId" jdbcType="INTEGER" />
     <result column="FLOOR" property="floor" jdbcType="INTEGER" />
-    <result column="PASSWORD" property="password" jdbcType="CHAR" />
     <result column="SEQUENCE" property="sequence" jdbcType="INTEGER" />
-    <result column="SHARE_ENABLE" property="shareEnable" jdbcType="CHAR" />
     <result column="NODE_PATH" property="nodePath" jdbcType="VARCHAR" />
     <result column="IS_VIRTUAL_RESOURCE" property="isVirtualResource" jdbcType="CHAR" />
     <result column="PERMISSION_ATTR_ID" property="permissionAttrId" jdbcType="INTEGER" />
     <result column="DEVICE_TYPE" property="deviceType" jdbcType="INTEGER" />
-    <result column="MANUFACTURER_ID" property="manufacturerId" jdbcType="INTEGER" />
     <result column="NODE_ID" property="nodeId" jdbcType="INTEGER" />
     
-    <association property="cusResRelModel" javaType="com.ldps.model.CusGrpResourceRelModel">
+    <association property="cGrpResRelModel" javaType="com.ldps.model.CusGrpResourceRelModel">
 	    <id column="CR_CGROUP_ID" property="cgroupId" jdbcType="BIGINT" />
 	    <result column="CR_RESOURCE_ID" property="resourceId" jdbcType="INTEGER" />
 	    <result column="CR_ENABLE" property="enable" jdbcType="CHAR" />
 	    <result column="CR_CREATE_DATE" property="createDate"  />
+	    <result column="CR_UPDATE_DATE" property="updateDate"  />
 	    <result column="CR_CREATE_USER" property="createUser" jdbcType="BIGINT" />
 	    <result column="CR_START_DATE" property="startDate"  />
 	    <result column="CR_END_DATE" property="endDate"  />
@@ -54,10 +51,10 @@
   </sql>
   
   <sql id="Resource_With_CusGrp_RelModel_List" >
-    R.ID, R.NAME, R.TYPE_ID, R.STATUS, R.CREATE_DATE, R.CREATE_USER, R.MAC, R.BUILDING_ID, R.FLOOR, R.PASSWORD, 
-    R.SEQUENCE, R.SHARE_ENABLE,R.NODE_PATH,R.IS_VIRTUAL_RESOURCE, R.PERMISSION_ATTR_ID, R.DEVICE_TYPE, R.MANUFACTURER_ID, R.NODE_ID,
+    R.ID, R.NAME, R.TYPE_ID, R.STATUS, R.CREATE_DATE, R.CREATE_USER, R.BUILDING_ID, R.FLOOR, 
+    R.SEQUENCE, R.SHARE_ENABLE,R.NODE_PATH,R.IS_VIRTUAL_RESOURCE, R.PERMISSION_ATTR_ID, R.DEVICE_TYPE, R.NODE_ID,
     CR.CGROUP_ID CR_CGROUP_ID, CR.RESOURCE_ID CR_RESOURCE_ID, CR.ENABLE CR_ENABLE,  CR.CREATE_DATE CR_CREATE_DATE, 
-    CR.CREATE_USER CR_CREATE_USER, CR.START_DATE CR_START_DATE, CR.END_DATE CR_END_DATE
+    CR.UPDATE_DATE CR_UPDATE_DATE, CR.CREATE_USER CR_CREATE_USER, CR.START_DATE CR_START_DATE, CR.END_DATE CR_END_DATE
   </sql>
   
   <insert id="insert" parameterType="com.ldps.model.CusGrpResourceRelModel" >
@@ -158,5 +155,38 @@
      </if>
     limit #{startRow,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
   </select>
+  
+  <update id="disableResourcePermission" parameterType="com.ldps.model.CusGrpResourceRelModel" >
+    update CGROUP_RESOURCE_REL
+    <set>
+      <if test="enable != null" >
+        ENABLE = #{enable,jdbcType=CHAR},
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER = #{createUser,jdbcType=BIGINT}, 
+      </if>
+      UPDATE_DATE = now()
+    </set>
+    where CGROUP_ID = #{cgroupId,jdbcType=INTEGER}
+    AND RESOURCE_ID = #{resourceId,jdbcType=INTEGER}
+  </update>
+  
+   <update id="updateByConditionSelective" parameterType="com.ldps.model.CusGrpResourceRelModel" >
+    update CUSTOMER_RESOURCE_REL
+    <set>
+      <if test="enable != null" >
+        ENABLE = #{enable,jdbcType=CHAR},
+      </if>
+      
+        START_DATE = #{startDate,jdbcType=BIGINT},
+        END_DATE = #{endDate,jdbcType=BIGINT},
+        UPDATE_DATE = now(),
+      <if test="createUser != null" >
+        CREATE_USER = #{createUser,jdbcType=BIGINT},
+      </if>
+    </set>
+    where CGROUP_ID = #{cgroupId,jdbcType=INTEGER}
+    AND RESOURCE_ID = #{resourceId,jdbcType=INTEGER}
+  </update>
   
 </mapper>

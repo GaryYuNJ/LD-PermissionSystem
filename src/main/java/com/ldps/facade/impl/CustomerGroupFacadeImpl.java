@@ -46,6 +46,9 @@ public class CustomerGroupFacadeImpl implements CustomerGroupFacade {
 	@Resource
 	CustomerGroupModelConverter customerGroupModelConverter;
 	
+	@Resource
+	ICusGrpResourceRelService iCusGrpResourceRelService;
+	
 	@Override
 	public List<CustomerGroupData> queryAllCusGropWithPageIndex(Integer startRow,
 			Integer pageSize) {
@@ -112,4 +115,22 @@ public class CustomerGroupFacadeImpl implements CustomerGroupFacade {
 		
 		return iCustomerGroupService.updateUserGroup(customerGroupId,customerGroupName);
 	}
+	
+	//解除用户组对某资源的权限
+	@Override
+	public int disableCusGrpResPermission(Integer cusGrpId, Integer resourceId) {
+		return  iCusGrpResourceRelService.disableCusGrpResPermission(cusGrpId, resourceId);
+	}
+
+	@Override
+	public int authCusGrpResPermission(CusGrpResourceRelModel cusGrpResourceRelModel) {
+		return  iCusGrpResourceRelService.authCusGrpResPermission(cusGrpResourceRelModel);
+	}
+
+	@Override
+	public int jointAuthCusGrpResPermission(
+			CusGrpResourceRelModel cusGrpResourceRelModel) {
+		return  iCusGrpResourceRelService.jointAuthCusGrpResPermission(cusGrpResourceRelModel);
+	}
+
 }

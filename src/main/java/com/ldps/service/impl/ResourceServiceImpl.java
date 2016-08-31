@@ -157,7 +157,7 @@ public class ResourceServiceImpl implements IResourceService {
 				model.setName(null);
 		} 
 		
-		if(null == model || null == model.getSpecificUserId()){
+		if(null == model || null == model.getSpecificCusGroupId()){
 			return resourceDao.selectResouceListByCondition(model, pageNo, pageSize);
 		}else{
 			return cusGrpResRelDao.selectResouceListWithSpecCusGroupId(model, pageNo, pageSize);

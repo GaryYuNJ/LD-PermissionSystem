@@ -56,7 +56,17 @@ public class ResourceModel {
     
     private Integer specificCusGroupId; //指定要查询关联情况的CustomeGroupId
     
-    public Integer getSpecificCusGroupId() {
+    private CusGrpResourceRelModel cGrpResRelModel; //指定要查询关联情况的customer group Model
+    
+    public CusGrpResourceRelModel getcGrpResRelModel() {
+		return cGrpResRelModel;
+	}
+
+	public void setcGrpResRelModel(CusGrpResourceRelModel cGrpResRelModel) {
+		this.cGrpResRelModel = cGrpResRelModel;
+	}
+
+	public Integer getSpecificCusGroupId() {
 		return specificCusGroupId;
 	}
 

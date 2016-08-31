@@ -25,4 +25,7 @@ public interface CusResourceRelModelMapper {
 
 	int disableResourcePermission(CusResourceRelModel crModel);
 
+	int disableBatchResourcePermission(@Param("disableFlag")String disableFlag, @Param("user")Integer user,
+			@Param("customerIds") List<Long> customerIds, @Param("resourceId") Integer resourceId);
+
 }
