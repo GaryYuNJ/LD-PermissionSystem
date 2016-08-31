@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.ldps.model.CusGrpResourceRelModel;
+import com.ldps.model.ResourceModel;
 
 public interface CusGrpResourceRelModelMapper {
     int insert(CusGrpResourceRelModel record);
@@ -15,4 +16,8 @@ public interface CusGrpResourceRelModelMapper {
     
     List<CusGrpResourceRelModel> selectByGroupIdListAndResId(@Param("groupIds")List<Integer> groupIds, 
     		@Param("resourceId")Integer resourceId);
+    
+
+	List<ResourceModel> selectResouceListWithSpecCusGroupId(@Param("resourceModel")ResourceModel resourceModel,@Param("startRow") Integer startRow,
+			@Param("pageSize") Integer pageSize);
 }
