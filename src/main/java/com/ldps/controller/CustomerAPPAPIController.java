@@ -64,7 +64,7 @@ public class CustomerAPPAPIController {
 		List<ResourceData> rDatas = null;
 		
 		try{
-			rDatas = customerFacade.queryPubResByBuildingId(buildingId);
+			rDatas = customerFacade.queryPubResWithKeysByBuildingId(buildingId);
 			
 			if(null== rDatas || rDatas.size() == 0){
 				apiMessage.setStatus(0);
@@ -96,7 +96,7 @@ public class CustomerAPPAPIController {
 		List<ResourceData> rDatas = null;
 		
 		try{
-			rDatas = customerFacade.queryPrivateResByBIdAndMobile(buildingId, mobile);
+			rDatas = customerFacade.queryPrivateResWithKeysByBIdAndMobile(buildingId, mobile);
 			
 			if(null== rDatas || rDatas.size() == 0){
 				apiMessage.setStatus(0);
@@ -109,6 +109,7 @@ public class CustomerAPPAPIController {
 		}catch(Exception e){
 			apiMessage.setStatus(-1);
 			apiMessage.setMessage("系统异常");
+			e.printStackTrace();
 		}
 		return JSON.toJSONString(apiMessage);
 	}

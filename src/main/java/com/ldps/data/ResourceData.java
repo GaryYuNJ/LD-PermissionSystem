@@ -3,6 +3,8 @@ package com.ldps.data;
 import java.util.Date;
 import java.util.List;
 
+import com.ldps.model.ResourceKeyModel;
+
 
 public class ResourceData {
     private Integer id;
@@ -21,15 +23,11 @@ public class ResourceData {
     
     private Integer createUser;
 
-    private String mac;
-
     private Integer buildingId;
     
     private String buildingName;
 
     private Integer floor;
-
-    private String password;
 
     private Integer sequence;
 
@@ -67,8 +65,17 @@ public class ResourceData {
     
     private List<ResourceGroupData> resourceGroups;  
     
+    private List<ResourceKeyModel> resourceKeys; 
     
-    public String getCreateDateStr() {
+    public List<ResourceKeyModel> getResourceKeys() {
+		return resourceKeys;
+	}
+
+	public void setResourceKeys(List<ResourceKeyModel> resourceKeys) {
+		this.resourceKeys = resourceKeys;
+	}
+
+	public String getCreateDateStr() {
 		return createDateStr;
 	}
 
@@ -205,13 +212,6 @@ public class ResourceData {
         this.createUser = createUser;
     }
 
-    public String getMac() {
-        return mac;
-    }
-
-    public void setMac(String mac) {
-        this.mac = mac == null ? null : mac.trim();
-    }
 
     public Integer getBuildingId() {
         return buildingId;
@@ -224,17 +224,8 @@ public class ResourceData {
     public Integer getFloor() {
         return floor;
     }
-
     public void setFloor(Integer floor) {
         this.floor = floor;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password == null ? null : password.trim();
     }
 
     public Integer getSequence() {

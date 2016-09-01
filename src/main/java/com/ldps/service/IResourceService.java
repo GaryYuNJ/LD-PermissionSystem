@@ -56,4 +56,9 @@ public interface IResourceService {
 
 	List<ResourceModel> queryResByConditionWithCusGroupId(
 			ResourceModel resourceModel, Integer offset, Integer limit);
+
+	List<ResourceModel> selectPubResWithKeysByBuildingId(Integer buildingId);
+
+	List<ResourceModel> queryPriResWithKeysByBIdAndCusId(Integer buildingId,
+			Long customerId);
 }

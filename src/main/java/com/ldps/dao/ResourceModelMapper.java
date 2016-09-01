@@ -28,6 +28,8 @@ public interface ResourceModelMapper {
     List<ResourceModel>  selectSharableResourceById(Long customerId);
 
 	List<ResourceModel> selectValidPubResByBuildingId(Integer buildingId);
+	
+	List<ResourceModel> selectPubResWithKeysByBuildingId(Integer buildingId);
 
 	List<ResourceModel> selectPrivateResByBIdAndCusId(@Param("buildingId") Integer buildingId,
 			@Param("customerId") Long customerId);
@@ -37,5 +39,8 @@ public interface ResourceModelMapper {
 	List<ResourceModel> selectResouceListByCondition(@Param("resourceModel")ResourceModel resourceModel,@Param("startRow") Integer startRow,
 			@Param("pageSize") Integer pageSize);
 	int selectCountByCondition(@Param("resourceModel")ResourceModel resourceModel);
+	
+	List<ResourceModel>  selectPriResWIthKeysByBIdAndCusId (@Param("buildingId") Integer buildingId,
+			@Param("customerId") Long customerId);
 	
 }

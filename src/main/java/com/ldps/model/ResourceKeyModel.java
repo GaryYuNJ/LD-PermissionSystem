@@ -1,6 +1,6 @@
 package com.ldps.model;
 
-public class ResourceKey {
+public class ResourceKeyModel {
     private Integer id;
 
     private String mac;

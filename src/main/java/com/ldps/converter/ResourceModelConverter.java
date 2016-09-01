@@ -98,9 +98,8 @@ public class ResourceModelConverter {
 		    data.setIsVirtualResource(source.getIsVirtualResource());
 		    data.setPermissionAttrId(source.getPermissionAttrId());
 		    data.setDeviceType(source.getDeviceType());
-		    //data.setManufacturerId(source.getManufacturerId());
+		    data.setResourceKeys(source.getResourceKeys());
 		}
-		
 		
 		return data;
 	}

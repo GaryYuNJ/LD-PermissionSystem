@@ -24,10 +24,6 @@ public interface CustomerFacade {
 	public String shareResource(String fromMobile, String toMobile, Integer sourceKeyId, String startDate, String endDate);
 
 	/*
-	获取building里的公共资源
-	 */
-	public List<ResourceData> queryPubResByBuildingId(Integer buildingId);
-	/*
 	获取building里用户有权限设备
 	 */
 	public List<ResourceData> queryPrivateResByBIdAndMobile(Integer buildingId,
@@ -83,4 +79,12 @@ public interface CustomerFacade {
 	int authCusResPermission(CusResourceRelModel cusResourceRelModel);
 
 	int jointAuthCusResPermission(CusResourceRelModel cusResourceRelModel);
+
+	/*
+	获取building里的公共资源 ，resourceKeys同时返回
+	 */
+	List<ResourceData> queryPubResWithKeysByBuildingId(Integer buildingId);
+
+	public List<ResourceData> queryPrivateResWithKeysByBIdAndMobile(
+			Integer buildingId, String mobile);
 }

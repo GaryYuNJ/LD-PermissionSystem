@@ -41,13 +41,21 @@ public class ResourceServiceImpl implements IResourceService {
 
 
 	/*
-	获取building里的公共资源
+	获取building里的公共资源基本信息
 	 */
 	@Override
 	public List<ResourceModel> selectValidPubResByBuildingId(Integer buildingId) {
 		return resourceDao.selectValidPubResByBuildingId(buildingId);
 	}
 
+	/*
+	获取building里的公共资源，resourceKeys同时返回
+	 */
+	@Override
+	public List<ResourceModel> selectPubResWithKeysByBuildingId(Integer buildingId) {
+		return resourceDao.selectPubResWithKeysByBuildingId(buildingId);
+	}
+	
 	/*
 	获取building里用户有权限设备
 	 */
@@ -167,5 +175,11 @@ public class ResourceServiceImpl implements IResourceService {
 	@Override
 	public int queryCountByCondition(ResourceModel model) {
 		return resourceDao.selectCountByCondition(model);
+	}
+
+	@Override
+	public List<ResourceModel> queryPriResWithKeysByBIdAndCusId(
+			Integer buildingId, Long customerId) {
+		return resourceDao.selectPriResWIthKeysByBIdAndCusId(buildingId, customerId);
 	}
 }
