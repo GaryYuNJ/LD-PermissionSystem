@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import com.alibaba.fastjson.JSON;
 import com.ldps.converter.CusResourceRelModelConverter;
 import com.ldps.converter.CustomerModelConverter;
 import com.ldps.converter.ResourceModelConverter;
@@ -92,6 +93,8 @@ public class CustomerFacadeImpl implements CustomerFacade {
 	public List<CustomerData> queryAllUserListWithPageIndex(Integer startRow, Integer pageSize) {
 	
 		List<CustomerModel> cModels = iCustomerSevice.queryAllWithPageIndex(startRow, pageSize);
+		
+		System.out.println(JSON.toJSONString(cModels.get(0)));
 		
 		return customerModelConverter.processList(cModels);
 	}

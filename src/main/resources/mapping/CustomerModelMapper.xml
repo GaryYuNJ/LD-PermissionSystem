@@ -7,86 +7,2275 @@
   	size="1024" 
   	readOnly="true" >
   </cache>
+  
+  <resultMap id="FullResultMap" type="com.ldps.model.CustomerModel" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="CM_MEMID" property="cmMemid" jdbcType="VARCHAR" />
+    <result column="CM_CUSTID" property="cmCustid" jdbcType="VARCHAR" />
+    <result column="CM_ISOWNER" property="cmIsowner" jdbcType="CHAR" />
+    <result column="CM_RELATION" property="cmRelation" jdbcType="CHAR" />
+    <result column="CM_GRADE" property="cmGrade" jdbcType="CHAR" />
+    <result column="CM_FLAG1" property="cmFlag1" jdbcType="CHAR" />
+    <result column="CM_FLAG2" property="cmFlag2" jdbcType="CHAR" />
+    <result column="CM_FLAG3" property="cmFlag3" jdbcType="CHAR" />
+    <result column="CM_LMYKJF" property="cmLmykjf" jdbcType="DECIMAL" />
+    <result column="CM_JFXFXE" property="cmJfxfxe" jdbcType="DECIMAL" />
+    <result column="CM_LCZHYE" property="cmLczhye" jdbcType="DECIMAL" />
+    <result column="CM_N1" property="cmN1" jdbcType="DECIMAL" />
+    <result column="CM_N2" property="cmN2" jdbcType="DECIMAL" />
+    <result column="CM_N3" property="cmN3" jdbcType="DECIMAL" />
+    <result column="CM_N4" property="cmN4" jdbcType="DECIMAL" />
+    <result column="CM_N5" property="cmN5" jdbcType="DECIMAL" />
+    <result column="CM_N6" property="cmN6" jdbcType="DECIMAL" />
+    <result column="CM_N7" property="cmN7" jdbcType="DECIMAL" />
+    <result column="CM_N8" property="cmN8" jdbcType="DECIMAL" />
+    <result column="CM_N9" property="cmN9" jdbcType="DECIMAL" />
+    <result column="CM_JFA" property="cmJfa" jdbcType="DECIMAL" />
+    <result column="CM_JFB" property="cmJfb" jdbcType="DECIMAL" />
+    <result column="CM_JFC" property="cmJfc" jdbcType="DECIMAL" />
+    <result column="CM_JFD" property="cmJfd" jdbcType="DECIMAL" />
+    <result column="CM_JFE" property="cmJfe" jdbcType="DECIMAL" />
+    <result column="CM_JFF" property="cmJff" jdbcType="DECIMAL" />
+    <result column="CM_DECJF" property="cmDecjf" jdbcType="DECIMAL" />
+    <result column="CM_TOTJF" property="cmTotjf" jdbcType="DECIMAL" />
+    <result column="CM_XFJE" property="cmXfje" jdbcType="DECIMAL" />
+    <result column="CM_MAINTOR" property="cmMaintor" jdbcType="VARCHAR" />
+    <result column="CM_MAINTDATE" property="cmMaintdate" jdbcType="TIMESTAMP" />
+    <result column="CM_NAME" property="cmName" jdbcType="VARCHAR" />
+    <result column="CM_BIRTHDAY" property="cmBirthday" jdbcType="DATE" />
+    <result column="CM_BIRTHTYPE" property="cmBirthtype" jdbcType="CHAR" />
+    <result column="CM_SEX" property="cmSex" jdbcType="CHAR" />
+    <result column="CM_ADDR" property="cmAddr" jdbcType="VARCHAR" />
+    <result column="CM_ADD1" property="cmAdd1" jdbcType="VARCHAR" />
+    <result column="CM_ADD2" property="cmAdd2" jdbcType="VARCHAR" />
+    <result column="CM_ADD3" property="cmAdd3" jdbcType="VARCHAR" />
+    <result column="CM_ADD4" property="cmAdd4" jdbcType="VARCHAR" />
+    <result column="CM_ZIP" property="cmZip" jdbcType="CHAR" />
+    <result column="CM_IDTYPE" property="cmIdtype" jdbcType="CHAR" />
+    <result column="CM_IDNO" property="cmIdno" jdbcType="VARCHAR" />
+    <result column="CM_LXTYPE1" property="cmLxtype1" jdbcType="CHAR" />
+    <result column="CM_LXTYPE2" property="cmLxtype2" jdbcType="CHAR" />
+    <result column="CM_LXTYPE3" property="cmLxtype3" jdbcType="CHAR" />
+    <result column="CM_LXTYPE4" property="cmLxtype4" jdbcType="CHAR" />
+    <result column="CM_LXTYPE5" property="cmLxtype5" jdbcType="CHAR" />
+    <result column="CM_TEL" property="cmTel" jdbcType="VARCHAR" />
+    <result column="CM_MOBILE1" property="cmMobile1" jdbcType="VARCHAR" />
+    <result column="CM_MOBILE2" property="cmMobile2" jdbcType="VARCHAR" />
+    <result column="CM_FAX" property="cmFax" jdbcType="VARCHAR" />
+    <result column="CM_EMAIL" property="cmEmail" jdbcType="VARCHAR" />
+    <result column="CM_ISEMPLOYEE" property="cmIsemployee" jdbcType="CHAR" />
+    <result column="CM_LUNAR" property="cmLunar" jdbcType="VARCHAR" />
+    <result column="CM_LUNARCHN" property="cmLunarchn" jdbcType="VARCHAR" />
+    <result column="CM_SX" property="cmSx" jdbcType="VARCHAR" />
+    <result column="CM_COMPANY" property="cmCompany" jdbcType="VARCHAR" />
+    <result column="CM_DKJF" property="cmDkjf" jdbcType="DECIMAL" />
+    <result column="CM_DHISJF" property="cmDhisjf" jdbcType="DECIMAL" />
+    <result column="CM_CHR1" property="cmChr1" jdbcType="VARCHAR" />
+    <result column="CM_CHR2" property="cmChr2" jdbcType="VARCHAR" />
+    <result column="CM_CHR3" property="cmChr3" jdbcType="VARCHAR" />
+    <result column="CM_CHR4" property="cmChr4" jdbcType="VARCHAR" />
+    <result column="CM_CHR5" property="cmChr5" jdbcType="VARCHAR" />
+    <result column="CM_CHR6" property="cmChr6" jdbcType="VARCHAR" />
+    <result column="CM_CHR7" property="cmChr7" jdbcType="VARCHAR" />
+    <result column="CM_CHR8" property="cmChr8" jdbcType="VARCHAR" />
+    <result column="CM_CHR9" property="cmChr9" jdbcType="VARCHAR" />
+    <result column="CM_CHR10" property="cmChr10" jdbcType="VARCHAR" />
+    <result column="CM_CHR11" property="cmChr11" jdbcType="VARCHAR" />
+    <result column="CM_CHR12" property="cmChr12" jdbcType="VARCHAR" />
+    <result column="CM_CHR13" property="cmChr13" jdbcType="VARCHAR" />
+    <result column="CM_CHR14" property="cmChr14" jdbcType="VARCHAR" />
+    <result column="CM_CHR15" property="cmChr15" jdbcType="VARCHAR" />
+    <result column="CM_CHR16" property="cmChr16" jdbcType="VARCHAR" />
+    <result column="CM_CHR17" property="cmChr17" jdbcType="VARCHAR" />
+    <result column="CM_CHR18" property="cmChr18" jdbcType="VARCHAR" />
+    <result column="CM_CHR19" property="cmChr19" jdbcType="VARCHAR" />
+    <result column="CM_CHR20" property="cmChr20" jdbcType="VARCHAR" />
+    <result column="CM_CHR21" property="cmChr21" jdbcType="VARCHAR" />
+    <result column="CM_CHR22" property="cmChr22" jdbcType="VARCHAR" />
+    <result column="CM_CHR23" property="cmChr23" jdbcType="VARCHAR" />
+    <result column="CM_CHR24" property="cmChr24" jdbcType="VARCHAR" />
+    <result column="CM_CHR25" property="cmChr25" jdbcType="VARCHAR" />
+    <result column="CM_CHR26" property="cmChr26" jdbcType="VARCHAR" />
+    <result column="CM_CHR27" property="cmChr27" jdbcType="VARCHAR" />
+    <result column="CM_CHR28" property="cmChr28" jdbcType="VARCHAR" />
+    <result column="CM_CHR29" property="cmChr29" jdbcType="VARCHAR" />
+    <result column="CM_CHR30" property="cmChr30" jdbcType="VARCHAR" />
+    <result column="CM_CHR31" property="cmChr31" jdbcType="VARCHAR" />
+    <result column="CM_CHR32" property="cmChr32" jdbcType="VARCHAR" />
+    <result column="CM_CHR33" property="cmChr33" jdbcType="VARCHAR" />
+    <result column="CM_CHR34" property="cmChr34" jdbcType="VARCHAR" />
+    <result column="CM_CHR35" property="cmChr35" jdbcType="VARCHAR" />
+    <result column="CM_CHR36" property="cmChr36" jdbcType="VARCHAR" />
+    <result column="CM_CHR37" property="cmChr37" jdbcType="VARCHAR" />
+    <result column="CM_CHR38" property="cmChr38" jdbcType="VARCHAR" />
+    <result column="CM_CHR39" property="cmChr39" jdbcType="VARCHAR" />
+    <result column="CM_CHR40" property="cmChr40" jdbcType="VARCHAR" />
+    <result column="CM_CHR41" property="cmChr41" jdbcType="VARCHAR" />
+    <result column="CM_CHR42" property="cmChr42" jdbcType="VARCHAR" />
+    <result column="CM_CHR43" property="cmChr43" jdbcType="VARCHAR" />
+    <result column="CM_CHR44" property="cmChr44" jdbcType="VARCHAR" />
+    <result column="CM_CHR45" property="cmChr45" jdbcType="VARCHAR" />
+    <result column="CM_CHR46" property="cmChr46" jdbcType="VARCHAR" />
+    <result column="CM_CHR47" property="cmChr47" jdbcType="VARCHAR" />
+    <result column="CM_CHR48" property="cmChr48" jdbcType="VARCHAR" />
+    <result column="CM_CHR49" property="cmChr49" jdbcType="VARCHAR" />
+    <result column="CM_CHR50" property="cmChr50" jdbcType="VARCHAR" />
+    <result column="CM_NUM1" property="cmNum1" jdbcType="DECIMAL" />
+    <result column="CM_NUM2" property="cmNum2" jdbcType="DECIMAL" />
+    <result column="CM_NUM3" property="cmNum3" jdbcType="DECIMAL" />
+    <result column="CM_NUM4" property="cmNum4" jdbcType="DECIMAL" />
+    <result column="CM_NUM5" property="cmNum5" jdbcType="DECIMAL" />
+    <result column="CM_NUM6" property="cmNum6" jdbcType="DECIMAL" />
+    <result column="CM_NUM7" property="cmNum7" jdbcType="DECIMAL" />
+    <result column="CM_NUM8" property="cmNum8" jdbcType="DECIMAL" />
+    <result column="CM_NUM9" property="cmNum9" jdbcType="DECIMAL" />
+    <result column="CM_NUM10" property="cmNum10" jdbcType="DECIMAL" />
+    <result column="CM_NUM11" property="cmNum11" jdbcType="DECIMAL" />
+    <result column="CM_NUM12" property="cmNum12" jdbcType="DECIMAL" />
+    <result column="CM_NUM13" property="cmNum13" jdbcType="DECIMAL" />
+    <result column="CM_NUM14" property="cmNum14" jdbcType="DECIMAL" />
+    <result column="CM_NUM15" property="cmNum15" jdbcType="DECIMAL" />
+    <result column="CM_NUM16" property="cmNum16" jdbcType="DECIMAL" />
+    <result column="CM_NUM17" property="cmNum17" jdbcType="DECIMAL" />
+    <result column="CM_NUM18" property="cmNum18" jdbcType="DECIMAL" />
+    <result column="CM_NUM19" property="cmNum19" jdbcType="DECIMAL" />
+    <result column="CM_NUM20" property="cmNum20" jdbcType="DECIMAL" />
+    <result column="CM_MKT" property="cmMkt" jdbcType="VARCHAR" />
+    <result column="CM_KHDATE" property="cmKhdate" jdbcType="TIMESTAMP" />
+    <result column="CM_XFDATE" property="cmXfdate" jdbcType="TIMESTAMP" />
+    <result column="CM_SJDATE" property="cmSjdate" jdbcType="TIMESTAMP" />
+    <result column="CM_JJDATE" property="cmJjdate" jdbcType="TIMESTAMP" />
+    <result column="CM_ASTRO" property="cmAstro" jdbcType="VARCHAR" />
+    <result column="CM_FSTDATE" property="cmFstdate" jdbcType="TIMESTAMP" />
+    <result column="CM_TOKEN" property="cmToken" jdbcType="VARCHAR" />
+    <result column="CM_TOKEN2" property="cmToken2" jdbcType="VARCHAR" />
+    <result column="CM_TOKENDATE" property="cmTokendate" jdbcType="DATE" />
+    <result column="CM_PWD" property="cmPwd" jdbcType="VARCHAR" />
+    <result column="CM_SSQY" property="cmSsqy" jdbcType="VARCHAR" />
+    <result column="CM_QYJS" property="cmQyjs" jdbcType="VARCHAR" />
+    <result column="CM_JTJS" property="cmJtjs" jdbcType="VARCHAR" />
+    <result column="CM_PTNAME" property="cmPtname" jdbcType="VARCHAR" />
+    <result column="CM_CZZ" property="cmCzz" jdbcType="DECIMAL" />
+    <result column="CM_REFEREE" property="cmReferee" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Full_Column_List" >
+    ID, CM_MEMID, CM_CUSTID, CM_ISOWNER, CM_RELATION, CM_GRADE, CM_FLAG1, CM_FLAG2, CM_FLAG3, 
+    CM_LMYKJF, CM_JFXFXE, CM_LCZHYE, CM_N1, CM_N2, CM_N3, CM_N4, CM_N5, CM_N6, CM_N7, 
+    CM_N8, CM_N9, CM_JFA, CM_JFB, CM_JFC, CM_JFD, CM_JFE, CM_JFF, CM_DECJF, CM_TOTJF, 
+    CM_XFJE, CM_MAINTOR, CM_MAINTDATE, CM_NAME, CM_BIRTHDAY, CM_BIRTHTYPE, CM_SEX, CM_ADDR, 
+    CM_ADD1, CM_ADD2, CM_ADD3, CM_ADD4, CM_ZIP, CM_IDTYPE, CM_IDNO, CM_LXTYPE1, CM_LXTYPE2, 
+    CM_LXTYPE3, CM_LXTYPE4, CM_LXTYPE5, CM_TEL, CM_MOBILE1, CM_MOBILE2, CM_FAX, CM_EMAIL, 
+    CM_ISEMPLOYEE, CM_LUNAR, CM_LUNARCHN, CM_SX, CM_COMPANY, CM_DKJF, CM_DHISJF, CM_CHR1, 
+    CM_CHR2, CM_CHR3, CM_CHR4, CM_CHR5, CM_CHR6, CM_CHR7, CM_CHR8, CM_CHR9, CM_CHR10, 
+    CM_CHR11, CM_CHR12, CM_CHR13, CM_CHR14, CM_CHR15, CM_CHR16, CM_CHR17, CM_CHR18, CM_CHR19, 
+    CM_CHR20, CM_CHR21, CM_CHR22, CM_CHR23, CM_CHR24, CM_CHR25, CM_CHR26, CM_CHR27, CM_CHR28, 
+    CM_CHR29, CM_CHR30, CM_CHR31, CM_CHR32, CM_CHR33, CM_CHR34, CM_CHR35, CM_CHR36, CM_CHR37, 
+    CM_CHR38, CM_CHR39, CM_CHR40, CM_CHR41, CM_CHR42, CM_CHR43, CM_CHR44, CM_CHR45, CM_CHR46, 
+    CM_CHR47, CM_CHR48, CM_CHR49, CM_CHR50, CM_NUM1, CM_NUM2, CM_NUM3, CM_NUM4, CM_NUM5, 
+    CM_NUM6, CM_NUM7, CM_NUM8, CM_NUM9, CM_NUM10, CM_NUM11, CM_NUM12, CM_NUM13, CM_NUM14, 
+    CM_NUM15, CM_NUM16, CM_NUM17, CM_NUM18, CM_NUM19, CM_NUM20, CM_MKT, CM_KHDATE, CM_XFDATE, 
+    CM_SJDATE, CM_JJDATE, CM_ASTRO, CM_FSTDATE, CM_TOKEN, CM_TOKEN2, CM_TOKENDATE, CM_PWD, 
+    CM_SSQY, CM_QYJS, CM_JTJS, CM_PTNAME, CM_CZZ, CM_REFEREE
+  </sql>
+  
+  <select id="selectFullByPrimaryKey" resultMap="FullResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Full_Column_List" />
+    from CUSTOMER
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <insert id="insert" parameterType="com.ldps.model.CustomerModel" >
+    insert into CUSTOMER (ID, CM_MEMID, CM_CUSTID, 
+      CM_ISOWNER, CM_RELATION, CM_GRADE, 
+      CM_FLAG1, CM_FLAG2, CM_FLAG3, CM_LMYKJF, 
+      CM_JFXFXE, CM_LCZHYE, CM_N1, 
+      CM_N2, CM_N3, CM_N4, CM_N5, 
+      CM_N6, CM_N7, CM_N8, CM_N9, 
+      CM_JFA, CM_JFB, CM_JFC, 
+      CM_JFD, CM_JFE, CM_JFF, 
+      CM_DECJF, CM_TOTJF, CM_XFJE, 
+      CM_MAINTOR, CM_MAINTDATE, CM_NAME, 
+      CM_BIRTHDAY, CM_BIRTHTYPE, CM_SEX, 
+      CM_ADDR, CM_ADD1, CM_ADD2, 
+      CM_ADD3, CM_ADD4, CM_ZIP, 
+      CM_IDTYPE, CM_IDNO, CM_LXTYPE1, 
+      CM_LXTYPE2, CM_LXTYPE3, CM_LXTYPE4, 
+      CM_LXTYPE5, CM_TEL, CM_MOBILE1, 
+      CM_MOBILE2, CM_FAX, CM_EMAIL, 
+      CM_ISEMPLOYEE, CM_LUNAR, CM_LUNARCHN, 
+      CM_SX, CM_COMPANY, CM_DKJF, 
+      CM_DHISJF, CM_CHR1, CM_CHR2, 
+      CM_CHR3, CM_CHR4, CM_CHR5, 
+      CM_CHR6, CM_CHR7, CM_CHR8, 
+      CM_CHR9, CM_CHR10, CM_CHR11, 
+      CM_CHR12, CM_CHR13, CM_CHR14, 
+      CM_CHR15, CM_CHR16, CM_CHR17, 
+      CM_CHR18, CM_CHR19, CM_CHR20, 
+      CM_CHR21, CM_CHR22, CM_CHR23, 
+      CM_CHR24, CM_CHR25, CM_CHR26, 
+      CM_CHR27, CM_CHR28, CM_CHR29, 
+      CM_CHR30, CM_CHR31, CM_CHR32, 
+      CM_CHR33, CM_CHR34, CM_CHR35, 
+      CM_CHR36, CM_CHR37, CM_CHR38, 
+      CM_CHR39, CM_CHR40, CM_CHR41, 
+      CM_CHR42, CM_CHR43, CM_CHR44, 
+      CM_CHR45, CM_CHR46, CM_CHR47, 
+      CM_CHR48, CM_CHR49, CM_CHR50, 
+      CM_NUM1, CM_NUM2, CM_NUM3, 
+      CM_NUM4, CM_NUM5, CM_NUM6, 
+      CM_NUM7, CM_NUM8, CM_NUM9, 
+      CM_NUM10, CM_NUM11, CM_NUM12, 
+      CM_NUM13, CM_NUM14, CM_NUM15, 
+      CM_NUM16, CM_NUM17, CM_NUM18, 
+      CM_NUM19, CM_NUM20, CM_MKT, 
+      CM_KHDATE, CM_XFDATE, CM_SJDATE, 
+      CM_JJDATE, CM_ASTRO, CM_FSTDATE, 
+      CM_TOKEN, CM_TOKEN2, CM_TOKENDATE, 
+      CM_PWD, CM_SSQY, CM_QYJS, 
+      CM_JTJS, CM_PTNAME, CM_CZZ, 
+      CM_REFEREE)
+    values (#{id,jdbcType=BIGINT}, #{cmMemid,jdbcType=VARCHAR}, #{cmCustid,jdbcType=VARCHAR}, 
+      #{cmIsowner,jdbcType=CHAR}, #{cmRelation,jdbcType=CHAR}, #{cmGrade,jdbcType=CHAR}, 
+      #{cmFlag1,jdbcType=CHAR}, #{cmFlag2,jdbcType=CHAR}, #{cmFlag3,jdbcType=CHAR}, #{cmLmykjf,jdbcType=DECIMAL}, 
+      #{cmJfxfxe,jdbcType=DECIMAL}, #{cmLczhye,jdbcType=DECIMAL}, #{cmN1,jdbcType=DECIMAL}, 
+      #{cmN2,jdbcType=DECIMAL}, #{cmN3,jdbcType=DECIMAL}, #{cmN4,jdbcType=DECIMAL}, #{cmN5,jdbcType=DECIMAL}, 
+      #{cmN6,jdbcType=DECIMAL}, #{cmN7,jdbcType=DECIMAL}, #{cmN8,jdbcType=DECIMAL}, #{cmN9,jdbcType=DECIMAL}, 
+      #{cmJfa,jdbcType=DECIMAL}, #{cmJfb,jdbcType=DECIMAL}, #{cmJfc,jdbcType=DECIMAL}, 
+      #{cmJfd,jdbcType=DECIMAL}, #{cmJfe,jdbcType=DECIMAL}, #{cmJff,jdbcType=DECIMAL}, 
+      #{cmDecjf,jdbcType=DECIMAL}, #{cmTotjf,jdbcType=DECIMAL}, #{cmXfje,jdbcType=DECIMAL}, 
+      #{cmMaintor,jdbcType=VARCHAR}, #{cmMaintdate,jdbcType=TIMESTAMP}, #{cmName,jdbcType=VARCHAR}, 
+      #{cmBirthday,jdbcType=DATE}, #{cmBirthtype,jdbcType=CHAR}, #{cmSex,jdbcType=CHAR}, 
+      #{cmAddr,jdbcType=VARCHAR}, #{cmAdd1,jdbcType=VARCHAR}, #{cmAdd2,jdbcType=VARCHAR}, 
+      #{cmAdd3,jdbcType=VARCHAR}, #{cmAdd4,jdbcType=VARCHAR}, #{cmZip,jdbcType=CHAR}, 
+      #{cmIdtype,jdbcType=CHAR}, #{cmIdno,jdbcType=VARCHAR}, #{cmLxtype1,jdbcType=CHAR}, 
+      #{cmLxtype2,jdbcType=CHAR}, #{cmLxtype3,jdbcType=CHAR}, #{cmLxtype4,jdbcType=CHAR}, 
+      #{cmLxtype5,jdbcType=CHAR}, #{cmTel,jdbcType=VARCHAR}, #{cmMobile1,jdbcType=VARCHAR}, 
+      #{cmMobile2,jdbcType=VARCHAR}, #{cmFax,jdbcType=VARCHAR}, #{cmEmail,jdbcType=VARCHAR}, 
+      #{cmIsemployee,jdbcType=CHAR}, #{cmLunar,jdbcType=VARCHAR}, #{cmLunarchn,jdbcType=VARCHAR}, 
+      #{cmSx,jdbcType=VARCHAR}, #{cmCompany,jdbcType=VARCHAR}, #{cmDkjf,jdbcType=DECIMAL}, 
+      #{cmDhisjf,jdbcType=DECIMAL}, #{cmChr1,jdbcType=VARCHAR}, #{cmChr2,jdbcType=VARCHAR}, 
+      #{cmChr3,jdbcType=VARCHAR}, #{cmChr4,jdbcType=VARCHAR}, #{cmChr5,jdbcType=VARCHAR}, 
+      #{cmChr6,jdbcType=VARCHAR}, #{cmChr7,jdbcType=VARCHAR}, #{cmChr8,jdbcType=VARCHAR}, 
+      #{cmChr9,jdbcType=VARCHAR}, #{cmChr10,jdbcType=VARCHAR}, #{cmChr11,jdbcType=VARCHAR}, 
+      #{cmChr12,jdbcType=VARCHAR}, #{cmChr13,jdbcType=VARCHAR}, #{cmChr14,jdbcType=VARCHAR}, 
+      #{cmChr15,jdbcType=VARCHAR}, #{cmChr16,jdbcType=VARCHAR}, #{cmChr17,jdbcType=VARCHAR}, 
+      #{cmChr18,jdbcType=VARCHAR}, #{cmChr19,jdbcType=VARCHAR}, #{cmChr20,jdbcType=VARCHAR}, 
+      #{cmChr21,jdbcType=VARCHAR}, #{cmChr22,jdbcType=VARCHAR}, #{cmChr23,jdbcType=VARCHAR}, 
+      #{cmChr24,jdbcType=VARCHAR}, #{cmChr25,jdbcType=VARCHAR}, #{cmChr26,jdbcType=VARCHAR}, 
+      #{cmChr27,jdbcType=VARCHAR}, #{cmChr28,jdbcType=VARCHAR}, #{cmChr29,jdbcType=VARCHAR}, 
+      #{cmChr30,jdbcType=VARCHAR}, #{cmChr31,jdbcType=VARCHAR}, #{cmChr32,jdbcType=VARCHAR}, 
+      #{cmChr33,jdbcType=VARCHAR}, #{cmChr34,jdbcType=VARCHAR}, #{cmChr35,jdbcType=VARCHAR}, 
+      #{cmChr36,jdbcType=VARCHAR}, #{cmChr37,jdbcType=VARCHAR}, #{cmChr38,jdbcType=VARCHAR}, 
+      #{cmChr39,jdbcType=VARCHAR}, #{cmChr40,jdbcType=VARCHAR}, #{cmChr41,jdbcType=VARCHAR}, 
+      #{cmChr42,jdbcType=VARCHAR}, #{cmChr43,jdbcType=VARCHAR}, #{cmChr44,jdbcType=VARCHAR}, 
+      #{cmChr45,jdbcType=VARCHAR}, #{cmChr46,jdbcType=VARCHAR}, #{cmChr47,jdbcType=VARCHAR}, 
+      #{cmChr48,jdbcType=VARCHAR}, #{cmChr49,jdbcType=VARCHAR}, #{cmChr50,jdbcType=VARCHAR}, 
+      #{cmNum1,jdbcType=DECIMAL}, #{cmNum2,jdbcType=DECIMAL}, #{cmNum3,jdbcType=DECIMAL}, 
+      #{cmNum4,jdbcType=DECIMAL}, #{cmNum5,jdbcType=DECIMAL}, #{cmNum6,jdbcType=DECIMAL}, 
+      #{cmNum7,jdbcType=DECIMAL}, #{cmNum8,jdbcType=DECIMAL}, #{cmNum9,jdbcType=DECIMAL}, 
+      #{cmNum10,jdbcType=DECIMAL}, #{cmNum11,jdbcType=DECIMAL}, #{cmNum12,jdbcType=DECIMAL}, 
+      #{cmNum13,jdbcType=DECIMAL}, #{cmNum14,jdbcType=DECIMAL}, #{cmNum15,jdbcType=DECIMAL}, 
+      #{cmNum16,jdbcType=DECIMAL}, #{cmNum17,jdbcType=DECIMAL}, #{cmNum18,jdbcType=DECIMAL}, 
+      #{cmNum19,jdbcType=DECIMAL}, #{cmNum20,jdbcType=DECIMAL}, #{cmMkt,jdbcType=VARCHAR}, 
+      #{cmKhdate,jdbcType=TIMESTAMP}, #{cmXfdate,jdbcType=TIMESTAMP}, #{cmSjdate,jdbcType=TIMESTAMP}, 
+      #{cmJjdate,jdbcType=TIMESTAMP}, #{cmAstro,jdbcType=VARCHAR}, #{cmFstdate,jdbcType=TIMESTAMP}, 
+      #{cmToken,jdbcType=VARCHAR}, #{cmToken2,jdbcType=VARCHAR}, #{cmTokendate,jdbcType=DATE}, 
+      #{cmPwd,jdbcType=VARCHAR}, #{cmSsqy,jdbcType=VARCHAR}, #{cmQyjs,jdbcType=VARCHAR}, 
+      #{cmJtjs,jdbcType=VARCHAR}, #{cmPtname,jdbcType=VARCHAR}, #{cmCzz,jdbcType=DECIMAL}, 
+      #{cmReferee,jdbcType=VARCHAR})
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.ldps.model.CustomerModel" >
+    insert into CUSTOMER
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="cmMemid != null" >
+        CM_MEMID,
+      </if>
+      <if test="cmCustid != null" >
+        CM_CUSTID,
+      </if>
+      <if test="cmIsowner != null" >
+        CM_ISOWNER,
+      </if>
+      <if test="cmRelation != null" >
+        CM_RELATION,
+      </if>
+      <if test="cmGrade != null" >
+        CM_GRADE,
+      </if>
+      <if test="cmFlag1 != null" >
+        CM_FLAG1,
+      </if>
+      <if test="cmFlag2 != null" >
+        CM_FLAG2,
+      </if>
+      <if test="cmFlag3 != null" >
+        CM_FLAG3,
+      </if>
+      <if test="cmLmykjf != null" >
+        CM_LMYKJF,
+      </if>
+      <if test="cmJfxfxe != null" >
+        CM_JFXFXE,
+      </if>
+      <if test="cmLczhye != null" >
+        CM_LCZHYE,
+      </if>
+      <if test="cmN1 != null" >
+        CM_N1,
+      </if>
+      <if test="cmN2 != null" >
+        CM_N2,
+      </if>
+      <if test="cmN3 != null" >
+        CM_N3,
+      </if>
+      <if test="cmN4 != null" >
+        CM_N4,
+      </if>
+      <if test="cmN5 != null" >
+        CM_N5,
+      </if>
+      <if test="cmN6 != null" >
+        CM_N6,
+      </if>
+      <if test="cmN7 != null" >
+        CM_N7,
+      </if>
+      <if test="cmN8 != null" >
+        CM_N8,
+      </if>
+      <if test="cmN9 != null" >
+        CM_N9,
+      </if>
+      <if test="cmJfa != null" >
+        CM_JFA,
+      </if>
+      <if test="cmJfb != null" >
+        CM_JFB,
+      </if>
+      <if test="cmJfc != null" >
+        CM_JFC,
+      </if>
+      <if test="cmJfd != null" >
+        CM_JFD,
+      </if>
+      <if test="cmJfe != null" >
+        CM_JFE,
+      </if>
+      <if test="cmJff != null" >
+        CM_JFF,
+      </if>
+      <if test="cmDecjf != null" >
+        CM_DECJF,
+      </if>
+      <if test="cmTotjf != null" >
+        CM_TOTJF,
+      </if>
+      <if test="cmXfje != null" >
+        CM_XFJE,
+      </if>
+      <if test="cmMaintor != null" >
+        CM_MAINTOR,
+      </if>
+      <if test="cmMaintdate != null" >
+        CM_MAINTDATE,
+      </if>
+      <if test="cmName != null" >
+        CM_NAME,
+      </if>
+      <if test="cmBirthday != null" >
+        CM_BIRTHDAY,
+      </if>
+      <if test="cmBirthtype != null" >
+        CM_BIRTHTYPE,
+      </if>
+      <if test="cmSex != null" >
+        CM_SEX,
+      </if>
+      <if test="cmAddr != null" >
+        CM_ADDR,
+      </if>
+      <if test="cmAdd1 != null" >
+        CM_ADD1,
+      </if>
+      <if test="cmAdd2 != null" >
+        CM_ADD2,
+      </if>
+      <if test="cmAdd3 != null" >
+        CM_ADD3,
+      </if>
+      <if test="cmAdd4 != null" >
+        CM_ADD4,
+      </if>
+      <if test="cmZip != null" >
+        CM_ZIP,
+      </if>
+      <if test="cmIdtype != null" >
+        CM_IDTYPE,
+      </if>
+      <if test="cmIdno != null" >
+        CM_IDNO,
+      </if>
+      <if test="cmLxtype1 != null" >
+        CM_LXTYPE1,
+      </if>
+      <if test="cmLxtype2 != null" >
+        CM_LXTYPE2,
+      </if>
+      <if test="cmLxtype3 != null" >
+        CM_LXTYPE3,
+      </if>
+      <if test="cmLxtype4 != null" >
+        CM_LXTYPE4,
+      </if>
+      <if test="cmLxtype5 != null" >
+        CM_LXTYPE5,
+      </if>
+      <if test="cmTel != null" >
+        CM_TEL,
+      </if>
+      <if test="cmMobile1 != null" >
+        CM_MOBILE1,
+      </if>
+      <if test="cmMobile2 != null" >
+        CM_MOBILE2,
+      </if>
+      <if test="cmFax != null" >
+        CM_FAX,
+      </if>
+      <if test="cmEmail != null" >
+        CM_EMAIL,
+      </if>
+      <if test="cmIsemployee != null" >
+        CM_ISEMPLOYEE,
+      </if>
+      <if test="cmLunar != null" >
+        CM_LUNAR,
+      </if>
+      <if test="cmLunarchn != null" >
+        CM_LUNARCHN,
+      </if>
+      <if test="cmSx != null" >
+        CM_SX,
+      </if>
+      <if test="cmCompany != null" >
+        CM_COMPANY,
+      </if>
+      <if test="cmDkjf != null" >
+        CM_DKJF,
+      </if>
+      <if test="cmDhisjf != null" >
+        CM_DHISJF,
+      </if>
+      <if test="cmChr1 != null" >
+        CM_CHR1,
+      </if>
+      <if test="cmChr2 != null" >
+        CM_CHR2,
+      </if>
+      <if test="cmChr3 != null" >
+        CM_CHR3,
+      </if>
+      <if test="cmChr4 != null" >
+        CM_CHR4,
+      </if>
+      <if test="cmChr5 != null" >
+        CM_CHR5,
+      </if>
+      <if test="cmChr6 != null" >
+        CM_CHR6,
+      </if>
+      <if test="cmChr7 != null" >
+        CM_CHR7,
+      </if>
+      <if test="cmChr8 != null" >
+        CM_CHR8,
+      </if>
+      <if test="cmChr9 != null" >
+        CM_CHR9,
+      </if>
+      <if test="cmChr10 != null" >
+        CM_CHR10,
+      </if>
+      <if test="cmChr11 != null" >
+        CM_CHR11,
+      </if>
+      <if test="cmChr12 != null" >
+        CM_CHR12,
+      </if>
+      <if test="cmChr13 != null" >
+        CM_CHR13,
+      </if>
+      <if test="cmChr14 != null" >
+        CM_CHR14,
+      </if>
+      <if test="cmChr15 != null" >
+        CM_CHR15,
+      </if>
+      <if test="cmChr16 != null" >
+        CM_CHR16,
+      </if>
+      <if test="cmChr17 != null" >
+        CM_CHR17,
+      </if>
+      <if test="cmChr18 != null" >
+        CM_CHR18,
+      </if>
+      <if test="cmChr19 != null" >
+        CM_CHR19,
+      </if>
+      <if test="cmChr20 != null" >
+        CM_CHR20,
+      </if>
+      <if test="cmChr21 != null" >
+        CM_CHR21,
+      </if>
+      <if test="cmChr22 != null" >
+        CM_CHR22,
+      </if>
+      <if test="cmChr23 != null" >
+        CM_CHR23,
+      </if>
+      <if test="cmChr24 != null" >
+        CM_CHR24,
+      </if>
+      <if test="cmChr25 != null" >
+        CM_CHR25,
+      </if>
+      <if test="cmChr26 != null" >
+        CM_CHR26,
+      </if>
+      <if test="cmChr27 != null" >
+        CM_CHR27,
+      </if>
+      <if test="cmChr28 != null" >
+        CM_CHR28,
+      </if>
+      <if test="cmChr29 != null" >
+        CM_CHR29,
+      </if>
+      <if test="cmChr30 != null" >
+        CM_CHR30,
+      </if>
+      <if test="cmChr31 != null" >
+        CM_CHR31,
+      </if>
+      <if test="cmChr32 != null" >
+        CM_CHR32,
+      </if>
+      <if test="cmChr33 != null" >
+        CM_CHR33,
+      </if>
+      <if test="cmChr34 != null" >
+        CM_CHR34,
+      </if>
+      <if test="cmChr35 != null" >
+        CM_CHR35,
+      </if>
+      <if test="cmChr36 != null" >
+        CM_CHR36,
+      </if>
+      <if test="cmChr37 != null" >
+        CM_CHR37,
+      </if>
+      <if test="cmChr38 != null" >
+        CM_CHR38,
+      </if>
+      <if test="cmChr39 != null" >
+        CM_CHR39,
+      </if>
+      <if test="cmChr40 != null" >
+        CM_CHR40,
+      </if>
+      <if test="cmChr41 != null" >
+        CM_CHR41,
+      </if>
+      <if test="cmChr42 != null" >
+        CM_CHR42,
+      </if>
+      <if test="cmChr43 != null" >
+        CM_CHR43,
+      </if>
+      <if test="cmChr44 != null" >
+        CM_CHR44,
+      </if>
+      <if test="cmChr45 != null" >
+        CM_CHR45,
+      </if>
+      <if test="cmChr46 != null" >
+        CM_CHR46,
+      </if>
+      <if test="cmChr47 != null" >
+        CM_CHR47,
+      </if>
+      <if test="cmChr48 != null" >
+        CM_CHR48,
+      </if>
+      <if test="cmChr49 != null" >
+        CM_CHR49,
+      </if>
+      <if test="cmChr50 != null" >
+        CM_CHR50,
+      </if>
+      <if test="cmNum1 != null" >
+        CM_NUM1,
+      </if>
+      <if test="cmNum2 != null" >
+        CM_NUM2,
+      </if>
+      <if test="cmNum3 != null" >
+        CM_NUM3,
+      </if>
+      <if test="cmNum4 != null" >
+        CM_NUM4,
+      </if>
+      <if test="cmNum5 != null" >
+        CM_NUM5,
+      </if>
+      <if test="cmNum6 != null" >
+        CM_NUM6,
+      </if>
+      <if test="cmNum7 != null" >
+        CM_NUM7,
+      </if>
+      <if test="cmNum8 != null" >
+        CM_NUM8,
+      </if>
+      <if test="cmNum9 != null" >
+        CM_NUM9,
+      </if>
+      <if test="cmNum10 != null" >
+        CM_NUM10,
+      </if>
+      <if test="cmNum11 != null" >
+        CM_NUM11,
+      </if>
+      <if test="cmNum12 != null" >
+        CM_NUM12,
+      </if>
+      <if test="cmNum13 != null" >
+        CM_NUM13,
+      </if>
+      <if test="cmNum14 != null" >
+        CM_NUM14,
+      </if>
+      <if test="cmNum15 != null" >
+        CM_NUM15,
+      </if>
+      <if test="cmNum16 != null" >
+        CM_NUM16,
+      </if>
+      <if test="cmNum17 != null" >
+        CM_NUM17,
+      </if>
+      <if test="cmNum18 != null" >
+        CM_NUM18,
+      </if>
+      <if test="cmNum19 != null" >
+        CM_NUM19,
+      </if>
+      <if test="cmNum20 != null" >
+        CM_NUM20,
+      </if>
+      <if test="cmMkt != null" >
+        CM_MKT,
+      </if>
+      <if test="cmKhdate != null" >
+        CM_KHDATE,
+      </if>
+      <if test="cmXfdate != null" >
+        CM_XFDATE,
+      </if>
+      <if test="cmSjdate != null" >
+        CM_SJDATE,
+      </if>
+      <if test="cmJjdate != null" >
+        CM_JJDATE,
+      </if>
+      <if test="cmAstro != null" >
+        CM_ASTRO,
+      </if>
+      <if test="cmFstdate != null" >
+        CM_FSTDATE,
+      </if>
+      <if test="cmToken != null" >
+        CM_TOKEN,
+      </if>
+      <if test="cmToken2 != null" >
+        CM_TOKEN2,
+      </if>
+      <if test="cmTokendate != null" >
+        CM_TOKENDATE,
+      </if>
+      <if test="cmPwd != null" >
+        CM_PWD,
+      </if>
+      <if test="cmSsqy != null" >
+        CM_SSQY,
+      </if>
+      <if test="cmQyjs != null" >
+        CM_QYJS,
+      </if>
+      <if test="cmJtjs != null" >
+        CM_JTJS,
+      </if>
+      <if test="cmPtname != null" >
+        CM_PTNAME,
+      </if>
+      <if test="cmCzz != null" >
+        CM_CZZ,
+      </if>
+      <if test="cmReferee != null" >
+        CM_REFEREE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="cmMemid != null" >
+        #{cmMemid,jdbcType=VARCHAR},
+      </if>
+      <if test="cmCustid != null" >
+        #{cmCustid,jdbcType=VARCHAR},
+      </if>
+      <if test="cmIsowner != null" >
+        #{cmIsowner,jdbcType=CHAR},
+      </if>
+      <if test="cmRelation != null" >
+        #{cmRelation,jdbcType=CHAR},
+      </if>
+      <if test="cmGrade != null" >
+        #{cmGrade,jdbcType=CHAR},
+      </if>
+      <if test="cmFlag1 != null" >
+        #{cmFlag1,jdbcType=CHAR},
+      </if>
+      <if test="cmFlag2 != null" >
+        #{cmFlag2,jdbcType=CHAR},
+      </if>
+      <if test="cmFlag3 != null" >
+        #{cmFlag3,jdbcType=CHAR},
+      </if>
+      <if test="cmLmykjf != null" >
+        #{cmLmykjf,jdbcType=DECIMAL},
+      </if>
+      <if test="cmJfxfxe != null" >
+        #{cmJfxfxe,jdbcType=DECIMAL},
+      </if>
+      <if test="cmLczhye != null" >
+        #{cmLczhye,jdbcType=DECIMAL},
+      </if>
+      <if test="cmN1 != null" >
+        #{cmN1,jdbcType=DECIMAL},
+      </if>
+      <if test="cmN2 != null" >
+        #{cmN2,jdbcType=DECIMAL},
+      </if>
+      <if test="cmN3 != null" >
+        #{cmN3,jdbcType=DECIMAL},
+      </if>
+      <if test="cmN4 != null" >
+        #{cmN4,jdbcType=DECIMAL},
+      </if>
+      <if test="cmN5 != null" >
+        #{cmN5,jdbcType=DECIMAL},
+      </if>
+      <if test="cmN6 != null" >
+        #{cmN6,jdbcType=DECIMAL},
+      </if>
+      <if test="cmN7 != null" >
+        #{cmN7,jdbcType=DECIMAL},
+      </if>
+      <if test="cmN8 != null" >
+        #{cmN8,jdbcType=DECIMAL},
+      </if>
+      <if test="cmN9 != null" >
+        #{cmN9,jdbcType=DECIMAL},
+      </if>
+      <if test="cmJfa != null" >
+        #{cmJfa,jdbcType=DECIMAL},
+      </if>
+      <if test="cmJfb != null" >
+        #{cmJfb,jdbcType=DECIMAL},
+      </if>
+      <if test="cmJfc != null" >
+        #{cmJfc,jdbcType=DECIMAL},
+      </if>
+      <if test="cmJfd != null" >
+        #{cmJfd,jdbcType=DECIMAL},
+      </if>
+      <if test="cmJfe != null" >
+        #{cmJfe,jdbcType=DECIMAL},
+      </if>
+      <if test="cmJff != null" >
+        #{cmJff,jdbcType=DECIMAL},
+      </if>
+      <if test="cmDecjf != null" >
+        #{cmDecjf,jdbcType=DECIMAL},
+      </if>
+      <if test="cmTotjf != null" >
+        #{cmTotjf,jdbcType=DECIMAL},
+      </if>
+      <if test="cmXfje != null" >
+        #{cmXfje,jdbcType=DECIMAL},
+      </if>
+      <if test="cmMaintor != null" >
+        #{cmMaintor,jdbcType=VARCHAR},
+      </if>
+      <if test="cmMaintdate != null" >
+        #{cmMaintdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cmName != null" >
+        #{cmName,jdbcType=VARCHAR},
+      </if>
+      <if test="cmBirthday != null" >
+        #{cmBirthday,jdbcType=DATE},
+      </if>
+      <if test="cmBirthtype != null" >
+        #{cmBirthtype,jdbcType=CHAR},
+      </if>
+      <if test="cmSex != null" >
+        #{cmSex,jdbcType=CHAR},
+      </if>
+      <if test="cmAddr != null" >
+        #{cmAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="cmAdd1 != null" >
+        #{cmAdd1,jdbcType=VARCHAR},
+      </if>
+      <if test="cmAdd2 != null" >
+        #{cmAdd2,jdbcType=VARCHAR},
+      </if>
+      <if test="cmAdd3 != null" >
+        #{cmAdd3,jdbcType=VARCHAR},
+      </if>
+      <if test="cmAdd4 != null" >
+        #{cmAdd4,jdbcType=VARCHAR},
+      </if>
+      <if test="cmZip != null" >
+        #{cmZip,jdbcType=CHAR},
+      </if>
+      <if test="cmIdtype != null" >
+        #{cmIdtype,jdbcType=CHAR},
+      </if>
+      <if test="cmIdno != null" >
+        #{cmIdno,jdbcType=VARCHAR},
+      </if>
+      <if test="cmLxtype1 != null" >
+        #{cmLxtype1,jdbcType=CHAR},
+      </if>
+      <if test="cmLxtype2 != null" >
+        #{cmLxtype2,jdbcType=CHAR},
+      </if>
+      <if test="cmLxtype3 != null" >
+        #{cmLxtype3,jdbcType=CHAR},
+      </if>
+      <if test="cmLxtype4 != null" >
+        #{cmLxtype4,jdbcType=CHAR},
+      </if>
+      <if test="cmLxtype5 != null" >
+        #{cmLxtype5,jdbcType=CHAR},
+      </if>
+      <if test="cmTel != null" >
+        #{cmTel,jdbcType=VARCHAR},
+      </if>
+      <if test="cmMobile1 != null" >
+        #{cmMobile1,jdbcType=VARCHAR},
+      </if>
+      <if test="cmMobile2 != null" >
+        #{cmMobile2,jdbcType=VARCHAR},
+      </if>
+      <if test="cmFax != null" >
+        #{cmFax,jdbcType=VARCHAR},
+      </if>
+      <if test="cmEmail != null" >
+        #{cmEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="cmIsemployee != null" >
+        #{cmIsemployee,jdbcType=CHAR},
+      </if>
+      <if test="cmLunar != null" >
+        #{cmLunar,jdbcType=VARCHAR},
+      </if>
+      <if test="cmLunarchn != null" >
+        #{cmLunarchn,jdbcType=VARCHAR},
+      </if>
+      <if test="cmSx != null" >
+        #{cmSx,jdbcType=VARCHAR},
+      </if>
+      <if test="cmCompany != null" >
+        #{cmCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="cmDkjf != null" >
+        #{cmDkjf,jdbcType=DECIMAL},
+      </if>
+      <if test="cmDhisjf != null" >
+        #{cmDhisjf,jdbcType=DECIMAL},
+      </if>
+      <if test="cmChr1 != null" >
+        #{cmChr1,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr2 != null" >
+        #{cmChr2,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr3 != null" >
+        #{cmChr3,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr4 != null" >
+        #{cmChr4,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr5 != null" >
+        #{cmChr5,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr6 != null" >
+        #{cmChr6,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr7 != null" >
+        #{cmChr7,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr8 != null" >
+        #{cmChr8,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr9 != null" >
+        #{cmChr9,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr10 != null" >
+        #{cmChr10,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr11 != null" >
+        #{cmChr11,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr12 != null" >
+        #{cmChr12,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr13 != null" >
+        #{cmChr13,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr14 != null" >
+        #{cmChr14,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr15 != null" >
+        #{cmChr15,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr16 != null" >
+        #{cmChr16,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr17 != null" >
+        #{cmChr17,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr18 != null" >
+        #{cmChr18,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr19 != null" >
+        #{cmChr19,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr20 != null" >
+        #{cmChr20,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr21 != null" >
+        #{cmChr21,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr22 != null" >
+        #{cmChr22,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr23 != null" >
+        #{cmChr23,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr24 != null" >
+        #{cmChr24,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr25 != null" >
+        #{cmChr25,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr26 != null" >
+        #{cmChr26,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr27 != null" >
+        #{cmChr27,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr28 != null" >
+        #{cmChr28,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr29 != null" >
+        #{cmChr29,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr30 != null" >
+        #{cmChr30,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr31 != null" >
+        #{cmChr31,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr32 != null" >
+        #{cmChr32,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr33 != null" >
+        #{cmChr33,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr34 != null" >
+        #{cmChr34,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr35 != null" >
+        #{cmChr35,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr36 != null" >
+        #{cmChr36,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr37 != null" >
+        #{cmChr37,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr38 != null" >
+        #{cmChr38,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr39 != null" >
+        #{cmChr39,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr40 != null" >
+        #{cmChr40,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr41 != null" >
+        #{cmChr41,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr42 != null" >
+        #{cmChr42,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr43 != null" >
+        #{cmChr43,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr44 != null" >
+        #{cmChr44,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr45 != null" >
+        #{cmChr45,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr46 != null" >
+        #{cmChr46,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr47 != null" >
+        #{cmChr47,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr48 != null" >
+        #{cmChr48,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr49 != null" >
+        #{cmChr49,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr50 != null" >
+        #{cmChr50,jdbcType=VARCHAR},
+      </if>
+      <if test="cmNum1 != null" >
+        #{cmNum1,jdbcType=DECIMAL},
+      </if>
+      <if test="cmNum2 != null" >
+        #{cmNum2,jdbcType=DECIMAL},
+      </if>
+      <if test="cmNum3 != null" >
+        #{cmNum3,jdbcType=DECIMAL},
+      </if>
+      <if test="cmNum4 != null" >
+        #{cmNum4,jdbcType=DECIMAL},
+      </if>
+      <if test="cmNum5 != null" >
+        #{cmNum5,jdbcType=DECIMAL},
+      </if>
+      <if test="cmNum6 != null" >
+        #{cmNum6,jdbcType=DECIMAL},
+      </if>
+      <if test="cmNum7 != null" >
+        #{cmNum7,jdbcType=DECIMAL},
+      </if>
+      <if test="cmNum8 != null" >
+        #{cmNum8,jdbcType=DECIMAL},
+      </if>
+      <if test="cmNum9 != null" >
+        #{cmNum9,jdbcType=DECIMAL},
+      </if>
+      <if test="cmNum10 != null" >
+        #{cmNum10,jdbcType=DECIMAL},
+      </if>
+      <if test="cmNum11 != null" >
+        #{cmNum11,jdbcType=DECIMAL},
+      </if>
+      <if test="cmNum12 != null" >
+        #{cmNum12,jdbcType=DECIMAL},
+      </if>
+      <if test="cmNum13 != null" >
+        #{cmNum13,jdbcType=DECIMAL},
+      </if>
+      <if test="cmNum14 != null" >
+        #{cmNum14,jdbcType=DECIMAL},
+      </if>
+      <if test="cmNum15 != null" >
+        #{cmNum15,jdbcType=DECIMAL},
+      </if>
+      <if test="cmNum16 != null" >
+        #{cmNum16,jdbcType=DECIMAL},
+      </if>
+      <if test="cmNum17 != null" >
+        #{cmNum17,jdbcType=DECIMAL},
+      </if>
+      <if test="cmNum18 != null" >
+        #{cmNum18,jdbcType=DECIMAL},
+      </if>
+      <if test="cmNum19 != null" >
+        #{cmNum19,jdbcType=DECIMAL},
+      </if>
+      <if test="cmNum20 != null" >
+        #{cmNum20,jdbcType=DECIMAL},
+      </if>
+      <if test="cmMkt != null" >
+        #{cmMkt,jdbcType=VARCHAR},
+      </if>
+      <if test="cmKhdate != null" >
+        #{cmKhdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cmXfdate != null" >
+        #{cmXfdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cmSjdate != null" >
+        #{cmSjdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cmJjdate != null" >
+        #{cmJjdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cmAstro != null" >
+        #{cmAstro,jdbcType=VARCHAR},
+      </if>
+      <if test="cmFstdate != null" >
+        #{cmFstdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cmToken != null" >
+        #{cmToken,jdbcType=VARCHAR},
+      </if>
+      <if test="cmToken2 != null" >
+        #{cmToken2,jdbcType=VARCHAR},
+      </if>
+      <if test="cmTokendate != null" >
+        #{cmTokendate,jdbcType=DATE},
+      </if>
+      <if test="cmPwd != null" >
+        #{cmPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="cmSsqy != null" >
+        #{cmSsqy,jdbcType=VARCHAR},
+      </if>
+      <if test="cmQyjs != null" >
+        #{cmQyjs,jdbcType=VARCHAR},
+      </if>
+      <if test="cmJtjs != null" >
+        #{cmJtjs,jdbcType=VARCHAR},
+      </if>
+      <if test="cmPtname != null" >
+        #{cmPtname,jdbcType=VARCHAR},
+      </if>
+      <if test="cmCzz != null" >
+        #{cmCzz,jdbcType=DECIMAL},
+      </if>
+      <if test="cmReferee != null" >
+        #{cmReferee,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.ldps.model.CustomerModel" >
+    update CUSTOMER
+    <set >
+      <if test="cmMemid != null" >
+        CM_MEMID = #{cmMemid,jdbcType=VARCHAR},
+      </if>
+      <if test="cmCustid != null" >
+        CM_CUSTID = #{cmCustid,jdbcType=VARCHAR},
+      </if>
+      <if test="cmIsowner != null" >
+        CM_ISOWNER = #{cmIsowner,jdbcType=CHAR},
+      </if>
+      <if test="cmRelation != null" >
+        CM_RELATION = #{cmRelation,jdbcType=CHAR},
+      </if>
+      <if test="cmGrade != null" >
+        CM_GRADE = #{cmGrade,jdbcType=CHAR},
+      </if>
+      <if test="cmFlag1 != null" >
+        CM_FLAG1 = #{cmFlag1,jdbcType=CHAR},
+      </if>
+      <if test="cmFlag2 != null" >
+        CM_FLAG2 = #{cmFlag2,jdbcType=CHAR},
+      </if>
+      <if test="cmFlag3 != null" >
+        CM_FLAG3 = #{cmFlag3,jdbcType=CHAR},
+      </if>
+      <if test="cmLmykjf != null" >
+        CM_LMYKJF = #{cmLmykjf,jdbcType=DECIMAL},
+      </if>
+      <if test="cmJfxfxe != null" >
+        CM_JFXFXE = #{cmJfxfxe,jdbcType=DECIMAL},
+      </if>
+      <if test="cmLczhye != null" >
+        CM_LCZHYE = #{cmLczhye,jdbcType=DECIMAL},
+      </if>
+      <if test="cmN1 != null" >
+        CM_N1 = #{cmN1,jdbcType=DECIMAL},
+      </if>
+      <if test="cmN2 != null" >
+        CM_N2 = #{cmN2,jdbcType=DECIMAL},
+      </if>
+      <if test="cmN3 != null" >
+        CM_N3 = #{cmN3,jdbcType=DECIMAL},
+      </if>
+      <if test="cmN4 != null" >
+        CM_N4 = #{cmN4,jdbcType=DECIMAL},
+      </if>
+      <if test="cmN5 != null" >
+        CM_N5 = #{cmN5,jdbcType=DECIMAL},
+      </if>
+      <if test="cmN6 != null" >
+        CM_N6 = #{cmN6,jdbcType=DECIMAL},
+      </if>
+      <if test="cmN7 != null" >
+        CM_N7 = #{cmN7,jdbcType=DECIMAL},
+      </if>
+      <if test="cmN8 != null" >
+        CM_N8 = #{cmN8,jdbcType=DECIMAL},
+      </if>
+      <if test="cmN9 != null" >
+        CM_N9 = #{cmN9,jdbcType=DECIMAL},
+      </if>
+      <if test="cmJfa != null" >
+        CM_JFA = #{cmJfa,jdbcType=DECIMAL},
+      </if>
+      <if test="cmJfb != null" >
+        CM_JFB = #{cmJfb,jdbcType=DECIMAL},
+      </if>
+      <if test="cmJfc != null" >
+        CM_JFC = #{cmJfc,jdbcType=DECIMAL},
+      </if>
+      <if test="cmJfd != null" >
+        CM_JFD = #{cmJfd,jdbcType=DECIMAL},
+      </if>
+      <if test="cmJfe != null" >
+        CM_JFE = #{cmJfe,jdbcType=DECIMAL},
+      </if>
+      <if test="cmJff != null" >
+        CM_JFF = #{cmJff,jdbcType=DECIMAL},
+      </if>
+      <if test="cmDecjf != null" >
+        CM_DECJF = #{cmDecjf,jdbcType=DECIMAL},
+      </if>
+      <if test="cmTotjf != null" >
+        CM_TOTJF = #{cmTotjf,jdbcType=DECIMAL},
+      </if>
+      <if test="cmXfje != null" >
+        CM_XFJE = #{cmXfje,jdbcType=DECIMAL},
+      </if>
+      <if test="cmMaintor != null" >
+        CM_MAINTOR = #{cmMaintor,jdbcType=VARCHAR},
+      </if>
+      <if test="cmMaintdate != null" >
+        CM_MAINTDATE = #{cmMaintdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cmName != null" >
+        CM_NAME = #{cmName,jdbcType=VARCHAR},
+      </if>
+      <if test="cmBirthday != null" >
+        CM_BIRTHDAY = #{cmBirthday,jdbcType=DATE},
+      </if>
+      <if test="cmBirthtype != null" >
+        CM_BIRTHTYPE = #{cmBirthtype,jdbcType=CHAR},
+      </if>
+      <if test="cmSex != null" >
+        CM_SEX = #{cmSex,jdbcType=CHAR},
+      </if>
+      <if test="cmAddr != null" >
+        CM_ADDR = #{cmAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="cmAdd1 != null" >
+        CM_ADD1 = #{cmAdd1,jdbcType=VARCHAR},
+      </if>
+      <if test="cmAdd2 != null" >
+        CM_ADD2 = #{cmAdd2,jdbcType=VARCHAR},
+      </if>
+      <if test="cmAdd3 != null" >
+        CM_ADD3 = #{cmAdd3,jdbcType=VARCHAR},
+      </if>
+      <if test="cmAdd4 != null" >
+        CM_ADD4 = #{cmAdd4,jdbcType=VARCHAR},
+      </if>
+      <if test="cmZip != null" >
+        CM_ZIP = #{cmZip,jdbcType=CHAR},
+      </if>
+      <if test="cmIdtype != null" >
+        CM_IDTYPE = #{cmIdtype,jdbcType=CHAR},
+      </if>
+      <if test="cmIdno != null" >
+        CM_IDNO = #{cmIdno,jdbcType=VARCHAR},
+      </if>
+      <if test="cmLxtype1 != null" >
+        CM_LXTYPE1 = #{cmLxtype1,jdbcType=CHAR},
+      </if>
+      <if test="cmLxtype2 != null" >
+        CM_LXTYPE2 = #{cmLxtype2,jdbcType=CHAR},
+      </if>
+      <if test="cmLxtype3 != null" >
+        CM_LXTYPE3 = #{cmLxtype3,jdbcType=CHAR},
+      </if>
+      <if test="cmLxtype4 != null" >
+        CM_LXTYPE4 = #{cmLxtype4,jdbcType=CHAR},
+      </if>
+      <if test="cmLxtype5 != null" >
+        CM_LXTYPE5 = #{cmLxtype5,jdbcType=CHAR},
+      </if>
+      <if test="cmTel != null" >
+        CM_TEL = #{cmTel,jdbcType=VARCHAR},
+      </if>
+      <if test="cmMobile1 != null" >
+        CM_MOBILE1 = #{cmMobile1,jdbcType=VARCHAR},
+      </if>
+      <if test="cmMobile2 != null" >
+        CM_MOBILE2 = #{cmMobile2,jdbcType=VARCHAR},
+      </if>
+      <if test="cmFax != null" >
+        CM_FAX = #{cmFax,jdbcType=VARCHAR},
+      </if>
+      <if test="cmEmail != null" >
+        CM_EMAIL = #{cmEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="cmIsemployee != null" >
+        CM_ISEMPLOYEE = #{cmIsemployee,jdbcType=CHAR},
+      </if>
+      <if test="cmLunar != null" >
+        CM_LUNAR = #{cmLunar,jdbcType=VARCHAR},
+      </if>
+      <if test="cmLunarchn != null" >
+        CM_LUNARCHN = #{cmLunarchn,jdbcType=VARCHAR},
+      </if>
+      <if test="cmSx != null" >
+        CM_SX = #{cmSx,jdbcType=VARCHAR},
+      </if>
+      <if test="cmCompany != null" >
+        CM_COMPANY = #{cmCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="cmDkjf != null" >
+        CM_DKJF = #{cmDkjf,jdbcType=DECIMAL},
+      </if>
+      <if test="cmDhisjf != null" >
+        CM_DHISJF = #{cmDhisjf,jdbcType=DECIMAL},
+      </if>
+      <if test="cmChr1 != null" >
+        CM_CHR1 = #{cmChr1,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr2 != null" >
+        CM_CHR2 = #{cmChr2,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr3 != null" >
+        CM_CHR3 = #{cmChr3,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr4 != null" >
+        CM_CHR4 = #{cmChr4,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr5 != null" >
+        CM_CHR5 = #{cmChr5,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr6 != null" >
+        CM_CHR6 = #{cmChr6,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr7 != null" >
+        CM_CHR7 = #{cmChr7,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr8 != null" >
+        CM_CHR8 = #{cmChr8,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr9 != null" >
+        CM_CHR9 = #{cmChr9,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr10 != null" >
+        CM_CHR10 = #{cmChr10,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr11 != null" >
+        CM_CHR11 = #{cmChr11,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr12 != null" >
+        CM_CHR12 = #{cmChr12,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr13 != null" >
+        CM_CHR13 = #{cmChr13,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr14 != null" >
+        CM_CHR14 = #{cmChr14,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr15 != null" >
+        CM_CHR15 = #{cmChr15,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr16 != null" >
+        CM_CHR16 = #{cmChr16,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr17 != null" >
+        CM_CHR17 = #{cmChr17,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr18 != null" >
+        CM_CHR18 = #{cmChr18,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr19 != null" >
+        CM_CHR19 = #{cmChr19,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr20 != null" >
+        CM_CHR20 = #{cmChr20,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr21 != null" >
+        CM_CHR21 = #{cmChr21,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr22 != null" >
+        CM_CHR22 = #{cmChr22,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr23 != null" >
+        CM_CHR23 = #{cmChr23,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr24 != null" >
+        CM_CHR24 = #{cmChr24,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr25 != null" >
+        CM_CHR25 = #{cmChr25,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr26 != null" >
+        CM_CHR26 = #{cmChr26,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr27 != null" >
+        CM_CHR27 = #{cmChr27,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr28 != null" >
+        CM_CHR28 = #{cmChr28,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr29 != null" >
+        CM_CHR29 = #{cmChr29,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr30 != null" >
+        CM_CHR30 = #{cmChr30,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr31 != null" >
+        CM_CHR31 = #{cmChr31,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr32 != null" >
+        CM_CHR32 = #{cmChr32,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr33 != null" >
+        CM_CHR33 = #{cmChr33,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr34 != null" >
+        CM_CHR34 = #{cmChr34,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr35 != null" >
+        CM_CHR35 = #{cmChr35,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr36 != null" >
+        CM_CHR36 = #{cmChr36,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr37 != null" >
+        CM_CHR37 = #{cmChr37,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr38 != null" >
+        CM_CHR38 = #{cmChr38,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr39 != null" >
+        CM_CHR39 = #{cmChr39,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr40 != null" >
+        CM_CHR40 = #{cmChr40,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr41 != null" >
+        CM_CHR41 = #{cmChr41,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr42 != null" >
+        CM_CHR42 = #{cmChr42,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr43 != null" >
+        CM_CHR43 = #{cmChr43,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr44 != null" >
+        CM_CHR44 = #{cmChr44,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr45 != null" >
+        CM_CHR45 = #{cmChr45,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr46 != null" >
+        CM_CHR46 = #{cmChr46,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr47 != null" >
+        CM_CHR47 = #{cmChr47,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr48 != null" >
+        CM_CHR48 = #{cmChr48,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr49 != null" >
+        CM_CHR49 = #{cmChr49,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr50 != null" >
+        CM_CHR50 = #{cmChr50,jdbcType=VARCHAR},
+      </if>
+      <if test="cmNum1 != null" >
+        CM_NUM1 = #{cmNum1,jdbcType=DECIMAL},
+      </if>
+      <if test="cmNum2 != null" >
+        CM_NUM2 = #{cmNum2,jdbcType=DECIMAL},
+      </if>
+      <if test="cmNum3 != null" >
+        CM_NUM3 = #{cmNum3,jdbcType=DECIMAL},
+      </if>
+      <if test="cmNum4 != null" >
+        CM_NUM4 = #{cmNum4,jdbcType=DECIMAL},
+      </if>
+      <if test="cmNum5 != null" >
+        CM_NUM5 = #{cmNum5,jdbcType=DECIMAL},
+      </if>
+      <if test="cmNum6 != null" >
+        CM_NUM6 = #{cmNum6,jdbcType=DECIMAL},
+      </if>
+      <if test="cmNum7 != null" >
+        CM_NUM7 = #{cmNum7,jdbcType=DECIMAL},
+      </if>
+      <if test="cmNum8 != null" >
+        CM_NUM8 = #{cmNum8,jdbcType=DECIMAL},
+      </if>
+      <if test="cmNum9 != null" >
+        CM_NUM9 = #{cmNum9,jdbcType=DECIMAL},
+      </if>
+      <if test="cmNum10 != null" >
+        CM_NUM10 = #{cmNum10,jdbcType=DECIMAL},
+      </if>
+      <if test="cmNum11 != null" >
+        CM_NUM11 = #{cmNum11,jdbcType=DECIMAL},
+      </if>
+      <if test="cmNum12 != null" >
+        CM_NUM12 = #{cmNum12,jdbcType=DECIMAL},
+      </if>
+      <if test="cmNum13 != null" >
+        CM_NUM13 = #{cmNum13,jdbcType=DECIMAL},
+      </if>
+      <if test="cmNum14 != null" >
+        CM_NUM14 = #{cmNum14,jdbcType=DECIMAL},
+      </if>
+      <if test="cmNum15 != null" >
+        CM_NUM15 = #{cmNum15,jdbcType=DECIMAL},
+      </if>
+      <if test="cmNum16 != null" >
+        CM_NUM16 = #{cmNum16,jdbcType=DECIMAL},
+      </if>
+      <if test="cmNum17 != null" >
+        CM_NUM17 = #{cmNum17,jdbcType=DECIMAL},
+      </if>
+      <if test="cmNum18 != null" >
+        CM_NUM18 = #{cmNum18,jdbcType=DECIMAL},
+      </if>
+      <if test="cmNum19 != null" >
+        CM_NUM19 = #{cmNum19,jdbcType=DECIMAL},
+      </if>
+      <if test="cmNum20 != null" >
+        CM_NUM20 = #{cmNum20,jdbcType=DECIMAL},
+      </if>
+      <if test="cmMkt != null" >
+        CM_MKT = #{cmMkt,jdbcType=VARCHAR},
+      </if>
+      <if test="cmKhdate != null" >
+        CM_KHDATE = #{cmKhdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cmXfdate != null" >
+        CM_XFDATE = #{cmXfdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cmSjdate != null" >
+        CM_SJDATE = #{cmSjdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cmJjdate != null" >
+        CM_JJDATE = #{cmJjdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cmAstro != null" >
+        CM_ASTRO = #{cmAstro,jdbcType=VARCHAR},
+      </if>
+      <if test="cmFstdate != null" >
+        CM_FSTDATE = #{cmFstdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cmToken != null" >
+        CM_TOKEN = #{cmToken,jdbcType=VARCHAR},
+      </if>
+      <if test="cmToken2 != null" >
+        CM_TOKEN2 = #{cmToken2,jdbcType=VARCHAR},
+      </if>
+      <if test="cmTokendate != null" >
+        CM_TOKENDATE = #{cmTokendate,jdbcType=DATE},
+      </if>
+      <if test="cmPwd != null" >
+        CM_PWD = #{cmPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="cmSsqy != null" >
+        CM_SSQY = #{cmSsqy,jdbcType=VARCHAR},
+      </if>
+      <if test="cmQyjs != null" >
+        CM_QYJS = #{cmQyjs,jdbcType=VARCHAR},
+      </if>
+      <if test="cmJtjs != null" >
+        CM_JTJS = #{cmJtjs,jdbcType=VARCHAR},
+      </if>
+      <if test="cmPtname != null" >
+        CM_PTNAME = #{cmPtname,jdbcType=VARCHAR},
+      </if>
+      <if test="cmCzz != null" >
+        CM_CZZ = #{cmCzz,jdbcType=DECIMAL},
+      </if>
+      <if test="cmReferee != null" >
+        CM_REFEREE = #{cmReferee,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  
+  
+  <update id="updateByCmMemidSelective" parameterType="com.ldps.model.CustomerModel" >
+    update CUSTOMER
+    <set >
+      <if test="cmMemid != null" >
+        CM_MEMID = #{cmMemid,jdbcType=VARCHAR},
+      </if>
+      <if test="cmCustid != null" >
+        CM_CUSTID = #{cmCustid,jdbcType=VARCHAR},
+      </if>
+      <if test="cmIsowner != null" >
+        CM_ISOWNER = #{cmIsowner,jdbcType=CHAR},
+      </if>
+      <if test="cmRelation != null" >
+        CM_RELATION = #{cmRelation,jdbcType=CHAR},
+      </if>
+      <if test="cmGrade != null" >
+        CM_GRADE = #{cmGrade,jdbcType=CHAR},
+      </if>
+      <if test="cmFlag1 != null" >
+        CM_FLAG1 = #{cmFlag1,jdbcType=CHAR},
+      </if>
+      <if test="cmFlag2 != null" >
+        CM_FLAG2 = #{cmFlag2,jdbcType=CHAR},
+      </if>
+      <if test="cmFlag3 != null" >
+        CM_FLAG3 = #{cmFlag3,jdbcType=CHAR},
+      </if>
+      <if test="cmLmykjf != null" >
+        CM_LMYKJF = #{cmLmykjf,jdbcType=DECIMAL},
+      </if>
+      <if test="cmJfxfxe != null" >
+        CM_JFXFXE = #{cmJfxfxe,jdbcType=DECIMAL},
+      </if>
+      <if test="cmLczhye != null" >
+        CM_LCZHYE = #{cmLczhye,jdbcType=DECIMAL},
+      </if>
+      <if test="cmN1 != null" >
+        CM_N1 = #{cmN1,jdbcType=DECIMAL},
+      </if>
+      <if test="cmN2 != null" >
+        CM_N2 = #{cmN2,jdbcType=DECIMAL},
+      </if>
+      <if test="cmN3 != null" >
+        CM_N3 = #{cmN3,jdbcType=DECIMAL},
+      </if>
+      <if test="cmN4 != null" >
+        CM_N4 = #{cmN4,jdbcType=DECIMAL},
+      </if>
+      <if test="cmN5 != null" >
+        CM_N5 = #{cmN5,jdbcType=DECIMAL},
+      </if>
+      <if test="cmN6 != null" >
+        CM_N6 = #{cmN6,jdbcType=DECIMAL},
+      </if>
+      <if test="cmN7 != null" >
+        CM_N7 = #{cmN7,jdbcType=DECIMAL},
+      </if>
+      <if test="cmN8 != null" >
+        CM_N8 = #{cmN8,jdbcType=DECIMAL},
+      </if>
+      <if test="cmN9 != null" >
+        CM_N9 = #{cmN9,jdbcType=DECIMAL},
+      </if>
+      <if test="cmJfa != null" >
+        CM_JFA = #{cmJfa,jdbcType=DECIMAL},
+      </if>
+      <if test="cmJfb != null" >
+        CM_JFB = #{cmJfb,jdbcType=DECIMAL},
+      </if>
+      <if test="cmJfc != null" >
+        CM_JFC = #{cmJfc,jdbcType=DECIMAL},
+      </if>
+      <if test="cmJfd != null" >
+        CM_JFD = #{cmJfd,jdbcType=DECIMAL},
+      </if>
+      <if test="cmJfe != null" >
+        CM_JFE = #{cmJfe,jdbcType=DECIMAL},
+      </if>
+      <if test="cmJff != null" >
+        CM_JFF = #{cmJff,jdbcType=DECIMAL},
+      </if>
+      <if test="cmDecjf != null" >
+        CM_DECJF = #{cmDecjf,jdbcType=DECIMAL},
+      </if>
+      <if test="cmTotjf != null" >
+        CM_TOTJF = #{cmTotjf,jdbcType=DECIMAL},
+      </if>
+      <if test="cmXfje != null" >
+        CM_XFJE = #{cmXfje,jdbcType=DECIMAL},
+      </if>
+      <if test="cmMaintor != null" >
+        CM_MAINTOR = #{cmMaintor,jdbcType=VARCHAR},
+      </if>
+      <if test="cmMaintdate != null" >
+        CM_MAINTDATE = #{cmMaintdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cmName != null" >
+        CM_NAME = #{cmName,jdbcType=VARCHAR},
+      </if>
+      <if test="cmBirthday != null" >
+        CM_BIRTHDAY = #{cmBirthday,jdbcType=DATE},
+      </if>
+      <if test="cmBirthtype != null" >
+        CM_BIRTHTYPE = #{cmBirthtype,jdbcType=CHAR},
+      </if>
+      <if test="cmSex != null" >
+        CM_SEX = #{cmSex,jdbcType=CHAR},
+      </if>
+      <if test="cmAddr != null" >
+        CM_ADDR = #{cmAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="cmAdd1 != null" >
+        CM_ADD1 = #{cmAdd1,jdbcType=VARCHAR},
+      </if>
+      <if test="cmAdd2 != null" >
+        CM_ADD2 = #{cmAdd2,jdbcType=VARCHAR},
+      </if>
+      <if test="cmAdd3 != null" >
+        CM_ADD3 = #{cmAdd3,jdbcType=VARCHAR},
+      </if>
+      <if test="cmAdd4 != null" >
+        CM_ADD4 = #{cmAdd4,jdbcType=VARCHAR},
+      </if>
+      <if test="cmZip != null" >
+        CM_ZIP = #{cmZip,jdbcType=CHAR},
+      </if>
+      <if test="cmIdtype != null" >
+        CM_IDTYPE = #{cmIdtype,jdbcType=CHAR},
+      </if>
+      <if test="cmIdno != null" >
+        CM_IDNO = #{cmIdno,jdbcType=VARCHAR},
+      </if>
+      <if test="cmLxtype1 != null" >
+        CM_LXTYPE1 = #{cmLxtype1,jdbcType=CHAR},
+      </if>
+      <if test="cmLxtype2 != null" >
+        CM_LXTYPE2 = #{cmLxtype2,jdbcType=CHAR},
+      </if>
+      <if test="cmLxtype3 != null" >
+        CM_LXTYPE3 = #{cmLxtype3,jdbcType=CHAR},
+      </if>
+      <if test="cmLxtype4 != null" >
+        CM_LXTYPE4 = #{cmLxtype4,jdbcType=CHAR},
+      </if>
+      <if test="cmLxtype5 != null" >
+        CM_LXTYPE5 = #{cmLxtype5,jdbcType=CHAR},
+      </if>
+      <if test="cmTel != null" >
+        CM_TEL = #{cmTel,jdbcType=VARCHAR},
+      </if>
+      <if test="cmMobile1 != null" >
+        CM_MOBILE1 = #{cmMobile1,jdbcType=VARCHAR},
+      </if>
+      <if test="cmMobile2 != null" >
+        CM_MOBILE2 = #{cmMobile2,jdbcType=VARCHAR},
+      </if>
+      <if test="cmFax != null" >
+        CM_FAX = #{cmFax,jdbcType=VARCHAR},
+      </if>
+      <if test="cmEmail != null" >
+        CM_EMAIL = #{cmEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="cmIsemployee != null" >
+        CM_ISEMPLOYEE = #{cmIsemployee,jdbcType=CHAR},
+      </if>
+      <if test="cmLunar != null" >
+        CM_LUNAR = #{cmLunar,jdbcType=VARCHAR},
+      </if>
+      <if test="cmLunarchn != null" >
+        CM_LUNARCHN = #{cmLunarchn,jdbcType=VARCHAR},
+      </if>
+      <if test="cmSx != null" >
+        CM_SX = #{cmSx,jdbcType=VARCHAR},
+      </if>
+      <if test="cmCompany != null" >
+        CM_COMPANY = #{cmCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="cmDkjf != null" >
+        CM_DKJF = #{cmDkjf,jdbcType=DECIMAL},
+      </if>
+      <if test="cmDhisjf != null" >
+        CM_DHISJF = #{cmDhisjf,jdbcType=DECIMAL},
+      </if>
+      <if test="cmChr1 != null" >
+        CM_CHR1 = #{cmChr1,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr2 != null" >
+        CM_CHR2 = #{cmChr2,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr3 != null" >
+        CM_CHR3 = #{cmChr3,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr4 != null" >
+        CM_CHR4 = #{cmChr4,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr5 != null" >
+        CM_CHR5 = #{cmChr5,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr6 != null" >
+        CM_CHR6 = #{cmChr6,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr7 != null" >
+        CM_CHR7 = #{cmChr7,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr8 != null" >
+        CM_CHR8 = #{cmChr8,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr9 != null" >
+        CM_CHR9 = #{cmChr9,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr10 != null" >
+        CM_CHR10 = #{cmChr10,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr11 != null" >
+        CM_CHR11 = #{cmChr11,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr12 != null" >
+        CM_CHR12 = #{cmChr12,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr13 != null" >
+        CM_CHR13 = #{cmChr13,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr14 != null" >
+        CM_CHR14 = #{cmChr14,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr15 != null" >
+        CM_CHR15 = #{cmChr15,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr16 != null" >
+        CM_CHR16 = #{cmChr16,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr17 != null" >
+        CM_CHR17 = #{cmChr17,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr18 != null" >
+        CM_CHR18 = #{cmChr18,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr19 != null" >
+        CM_CHR19 = #{cmChr19,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr20 != null" >
+        CM_CHR20 = #{cmChr20,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr21 != null" >
+        CM_CHR21 = #{cmChr21,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr22 != null" >
+        CM_CHR22 = #{cmChr22,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr23 != null" >
+        CM_CHR23 = #{cmChr23,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr24 != null" >
+        CM_CHR24 = #{cmChr24,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr25 != null" >
+        CM_CHR25 = #{cmChr25,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr26 != null" >
+        CM_CHR26 = #{cmChr26,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr27 != null" >
+        CM_CHR27 = #{cmChr27,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr28 != null" >
+        CM_CHR28 = #{cmChr28,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr29 != null" >
+        CM_CHR29 = #{cmChr29,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr30 != null" >
+        CM_CHR30 = #{cmChr30,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr31 != null" >
+        CM_CHR31 = #{cmChr31,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr32 != null" >
+        CM_CHR32 = #{cmChr32,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr33 != null" >
+        CM_CHR33 = #{cmChr33,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr34 != null" >
+        CM_CHR34 = #{cmChr34,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr35 != null" >
+        CM_CHR35 = #{cmChr35,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr36 != null" >
+        CM_CHR36 = #{cmChr36,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr37 != null" >
+        CM_CHR37 = #{cmChr37,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr38 != null" >
+        CM_CHR38 = #{cmChr38,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr39 != null" >
+        CM_CHR39 = #{cmChr39,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr40 != null" >
+        CM_CHR40 = #{cmChr40,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr41 != null" >
+        CM_CHR41 = #{cmChr41,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr42 != null" >
+        CM_CHR42 = #{cmChr42,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr43 != null" >
+        CM_CHR43 = #{cmChr43,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr44 != null" >
+        CM_CHR44 = #{cmChr44,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr45 != null" >
+        CM_CHR45 = #{cmChr45,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr46 != null" >
+        CM_CHR46 = #{cmChr46,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr47 != null" >
+        CM_CHR47 = #{cmChr47,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr48 != null" >
+        CM_CHR48 = #{cmChr48,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr49 != null" >
+        CM_CHR49 = #{cmChr49,jdbcType=VARCHAR},
+      </if>
+      <if test="cmChr50 != null" >
+        CM_CHR50 = #{cmChr50,jdbcType=VARCHAR},
+      </if>
+      <if test="cmNum1 != null" >
+        CM_NUM1 = #{cmNum1,jdbcType=DECIMAL},
+      </if>
+      <if test="cmNum2 != null" >
+        CM_NUM2 = #{cmNum2,jdbcType=DECIMAL},
+      </if>
+      <if test="cmNum3 != null" >
+        CM_NUM3 = #{cmNum3,jdbcType=DECIMAL},
+      </if>
+      <if test="cmNum4 != null" >
+        CM_NUM4 = #{cmNum4,jdbcType=DECIMAL},
+      </if>
+      <if test="cmNum5 != null" >
+        CM_NUM5 = #{cmNum5,jdbcType=DECIMAL},
+      </if>
+      <if test="cmNum6 != null" >
+        CM_NUM6 = #{cmNum6,jdbcType=DECIMAL},
+      </if>
+      <if test="cmNum7 != null" >
+        CM_NUM7 = #{cmNum7,jdbcType=DECIMAL},
+      </if>
+      <if test="cmNum8 != null" >
+        CM_NUM8 = #{cmNum8,jdbcType=DECIMAL},
+      </if>
+      <if test="cmNum9 != null" >
+        CM_NUM9 = #{cmNum9,jdbcType=DECIMAL},
+      </if>
+      <if test="cmNum10 != null" >
+        CM_NUM10 = #{cmNum10,jdbcType=DECIMAL},
+      </if>
+      <if test="cmNum11 != null" >
+        CM_NUM11 = #{cmNum11,jdbcType=DECIMAL},
+      </if>
+      <if test="cmNum12 != null" >
+        CM_NUM12 = #{cmNum12,jdbcType=DECIMAL},
+      </if>
+      <if test="cmNum13 != null" >
+        CM_NUM13 = #{cmNum13,jdbcType=DECIMAL},
+      </if>
+      <if test="cmNum14 != null" >
+        CM_NUM14 = #{cmNum14,jdbcType=DECIMAL},
+      </if>
+      <if test="cmNum15 != null" >
+        CM_NUM15 = #{cmNum15,jdbcType=DECIMAL},
+      </if>
+      <if test="cmNum16 != null" >
+        CM_NUM16 = #{cmNum16,jdbcType=DECIMAL},
+      </if>
+      <if test="cmNum17 != null" >
+        CM_NUM17 = #{cmNum17,jdbcType=DECIMAL},
+      </if>
+      <if test="cmNum18 != null" >
+        CM_NUM18 = #{cmNum18,jdbcType=DECIMAL},
+      </if>
+      <if test="cmNum19 != null" >
+        CM_NUM19 = #{cmNum19,jdbcType=DECIMAL},
+      </if>
+      <if test="cmNum20 != null" >
+        CM_NUM20 = #{cmNum20,jdbcType=DECIMAL},
+      </if>
+      <if test="cmMkt != null" >
+        CM_MKT = #{cmMkt,jdbcType=VARCHAR},
+      </if>
+      <if test="cmKhdate != null" >
+        CM_KHDATE = #{cmKhdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cmXfdate != null" >
+        CM_XFDATE = #{cmXfdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cmSjdate != null" >
+        CM_SJDATE = #{cmSjdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cmJjdate != null" >
+        CM_JJDATE = #{cmJjdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cmAstro != null" >
+        CM_ASTRO = #{cmAstro,jdbcType=VARCHAR},
+      </if>
+      <if test="cmFstdate != null" >
+        CM_FSTDATE = #{cmFstdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cmToken != null" >
+        CM_TOKEN = #{cmToken,jdbcType=VARCHAR},
+      </if>
+      <if test="cmToken2 != null" >
+        CM_TOKEN2 = #{cmToken2,jdbcType=VARCHAR},
+      </if>
+      <if test="cmTokendate != null" >
+        CM_TOKENDATE = #{cmTokendate,jdbcType=DATE},
+      </if>
+      <if test="cmPwd != null" >
+        CM_PWD = #{cmPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="cmSsqy != null" >
+        CM_SSQY = #{cmSsqy,jdbcType=VARCHAR},
+      </if>
+      <if test="cmQyjs != null" >
+        CM_QYJS = #{cmQyjs,jdbcType=VARCHAR},
+      </if>
+      <if test="cmJtjs != null" >
+        CM_JTJS = #{cmJtjs,jdbcType=VARCHAR},
+      </if>
+      <if test="cmPtname != null" >
+        CM_PTNAME = #{cmPtname,jdbcType=VARCHAR},
+      </if>
+      <if test="cmCzz != null" >
+        CM_CZZ = #{cmCzz,jdbcType=DECIMAL},
+      </if>
+      <if test="cmReferee != null" >
+        CM_REFEREE = #{cmReferee,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CM_MEMID = #{cmMemid,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.ldps.model.CustomerModel" >
+    update CUSTOMER
+    set CM_MEMID = #{cmMemid,jdbcType=VARCHAR},
+      CM_CUSTID = #{cmCustid,jdbcType=VARCHAR},
+      CM_ISOWNER = #{cmIsowner,jdbcType=CHAR},
+      CM_RELATION = #{cmRelation,jdbcType=CHAR},
+      CM_GRADE = #{cmGrade,jdbcType=CHAR},
+      CM_FLAG1 = #{cmFlag1,jdbcType=CHAR},
+      CM_FLAG2 = #{cmFlag2,jdbcType=CHAR},
+      CM_FLAG3 = #{cmFlag3,jdbcType=CHAR},
+      CM_LMYKJF = #{cmLmykjf,jdbcType=DECIMAL},
+      CM_JFXFXE = #{cmJfxfxe,jdbcType=DECIMAL},
+      CM_LCZHYE = #{cmLczhye,jdbcType=DECIMAL},
+      CM_N1 = #{cmN1,jdbcType=DECIMAL},
+      CM_N2 = #{cmN2,jdbcType=DECIMAL},
+      CM_N3 = #{cmN3,jdbcType=DECIMAL},
+      CM_N4 = #{cmN4,jdbcType=DECIMAL},
+      CM_N5 = #{cmN5,jdbcType=DECIMAL},
+      CM_N6 = #{cmN6,jdbcType=DECIMAL},
+      CM_N7 = #{cmN7,jdbcType=DECIMAL},
+      CM_N8 = #{cmN8,jdbcType=DECIMAL},
+      CM_N9 = #{cmN9,jdbcType=DECIMAL},
+      CM_JFA = #{cmJfa,jdbcType=DECIMAL},
+      CM_JFB = #{cmJfb,jdbcType=DECIMAL},
+      CM_JFC = #{cmJfc,jdbcType=DECIMAL},
+      CM_JFD = #{cmJfd,jdbcType=DECIMAL},
+      CM_JFE = #{cmJfe,jdbcType=DECIMAL},
+      CM_JFF = #{cmJff,jdbcType=DECIMAL},
+      CM_DECJF = #{cmDecjf,jdbcType=DECIMAL},
+      CM_TOTJF = #{cmTotjf,jdbcType=DECIMAL},
+      CM_XFJE = #{cmXfje,jdbcType=DECIMAL},
+      CM_MAINTOR = #{cmMaintor,jdbcType=VARCHAR},
+      CM_MAINTDATE = #{cmMaintdate,jdbcType=TIMESTAMP},
+      CM_NAME = #{cmName,jdbcType=VARCHAR},
+      CM_BIRTHDAY = #{cmBirthday,jdbcType=DATE},
+      CM_BIRTHTYPE = #{cmBirthtype,jdbcType=CHAR},
+      CM_SEX = #{cmSex,jdbcType=CHAR},
+      CM_ADDR = #{cmAddr,jdbcType=VARCHAR},
+      CM_ADD1 = #{cmAdd1,jdbcType=VARCHAR},
+      CM_ADD2 = #{cmAdd2,jdbcType=VARCHAR},
+      CM_ADD3 = #{cmAdd3,jdbcType=VARCHAR},
+      CM_ADD4 = #{cmAdd4,jdbcType=VARCHAR},
+      CM_ZIP = #{cmZip,jdbcType=CHAR},
+      CM_IDTYPE = #{cmIdtype,jdbcType=CHAR},
+      CM_IDNO = #{cmIdno,jdbcType=VARCHAR},
+      CM_LXTYPE1 = #{cmLxtype1,jdbcType=CHAR},
+      CM_LXTYPE2 = #{cmLxtype2,jdbcType=CHAR},
+      CM_LXTYPE3 = #{cmLxtype3,jdbcType=CHAR},
+      CM_LXTYPE4 = #{cmLxtype4,jdbcType=CHAR},
+      CM_LXTYPE5 = #{cmLxtype5,jdbcType=CHAR},
+      CM_TEL = #{cmTel,jdbcType=VARCHAR},
+      CM_MOBILE1 = #{cmMobile1,jdbcType=VARCHAR},
+      CM_MOBILE2 = #{cmMobile2,jdbcType=VARCHAR},
+      CM_FAX = #{cmFax,jdbcType=VARCHAR},
+      CM_EMAIL = #{cmEmail,jdbcType=VARCHAR},
+      CM_ISEMPLOYEE = #{cmIsemployee,jdbcType=CHAR},
+      CM_LUNAR = #{cmLunar,jdbcType=VARCHAR},
+      CM_LUNARCHN = #{cmLunarchn,jdbcType=VARCHAR},
+      CM_SX = #{cmSx,jdbcType=VARCHAR},
+      CM_COMPANY = #{cmCompany,jdbcType=VARCHAR},
+      CM_DKJF = #{cmDkjf,jdbcType=DECIMAL},
+      CM_DHISJF = #{cmDhisjf,jdbcType=DECIMAL},
+      CM_CHR1 = #{cmChr1,jdbcType=VARCHAR},
+      CM_CHR2 = #{cmChr2,jdbcType=VARCHAR},
+      CM_CHR3 = #{cmChr3,jdbcType=VARCHAR},
+      CM_CHR4 = #{cmChr4,jdbcType=VARCHAR},
+      CM_CHR5 = #{cmChr5,jdbcType=VARCHAR},
+      CM_CHR6 = #{cmChr6,jdbcType=VARCHAR},
+      CM_CHR7 = #{cmChr7,jdbcType=VARCHAR},
+      CM_CHR8 = #{cmChr8,jdbcType=VARCHAR},
+      CM_CHR9 = #{cmChr9,jdbcType=VARCHAR},
+      CM_CHR10 = #{cmChr10,jdbcType=VARCHAR},
+      CM_CHR11 = #{cmChr11,jdbcType=VARCHAR},
+      CM_CHR12 = #{cmChr12,jdbcType=VARCHAR},
+      CM_CHR13 = #{cmChr13,jdbcType=VARCHAR},
+      CM_CHR14 = #{cmChr14,jdbcType=VARCHAR},
+      CM_CHR15 = #{cmChr15,jdbcType=VARCHAR},
+      CM_CHR16 = #{cmChr16,jdbcType=VARCHAR},
+      CM_CHR17 = #{cmChr17,jdbcType=VARCHAR},
+      CM_CHR18 = #{cmChr18,jdbcType=VARCHAR},
+      CM_CHR19 = #{cmChr19,jdbcType=VARCHAR},
+      CM_CHR20 = #{cmChr20,jdbcType=VARCHAR},
+      CM_CHR21 = #{cmChr21,jdbcType=VARCHAR},
+      CM_CHR22 = #{cmChr22,jdbcType=VARCHAR},
+      CM_CHR23 = #{cmChr23,jdbcType=VARCHAR},
+      CM_CHR24 = #{cmChr24,jdbcType=VARCHAR},
+      CM_CHR25 = #{cmChr25,jdbcType=VARCHAR},
+      CM_CHR26 = #{cmChr26,jdbcType=VARCHAR},
+      CM_CHR27 = #{cmChr27,jdbcType=VARCHAR},
+      CM_CHR28 = #{cmChr28,jdbcType=VARCHAR},
+      CM_CHR29 = #{cmChr29,jdbcType=VARCHAR},
+      CM_CHR30 = #{cmChr30,jdbcType=VARCHAR},
+      CM_CHR31 = #{cmChr31,jdbcType=VARCHAR},
+      CM_CHR32 = #{cmChr32,jdbcType=VARCHAR},
+      CM_CHR33 = #{cmChr33,jdbcType=VARCHAR},
+      CM_CHR34 = #{cmChr34,jdbcType=VARCHAR},
+      CM_CHR35 = #{cmChr35,jdbcType=VARCHAR},
+      CM_CHR36 = #{cmChr36,jdbcType=VARCHAR},
+      CM_CHR37 = #{cmChr37,jdbcType=VARCHAR},
+      CM_CHR38 = #{cmChr38,jdbcType=VARCHAR},
+      CM_CHR39 = #{cmChr39,jdbcType=VARCHAR},
+      CM_CHR40 = #{cmChr40,jdbcType=VARCHAR},
+      CM_CHR41 = #{cmChr41,jdbcType=VARCHAR},
+      CM_CHR42 = #{cmChr42,jdbcType=VARCHAR},
+      CM_CHR43 = #{cmChr43,jdbcType=VARCHAR},
+      CM_CHR44 = #{cmChr44,jdbcType=VARCHAR},
+      CM_CHR45 = #{cmChr45,jdbcType=VARCHAR},
+      CM_CHR46 = #{cmChr46,jdbcType=VARCHAR},
+      CM_CHR47 = #{cmChr47,jdbcType=VARCHAR},
+      CM_CHR48 = #{cmChr48,jdbcType=VARCHAR},
+      CM_CHR49 = #{cmChr49,jdbcType=VARCHAR},
+      CM_CHR50 = #{cmChr50,jdbcType=VARCHAR},
+      CM_NUM1 = #{cmNum1,jdbcType=DECIMAL},
+      CM_NUM2 = #{cmNum2,jdbcType=DECIMAL},
+      CM_NUM3 = #{cmNum3,jdbcType=DECIMAL},
+      CM_NUM4 = #{cmNum4,jdbcType=DECIMAL},
+      CM_NUM5 = #{cmNum5,jdbcType=DECIMAL},
+      CM_NUM6 = #{cmNum6,jdbcType=DECIMAL},
+      CM_NUM7 = #{cmNum7,jdbcType=DECIMAL},
+      CM_NUM8 = #{cmNum8,jdbcType=DECIMAL},
+      CM_NUM9 = #{cmNum9,jdbcType=DECIMAL},
+      CM_NUM10 = #{cmNum10,jdbcType=DECIMAL},
+      CM_NUM11 = #{cmNum11,jdbcType=DECIMAL},
+      CM_NUM12 = #{cmNum12,jdbcType=DECIMAL},
+      CM_NUM13 = #{cmNum13,jdbcType=DECIMAL},
+      CM_NUM14 = #{cmNum14,jdbcType=DECIMAL},
+      CM_NUM15 = #{cmNum15,jdbcType=DECIMAL},
+      CM_NUM16 = #{cmNum16,jdbcType=DECIMAL},
+      CM_NUM17 = #{cmNum17,jdbcType=DECIMAL},
+      CM_NUM18 = #{cmNum18,jdbcType=DECIMAL},
+      CM_NUM19 = #{cmNum19,jdbcType=DECIMAL},
+      CM_NUM20 = #{cmNum20,jdbcType=DECIMAL},
+      CM_MKT = #{cmMkt,jdbcType=VARCHAR},
+      CM_KHDATE = #{cmKhdate,jdbcType=TIMESTAMP},
+      CM_XFDATE = #{cmXfdate,jdbcType=TIMESTAMP},
+      CM_SJDATE = #{cmSjdate,jdbcType=TIMESTAMP},
+      CM_JJDATE = #{cmJjdate,jdbcType=TIMESTAMP},
+      CM_ASTRO = #{cmAstro,jdbcType=VARCHAR},
+      CM_FSTDATE = #{cmFstdate,jdbcType=TIMESTAMP},
+      CM_TOKEN = #{cmToken,jdbcType=VARCHAR},
+      CM_TOKEN2 = #{cmToken2,jdbcType=VARCHAR},
+      CM_TOKENDATE = #{cmTokendate,jdbcType=DATE},
+      CM_PWD = #{cmPwd,jdbcType=VARCHAR},
+      CM_SSQY = #{cmSsqy,jdbcType=VARCHAR},
+      CM_QYJS = #{cmQyjs,jdbcType=VARCHAR},
+      CM_JTJS = #{cmJtjs,jdbcType=VARCHAR},
+      CM_PTNAME = #{cmPtname,jdbcType=VARCHAR},
+      CM_CZZ = #{cmCzz,jdbcType=DECIMAL},
+      CM_REFEREE = #{cmReferee,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  
   <resultMap id="BaseResultMap" type="com.ldps.model.CustomerModel" >
     <id column="ID" property="id" jdbcType="BIGINT" />
-    <result column="CID" property="cid" jdbcType="VARCHAR" />
-    <result column="MOBILE" property="mobile" jdbcType="VARCHAR" />
-    <result column="NAME" property="name" jdbcType="VARCHAR" />
-    <result column="PASSWORD" property="password" jdbcType="VARCHAR" />
-    <result column="SEX" property="sex" jdbcType="CHAR" />
-    <result column="BIRTHDAY" property="birthday"  jdbcType="DATE" />
-    <result column="ADDRESS" property="address" jdbcType="VARCHAR" />
-    <result column="EMAIL" property="email" jdbcType="VARCHAR" />
-    <result column="PIC_NAME" property="picName" jdbcType="VARCHAR" />
-    <result column="ID_TYPE" property="idType" jdbcType="CHAR" />
-    <result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
-    <result column="MEMBER_ID" property="memberId" jdbcType="VARCHAR" />
-    <result column="REFEREE" property="referee" jdbcType="VARCHAR" />
-    <result column="RELATION" property="relation" jdbcType="CHAR" />
-    <result column="CTYPE" property="ctype" jdbcType="VARCHAR" />
-    <result column="CSTATUS" property="cstatus" jdbcType="CHAR" />
-    <result column="CCURJFYE" property="ccurjfye" jdbcType="DECIMAL" />
-    <result column="CHISJFYE" property="chisjfye" jdbcType="DECIMAL" />
-    <result column="CTOTJFYE" property="ctotjfye" jdbcType="DECIMAL" />
-    <result column="CCURXFJE" property="ccurxfje" jdbcType="DECIMAL" />
-    <result column="CHISXFJE" property="chisxfje" jdbcType="DECIMAL" />
-    <result column="CTOTXFJE" property="ctotxfje" jdbcType="DECIMAL" />
-    <result column="CVIPNO" property="cvipno" jdbcType="VARCHAR" />
-    <result column="CNAME" property="cname" jdbcType="VARCHAR" />
-    <result column="CCREATOR" property="ccreator" jdbcType="VARCHAR" />
-    <result column="CCREATDATE" property="ccreatdate"  />
-    <result column="CMAINTOR" property="cmaintor" jdbcType="VARCHAR" />
-    <result column="CMAINTDATE" property="cmaintdate"  />
-    <result column="CDATE1" property="cdate1"  />
-    <result column="CDATE2" property="cdate2"  />
-    <result column="CDATE3" property="cdate3"  />
-    <result column="CDATE4" property="cdate4"  />
-    <result column="CDATE5" property="cdate5"  />
-    <result column="CNUM1" property="cnum1" jdbcType="DECIMAL" />
-    <result column="CNUM2" property="cnum2" jdbcType="DECIMAL" />
-    <result column="CNUM3" property="cnum3" jdbcType="DECIMAL" />
-    <result column="CNUM4" property="cnum4" jdbcType="DECIMAL" />
-    <result column="CNUM5" property="cnum5" jdbcType="DECIMAL" />
-    <result column="CNUM6" property="cnum6" jdbcType="DECIMAL" />
-    <result column="CNUM7" property="cnum7" jdbcType="DECIMAL" />
-    <result column="CNUM8" property="cnum8" jdbcType="DECIMAL" />
-    <result column="CNUM9" property="cnum9" jdbcType="DECIMAL" />
-    <result column="CNUM10" property="cnum10" jdbcType="DECIMAL" />
-    <result column="CVC1" property="cvc1" jdbcType="VARCHAR" />
-    <result column="CVC2" property="cvc2" jdbcType="VARCHAR" />
-    <result column="CVC3" property="cvc3" jdbcType="VARCHAR" />
-    <result column="CVC4" property="cvc4" jdbcType="VARCHAR" />
-    <result column="CVC5" property="cvc5" jdbcType="VARCHAR" />
-    <result column="CVC6" property="cvc6" jdbcType="VARCHAR" />
-    <result column="CVC7" property="cvc7" jdbcType="VARCHAR" />
-    <result column="CVC8" property="cvc8" jdbcType="VARCHAR" />
-    <result column="CCHR1" property="cchr1" jdbcType="CHAR" />
-    <result column="CCHR2" property="cchr2" jdbcType="CHAR" />
-    <result column="CCHR3" property="cchr3" jdbcType="CHAR" />
-    <result column="CCHR4" property="cchr4" jdbcType="CHAR" />
-    <result column="CCHR5" property="cchr5" jdbcType="CHAR" />
-    <result column="CCHR6" property="cchr6" jdbcType="VARCHAR" />
+    <result column="CM_MEMID" property="cmMemid" jdbcType="VARCHAR" />
+    <result column="CM_CUSTID" property="cmCustid" jdbcType="VARCHAR" />
+	<result column="CM_RELATION" property="cmRelation" jdbcType="CHAR" />
+	<result column="CM_NAME" property="cmName" jdbcType="VARCHAR" />
+    <result column="CM_BIRTHDAY" property="cmBirthday" jdbcType="DATE"  />
+	<result column="CM_SEX" property="cmSex" jdbcType="CHAR" />
+	<result column="CM_ADDR" property="cmAddr" jdbcType="VARCHAR" />
+    <result column="CM_ADD1" property="cmAdd1" jdbcType="VARCHAR" />
+    <result column="CM_ADD2" property="cmAdd2" jdbcType="VARCHAR" />
+    <result column="CM_ADD3" property="cmAdd3" jdbcType="VARCHAR" />
+    <result column="CM_ADD4" property="cmAdd4" jdbcType="VARCHAR" />
+    <result column="CM_ZIP" property="cmZip" jdbcType="CHAR" />
+	<result column="CM_IDTYPE" property="cmIdtype" jdbcType="CHAR" />
+    <result column="CM_IDNO" property="cmIdno" jdbcType="VARCHAR" />
+	<result column="CM_TEL" property="cmTel" jdbcType="VARCHAR" />
+    <result column="CM_MOBILE1" property="cmMobile1" jdbcType="VARCHAR" />
+    <result column="CM_MOBILE2" property="cmMobile2" jdbcType="VARCHAR" />
+    <result column="CM_FAX" property="cmFax" jdbcType="VARCHAR" />
+    <result column="CM_EMAIL" property="cmEmail" jdbcType="VARCHAR" />
+	<result column="CM_ISEMPLOYEE" property="cmIsemployee" jdbcType="CHAR" />
+	<result column="CM_PWD" property="cmPwd" jdbcType="VARCHAR" />
   </resultMap>
   
   <resultMap id="SimpleResultMap" type="com.ldps.model.CustomerModel" >
     <id column="ID" property="id" jdbcType="BIGINT" />
-    <result column="CID" property="cid" jdbcType="VARCHAR" />
-    <result column="CSTATUS" property="cstatus" jdbcType="CHAR" />
-    <result column="CNAME" property="cname" jdbcType="VARCHAR" />
-    <result column="MOBILE" property="mobile" jdbcType="VARCHAR" />
-    <result column="NAME" property="name" jdbcType="VARCHAR" />
-    <result column="PASSWORD" property="password" jdbcType="VARCHAR" />
-    <result column="SEX" property="sex" jdbcType="CHAR" />
-    <result column="BIRTHDAY" property="birthday"  jdbcType="DATE" />
-    <result column="ADDRESS" property="address" jdbcType="VARCHAR" />
-    <result column="EMAIL" property="email" jdbcType="VARCHAR" />
+    <result column="CM_MEMID" property="cmMemid" jdbcType="VARCHAR" />
+    <result column="CM_CUSTID" property="cmCustid" jdbcType="VARCHAR" />
+	<result column="CM_RELATION" property="cmRelation" jdbcType="CHAR" />
+	<result column="CM_NAME" property="cmName" jdbcType="VARCHAR" />
+	<result column="CM_SEX" property="cmSex" jdbcType="CHAR" />
+    <result column="CM_MOBILE1" property="cmMobile1" jdbcType="VARCHAR" />
+    <result column="CM_EMAIL" property="cmEmail" jdbcType="VARCHAR" />
   </resultMap>
   
   <resultMap id="SimpleWithGroupsResultMap" type="com.ldps.model.CustomerModel" >
     <id column="ID" property="id" jdbcType="BIGINT" />
-    <result column="CID" property="cid" jdbcType="VARCHAR" />
-    <result column="CSTATUS" property="cstatus" jdbcType="CHAR" />
-    <result column="CNAME" property="cname" jdbcType="VARCHAR" />
+    <result column="CM_MEMID" property="cmMemid" jdbcType="VARCHAR" />
+    <result column="CM_CUSTID" property="cmCustid" jdbcType="VARCHAR" />
+	<result column="CM_RELATION" property="cmRelation" jdbcType="CHAR" />
+	<result column="CM_NAME" property="cmName" jdbcType="VARCHAR" />
+	<result column="CM_SEX" property="cmSex" jdbcType="CHAR" />
+    <result column="CM_MOBILE1" property="cmMobile1" jdbcType="VARCHAR" />
+    <result column="CM_EMAIL" property="cmEmail" jdbcType="VARCHAR" />
     <collection property="customerGroups" javaType="java.util.List" ofType="com.ldps.model.CustomerGroupModel">  
         <id column="CG_ID" property="id" jdbcType="INTEGER" />
 	    <result column="CG_NAME" property="name" jdbcType="VARCHAR" />
@@ -111,20 +2300,17 @@
    </resultMap>  
   
   <sql id="Base_Column_List" >
-    ID, CID, MOBILE, NAME, PASSWORD, SEX, BIRTHDAY, ADDRESS, EMAIL, PIC_NAME, ID_TYPE, 
-    ID_NO, MEMBER_ID, REFEREE, RELATION, CTYPE, CSTATUS, CCURJFYE, CHISJFYE, CTOTJFYE, 
-    CCURXFJE, CHISXFJE, CTOTXFJE, CVIPNO, CNAME, CCREATOR, CCREATDATE, CMAINTOR, CMAINTDATE, 
-    CDATE1, CDATE2, CDATE3, CDATE4, CDATE5, CNUM1, CNUM2, CNUM3, CNUM4, CNUM5, CNUM6, 
-    CNUM7, CNUM8, CNUM9, CNUM10, CVC1, CVC2, CVC3, CVC4, CVC5, CVC6, CVC7, CVC8, CCHR1, 
-    CCHR2, CCHR3, CCHR4, CCHR5, CCHR6
+    ID, CM_MEMID, CM_CUSTID, CM_RELATION, CM_NAME, CM_BIRTHDAY, CM_SEX, CM_ADDR, 
+	CM_ADD1, CM_ADD2, CM_ADD3, CM_ADD4, CM_ZIP, CM_IDTYPE, CM_IDNO, CM_TEL, 
+	CM_MOBILE1, CM_MOBILE2, CM_FAX, CM_EMAIL, CM_ISEMPLOYEE, CM_PWD  
   </sql>
   
   <sql id="Simple_Column_List" >
-  	ID, CID, CSTATUS, NAME, MOBILE,PASSWORD,SEX,BIRTHDAY,EMAIL,ADDRESS,RELATION
+  	ID, CM_MEMID, CM_CUSTID, CM_RELATION, CM_NAME, CM_SEX, CM_MOBILE1, CM_EMAIL
   </sql>
   
   <sql id="Simple_Column_WithGroups" >
-  	C.ID, C.CID, C.CSTATUS, C.CNAME, 
+  	C.ID, C.CM_MEMID, C.CM_CUSTID, C.CM_RELATION, C.CM_NAME, C.CM_SEX, C.CM_MOBILE1, C.CM_EMAIL
 	CG.ID CG_ID, CG.NAME CG_NAME,CG.STATUS CG_STATUS, CG.CREATE_DATE CG_CREATE_DATE,
 	CG.CREATE_USER CG_CREATE_USER, CG.NUM1 CG_NUM1, CG.NUM2 CG_NUM2, CG.VC1 CG_VC1, CG.VC2 CG_VC2, CG.CHR1 CG_CHR1, CG.CHR2 CG_CHR2
   </sql>
@@ -136,32 +2322,24 @@
     where ID = #{id,jdbcType=BIGINT}
   </select>
   
-  <select id="simpleSelectByCID" resultMap="SimpleResultMap" parameterType="java.lang.String" >
+  <select id="simpleSelectByCmMemid" resultMap="SimpleResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Simple_Column_List" />
     from CUSTOMER
-    where CID = #{cid,jdbcType=VARCHAR}
+    where CICM_MEMIDD = #{cmMemid,jdbcType=VARCHAR}
   </select>
-  
-    <select id="simpleSelectById" resultMap="SimpleResultMap" parameterType="java.lang.Long" >
+   
+    <select id="simpleByPrimaryKey" resultMap="SimpleResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Simple_Column_List" />
     from CUSTOMER
     where ID = #{id,jdbcType=VARCHAR}
   </select>
   
-  <select id="simpleSelectWithGroupsByCID" resultMap="SimpleWithGroupsResultMap" parameterType="java.lang.String" >
-	SELECT 
-	<include refid="Simple_Column_WithGroups" />
-	FROM CUSTOMER C LEFT JOIN CGROUP_REL CGR ON CGR.CID=C.CID 
-	LEFT JOIN CGROUP CG ON CG.ID=CGR.CGROUP_ID 
-	where C.CID = #{cid,jdbcType=VARCHAR}
-  </select>
-  
    <select id="simpleSelectWithGroupsById" resultMap="SimpleWithGroupsResultMap" parameterType="java.lang.Long" >
 	SELECT 
 	<include refid="Simple_Column_WithGroups" />
-	FROM CUSTOMER C LEFT JOIN CGROUP_REL CGR ON CGR.CID=C.CID 
+	FROM CUSTOMER C LEFT JOIN CGROUP_REL CGR ON CGR.CUSTOMER_ID=C.ID 
 	LEFT JOIN CGROUP CG ON CG.ID=CGR.CGROUP_ID 
 	where C.ID = #{id,jdbcType=VARCHAR}
   </select>
@@ -170,20 +2348,20 @@
     select 
     <include refid="Simple_Column_List" />
     from CUSTOMER
-    where MOBILE = #{mobile,jdbcType=VARCHAR}
+    where CM_MOBILE1 = #{mobile,jdbcType=VARCHAR}
   </select>
   
   <select id="selectIdByMobile" resultMap="IDResultMap" parameterType="java.lang.String" >
     select 
     ID 
     from CUSTOMER
-    where MOBILE = #{mobile,jdbcType=VARCHAR}
+    where CM_MOBILE1 = #{mobile,jdbcType=VARCHAR}
   </select>
   
   <!-- query all 分页查询 -->
-  <select id="selectAllWithPageIndex" resultMap="SimpleResultMap"  >
+  <select id="selectAllWithPageIndex" resultMap="FullResultMap"  >
     select 
-    <include refid="Simple_Column_List" />
+    <include refid="Full_Column_List" />
     from CUSTOMER 
     limit #{startRow,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
   </select>
@@ -201,13 +2379,13 @@
     from CUSTOMER 
     where 
     <if test="mobile != null and mobile != ''" >
-        MOBILE =#{mobile,jdbcType=VARCHAR} 
+        CM_MOBILE1 =#{mobile,jdbcType=VARCHAR} 
     </if>
     <if test="mobile != null and mobile != '' and userName != null and userName != '' " >
         AND 
     </if>
     <if test="userName != null and userName != ''" >
-         NAME =#{userName,jdbcType=VARCHAR} 
+         CM_NAME =#{userName,jdbcType=VARCHAR} 
     </if>
     limit #{startRow,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
   </select>
@@ -218,13 +2396,13 @@
     from CUSTOMER 
     where 
     <if test="mobile != null and mobile != ''" >
-        MOBILE =#{mobile,jdbcType=VARCHAR} 
+        CM_MOBILE1 =#{mobile,jdbcType=VARCHAR} 
     </if>
     <if test="mobile != null and mobile != '' and userName != null and userName != '' " >
         AND 
     </if>
     <if test="userName != null and userName != ''" >
-         NAME =#{userName,jdbcType=VARCHAR} 
+         CM_NAME =#{userName,jdbcType=VARCHAR} 
     </if>
     
   </select>
@@ -235,782 +2413,9 @@
     where ID = #{id,jdbcType=BIGINT}
   </delete>
   
-  <delete id="deleteByCID" parameterType="java.lang.String" >
+  <delete id="deleteByCmMemid" parameterType="java.lang.String" >
     delete from CUSTOMER
-    where CID = #{cid,jdbcType=VARCHAR}
+    where CM_MEMID = #{cmMemid,jdbcType=VARCHAR}
   </delete>
   
-  <insert id="insert" parameterType="com.ldps.model.CustomerModel" >
-      insert into CUSTOMER (ID, CID, MOBILE, 
-      NAME, PASSWORD, SEX, BIRTHDAY, 
-      ADDRESS, EMAIL, PIC_NAME, 
-      ID_TYPE, ID_NO, MEMBER_ID, 
-      REFEREE, RELATION, CTYPE, 
-      CSTATUS, CCURJFYE, CHISJFYE, 
-      CTOTJFYE, CCURXFJE, CHISXFJE, 
-      CTOTXFJE, CVIPNO, CNAME, 
-      CCREATOR, CCREATDATE, CMAINTOR, 
-      CMAINTDATE, CDATE1, CDATE2, 
-      CDATE3, CDATE4, CDATE5, CNUM1, 
-      CNUM2, CNUM3, CNUM4, 
-      CNUM5, CNUM6, CNUM7, 
-      CNUM8, CNUM9, CNUM10, 
-      CVC1, CVC2, CVC3, CVC4, 
-      CVC5, CVC6, CVC7, CVC8, 
-      CCHR1, CCHR2, CCHR3, CCHR4, 
-      CCHR5, CCHR6)
-    values (#{id,jdbcType=BIGINT}, #{cid,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
-      #{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{sex,jdbcType=CHAR}, #{birthday,jdbcType=DATE}, 
-      #{address,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{picName,jdbcType=VARCHAR}, 
-      #{idType,jdbcType=CHAR}, #{idNo,jdbcType=VARCHAR}, #{memberId,jdbcType=VARCHAR}, 
-      #{referee,jdbcType=VARCHAR}, #{relation,jdbcType=CHAR}, #{ctype,jdbcType=VARCHAR}, 
-      #{cstatus,jdbcType=CHAR}, #{ccurjfye,jdbcType=DECIMAL}, #{chisjfye,jdbcType=DECIMAL}, 
-      #{ctotjfye,jdbcType=DECIMAL}, #{ccurxfje,jdbcType=DECIMAL}, #{chisxfje,jdbcType=DECIMAL}, 
-      #{ctotxfje,jdbcType=DECIMAL}, #{cvipno,jdbcType=VARCHAR}, #{cname,jdbcType=VARCHAR}, 
-      #{ccreator,jdbcType=VARCHAR}, #{ccreatdate}, #{cmaintor,jdbcType=VARCHAR}, 
-      #{cmaintdate}, #{cdate1}, #{cdate2}, 
-      #{cdate3}, #{cdate4}, #{cdate5}, #{cnum1,jdbcType=DECIMAL}, 
-      #{cnum2,jdbcType=DECIMAL}, #{cnum3,jdbcType=DECIMAL}, #{cnum4,jdbcType=DECIMAL}, 
-      #{cnum5,jdbcType=DECIMAL}, #{cnum6,jdbcType=DECIMAL}, #{cnum7,jdbcType=DECIMAL}, 
-      #{cnum8,jdbcType=DECIMAL}, #{cnum9,jdbcType=DECIMAL}, #{cnum10,jdbcType=DECIMAL}, 
-      #{cvc1,jdbcType=VARCHAR}, #{cvc2,jdbcType=VARCHAR}, #{cvc3,jdbcType=VARCHAR}, #{cvc4,jdbcType=VARCHAR}, 
-      #{cvc5,jdbcType=VARCHAR}, #{cvc6,jdbcType=VARCHAR}, #{cvc7,jdbcType=VARCHAR}, #{cvc8,jdbcType=VARCHAR}, 
-      #{cchr1,jdbcType=CHAR}, #{cchr2,jdbcType=CHAR}, #{cchr3,jdbcType=CHAR}, #{cchr4,jdbcType=CHAR}, 
-      #{cchr5,jdbcType=CHAR}, #{cchr6,jdbcType=VARCHAR})
-  </insert>
-  
-  <insert id="insertSelective" parameterType="com.ldps.model.CustomerModel" >
-    insert into CUSTOMER
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        ID,
-      </if>
-      <if test="cid != null" >
-        CID,
-      </if>
-      <if test="mobile != null" >
-        MOBILE,
-      </if>
-      <if test="name != null" >
-        NAME,
-      </if>
-      <if test="password != null" >
-        PASSWORD,
-      </if>
-      <if test="sex != null" >
-        SEX,
-      </if>
-      <if test="birthday != null" >
-        BIRTHDAY,
-      </if>
-      <if test="address != null" >
-        ADDRESS,
-      </if>
-      <if test="email != null" >
-        EMAIL,
-      </if>
-      <if test="picName != null" >
-        PIC_NAME,
-      </if>
-      <if test="idType != null" >
-        ID_TYPE,
-      </if>
-      <if test="idNo != null" >
-        ID_NO,
-      </if>
-      <if test="memberId != null" >
-        MEMBER_ID,
-      </if>
-      <if test="referee != null" >
-        REFEREE,
-      </if>
-      <if test="relation != null" >
-        RELATION,
-      </if>
-      <if test="ctype != null" >
-        CTYPE,
-      </if>
-      <if test="cstatus != null" >
-        CSTATUS,
-      </if>
-      <if test="ccurjfye != null" >
-        CCURJFYE,
-      </if>
-      <if test="chisjfye != null" >
-        CHISJFYE,
-      </if>
-      <if test="ctotjfye != null" >
-        CTOTJFYE,
-      </if>
-      <if test="ccurxfje != null" >
-        CCURXFJE,
-      </if>
-      <if test="chisxfje != null" >
-        CHISXFJE,
-      </if>
-      <if test="ctotxfje != null" >
-        CTOTXFJE,
-      </if>
-      <if test="cvipno != null" >
-        CVIPNO,
-      </if>
-      <if test="cname != null" >
-        CNAME,
-      </if>
-      <if test="ccreator != null" >
-        CCREATOR,
-      </if>
-      <if test="ccreatdate != null" >
-        CCREATDATE,
-      </if>
-      <if test="cmaintor != null" >
-        CMAINTOR,
-      </if>
-      <if test="cmaintdate != null" >
-        CMAINTDATE,
-      </if>
-      <if test="cdate1 != null" >
-        CDATE1,
-      </if>
-      <if test="cdate2 != null" >
-        CDATE2,
-      </if>
-      <if test="cdate3 != null" >
-        CDATE3,
-      </if>
-      <if test="cdate4 != null" >
-        CDATE4,
-      </if>
-      <if test="cdate5 != null" >
-        CDATE5,
-      </if>
-      <if test="cnum1 != null" >
-        CNUM1,
-      </if>
-      <if test="cnum2 != null" >
-        CNUM2,
-      </if>
-      <if test="cnum3 != null" >
-        CNUM3,
-      </if>
-      <if test="cnum4 != null" >
-        CNUM4,
-      </if>
-      <if test="cnum5 != null" >
-        CNUM5,
-      </if>
-      <if test="cnum6 != null" >
-        CNUM6,
-      </if>
-      <if test="cnum7 != null" >
-        CNUM7,
-      </if>
-      <if test="cnum8 != null" >
-        CNUM8,
-      </if>
-      <if test="cnum9 != null" >
-        CNUM9,
-      </if>
-      <if test="cnum10 != null" >
-        CNUM10,
-      </if>
-      <if test="cvc1 != null" >
-        CVC1,
-      </if>
-      <if test="cvc2 != null" >
-        CVC2,
-      </if>
-      <if test="cvc3 != null" >
-        CVC3,
-      </if>
-      <if test="cvc4 != null" >
-        CVC4,
-      </if>
-      <if test="cvc5 != null" >
-        CVC5,
-      </if>
-      <if test="cvc6 != null" >
-        CVC6,
-      </if>
-      <if test="cvc7 != null" >
-        CVC7,
-      </if>
-      <if test="cvc8 != null" >
-        CVC8,
-      </if>
-      <if test="cchr1 != null" >
-        CCHR1,
-      </if>
-      <if test="cchr2 != null" >
-        CCHR2,
-      </if>
-      <if test="cchr3 != null" >
-        CCHR3,
-      </if>
-      <if test="cchr4 != null" >
-        CCHR4,
-      </if>
-      <if test="cchr5 != null" >
-        CCHR5,
-      </if>
-      <if test="cchr6 != null" >
-        CCHR6,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="cid != null" >
-        #{cid,jdbcType=VARCHAR},
-      </if>
-      <if test="mobile != null" >
-        #{mobile,jdbcType=VARCHAR},
-      </if>
-      <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="password != null" >
-        #{password,jdbcType=VARCHAR},
-      </if>
-      <if test="sex != null" >
-        #{sex,jdbcType=CHAR},
-      </if>
-      <if test="birthday != null" >
-        #{birthday,jdbcType=DATE},
-      </if>
-      <if test="address != null" >
-        #{address,jdbcType=VARCHAR},
-      </if>
-      <if test="email != null" >
-        #{email,jdbcType=VARCHAR},
-      </if>
-      <if test="picName != null" >
-        #{picName,jdbcType=VARCHAR},
-      </if>
-      <if test="idType != null" >
-        #{idType,jdbcType=CHAR},
-      </if>
-      <if test="idNo != null" >
-        #{idNo,jdbcType=VARCHAR},
-      </if>
-      <if test="memberId != null" >
-        #{memberId,jdbcType=VARCHAR},
-      </if>
-      <if test="referee != null" >
-        #{referee,jdbcType=VARCHAR},
-      </if>
-      <if test="relation != null" >
-        #{relation,jdbcType=CHAR},
-      </if>
-      <if test="ctype != null" >
-        #{ctype,jdbcType=VARCHAR},
-      </if>
-      <if test="cstatus != null" >
-        #{cstatus,jdbcType=CHAR},
-      </if>
-      <if test="ccurjfye != null" >
-        #{ccurjfye,jdbcType=DECIMAL},
-      </if>
-      <if test="chisjfye != null" >
-        #{chisjfye,jdbcType=DECIMAL},
-      </if>
-      <if test="ctotjfye != null" >
-        #{ctotjfye,jdbcType=DECIMAL},
-      </if>
-      <if test="ccurxfje != null" >
-        #{ccurxfje,jdbcType=DECIMAL},
-      </if>
-      <if test="chisxfje != null" >
-        #{chisxfje,jdbcType=DECIMAL},
-      </if>
-      <if test="ctotxfje != null" >
-        #{ctotxfje,jdbcType=DECIMAL},
-      </if>
-      <if test="cvipno != null" >
-        #{cvipno,jdbcType=VARCHAR},
-      </if>
-      <if test="cname != null" >
-        #{cname,jdbcType=VARCHAR},
-      </if>
-      <if test="ccreator != null" >
-        #{ccreator,jdbcType=VARCHAR},
-      </if>
-      <if test="ccreatdate != null" >
-        #{ccreatdate},
-      </if>
-      <if test="cmaintor != null" >
-        #{cmaintor,jdbcType=VARCHAR},
-      </if>
-      <if test="cmaintdate != null" >
-        #{cmaintdate},
-      </if>
-      <if test="cdate1 != null" >
-        #{cdate1},
-      </if>
-      <if test="cdate2 != null" >
-        #{cdate2},
-      </if>
-      <if test="cdate3 != null" >
-        #{cdate3},
-      </if>
-      <if test="cdate4 != null" >
-        #{cdate4},
-      </if>
-      <if test="cdate5 != null" >
-        #{cdate5},
-      </if>
-      <if test="cnum1 != null" >
-        #{cnum1,jdbcType=DECIMAL},
-      </if>
-      <if test="cnum2 != null" >
-        #{cnum2,jdbcType=DECIMAL},
-      </if>
-      <if test="cnum3 != null" >
-        #{cnum3,jdbcType=DECIMAL},
-      </if>
-      <if test="cnum4 != null" >
-        #{cnum4,jdbcType=DECIMAL},
-      </if>
-      <if test="cnum5 != null" >
-        #{cnum5,jdbcType=DECIMAL},
-      </if>
-      <if test="cnum6 != null" >
-        #{cnum6,jdbcType=DECIMAL},
-      </if>
-      <if test="cnum7 != null" >
-        #{cnum7,jdbcType=DECIMAL},
-      </if>
-      <if test="cnum8 != null" >
-        #{cnum8,jdbcType=DECIMAL},
-      </if>
-      <if test="cnum9 != null" >
-        #{cnum9,jdbcType=DECIMAL},
-      </if>
-      <if test="cnum10 != null" >
-        #{cnum10,jdbcType=DECIMAL},
-      </if>
-      <if test="cvc1 != null" >
-        #{cvc1,jdbcType=VARCHAR},
-      </if>
-      <if test="cvc2 != null" >
-        #{cvc2,jdbcType=VARCHAR},
-      </if>
-      <if test="cvc3 != null" >
-        #{cvc3,jdbcType=VARCHAR},
-      </if>
-      <if test="cvc4 != null" >
-        #{cvc4,jdbcType=VARCHAR},
-      </if>
-      <if test="cvc5 != null" >
-        #{cvc5,jdbcType=VARCHAR},
-      </if>
-      <if test="cvc6 != null" >
-        #{cvc6,jdbcType=VARCHAR},
-      </if>
-      <if test="cvc7 != null" >
-        #{cvc7,jdbcType=VARCHAR},
-      </if>
-      <if test="cvc8 != null" >
-        #{cvc8,jdbcType=VARCHAR},
-      </if>
-      <if test="cchr1 != null" >
-        #{cchr1,jdbcType=CHAR},
-      </if>
-      <if test="cchr2 != null" >
-        #{cchr2,jdbcType=CHAR},
-      </if>
-      <if test="cchr3 != null" >
-        #{cchr3,jdbcType=CHAR},
-      </if>
-      <if test="cchr4 != null" >
-        #{cchr4,jdbcType=CHAR},
-      </if>
-      <if test="cchr5 != null" >
-        #{cchr5,jdbcType=CHAR},
-      </if>
-      <if test="cchr6 != null" >
-        #{cchr6,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  
-  <update id="updateByPrimaryKeySelective" parameterType="com.ldps.model.CustomerModel" >
-    update CUSTOMER
-    <set >
-      <if test="cid != null" >
-        CID = #{cid,jdbcType=VARCHAR},
-      </if>
-      <if test="mobile != null" >
-        MOBILE = #{mobile,jdbcType=VARCHAR},
-      </if>
-      <if test="name != null" >
-        NAME = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="password != null" >
-        PASSWORD = #{password,jdbcType=VARCHAR},
-      </if>
-      <if test="sex != null" >
-        SEX = #{sex,jdbcType=CHAR},
-      </if>
-      <if test="birthday != null" >
-        BIRTHDAY = #{birthday,jdbcType=DATE},
-      </if>
-      <if test="address != null" >
-        ADDRESS = #{address,jdbcType=VARCHAR},
-      </if>
-      <if test="email != null" >
-        EMAIL = #{email,jdbcType=VARCHAR},
-      </if>
-      <if test="picName != null" >
-        PIC_NAME = #{picName,jdbcType=VARCHAR},
-      </if>
-      <if test="idType != null" >
-        ID_TYPE = #{idType,jdbcType=CHAR},
-      </if>
-      <if test="idNo != null" >
-        ID_NO = #{idNo,jdbcType=VARCHAR},
-      </if>
-      <if test="memberId != null" >
-        MEMBER_ID = #{memberId,jdbcType=VARCHAR},
-      </if>
-      <if test="referee != null" >
-        REFEREE = #{referee,jdbcType=VARCHAR},
-      </if>
-      <if test="relation != null" >
-        RELATION = #{relation,jdbcType=CHAR},
-      </if>
-      <if test="ctype != null" >
-        CTYPE = #{ctype,jdbcType=VARCHAR},
-      </if>
-      <if test="cstatus != null" >
-        CSTATUS = #{cstatus,jdbcType=CHAR},
-      </if>
-      <if test="ccurjfye != null" >
-        CCURJFYE = #{ccurjfye,jdbcType=DECIMAL},
-      </if>
-      <if test="chisjfye != null" >
-        CHISJFYE = #{chisjfye,jdbcType=DECIMAL},
-      </if>
-      <if test="ctotjfye != null" >
-        CTOTJFYE = #{ctotjfye,jdbcType=DECIMAL},
-      </if>
-      <if test="ccurxfje != null" >
-        CCURXFJE = #{ccurxfje,jdbcType=DECIMAL},
-      </if>
-      <if test="chisxfje != null" >
-        CHISXFJE = #{chisxfje,jdbcType=DECIMAL},
-      </if>
-      <if test="ctotxfje != null" >
-        CTOTXFJE = #{ctotxfje,jdbcType=DECIMAL},
-      </if>
-      <if test="cvipno != null" >
-        CVIPNO = #{cvipno,jdbcType=VARCHAR},
-      </if>
-      <if test="cname != null" >
-        CNAME = #{cname,jdbcType=VARCHAR},
-      </if>
-      <if test="ccreator != null" >
-        CCREATOR = #{ccreator,jdbcType=VARCHAR},
-      </if>
-      <if test="ccreatdate != null" >
-        CCREATDATE = #{ccreatdate},
-      </if>
-      <if test="cmaintor != null" >
-        CMAINTOR = #{cmaintor,jdbcType=VARCHAR},
-      </if>
-      <if test="cmaintdate != null" >
-        CMAINTDATE = #{cmaintdate},
-      </if>
-      <if test="cdate1 != null" >
-        CDATE1 = #{cdate1},
-      </if>
-      <if test="cdate2 != null" >
-        CDATE2 = #{cdate2},
-      </if>
-      <if test="cdate3 != null" >
-        CDATE3 = #{cdate3},
-      </if>
-      <if test="cdate4 != null" >
-        CDATE4 = #{cdate4},
-      </if>
-      <if test="cdate5 != null" >
-        CDATE5 = #{cdate5},
-      </if>
-      <if test="cnum1 != null" >
-        CNUM1 = #{cnum1,jdbcType=DECIMAL},
-      </if>
-      <if test="cnum2 != null" >
-        CNUM2 = #{cnum2,jdbcType=DECIMAL},
-      </if>
-      <if test="cnum3 != null" >
-        CNUM3 = #{cnum3,jdbcType=DECIMAL},
-      </if>
-      <if test="cnum4 != null" >
-        CNUM4 = #{cnum4,jdbcType=DECIMAL},
-      </if>
-      <if test="cnum5 != null" >
-        CNUM5 = #{cnum5,jdbcType=DECIMAL},
-      </if>
-      <if test="cnum6 != null" >
-        CNUM6 = #{cnum6,jdbcType=DECIMAL},
-      </if>
-      <if test="cnum7 != null" >
-        CNUM7 = #{cnum7,jdbcType=DECIMAL},
-      </if>
-      <if test="cnum8 != null" >
-        CNUM8 = #{cnum8,jdbcType=DECIMAL},
-      </if>
-      <if test="cnum9 != null" >
-        CNUM9 = #{cnum9,jdbcType=DECIMAL},
-      </if>
-      <if test="cnum10 != null" >
-        CNUM10 = #{cnum10,jdbcType=DECIMAL},
-      </if>
-      <if test="cvc1 != null" >
-        CVC1 = #{cvc1,jdbcType=VARCHAR},
-      </if>
-      <if test="cvc2 != null" >
-        CVC2 = #{cvc2,jdbcType=VARCHAR},
-      </if>
-      <if test="cvc3 != null" >
-        CVC3 = #{cvc3,jdbcType=VARCHAR},
-      </if>
-      <if test="cvc4 != null" >
-        CVC4 = #{cvc4,jdbcType=VARCHAR},
-      </if>
-      <if test="cvc5 != null" >
-        CVC5 = #{cvc5,jdbcType=VARCHAR},
-      </if>
-      <if test="cvc6 != null" >
-        CVC6 = #{cvc6,jdbcType=VARCHAR},
-      </if>
-      <if test="cvc7 != null" >
-        CVC7 = #{cvc7,jdbcType=VARCHAR},
-      </if>
-      <if test="cvc8 != null" >
-        CVC8 = #{cvc8,jdbcType=VARCHAR},
-      </if>
-      <if test="cchr1 != null" >
-        CCHR1 = #{cchr1,jdbcType=CHAR},
-      </if>
-      <if test="cchr2 != null" >
-        CCHR2 = #{cchr2,jdbcType=CHAR},
-      </if>
-      <if test="cchr3 != null" >
-        CCHR3 = #{cchr3,jdbcType=CHAR},
-      </if>
-      <if test="cchr4 != null" >
-        CCHR4 = #{cchr4,jdbcType=CHAR},
-      </if>
-      <if test="cchr5 != null" >
-        CCHR5 = #{cchr5,jdbcType=CHAR},
-      </if>
-      <if test="cchr6 != null" >
-        CCHR6 = #{cchr6,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where ID = #{id,jdbcType=BIGINT}
-  </update>
-  
-  <update id="updateByPrimaryKey" parameterType="com.ldps.model.CustomerModel" >
-    update CUSTOMER
-    set CID = #{cid,jdbcType=VARCHAR},
-      MOBILE = #{mobile,jdbcType=VARCHAR},
-      NAME = #{name,jdbcType=VARCHAR},
-      PASSWORD = #{password,jdbcType=VARCHAR},
-      SEX = #{sex,jdbcType=CHAR},
-      BIRTHDAY = #{birthday,jdbcType=DATE},
-      ADDRESS = #{address,jdbcType=VARCHAR},
-      EMAIL = #{email,jdbcType=VARCHAR},
-      PIC_NAME = #{picName,jdbcType=VARCHAR},
-      ID_TYPE = #{idType,jdbcType=CHAR},
-      ID_NO = #{idNo,jdbcType=VARCHAR},
-      MEMBER_ID = #{memberId,jdbcType=VARCHAR},
-      REFEREE = #{referee,jdbcType=VARCHAR},
-      RELATION = #{relation,jdbcType=CHAR},
-      CTYPE = #{ctype,jdbcType=VARCHAR},
-      CSTATUS = #{cstatus,jdbcType=CHAR},
-      CCURJFYE = #{ccurjfye,jdbcType=DECIMAL},
-      CHISJFYE = #{chisjfye,jdbcType=DECIMAL},
-      CTOTJFYE = #{ctotjfye,jdbcType=DECIMAL},
-      CCURXFJE = #{ccurxfje,jdbcType=DECIMAL},
-      CHISXFJE = #{chisxfje,jdbcType=DECIMAL},
-      CTOTXFJE = #{ctotxfje,jdbcType=DECIMAL},
-      CVIPNO = #{cvipno,jdbcType=VARCHAR},
-      CNAME = #{cname,jdbcType=VARCHAR},
-      CCREATOR = #{ccreator,jdbcType=VARCHAR},
-      CCREATDATE = #{ccreatdate},
-      CMAINTOR = #{cmaintor,jdbcType=VARCHAR},
-      CMAINTDATE = #{cmaintdate},
-      CDATE1 = #{cdate1},
-      CDATE2 = #{cdate2},
-      CDATE3 = #{cdate3},
-      CDATE4 = #{cdate4},
-      CDATE5 = #{cdate5},
-      CNUM1 = #{cnum1,jdbcType=DECIMAL},
-      CNUM2 = #{cnum2,jdbcType=DECIMAL},
-      CNUM3 = #{cnum3,jdbcType=DECIMAL},
-      CNUM4 = #{cnum4,jdbcType=DECIMAL},
-      CNUM5 = #{cnum5,jdbcType=DECIMAL},
-      CNUM6 = #{cnum6,jdbcType=DECIMAL},
-      CNUM7 = #{cnum7,jdbcType=DECIMAL},
-      CNUM8 = #{cnum8,jdbcType=DECIMAL},
-      CNUM9 = #{cnum9,jdbcType=DECIMAL},
-      CNUM10 = #{cnum10,jdbcType=DECIMAL},
-      CVC1 = #{cvc1,jdbcType=VARCHAR},
-      CVC2 = #{cvc2,jdbcType=VARCHAR},
-      CVC3 = #{cvc3,jdbcType=VARCHAR},
-      CVC4 = #{cvc4,jdbcType=VARCHAR},
-      CVC5 = #{cvc5,jdbcType=VARCHAR},
-      CVC6 = #{cvc6,jdbcType=VARCHAR},
-      CVC7 = #{cvc7,jdbcType=VARCHAR},
-      CVC8 = #{cvc8,jdbcType=VARCHAR},
-      CCHR1 = #{cchr1,jdbcType=CHAR},
-      CCHR2 = #{cchr2,jdbcType=CHAR},
-      CCHR3 = #{cchr3,jdbcType=CHAR},
-      CCHR4 = #{cchr4,jdbcType=CHAR},
-      CCHR5 = #{cchr5,jdbcType=CHAR},
-      CCHR6 = #{cchr6,jdbcType=VARCHAR}
-    where ID = #{id,jdbcType=BIGINT}
-  </update>
-  
-  <update id="updateByCIDSelective" parameterType="com.ldps.model.CustomerModel" >
-    update CUSTOMER
-    <set >
-      <if test="cid != null" >
-        CID = #{cid,jdbcType=VARCHAR},
-      </if>
-      <if test="ctype != null" >
-        CTYPE = #{ctype,jdbcType=VARCHAR},
-      </if>
-      <if test="cstatus != null" >
-        CSTATUS = #{cstatus,jdbcType=CHAR},
-      </if>
-      <if test="ccurjfye != null" >
-        CCURJFYE = #{ccurjfye,jdbcType=DECIMAL},
-      </if>
-      <if test="chisjfye != null" >
-        CHISJFYE = #{chisjfye,jdbcType=DECIMAL},
-      </if>
-      <if test="ctotjfye != null" >
-        CTOTJFYE = #{ctotjfye,jdbcType=DECIMAL},
-      </if>
-      <if test="ccurxfje != null" >
-        CCURXFJE = #{ccurxfje,jdbcType=DECIMAL},
-      </if>
-      <if test="chisxfje != null" >
-        CHISXFJE = #{chisxfje,jdbcType=DECIMAL},
-      </if>
-      <if test="ctotxfje != null" >
-        CTOTXFJE = #{ctotxfje,jdbcType=DECIMAL},
-      </if>
-      <if test="cvipno != null" >
-        CVIPNO = #{cvipno,jdbcType=VARCHAR},
-      </if>
-      <if test="cname != null" >
-        CNAME = #{cname,jdbcType=VARCHAR},
-      </if>
-      <if test="ccreator != null" >
-        CCREATOR = #{ccreator,jdbcType=VARCHAR},
-      </if>
-      <if test="ccreatdate != null" >
-        CCREATDATE = #{ccreatdate},
-      </if>
-      <if test="cmaintor != null" >
-        CMAINTOR = #{cmaintor,jdbcType=VARCHAR},
-      </if>
-      <if test="cmaintdate != null" >
-        CMAINTDATE = #{cmaintdate},
-      </if>
-      <if test="cdate1 != null" >
-        CDATE1 = #{cdate1},
-      </if>
-      <if test="cdate2 != null" >
-        CDATE2 = #{cdate2},
-      </if>
-      <if test="cdate3 != null" >
-        CDATE3 = #{cdate3},
-      </if>
-      <if test="cdate4 != null" >
-        CDATE4 = #{cdate4},
-      </if>
-      <if test="cdate5 != null" >
-        CDATE5 = #{cdate5},
-      </if>
-      <if test="cnum1 != null" >
-        CNUM1 = #{cnum1,jdbcType=DECIMAL},
-      </if>
-      <if test="cnum2 != null" >
-        CNUM2 = #{cnum2,jdbcType=DECIMAL},
-      </if>
-      <if test="cnum3 != null" >
-        CNUM3 = #{cnum3,jdbcType=DECIMAL},
-      </if>
-      <if test="cnum4 != null" >
-        CNUM4 = #{cnum4,jdbcType=DECIMAL},
-      </if>
-      <if test="cnum5 != null" >
-        CNUM5 = #{cnum5,jdbcType=DECIMAL},
-      </if>
-      <if test="cnum6 != null" >
-        CNUM6 = #{cnum6,jdbcType=DECIMAL},
-      </if>
-      <if test="cnum7 != null" >
-        CNUM7 = #{cnum7,jdbcType=DECIMAL},
-      </if>
-      <if test="cnum8 != null" >
-        CNUM8 = #{cnum8,jdbcType=DECIMAL},
-      </if>
-      <if test="cnum9 != null" >
-        CNUM9 = #{cnum9,jdbcType=DECIMAL},
-      </if>
-      <if test="cnum10 != null" >
-        CNUM10 = #{cnum10,jdbcType=DECIMAL},
-      </if>
-      <if test="cvc1 != null" >
-        CVC1 = #{cvc1,jdbcType=VARCHAR},
-      </if>
-      <if test="cvc2 != null" >
-        CVC2 = #{cvc2,jdbcType=VARCHAR},
-      </if>
-      <if test="cvc3 != null" >
-        CVC3 = #{cvc3,jdbcType=VARCHAR},
-      </if>
-      <if test="cvc4 != null" >
-        CVC4 = #{cvc4,jdbcType=VARCHAR},
-      </if>
-      <if test="cvc5 != null" >
-        CVC5 = #{cvc5,jdbcType=VARCHAR},
-      </if>
-      <if test="cvc6 != null" >
-        CVC6 = #{cvc6,jdbcType=VARCHAR},
-      </if>
-      <if test="cvc7 != null" >
-        CVC7 = #{cvc7,jdbcType=VARCHAR},
-      </if>
-      <if test="cvc8 != null" >
-        CVC8 = #{cvc8,jdbcType=VARCHAR},
-      </if>
-      <if test="cchr1 != null" >
-        CCHR1 = #{cchr1,jdbcType=CHAR},
-      </if>
-      <if test="cchr2 != null" >
-        CCHR2 = #{cchr2,jdbcType=CHAR},
-      </if>
-      <if test="cchr3 != null" >
-        CCHR3 = #{cchr3,jdbcType=CHAR},
-      </if>
-      <if test="cchr4 != null" >
-        CCHR4 = #{cchr4,jdbcType=CHAR},
-      </if>
-      <if test="cchr5 != null" >
-        CCHR5 = #{cchr5,jdbcType=CHAR},
-      </if>
-      <if test="cchr6 != null" >
-        CCHR6 = #{cchr6,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where CID = #{cid,jdbcType=VARCHAR}
-  </update>
 </mapper>

@@ -15,18 +15,14 @@
   </resultMap>
   
   <resultMap id="SimpleResultMap" type="com.ldps.model.CustomerModel" >
-    <id column="ID" property="id" jdbcType="BIGINT" />
-    <result column="CID" property="cid" jdbcType="VARCHAR" />
-    <result column="CSTATUS" property="cstatus" jdbcType="CHAR" />
-    <result column="CNAME" property="cname" jdbcType="VARCHAR" />
-    <result column="MOBILE" property="mobile" jdbcType="VARCHAR" />
-    <result column="NAME" property="name" jdbcType="VARCHAR" />
-    <result column="PASSWORD" property="password" jdbcType="VARCHAR" />
-    <result column="SEX" property="sex" jdbcType="CHAR" />
-    <result column="BIRTHDAY" property="birthday"  jdbcType="DATE" />
-    <result column="ADDRESS" property="address" jdbcType="VARCHAR" />
-    <result column="EMAIL" property="email" jdbcType="VARCHAR" />
-    <result column="RELATION" property="relation" jdbcType="VARCHAR" />
+     <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="CM_MEMID" property="cmMemid" jdbcType="VARCHAR" />
+    <result column="CM_CUSTID" property="cmCustid" jdbcType="VARCHAR" />
+	<result column="CM_RELATION" property="cmRelation" jdbcType="CHAR" />
+	<result column="CM_NAME" property="cmName" jdbcType="VARCHAR" />
+	<result column="CM_SEX" property="cmSex" jdbcType="CHAR" />
+    <result column="CM_MOBILE1" property="cmMobile1" jdbcType="VARCHAR" />
+    <result column="CM_EMAIL" property="cmEmail" jdbcType="VARCHAR" />
     <result column="EXTEND_SPECIF_GROUPID" property="extendSpecificFlag" jdbcType="INTEGER" />
   </resultMap>
   
@@ -39,7 +35,7 @@
   </sql>
   
   <sql id="Simple_Customer_Column_List" >
-  	C.ID, C.CID, C.CSTATUS, C.NAME, C.MOBILE, C.PASSWORD, C.SEX, C.BIRTHDAY, C.EMAIL, C.ADDRESS, C.RELATION
+  	C.ID, C.CM_MEMID, C.CM_CUSTID, C.CM_RELATION, C.CM_NAME, C.CM_SEX, C.CM_MOBILE1, C.CM_EMAIL
   </sql>
   
   <insert id="insert" parameterType="com.ldps.model.CusGroupRelModel" >

@@ -50,8 +50,11 @@ public class CustomerAPIController {
 				}
 			}
 		} catch (JSONException e) {
-			apiMessage.setStatus(2);
+			apiMessage.setStatus(3);
 			apiMessage.setMessage("传入Json字符串错误");
+		}catch(Exception e){
+			apiMessage.setStatus(-1);
+			apiMessage.setMessage("系统异常");
 		}
 		// 返回信息
 		return JSON.toJSONString(apiMessage);
@@ -61,21 +64,27 @@ public class CustomerAPIController {
 	@RequestMapping(value = "delete", method = { RequestMethod.GET,
 			RequestMethod.POST })
 	@ResponseBody
-	public String deleteCustomer(@RequestParam String cId) {
+	public String deleteCustomer(@RequestParam String cmMemid) {
 		APIMessage apiMessage = new APIMessage();
 		apiMessage.setStatus(2);
 		apiMessage.setMessage("删除失败");
-		if (!StringUtils.isEmpty(cId)) {
-			int i = iCustomerSevice.deleteCustomer(cId);
-			if (i > 0) {
-				apiMessage.setStatus(1);
-				apiMessage.setMessage("删除成功");
+		try{
+			if (!StringUtils.isEmpty(cmMemid)) {
+				int i = iCustomerSevice.deleteCustomerByCmMemid(cmMemid);
+				if (i > 0) {
+					apiMessage.setStatus(1);
+					apiMessage.setMessage("删除成功");
+				}
 			}
+		}catch(Exception e){
+			apiMessage.setStatus(-1);
+			apiMessage.setMessage("系统异常");
 		}
+		
 		return JSON.toJSONString(apiMessage);
 	}
 
-	// 删除API接口
+	// 更新API接口
 	@RequestMapping(value = "update", method = { RequestMethod.GET,
 			RequestMethod.POST })
 	@ResponseBody
@@ -86,16 +95,19 @@ public class CustomerAPIController {
 		try {
 			CustomerModel customer = JSON.parseObject(customerStr,
 					CustomerModel.class);
-			if (!StringUtils.isEmpty(customer)&&!StringUtils.isEmpty(customer.getCid())) {
-				int i = iCustomerSevice.updateCustomer(customer);
+			if (!StringUtils.isEmpty(customer) && !StringUtils.isEmpty(customer.getCmMemid())) {
+				int i = iCustomerSevice.updateCustomerByCmMemid(customer);
 				if (i > 0) {
 					apiMessage.setStatus(1);
 					apiMessage.setMessage("更新成功");
 				}
 			}
 		} catch (JSONException e) {
-			apiMessage.setStatus(2);
+			apiMessage.setStatus(3);
 			apiMessage.setMessage("传入Json字符串错误");
+		}catch(Exception e){
+			apiMessage.setStatus(-1);
+			apiMessage.setMessage("系统异常");
 		}
 		// 返回信息
 		return JSON.toJSONString(apiMessage);

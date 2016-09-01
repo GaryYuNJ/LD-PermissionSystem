@@ -38,18 +38,17 @@ public class CustomerModelConverter {
 		}
 		if(null != source){
 			data.setId(source.getId());
-			data.setName(source.getName());
-			data.setMobile(source.getMobile());
-			data.setBirthday(source.getBirthday());
-			if(null != source.getBirthday()){
+			data.setName(source.getCmName());
+			data.setMobile(source.getCmMobile1());
+			data.setBirthday(source.getCmBirthday());
+			if(null != source.getCmBirthday()){
 				SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
-				data.setBirthdayStr(sf.format(source.getBirthday()));
+				data.setBirthdayStr(sf.format(source.getCmBirthday()));
 			}
-			data.setSex(source.getSex());
-			data.setAddress(source.getAddress());
-			data.setRelation(source.getRelation());
-			data.setPassword(source.getPassword());
-			data.setEmail(source.getEmail());
+			data.setSex(source.getCmSex());
+			data.setRelation(source.getCmRelation());
+			data.setPassword(source.getCmPwd());
+			data.setEmail(source.getCmEmail());
 			data.setExtendSpecificFlag(source.getExtendSpecificFlag());
 		}
 		

@@ -6,7 +6,6 @@ import com.ldps.model.CustomerModel;
 import com.ldps.model.ResourceModel;
 
 public interface ICustomerService {
-    public CustomerModel getUserByCId(String cid); 
 
 	//验证添加是否数据的完整性
 	String addVerification(CustomerModel custoemrModel);
@@ -15,12 +14,12 @@ public interface ICustomerService {
 	int addCustomer(CustomerModel custoemrModel);
 	
 	//删除数据
-	int deleteCustomer(String cid);
+	int deleteCustomerByCmMemid(String cmMemid);
 	
 	//按照账号更新数据
-	int updateCustomer(CustomerModel custoemrModel);
+	int updateCustomerByCmMemid(CustomerModel custoemrModel);
 
-	public CustomerModel getModelWithGroupsByCID(String cid);
+	//public CustomerModel getModelWithGroupsByCID(String cid);
 	
 	//获取用户可分享权限的资源列表
 	/*
@@ -69,4 +68,6 @@ public interface ICustomerService {
 	 */
 	public Integer queryTotalCountByMobileAndUserName(
 			String mobile, String userName);
+
+	CustomerModel getUserByCmMemid(String cmMemid);
 }

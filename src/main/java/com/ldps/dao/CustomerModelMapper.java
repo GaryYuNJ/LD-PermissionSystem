@@ -15,9 +15,9 @@ public interface CustomerModelMapper {
 
     CustomerModel selectByPrimaryKey(Long id);
     
-    CustomerModel simpleSelectByCID(String cid);
+    //CustomerModel simpleSelectByCID(String cid);
     
-    CustomerModel simpleSelectWithGroupsByCID(String cid);
+    //CustomerModel simpleSelectWithGroupsByCID(String cid);
     
     CustomerModel simpleSelectWithGroupsById(Long customerId);
     
@@ -25,13 +25,17 @@ public interface CustomerModelMapper {
 
     int updateByPrimaryKey(CustomerModel record);
     
-    int deleteByCID(String cid);
+    int updateByCmMemidSelective(CustomerModel record);
     
-    int updateByCIDSelective(CustomerModel record);
+    //int deleteByCID(String cid);
+    
+    //int updateByCIDSelective(CustomerModel record);
  
     CustomerModel selectIdByMobile(String mobile);
 
 	CustomerModel simpleSelectByMobile(String mobile);  
+	
+	CustomerModel simpleByPrimaryKey(Long id);
 	
 	List<CustomerModel> selectAllWithPageIndex(@Param("startRow") Integer startRow,
 			@Param("pageSize") Integer pageSize);
@@ -44,5 +48,9 @@ public interface CustomerModelMapper {
 	
 	Integer selectTotalCountByMobileAndName(@Param("mobile")String mobile,
 			@Param("userName") String userName);
+
+	int deleteByCmMemid(@Param("cmMemid")String cmMemid);
+
+	CustomerModel simpleSelectByCmMemid(@Param("cmMemid")String cmMemid);
 
 }

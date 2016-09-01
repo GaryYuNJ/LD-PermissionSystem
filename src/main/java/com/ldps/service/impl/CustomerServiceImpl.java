@@ -34,44 +34,44 @@ public class CustomerServiceImpl implements ICustomerService {
 	@Override
 	public String addVerification(CustomerModel custoemrModel) {
 		 String message="";
-		 if(StringUtils.isEmpty(custoemrModel.getCid())){
-			 message+="会员账号不能为空;";
+		 if(StringUtils.isEmpty(custoemrModel.getCmMemid())){
+			 message+="成员ID不能为空;";
 		 }
-		 if(StringUtils.isEmpty(custoemrModel.getCtype())){
-			 message+="会员类型不能为空;";
+		 if(StringUtils.isEmpty(custoemrModel.getCmCustid())){
+			 message+="会员ID不能为空;";
 		 }
-		 if(StringUtils.isEmpty(custoemrModel.getCstatus())){
-			 message+="会员状态不能为空;";
+		 if(StringUtils.isEmpty(custoemrModel.getCmMobile1())){
+			 message+="手机号不能为空;";
 		 }
 		return message;
 	}
  
 	@Override
 	public int addCustomer(CustomerModel custoemrModel) {
-		if(getUserByCId(custoemrModel.getCid())!=null)
-			return -1;
+		if(getUserByCmMemid(custoemrModel.getCmMemid()) != null)
+			return -1;//customerDao.updateByCmMemidSelective(custoemrModel);
 		return customerDao.insertSelective(custoemrModel);
 	}
 
 	@Override
-	public int deleteCustomer(String cid) {
-		return customerDao.deleteByCID(cid);
+	public int deleteCustomerByCmMemid(String cmMemid) {
+		return customerDao.deleteByCmMemid(cmMemid);
 	}
 
 	@Override
-	public int updateCustomer(CustomerModel custoemrModel) {
-		return customerDao.updateByCIDSelective(custoemrModel);
+	public int updateCustomerByCmMemid(CustomerModel custoemrModel) {
+		return customerDao.updateByCmMemidSelective(custoemrModel);
 	}
 
 	@Override
-	public CustomerModel getUserByCId(String cid) {
-		return customerDao.simpleSelectByCID(cid);
+	public CustomerModel getUserByCmMemid(String cmMemid) {
+		return customerDao.simpleSelectByCmMemid(cmMemid);
 	}
-	
-	@Override
-	public CustomerModel getModelWithGroupsByCID(String cid) {
-		return customerDao.simpleSelectWithGroupsByCID(cid);
-	}
+//	
+//	@Override
+//	public CustomerModel getModelWithGroupsByCID(String cid) {
+//		return customerDao.simpleSelectWithGroupsByCID(cid);
+//	}
 	
 	@Override
 	public CustomerModel simpleSelectWithGroupsById(Long customerId) {
