@@ -92,7 +92,7 @@ public class CustomerServiceImpl implements ICustomerService {
 	public Long getCustomerIdByMobile(String mobile) {
 		// TODO Auto-generated method stub
 		CustomerModel model = customerDao.selectIdByMobile(mobile);
-		if(null == customerDao){
+		if(null == model){
 			return null;
 		}else{
 			return model.getId();

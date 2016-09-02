@@ -13,7 +13,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.alibaba.fastjson.JSON;
 import com.ldps.model.NodeModel;
-import com.ldps.model.ResourceKey;
 import com.ldps.model.ResourceModel;
 import com.ldps.service.INodeService;
 import com.ldps.service.IResourceService;
@@ -88,13 +87,13 @@ public class TestResouce {
 	public void testJsontoObject(){
 		ResourceModel rm=new ResourceModel();
 		rm.setName("闸机");
-		ResourceKey rk=new ResourceKey();
+		/*ResourceKey rk=new ResourceKey();
 		rk.setPassword("1123");
 		List<ResourceKey> rks=new ArrayList<ResourceKey>();
 		rks.add(rk);
 		rm.setResourceKeys(rks);
 		String v=JSON.toJSON(rm).toString();
 		ResourceModel r2=JSON.parseObject(v, ResourceModel.class);
-		logger.info("--");
+		logger.info("--");*/
 	}
 }

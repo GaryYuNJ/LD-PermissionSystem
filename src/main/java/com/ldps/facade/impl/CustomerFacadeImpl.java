@@ -175,9 +175,9 @@ public class CustomerFacadeImpl implements CustomerFacade {
 		获取building里的公共资源
 	 */
 	@Override
-	public List<ResourceData> queryPubResByBuildingId(Integer buildingId) {
+	public List<ResourceData> queryPubResWithKeysByBuildingId(Integer buildingId) {
 
-		List<ResourceModel> rModels = iResourceService.selectValidPubResByBuildingId(buildingId);
+		List<ResourceModel> rModels = iResourceService.selectPubResWithKeysByBuildingId(buildingId);
 		
 		return resourceModelConverter.processList(rModels);
 	}
@@ -197,6 +197,21 @@ public class CustomerFacadeImpl implements CustomerFacade {
 		
 		return resourceModelConverter.processList(rModels);
 	}
+	
+	/*
+	获取building里用户有权限设备，resourcekeys信息跟随返回
+	 */
+	@Override
+	public List<ResourceData> queryPrivateResWithKeysByBIdAndMobile(
+			Integer buildingId, String mobile) {
+		Long customerId = iCustomerSevice.getCustomerIdByMobile(mobile);
+		if(null == customerId){ 
+			return null;
+		}
+		List<ResourceModel> rModels = iResourceService.queryPriResWithKeysByBIdAndCusId(buildingId,customerId);
+		
+		return resourceModelConverter.processList(rModels);
+	}
 
 
 	//连带资源授权接口(对一个资源授权，需要连带授权上层所有基础资源(要使用授权资源的前提资源)。
@@ -212,9 +227,9 @@ public class CustomerFacadeImpl implements CustomerFacade {
 	//by mobile、resourceKey
 	@Override
 	public int jointAuthResPermissionByMobile(String mobile,
-			String resourceKey, Date startDate, Date endDate, Long createUserId) {
+			String mac, Date startDate, Date endDate, Long createUserId) {
 		Long customerId = iCustomerSevice.getCustomerIdByMobile(mobile);
-		Integer resourceId = iResourceService.queryResourceIdByMAC(resourceKey);
+		Integer resourceId = iResourceService.queryResourceIdByMAC(mac);
 		
 		return iCusResourceRelService.jointAuthorizeResPermission(customerId, resourceId, startDate, 
 				endDate, "N", createUserId);
@@ -543,5 +558,6 @@ public class CustomerFacadeImpl implements CustomerFacade {
 			ResourceModelConverter resourceModelConverter) {
 		this.resourceModelConverter = resourceModelConverter;
 	}
+
 
 }

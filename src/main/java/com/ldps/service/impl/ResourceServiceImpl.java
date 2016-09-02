@@ -12,7 +12,7 @@ import com.ldps.dao.CusGrpResourceRelModelMapper;
 import com.ldps.dao.CusResourceRelModelMapper;
 import com.ldps.dao.ResourceKeyMapper;
 import com.ldps.dao.ResourceModelMapper;
-import com.ldps.model.ResourceKey;
+import com.ldps.model.ResourceKeyModel;
 import com.ldps.model.ResourceModel;
 import com.ldps.service.IResourceService;
 
@@ -115,7 +115,7 @@ public class ResourceServiceImpl implements IResourceService {
 	@Override
 	public int createResource(ResourceModel model) {
 		if(resourceDao.insertSelective(model)>0){
-			for(ResourceKey resourceKey:model.getResourceKeys()){
+			for(ResourceKeyModel resourceKey:model.getResourceKeys()){
 				resourceKey.setResourceId(model.getId());
 				resourceKeyDao.insertSelective(resourceKey);
 			}

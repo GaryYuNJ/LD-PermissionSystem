@@ -33,7 +33,49 @@
     <result column="CHR2" property="chr2" jdbcType="CHAR" />
   </resultMap>
   
-  <resultMap id="queryWithGroupList" type="com.ldps.model.ResourceModel" >
+  <resultMap id="queryWithResKeyResultMap" type="com.ldps.model.ResourceModel" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="TYPE_ID" property="typeId" jdbcType="INTEGER" />
+    <result column="STATUS" property="status" jdbcType="CHAR" />
+    <result column="CREATE_DATE" property="createDate"  />
+    <result column="CREATE_USER" property="createUser" jdbcType="INTEGER" />
+    <result column="BUILDING_ID" property="buildingId" jdbcType="INTEGER" />
+    <result column="FLOOR" property="floor" jdbcType="INTEGER" />
+    <result column="SEQUENCE" property="sequence" jdbcType="INTEGER" />
+    <result column="SHARE_ENABLE" property="shareEnable" jdbcType="CHAR" />
+    <result column="NODE_PATH" property="nodePath" jdbcType="VARCHAR" />
+    <result column="IS_VIRTUAL_RESOURCE" property="isVirtualResource" jdbcType="CHAR" />
+    <result column="PERMISSION_ATTR_ID" property="permissionAttrId" jdbcType="INTEGER" />
+    <result column="DEVICE_TYPE" property="deviceType" jdbcType="INTEGER" />
+    <result column="NODE_ID" property="nodeId" jdbcType="INTEGER" />
+    <result column="R_INT1" property="rInt1" jdbcType="INTEGER" />
+    <result column="R_INT2" property="rInt2" jdbcType="INTEGER" />
+    <result column="NUM1" property="num1" jdbcType="DECIMAL" />
+    <result column="NUM2" property="num2" jdbcType="DECIMAL" />
+    <result column="VC1" property="vc1" jdbcType="VARCHAR" />
+    <result column="VC2" property="vc2" jdbcType="VARCHAR" />
+    <result column="CHR1" property="chr1" jdbcType="CHAR" />
+    <result column="CHR2" property="chr2" jdbcType="CHAR" />
+    
+    <collection property="resourceKeys" javaType="java.util.List" ofType="com.ldps.model.ResourceKeyModel">  
+        <id column="RK_ID" property="id" jdbcType="INTEGER" />
+	    <result column="RK_MAC" property="mac" jdbcType="CHAR" />
+	    <result column="RK_PASSWORD" property="password" jdbcType="CHAR" />
+	    <result column="RK_MANUFACTURER_ID" property="manufacturerId" jdbcType="INTEGER" />
+	    <result column="RK_RESOURCE_ID" property="resourceId" jdbcType="INTEGER" />
+	    <result column="RK_R_INT1" property="rInt1" jdbcType="INTEGER" />
+	    <result column="RK_R_INT2" property="rInt2" jdbcType="INTEGER" />
+	    <result column="RK_NUM1" property="num1" jdbcType="DECIMAL" />
+	    <result column="RK_NUM2" property="num2" jdbcType="DECIMAL" />
+	    <result column="RK_VC1" property="vc1" jdbcType="VARCHAR" />
+	    <result column="RK_VC2" property="vc2" jdbcType="VARCHAR" />
+	    <result column="RK_CHR1" property="chr1" jdbcType="CHAR" />
+	    <result column="RK_CHR2" property="chr2" jdbcType="CHAR" />
+    </collection>
+  </resultMap>
+  
+  <resultMap id="queryWithGroupListResultMap" type="com.ldps.model.ResourceModel" >
     <id column="ID" property="id" jdbcType="INTEGER" />
     <result column="NAME" property="name" jdbcType="VARCHAR" />
     <result column="TYPE_ID" property="typeId" jdbcType="INTEGER" />
@@ -80,7 +122,23 @@
   <resultMap id="resultOfInteger" type="java.lang.Integer">  
        <result column="totalCount" property="totalCount" jdbcType="INTEGER" />  
   </resultMap>  
-   
+  
+  <sql id="Base_Column_List" >
+    ID, NAME, TYPE_ID, STATUS, CREATE_DATE, CREATE_USER,  BUILDING_ID, FLOOR, 
+    SEQUENCE, SHARE_ENABLE, NODE_PATH, IS_VIRTUAL_RESOURCE, PERMISSION_ATTR_ID, DEVICE_TYPE, 
+    NODE_ID, R_INT1, R_INT2, NUM1, NUM2, VC1, VC2, CHR1, CHR2
+  </sql>
+  
+  <sql id="With_ResKeys_Column_List" >
+    R.ID, R.NAME, R.TYPE_ID, R.STATUS, R.CREATE_DATE, R.CREATE_USER,  R.BUILDING_ID, R.FLOOR,
+    R.SEQUENCE, R.SHARE_ENABLE, R.NODE_PATH, R.IS_VIRTUAL_RESOURCE, R.PERMISSION_ATTR_ID, R.DEVICE_TYPE, 
+    R.NODE_ID,  R.R_INT1, R.R_INT2, R.NUM1, R.NUM2, R.VC1, R.VC2, R.CHR1, R.CHR2,
+    RK.ID RK_ID , RK.MAC RK_MAC, RK.PASSWORD RK_PASSWORD, RK.MANUFACTURER_ID RK_MANUFACTURER_ID, 
+    RK.RESOURCE_ID RK_RESOURCE_ID, RK.R_INT1 RK_R_INT1, 
+    RK.R_INT2 RK_R_INT2, RK.NUM1 RK_NUM1, RK.NUM2 RK_NUM2, RK.VC1 RK_VC1, 
+    RK.VC2 RK_VC2, RK.CHR1 RK_CHR1, RK.CHR2 RK_CHR2
+  </sql>
+ 
   <sql id="With_Groups_Column_List" >
     R.ID, R.NAME, R.TYPE_ID, R.STATUS, R.CREATE_DATE, R.CREATE_USER,  R.BUILDING_ID, R.FLOOR,
     R.SEQUENCE, R.SHARE_ENABLE, R.NODE_PATH, R.IS_VIRTUAL_RESOURCE, R.PERMISSION_ATTR_ID, R.DEVICE_TYPE, 
@@ -88,6 +146,14 @@
     G.ID G_ID, G.NAME G_NAME , G.STATUS G_STATUS , G.IS_PUBLIC G_IS_PUBLIC , G.CREATE_DATE G_CREATE_DATE , 
     G.CREATE_USER G_CREATE_USER , G.NUM1 G_NUM1 , G.NUM2 G_NUM2 , G.VC1 G_VC1 , G.VC2 G_VC2 , G.CHR1 G_CHR1 , G.CHR2 G_CHR2
   </sql>
+  
+    
+  <sql id="Base_Column_List_WithLable" >
+    R.ID, R.NAME, R.TYPE_ID, R.STATUS, R.CREATE_DATE, R.CREATE_USER,  R.BUILDING_ID, R.FLOOR,
+    R.SEQUENCE, R.SHARE_ENABLE, R.R_INT1, R.R_INT2, R.NUM1, R.NUM2, R.VC1, R.VC2, R.CHR1, R.CHR2, 
+    R.NODE_PATH, R.IS_VIRTUAL_RESOURCE, R.PERMISSION_ATTR_ID, R.DEVICE_TYPE, R.NODE_ID
+  </sql>
+  
   <select id="selectResouceListByCondition" resultMap="BaseResultMap" >
     select 
     <include refid="Base_Column_List" />
@@ -101,13 +167,16 @@
      </if>
     limit #{startRow,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
   </select>
- <select id="selectWithGroupsByMAC" resultMap="queryWithGroupList" parameterType="java.lang.String" >
+  
+  <select id="selectWithGroupsByMAC" resultMap="queryWithGroupListResultMap" parameterType="java.lang.String" >
 	SELECT 
 	<include refid="With_Groups_Column_List" />  
 	FROM RESOURCE R LEFT JOIN RESOURCE_GROUP_REL GR ON R.ID=GR.RESOURCE_ID
-    LEFT JOIN RESOURCE_GROUP G ON G.ID=GR.RGROUP_ID 
-    where R.MAC = #{mac,jdbcType=VARCHAR}
+    LEFT JOIN RESOURCE_GROUP G ON G.ID=GR.RGROUP_ID ,
+    RESOURCE_KEY RK 
+    where R.ID=RK.RESOURCE_ID AND RK.MAC = #{mac,jdbcType=VARCHAR}
   </select>
+  
   <select id="selectCountByCondition" resultMap="resultOfInteger" parameterType="com.ldps.model.ResourceModel" >
 	SELECT count(1) AS totalCount
 	FROM RESOURCE 
@@ -120,11 +189,6 @@
      </if>
   </select>
   
-  <sql id="Base_Column_List" >
-    ID, NAME, TYPE_ID, STATUS, CREATE_DATE, CREATE_USER,  BUILDING_ID, FLOOR, 
-    SEQUENCE, SHARE_ENABLE, NODE_PATH, IS_VIRTUAL_RESOURCE, PERMISSION_ATTR_ID, DEVICE_TYPE, 
-    NODE_ID, R_INT1, R_INT2, NUM1, NUM2, VC1, VC2, CHR1, CHR2
-  </sql>
   
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -135,9 +199,9 @@
   
   <select id="selectByMac" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
-    <include refid="Base_Column_List" />
-    from RESOURCE
-    where MAC = #{mac,jdbcType=VARCHAR}
+    <include refid="Base_Column_List_WithLable" />
+    from RESOURCE R, RESOURCE_KEY RK 
+    where R.ID=RK.RESOURCE_ID AND RK.MAC = #{mac,jdbcType=VARCHAR}
   </select>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
@@ -411,13 +475,7 @@
       CHR2 = #{chr2,jdbcType=CHAR}
     where ID = #{id,jdbcType=INTEGER}
   </update>
-  
-  <sql id="Base_Column_List_WithLable" >
-    R.ID, R.NAME, R.TYPE_ID, R.STATUS, R.CREATE_DATE, R.CREATE_USER,  R.BUILDING_ID, R.FLOOR,
-    R.SEQUENCE, R.SHARE_ENABLE, R.R_INT1, R.R_INT2, R.NUM1, R.NUM2, R.VC1, R.VC2, R.CHR1, R.CHR2, 
-    R.NODE_PATH, R.IS_VIRTUAL_RESOURCE, R.PERMISSION_ATTR_ID, R.DEVICE_TYPE, R.NODE_ID
-  </sql>
-  
+
   <select id="selectSharableResourceById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List_WithLable" /> 
@@ -425,6 +483,13 @@
 	WHERE CR.RESOURCE_ID=R.ID AND R.SHARE_ENABLE='Y' 
 	<![CDATA[ AND (CR.START_DATE IS NULL OR CR.START_DATE < now()) AND (CR.END_DATE IS NULL OR CR.END_DATE > now()) ]]> 
 	AND CR.CUSTOMER_ID = #{customerId,jdbcType=BIGINT}
+  </select>
+  
+  <select id="selectPubResWithKeysByBuildingId" resultMap="queryWithResKeyResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="With_ResKeys_Column_List" />
+    from RESOURCE R LEFT JOIN RESOURCE_KEY RK ON  R.ID=RK.RESOURCE_ID 
+    where R.STATUS = 'Y' and R.PERMISSION_ATTR_ID = 1 and R.BUILDING_ID = #{buildingId,jdbcType=INTEGER}
   </select>
   
   <select id="selectValidPubResByBuildingId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -445,6 +510,18 @@
 	AND PERMISSION_ATTR_ID != 1
   </select>
   
+    
+  <select id="selectPriResWIthKeysByBIdAndCusId" resultMap="queryWithResKeyResultMap" >
+    select 
+    <include refid="With_ResKeys_Column_List" /> 
+    FROM RESOURCE R  LEFT JOIN RESOURCE_KEY RK ON R.ID=RK.RESOURCE_ID, CUSTOMER_RESOURCE_REL CR 
+	WHERE CR.RESOURCE_ID=R.ID AND R.STATUS='Y' AND CR.ENABLE='Y'
+	<![CDATA[ AND (CR.START_DATE IS NULL OR CR.START_DATE < now()) AND (CR.END_DATE IS NULL OR CR.END_DATE > now()) ]]> 
+	AND CR.CUSTOMER_ID = #{customerId,jdbcType=BIGINT}
+	AND R.BUILDING_ID = #{buildingId,jdbcType=INTEGER} 
+	AND PERMISSION_ATTR_ID != 1
+  </select>
+  
   <select id="selectBasicResByNodeIdList" resultMap="BaseResultMap" >
     select DISTINCT 
     <include refid="Base_Column_List" />
@@ -458,8 +535,8 @@
   
   <select id="selectIdByMac"   resultMap="queryIdMap" parameterType="java.lang.String" >
     select 
-    ID 
-    from RESOURCE
-    where MAC = #{mac,jdbcType=VARCHAR}
+    R.ID 
+    from RESOURCE R, RESOURCE_KEY RK 
+    where R.ID=RK.RESOURCE_ID AND RK.MAC = #{mac,jdbcType=VARCHAR}
   </select>
 </mapper>

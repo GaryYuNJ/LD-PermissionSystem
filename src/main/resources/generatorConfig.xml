@@ -2,7 +2,7 @@
 <!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" 
   "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd"> 
 <generatorConfiguration> 
-	<classPathEntry location="H:/Java/repository1/mysql/mysql-connector-java/5.1.30/mysql-connector-java-5.1.30.jar"/>
+	<classPathEntry location="E:\MyProject\eclipse_workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp1\wtpwebapps\LD-PermissionSystem\WEB-INF\lib/mysql-connector-java-5.1.30.jar"/>
 	<context id="MysqlTables" targetRuntime="MyBatis3"> 
 		<commentGenerator>   
 		    <property name="suppressAllComments" value="true" />      
@@ -27,8 +27,10 @@
 		<javaClientGenerator type="XMLMAPPER" targetPackage="com.ldps.dao1" targetProject="LD-PermissionSystem\src\main\java"> 
 			<property name="enableSubPackages" value="true"/> 
 		</javaClientGenerator> 
+		<!--<table tableName="CUSTOMER" domainObjectName="CustomerModel" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+		
 		<table tableName="NODE" domainObjectName="NODEModel" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
-		<!-- 
+		 
 		<table tableName="BACKEND_USER" domainObjectName="UserModel" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
 		<table tableName="CUSTOMER" domainObjectName="CustomerModel" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
 		<table tableName="CGROUP" domainObjectName="CustomerGroupModel" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
@@ -45,6 +47,6 @@
 		<table tableName="NODE_REL" domainObjectName="NodeRelModel" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
 		<table tableName="NODE_RESOURCE_REL" domainObjectName="NodeResourceRelModel" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
 		 -->
-		 <table tableName="RESOURCE_KEY" domainObjectName="ResourceKey" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+		 <table tableName="RESOURCE_KEY" domainObjectName="ResourceKeyModel" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
 	</context> 
 </generatorConfiguration> 

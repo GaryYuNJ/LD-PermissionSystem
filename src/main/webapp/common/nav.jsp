@@ -13,22 +13,19 @@
 				<ul id="nav">
 					<!-- Main menu with font awesome icon -->
 					<li>
-						<a href="<c:url value="/manage/resouceManage" />"><i class="icon-home"></i> 首页</a>
+						<a href="<c:url value="/manage/resourceManagePage" />"><i class="icon-home"></i> 首页</a>
 					</li>
 					<li class="has_sub">
 						<a href="<c:url value="/manage/resourceManagePage" />"><i class="icon-list-alt"></i> 资源管理 </a>
 					</li>
 					<li class="has_sub">
-						<a href="<c:url value="/manage/resouceManage" />"><i class="icon-list-alt"></i> 资源组管理 </a>
+						<a href="<c:url value="/manage/resourceManagePage" />"><i class="icon-list-alt"></i> 资源组管理 </a>
 					</li>
 					<li class="has_sub">
 						<a href="<c:url value="/user/userManage" />"><i class="icon-list-alt"></i> 用户管理 </a>
 					</li>
 					<li class="has_sub">
 						<a href="<c:url value="/userGroup/userGroupManage" />"><i class="icon-list-alt"></i> 用户组管理 </a>
-					</li>
-					<li class="has_sub">
-						<a href="<c:url value="/manage/resouceManage" />"><i class="icon-list-alt"></i> 资源组 </a>
 					</li>
 			</div>
 			<!-- Sidebar ends -->

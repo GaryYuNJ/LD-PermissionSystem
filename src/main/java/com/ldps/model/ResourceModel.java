@@ -58,13 +58,13 @@ public class ResourceModel {
     
     private CusGrpResourceRelModel cGrpResRelModel; //指定要查询关联情况的customer group Model
     
-    private List<ResourceKey> resourceKeys;
+    private List<ResourceKeyModel> resourceKeys;
     
-	public List<ResourceKey> getResourceKeys() {
+	public List<ResourceKeyModel> getResourceKeys() {
 		return resourceKeys;
 	}
 
-	public void setResourceKeys(List<ResourceKey> resourceKeys) {
+	public void setResourceKeys(List<ResourceKeyModel> resourceKeys) {
 		this.resourceKeys = resourceKeys;
 	}
 

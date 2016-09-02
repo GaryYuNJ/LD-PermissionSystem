@@ -1,17 +1,21 @@
 package com.ldps.dao;
 
-import com.ldps.model.ResourceKey;
+import java.util.List;
+
+import com.ldps.model.ResourceKeyModel;
 
 public interface ResourceKeyMapper {
     int deleteByPrimaryKey(Integer id);
 
-    int insert(ResourceKey record);
+    int insert(ResourceKeyModel record);
 
-    int insertSelective(ResourceKey record);
+    int insertSelective(ResourceKeyModel record);
 
-    ResourceKey selectByPrimaryKey(Integer id);
+    ResourceKeyModel selectByPrimaryKey(Integer id);
 
-    int updateByPrimaryKeySelective(ResourceKey record);
+    int updateByPrimaryKeySelective(ResourceKeyModel record);
 
-    int updateByPrimaryKey(ResourceKey record);
+    int updateByPrimaryKey(ResourceKeyModel record);
+    
+    List<ResourceKeyModel> selectByResourceId(Integer id);
 }
