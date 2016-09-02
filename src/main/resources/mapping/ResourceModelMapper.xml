@@ -172,8 +172,9 @@
 	SELECT 
 	<include refid="With_Groups_Column_List" />  
 	FROM RESOURCE R LEFT JOIN RESOURCE_GROUP_REL GR ON R.ID=GR.RESOURCE_ID
-    LEFT JOIN RESOURCE_GROUP G ON G.ID=GR.RGROUP_ID 
-    where R.MAC = #{mac,jdbcType=VARCHAR}
+    LEFT JOIN RESOURCE_GROUP G ON G.ID=GR.RGROUP_ID ,
+    RESOURCE_KEY RK 
+    where R.ID=RK.RESOURCE_ID AND RK.MAC = #{mac,jdbcType=VARCHAR}
   </select>
   
   <select id="selectCountByCondition" resultMap="resultOfInteger" parameterType="com.ldps.model.ResourceModel" >
@@ -198,9 +199,9 @@
   
   <select id="selectByMac" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
-    <include refid="Base_Column_List" />
-    from RESOURCE
-    where MAC = #{mac,jdbcType=VARCHAR}
+    <include refid="Base_Column_List_WithLable" />
+    from RESOURCE R, RESOURCE_KEY RK 
+    where R.ID=RK.RESOURCE_ID AND RK.MAC = #{mac,jdbcType=VARCHAR}
   </select>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
@@ -530,8 +531,8 @@
   
   <select id="selectIdByMac"   resultMap="queryIdMap" parameterType="java.lang.String" >
     select 
-    ID 
-    from RESOURCE
-    where MAC = #{mac,jdbcType=VARCHAR}
+    R.ID 
+    from RESOURCE R, RESOURCE_KEY RK 
+    where R.ID=RK.RESOURCE_ID AND RK.MAC = #{mac,jdbcType=VARCHAR}
   </select>
 </mapper>

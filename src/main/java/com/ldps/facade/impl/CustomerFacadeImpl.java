@@ -227,9 +227,9 @@ public class CustomerFacadeImpl implements CustomerFacade {
 	//by mobile、resourceKey
 	@Override
 	public int jointAuthResPermissionByMobile(String mobile,
-			String resourceKey, Date startDate, Date endDate, Long createUserId) {
+			String mac, Date startDate, Date endDate, Long createUserId) {
 		Long customerId = iCustomerSevice.getCustomerIdByMobile(mobile);
-		Integer resourceId = iResourceService.queryResourceIdByMAC(resourceKey);
+		Integer resourceId = iResourceService.queryResourceIdByMAC(mac);
 		
 		return iCusResourceRelService.jointAuthorizeResPermission(customerId, resourceId, startDate, 
 				endDate, "N", createUserId);

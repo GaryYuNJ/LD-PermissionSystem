@@ -32,7 +32,7 @@ public interface CustomerFacade {
 	int jointAuthResPermissionByCusId(Long customerId, Integer resourceId,
 			Date startDate, Date endDate, Long createUserId);
 
-	int jointAuthResPermissionByMobile(String mobile, String resourceKey,
+	int jointAuthResPermissionByMobile(String mobile, String mac,
 			Date startDate, Date endDate, Long createUserId);
 
 	int authResPermissionByCusId(Long customerId, Integer resourceId,
