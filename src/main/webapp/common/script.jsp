@@ -36,6 +36,8 @@
 <script src="<c:url value="/js/bootstrap-datetimepicker.min.js" />"></script>
 <script src="<c:url value="/js/bootstrap-datetimepicker.zh-CN.js" />"></script>
 
+<script src="<c:url value="/js/fileinput.min.js" />"></script>
+<script src="<c:url value="/js/fileinput_locale_zh.js" />"></script>
 
 <script type="text/javascript">
 $("#nav li:eq(${pageIndex}) a").addClass("open");

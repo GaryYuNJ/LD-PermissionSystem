@@ -739,8 +739,9 @@ $('#jstree_resource').on("rename_node.jstree", function (e,node) {
 				        $("#newResourceId").removeAttr('disabled');
 				    });
 		</script>
-//文件选择器
+
 <script type="text/javascript">
+//文件选择器
 	$(document).on('ready', function() {
 	    $("#input-folder-1").fileinput({
 	    	language: 'zh', //设置语言,
