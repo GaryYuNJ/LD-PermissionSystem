@@ -28,149 +28,165 @@ public class ResourceControl {
 	private IResourceService iResourceService;
 	@Resource(name = "iBuildingModelService")
 	private IBuildingModelService iBuildingModelService;
-	
+
 	@RequestMapping(value = "resourceManagePage", method = RequestMethod.GET)
 	public String resouceManage(ModelMap model) {
 		// 页面菜单样式需要
 		model.put("pageIndex", 1);
 		return "resourceManage";
 	}
-	
 
 	@ResponseBody
-	@RequestMapping(value="getResourceById.json")
-	public String getResourceById(@RequestParam("id") Integer id){
+	@RequestMapping(value = "getResourceById.json")
+	public String getResourceById(@RequestParam("id") Integer id) {
 		return JSON.toJSONString(iResourceService.queryModelById(id));
 	}
-	
+
 	@ResponseBody
-	@RequestMapping(value="allBuildings.json")
-	public String getBuildings(){
+	@RequestMapping(value = "allBuildings.json")
+	public String getBuildings() {
 		return JSON.toJSONString(iBuildingModelService.queryAll());
 	}
-	
+
 	@ResponseBody
-	@RequestMapping(value="delResource.json")
-	public String deleteResource(@RequestParam("resourceId") Integer resourceId){
-		APIMessage am= new APIMessage();
+	@RequestMapping(value = "delResource.json")
+	public String deleteResource(@RequestParam("resourceId") Integer resourceId) {
+		APIMessage am = new APIMessage();
 		am.setStatus(1);
-		if(iResourceService.deleteResource(resourceId)>0){
+		if (iResourceService.deleteResource(resourceId) > 0) {
 			am.setStatus(0);
 		}
 		return JSON.toJSONString(am);
 	}
-	
+
 	@ResponseBody
-	@RequestMapping(value="updateResource.json")
-	public String updateResource(@ModelAttribute ResourceModel resourceModel){
-		APIMessage am= new APIMessage();
+	@RequestMapping(value = "updateResource.json")
+	public String updateResource(@ModelAttribute ResourceModel resourceModel) {
+		APIMessage am = new APIMessage();
 		am.setStatus(1);
-		if(iResourceService.updateResource(resourceModel)>0){
+		if (iResourceService.updateResource(resourceModel) > 0) {
 			am.setStatus(0);
 		}
 		return JSON.toJSONString(am);
 	}
-	
+
 	@ResponseBody
-	@RequestMapping(value="addResource.json")
-	public String addResource(@ModelAttribute ResourceModel resourceModel){
-		APIMessage am= new APIMessage();
+	@RequestMapping(value = "addResource.json")
+	public String addResource(
+			@RequestParam("resourceModelJson") String resourceModelJson) {
+		ResourceModel resourceModel = JSON.parseObject(resourceModelJson,
+				ResourceModel.class);
+		APIMessage am = new APIMessage();
 		am.setStatus(1);
-		if(StringUtils.isEmpty(resourceModel.getName())){
+		if (StringUtils.isEmpty(resourceModel.getName())) {
 			am.setMessage("name is null");
 		}
-		//type字段暂时没用， 所以直接这只值为1
-		if(StringUtils.isEmpty(resourceModel.getTypeId())){
+		// type字段暂时没用， 所以直接这只值为1
+		if (StringUtils.isEmpty(resourceModel.getTypeId())) {
 			resourceModel.setTypeId(1);
 		}
-		//没选择节点， 默认为根节点
-		if(StringUtils.isEmpty(resourceModel.getNodeId())){
+		// 没选择节点， 默认为根节点
+		if (StringUtils.isEmpty(resourceModel.getNodeId())) {
 			resourceModel.setNodeId(1);
-			resourceModel.setNodePath("根节点");;
+			resourceModel.setNodePath("根节点");
+			;
 		}
-		//没选择节点， 默认为根节点
-		if(StringUtils.isEmpty(resourceModel.getCreateUser())){
+		// 没选择节点， 默认为根节点
+		if (StringUtils.isEmpty(resourceModel.getCreateUser())) {
 			resourceModel.setCreateUser(1000);
 		}
 
-		if(StringUtils.isEmpty(resourceModel.getStatus())||resourceModel.getStatus().equals("on")){
+		if (StringUtils.isEmpty(resourceModel.getStatus())
+				|| resourceModel.getStatus().equals("on")) {
 			resourceModel.setStatus("Y");
-		}else{
+		} else {
 			resourceModel.setStatus("N");
 		}
 
-		if(StringUtils.isEmpty(resourceModel.getShareEnable())||resourceModel.getShareEnable().equals("on")){
+		if (StringUtils.isEmpty(resourceModel.getShareEnable())
+				|| resourceModel.getShareEnable().equals("on")) {
 			resourceModel.setShareEnable("Y");
-		}else{
+		} else {
 			resourceModel.setShareEnable("N");
 		}
-		
-		if(iResourceService.createResource(resourceModel)==1){
+
+		if (iResourceService.createResource(resourceModel) == 1) {
 			am.setStatus(0);
 		}
 		return JSON.toJSONString(am);
 	}
-	
+
 	@ResponseBody
-	@RequestMapping(value="resourceSearch.json")
-	public String resourceSearch(String search, @RequestParam("limit") Integer limit, 
-			@RequestParam("offset") Integer offset){
+	@RequestMapping(value = "resourceSearch.json")
+	public String resourceSearch(String search,
+			@RequestParam("limit") Integer limit,
+			@RequestParam("offset") Integer offset) {
 
-			ResourceModel resourceModel= JSON.parseObject(search,ResourceModel.class);
-			BootstrapTableData bData = new BootstrapTableData();
+		ResourceModel resourceModel = JSON.parseObject(search,
+				ResourceModel.class);
+		BootstrapTableData bData = new BootstrapTableData();
 
-			List<ResourceModel> resourceList = iResourceService.queryBasicResByCondition(resourceModel, offset, limit);
-			if(null != resourceList && resourceList.size()>0){
-				bData.setRows(resourceList);
-				bData.setPage(offset/limit +1);
-				bData.setTotal(iResourceService.queryCountByCondition(resourceModel));
-			}else{
-				bData.setTotal(0);
-			}
-		return JSON.toJSONString(bData);
-	}
-	
-	//关联用户查询资源，返回用户是否有权限标识
-	@ResponseBody
-	@RequestMapping(value="resourceSearchWithCusId.json")
-	public String resourceSearchWithCusId(String search, @RequestParam("limit") Integer limit, 
-			@RequestParam("offset") Integer offset){
-
-			ResourceModel resourceModel= JSON.parseObject(search,ResourceModel.class);
-			BootstrapTableData bData = new BootstrapTableData();
-
-			List<ResourceModel> resourceList = iResourceService.queryResByConditionWithCusId(resourceModel, offset, limit);
-			if(null != resourceList && resourceList.size()>0){
-				bData.setRows(resourceList);
-				bData.setPage(offset/limit +1);
-				bData.setTotal(iResourceService.queryCountByCondition(resourceModel));
-			}else{
-				bData.setTotal(0);
-			}
+		List<ResourceModel> resourceList = iResourceService
+				.queryBasicResByCondition(resourceModel, offset, limit);
+		if (null != resourceList && resourceList.size() > 0) {
+			bData.setRows(resourceList);
+			bData.setPage(offset / limit + 1);
+			bData.setTotal(iResourceService
+					.queryCountByCondition(resourceModel));
+		} else {
+			bData.setTotal(0);
+		}
 		return JSON.toJSONString(bData);
 	}
 
-	//关联用户组查询资源，返回用户组是否有权限标识
+	// 关联用户查询资源，返回用户是否有权限标识
 	@ResponseBody
-	@RequestMapping(value="resSearchWithCusGroupId.json")
-	public String resSearchWithCusGroupId(String search, @RequestParam("limit") Integer limit, 
-			@RequestParam("offset") Integer offset){
+	@RequestMapping(value = "resourceSearchWithCusId.json")
+	public String resourceSearchWithCusId(String search,
+			@RequestParam("limit") Integer limit,
+			@RequestParam("offset") Integer offset) {
 
-			ResourceModel resourceModel= JSON.parseObject(search,ResourceModel.class);
-			BootstrapTableData bData = new BootstrapTableData();
+		ResourceModel resourceModel = JSON.parseObject(search,
+				ResourceModel.class);
+		BootstrapTableData bData = new BootstrapTableData();
 
-			List<ResourceModel> resourceList = iResourceService.queryResByConditionWithCusGroupId(resourceModel, offset, limit);
-			if(null != resourceList && resourceList.size()>0){
-				bData.setRows(resourceList);
-				bData.setPage(offset/limit +1);
-				bData.setTotal(iResourceService.queryCountByCondition(resourceModel));
-			}else{
-				bData.setTotal(0);
-			}
+		List<ResourceModel> resourceList = iResourceService
+				.queryResByConditionWithCusId(resourceModel, offset, limit);
+		if (null != resourceList && resourceList.size() > 0) {
+			bData.setRows(resourceList);
+			bData.setPage(offset / limit + 1);
+			bData.setTotal(iResourceService
+					.queryCountByCondition(resourceModel));
+		} else {
+			bData.setTotal(0);
+		}
 		return JSON.toJSONString(bData);
 	}
 
-	
+	// 关联用户组查询资源，返回用户组是否有权限标识
+	@ResponseBody
+	@RequestMapping(value = "resSearchWithCusGroupId.json")
+	public String resSearchWithCusGroupId(String search,
+			@RequestParam("limit") Integer limit,
+			@RequestParam("offset") Integer offset) {
+
+		ResourceModel resourceModel = JSON.parseObject(search,
+				ResourceModel.class);
+		BootstrapTableData bData = new BootstrapTableData();
+
+		List<ResourceModel> resourceList = iResourceService
+				.queryResByConditionWithCusGroupId(resourceModel, offset, limit);
+		if (null != resourceList && resourceList.size() > 0) {
+			bData.setRows(resourceList);
+			bData.setPage(offset / limit + 1);
+			bData.setTotal(iResourceService
+					.queryCountByCondition(resourceModel));
+		} else {
+			bData.setTotal(0);
+		}
+		return JSON.toJSONString(bData);
+	}
+
 	public IResourceService getiResourceService() {
 		return iResourceService;
 	}
@@ -183,7 +199,8 @@ public class ResourceControl {
 		return iBuildingModelService;
 	}
 
-	public void setiBuildingModelService(IBuildingModelService iBuildingModelService) {
+	public void setiBuildingModelService(
+			IBuildingModelService iBuildingModelService) {
 		this.iBuildingModelService = iBuildingModelService;
 	}
 

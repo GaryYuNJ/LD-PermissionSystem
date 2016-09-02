@@ -1,5 +1,8 @@
 package ldps;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
@@ -78,5 +81,19 @@ public class TestResouce {
 		ResourceModel rm=new ResourceModel();
 		rm.setName("闸机");
 		logger.info(JSON.toJSON(iResourceService.queryBasicResByCondition(rm, 1, 10)));
+	}
+	
+	@Test
+	public void testJsontoObject(){
+		ResourceModel rm=new ResourceModel();
+		rm.setName("闸机");
+		/*ResourceKey rk=new ResourceKey();
+		rk.setPassword("1123");
+		List<ResourceKey> rks=new ArrayList<ResourceKey>();
+		rks.add(rk);
+		rm.setResourceKeys(rks);
+		String v=JSON.toJSON(rm).toString();
+		ResourceModel r2=JSON.parseObject(v, ResourceModel.class);
+		logger.info("--");*/
 	}
 }

@@ -46,10 +46,6 @@
 	</delete>
 	
 	<insert id="insert" parameterType="com.ldps.model.NodeModel">
-		<selectKey resultType="java.lang.Integer" order="AFTER"
-			keyProperty="id">
-			SELECT LAST_INSERT_ID() AS id
-		</selectKey>
 		insert into NODE (ID, NAME, GRADE,
 		N_INT1, VC1, CHR1, PARENT_ID )
 		values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},
@@ -58,6 +54,10 @@
 	</insert>
 	
 	<insert id="insertSelective" parameterType="com.ldps.model.NodeModel">
+		<selectKey resultType="java.lang.Integer" order="AFTER"
+			keyProperty="id">
+			SELECT LAST_INSERT_ID() AS id
+		</selectKey>
 		insert into NODE
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null">
