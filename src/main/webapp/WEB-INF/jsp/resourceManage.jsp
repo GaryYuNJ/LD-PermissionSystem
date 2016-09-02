@@ -308,10 +308,13 @@
 				<h4 class="modal-title" id="importModal">导入资源</h4>
 			</div>
 			<div class="modal-body">
-					<input id="input-folder-1" type="file"  class="file-loading" >
+				<form action="uploadFile" id="uploadFileForm" method="post" enctype="multipart/form-data">
+				  <input id="input-folder-1"  type="file" name="file"  class="file-loading" >
+				  <!-- <input type="submit" value="submit"> -->
+				</form>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal" id="uploadModalClose">关闭</button>
 				<!-- <button type="button" class="btn btn-primary" id="importResourceButtId">保存</button> -->
 			</div>
 		</div>
@@ -671,90 +674,135 @@ $('#jstree_resource').on("rename_node.jstree", function (e,node) {
 			 
 			//添加资源
 			$('#newResourceFormId').bootstrapValidator({
-				        message: '输入值错误',
-				        feedbackIcons: {
-				            valid: 'glyphicon glyphicon-ok',
-				            invalid: 'glyphicon glyphicon-remove',
-				            validating: 'glyphicon glyphicon-refresh'
-				        },
-				        fields: {
-				            name: {
-				                validators: {
-				                    notEmpty: {
-				                        message: '资源名称不能为空'
-				                    }
-				                }
-				            },
-				            floor: {
-				                validators: {
-				                	stringLength: {
-				                        min: 0,
-				                        max: 10,
-				                        message: '不能超过10位'
-				                    },
-				                    integer: {
-				                        message: '楼层只能输入数字'
-				                    }
-				                }
-				            },
-				            sequence: {
-				                validators: {
-				                	stringLength: {
-				                        min: 0,
-				                        max: 10,
-				                        message: '不能超过10位'
-				                    },
-				                    integer: {
-				                        message: '排序只能使用数字'
-				                    }
-				                }
-				            }
-				        }
-				    });
-				    $('#newResourceId').click(function() {
-				    	$("#newResourceId").attr('disabled',"true");
-				        $('#newResourceFormId').bootstrapValidator('validate');
-				        if($('#newResourceFormId').data('bootstrapValidator').isValid()){
-				        	 	var resourceModel = {};
-					            $.each($("#newResourceFormId").serializeArray(), function(i, field) {  
-					                resourceModel[field.name] = field.value;  
-					            });
-								var resourcekeys=new Array();
-								$.each($("#newResourceKeyFormId .resourceKeyForm"), function(i) {  
-									var resourceKey = {};
-									$.each($($("#newResourceKeyFormId .resourceKeyForm")[i]).find(".keyName").serializeArray(), function(i, field) {  
-										resourceKey[field.name] = field.value;  
-						            });
-									resourcekeys[i]=resourceKey;
-					            });
-								resourceModel["resourceKeys"]=resourcekeys;
-								//console.log(resourceModel);
-					            //console.log(JSON.stringify(resourceModel));
-					            //var data=$("#newResourceFormId").serializeArray();
-					            var data={"resourceModelJson":JSON.stringify(resourceModel)}
-					            $.post("<c:url value='/manage/addResource.json' />",data ,function(data){
-					            	console.log("1111");
-					             });
-				        }
-				        $("#newResourceId").removeAttr('disabled');
-				    });
+		        message: '输入值错误',
+		        feedbackIcons: {
+		            valid: 'glyphicon glyphicon-ok',
+		            invalid: 'glyphicon glyphicon-remove',
+		            validating: 'glyphicon glyphicon-refresh'
+		        },
+		        fields: {
+		            name: {
+		                validators: {
+		                    notEmpty: {
+		                        message: '资源名称不能为空'
+		                    }
+		                }
+		            },
+		            floor: {
+		                validators: {
+		                	stringLength: {
+		                        min: 0,
+		                        max: 10,
+		                        message: '不能超过10位'
+		                    },
+		                    integer: {
+		                        message: '楼层只能输入数字'
+		                    }
+		                }
+		            },
+		            sequence: {
+		                validators: {
+		                	stringLength: {
+		                        min: 0,
+		                        max: 10,
+		                        message: '不能超过10位'
+		                    },
+		                    integer: {
+		                        message: '排序只能使用数字'
+		                    }
+		                }
+		            }
+		        }
+		    });
+		    $('#newResourceId').click(function() {
+		    	$("#newResourceId").attr('disabled',"true");
+		        $('#newResourceFormId').bootstrapValidator('validate');
+		        if($('#newResourceFormId').data('bootstrapValidator').isValid()){
+		        	 	var resourceModel = {};
+			            $.each($("#newResourceFormId").serializeArray(), function(i, field) {  
+			                resourceModel[field.name] = field.value;  
+			            });
+						var resourcekeys=new Array();
+						$.each($("#newResourceKeyFormId .resourceKeyForm"), function(i) {  
+							var resourceKey = {};
+							$.each($($("#newResourceKeyFormId .resourceKeyForm")[i]).find(".keyName").serializeArray(), function(i, field) {  
+								resourceKey[field.name] = field.value;  
+				            });
+							resourcekeys[i]=resourceKey;
+			            });
+						resourceModel["resourceKeys"]=resourcekeys;
+						//console.log(resourceModel);
+			            //console.log(JSON.stringify(resourceModel));
+			            //var data=$("#newResourceFormId").serializeArray();
+			            var data={"resourceModelJson":JSON.stringify(resourceModel)}
+			            $.post("<c:url value='/manage/addResource.json' />",data ,function(data){
+			            	console.log("1111");
+			             });
+		        }
+		        $("#newResourceId").removeAttr('disabled');
+		    });
 		</script>
 
 <script type="text/javascript">
-//文件选择器
+	//文件选择器
 	$(document).on('ready', function() {
+		 
 	    $("#input-folder-1").fileinput({
 	    	language: 'zh', //设置语言,
-	    	uploadUrl: "test",
+	    	uploadUrl: "uploadFile",
+	    	uploadAsync: true,
 	        //browseLabel: 'Select Folder...',
         	allowedFileExtensions : ['xls', 'xlsx'],//接收的文件后缀
             showUpload: true, //是否显示上传按钮
             showCaption: false,//是否显示标题
-            //showPreview: false,
+            showPreview: true,
             browseClass: "btn btn-primary", //按钮样式             
             previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
             //elErrorContainer: "#errorBlock",
-            maxFilePreviewSize: 10240
+            maxFilePreviewSize: 10240,
+            uploadExtraData: function() {
+            	//return "";
+               /* var extraValue = null;
+                var radios = document.getElementsByName('excelType');
+                for(var i=0;i<radios.length;i++){
+                    if(radios[i].checked){
+                        extraValue = radios[i].value;
+                    }
+                }
+                return {"excelType": extraValue};
+                */
+                
+            	return {"nodeId": "123123"};
+            }
+	    });
+	  //上传失败
+	    $('#input-folder-1').on('fileuploaderror', function(event, data, previewId, index) {
+	    	alert("文件上传失败！");
+	        //var form = data.form, files = data.files, extra = data.extra,
+	        //        response = data.response, reader = data.reader;
+	        //console.log(data);
+	        //console.log('File upload error');
+	    });
+		//上传失败
+	    $('#input-folder-1').on('fileerror', function(event, data) {
+	    	alert("文件解析失败！");
+	        //console.log(data.id);
+	        //console.log(data.index);
+	        //console.log(data.file);
+	        //console.log(data.reader);
+	        //console.log(data.files);
+	    });
+		//上传成功返回监听
+	    $('#input-folder-1').on('fileuploaded', function(event, data, previewId, index) {
+	        var form = data.form, 
+	        files = data.files, 
+	        extra = data.extra, 
+	        response = data.response, 
+	        reader = data.reader;
+	        
+	        alert("资源导入成功！");
+	        $("#uploadModalClose").click();
+	        //console.log('File uploaded triggered');
 	    });
 	});
 </script>
