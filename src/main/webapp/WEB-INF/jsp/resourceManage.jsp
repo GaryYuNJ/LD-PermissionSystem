@@ -63,7 +63,7 @@
 											  <option value="">选择楼栋</option>
 											</select>
 										</div>
-										<div class="col-lg-3">
+										<div class="col-lg-2">
 											<button type="button" class="btn btn-primary" id="dosearch">
 												<i class="icon-search"></i> 查询
 											</button>
@@ -72,6 +72,12 @@
 											<button type="button" class="btn btn-primary"
 												data-toggle="modal" data-target="#myModal">
 												<i class="icon-plus"></i> 新增资源
+											</button>
+										</div>
+										<div class="col-lg-2">
+											<button type="button" class="btn btn-primary"
+												data-toggle="modal" data-target="#importModal">
+												<i class="icon-plus"></i> 导入资源
 											</button>
 										</div>
 									</div>
@@ -283,6 +289,32 @@
 		</div>
 	</div>
 </div>
+
+
+<!-- 导入资源Modal -->
+<div class="modal fade" id="importModal" tabindex="-1" role="dialog"
+	aria-labelledby="importModalLabel">
+	<div class="modal-dialog" role="document" style="width:800px;height:600px">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="importModal">导入资源</h4>
+			</div>
+			<div class="modal-body">
+					<input id="input-folder-1" type="file"  class="file-loading" >
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				<!-- <button type="button" class="btn btn-primary" id="importResourceButtId">保存</button> -->
+			</div>
+		</div>
+	</div>
+</div>
+
+
 <%@ include file="/common/script.jsp"%>
 <script type="text/javascript">
 $('#jstree_resource').on("rename_node.jstree", function (e,node) {
@@ -663,6 +695,23 @@ $('#jstree_resource').on("rename_node.jstree", function (e,node) {
 				        }
 				        $("#newResourceId").removeAttr('disabled');
 				    });
-				    
 		</script>
+//文件选择器
+<script type="text/javascript">
+	$(document).on('ready', function() {
+	    $("#input-folder-1").fileinput({
+	    	language: 'zh', //设置语言,
+	    	uploadUrl: "test",
+	        //browseLabel: 'Select Folder...',
+        	allowedFileExtensions : ['xls', 'xlsx'],//接收的文件后缀
+            showUpload: true, //是否显示上传按钮
+            showCaption: false,//是否显示标题
+            //showPreview: false,
+            browseClass: "btn btn-primary", //按钮样式             
+            previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
+            //elErrorContainer: "#errorBlock",
+            maxFilePreviewSize: 10240
+	    });
+	});
+</script>
 <%@ include file="/common/footer.html"%>
