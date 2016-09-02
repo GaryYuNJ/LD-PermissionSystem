@@ -10,7 +10,9 @@ import org.springframework.util.StringUtils;
 
 import com.ldps.dao.CusGrpResourceRelModelMapper;
 import com.ldps.dao.CusResourceRelModelMapper;
+import com.ldps.dao.ResourceKeyMapper;
 import com.ldps.dao.ResourceModelMapper;
+import com.ldps.model.ResourceKey;
 import com.ldps.model.ResourceModel;
 import com.ldps.service.IResourceService;
 
@@ -23,6 +25,8 @@ public class ResourceServiceImpl implements IResourceService {
 	private CusResourceRelModelMapper cusResourceRelDao;
 	@Resource
 	private CusGrpResourceRelModelMapper cusGrpResRelDao;
+	@Resource
+	private ResourceKeyMapper resourceKeyDao;
 
 	@Override
 	public ResourceModel queryResourceByMAC(String mac) {
@@ -41,13 +45,21 @@ public class ResourceServiceImpl implements IResourceService {
 
 
 	/*
-	获取building里的公共资源
+	获取building里的公共资源基本信息
 	 */
 	@Override
 	public List<ResourceModel> selectValidPubResByBuildingId(Integer buildingId) {
 		return resourceDao.selectValidPubResByBuildingId(buildingId);
 	}
 
+	/*
+	获取building里的公共资源，resourceKeys同时返回
+	 */
+	@Override
+	public List<ResourceModel> selectPubResWithKeysByBuildingId(Integer buildingId) {
+		return resourceDao.selectPubResWithKeysByBuildingId(buildingId);
+	}
+	
 	/*
 	获取building里用户有权限设备
 	 */
@@ -102,8 +114,14 @@ public class ResourceServiceImpl implements IResourceService {
 	//新建资源
 	@Override
 	public int createResource(ResourceModel model) {
-		
-		return resourceDao.insertSelective(model);
+		if(resourceDao.insertSelective(model)>0){
+			for(ResourceKey resourceKey:model.getResourceKeys()){
+				resourceKey.setResourceId(model.getId());
+				resourceKeyDao.insertSelective(resourceKey);
+			}
+			return 1;
+		}
+		return 0;
 	}
 	
 	//更新资源
@@ -167,5 +185,11 @@ public class ResourceServiceImpl implements IResourceService {
 	@Override
 	public int queryCountByCondition(ResourceModel model) {
 		return resourceDao.selectCountByCondition(model);
+	}
+
+	@Override
+	public List<ResourceModel> queryPriResWithKeysByBIdAndCusId(
+			Integer buildingId, Long customerId) {
+		return resourceDao.selectPriResWIthKeysByBIdAndCusId(buildingId, customerId);
 	}
 }

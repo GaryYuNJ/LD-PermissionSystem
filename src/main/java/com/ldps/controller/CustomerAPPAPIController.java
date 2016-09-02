@@ -34,11 +34,11 @@ public class CustomerAPPAPIController {
 			RequestMethod.POST },produces = "application/json; charset=utf-8")
 	@ResponseBody
 	public String permissionVerfy(@RequestParam("mobile")String mobile,
-			@RequestParam("resourceKeyId")String resourceKeyId,
+			@RequestParam("resourceKey")String mac,
 			Model model){
 		APIMessage apiMessage = new APIMessage();
 		
-		String result = customerFacade.verification(mobile, resourceKeyId);
+		String result = customerFacade.verification(mobile, mac);
 		
 		if("0".equals(result)){
 			apiMessage.setStatus(1);
@@ -64,7 +64,7 @@ public class CustomerAPPAPIController {
 		List<ResourceData> rDatas = null;
 		
 		try{
-			rDatas = customerFacade.queryPubResByBuildingId(buildingId);
+			rDatas = customerFacade.queryPubResWithKeysByBuildingId(buildingId);
 			
 			if(null== rDatas || rDatas.size() == 0){
 				apiMessage.setStatus(0);
@@ -96,7 +96,7 @@ public class CustomerAPPAPIController {
 		List<ResourceData> rDatas = null;
 		
 		try{
-			rDatas = customerFacade.queryPrivateResByBIdAndMobile(buildingId, mobile);
+			rDatas = customerFacade.queryPrivateResWithKeysByBIdAndMobile(buildingId, mobile);
 			
 			if(null== rDatas || rDatas.size() == 0){
 				apiMessage.setStatus(0);
@@ -109,6 +109,7 @@ public class CustomerAPPAPIController {
 		}catch(Exception e){
 			apiMessage.setStatus(-1);
 			apiMessage.setMessage("系统异常");
+			e.printStackTrace();
 		}
 		return JSON.toJSONString(apiMessage);
 	}
@@ -119,12 +120,12 @@ public class CustomerAPPAPIController {
 			RequestMethod.POST },  produces = {"application/json;charset=UTF-8"})
 	@ResponseBody
 	public String jointAuthResPermissionByMobile(@RequestParam("mobile")String mobile,
-			@RequestParam("resourceKey")String resourceKey, @RequestParam("startDate")String startDateStr,
+			@RequestParam("mac")String mac, @RequestParam("startDate")String startDateStr,
 			@RequestParam("endDate")String endDateStr, Model model){
 		
 		APIMessage apiMessage = new APIMessage();
 		
-		if(StringUtils.isEmpty(mobile)||StringUtils.isEmpty(resourceKey)){
+		if(StringUtils.isEmpty(mobile)||StringUtils.isEmpty(mac)){
 			apiMessage.setStatus(-2);
 			apiMessage.setMessage("入参mobile、resourceKey为空");
 		}else{
@@ -141,7 +142,7 @@ public class CustomerAPPAPIController {
 					endDate = df.parse(endDateStr); 
 				}
 				int result = 
-						customerFacade.jointAuthResPermissionByMobile(mobile, resourceKey, startDate, endDate,0L);
+						customerFacade.jointAuthResPermissionByMobile(mobile, mac, startDate, endDate,0L);
 				apiMessage.setStatus(result);
 			} catch (ParseException e) {
 				apiMessage.setStatus(-2);

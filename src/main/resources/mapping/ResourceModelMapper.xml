@@ -165,6 +165,10 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.ldps.model.ResourceModel" >
+  <selectKey resultType="java.lang.Integer" order="AFTER"
+			keyProperty="id">
+			SELECT LAST_INSERT_ID() AS id
+	</selectKey>
     insert into RESOURCE
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >

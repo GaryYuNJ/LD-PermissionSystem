@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.ldps.dao1.ResourceKeyMapper" >
-  <resultMap id="BaseResultMap" type="com.ldps.model.ResourceKey" >
+<mapper namespace="com.ldps.dao.ResourceKeyMapper" >
+  <resultMap id="BaseResultMap" type="com.ldps.model.ResourceKeyModel" >
     <id column="ID" property="id" jdbcType="INTEGER" />
     <result column="MAC" property="mac" jdbcType="CHAR" />
     <result column="PASSWORD" property="password" jdbcType="CHAR" />
@@ -26,11 +26,17 @@
     from RESOURCE_KEY
     where ID = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectByResourceId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from RESOURCE_KEY
+    where RESOURCE_ID = #{resourceId,jdbcType=INTEGER}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from RESOURCE_KEY
     where ID = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.ldps.model.ResourceKey" >
+  <insert id="insert" parameterType="com.ldps.model.ResourceKeyModel" >
     insert into RESOURCE_KEY (ID, MAC, PASSWORD, 
       MANUFACTURER_ID, RESOURCE_ID, R_INT1, 
       R_INT2, NUM1, NUM2, 
@@ -42,7 +48,7 @@
       #{vc1,jdbcType=VARCHAR}, #{vc2,jdbcType=VARCHAR}, #{chr1,jdbcType=CHAR}, #{chr2,jdbcType=CHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.ldps.model.ResourceKey" >
+  <insert id="insertSelective" parameterType="com.ldps.model.ResourceKeyModel" >
     insert into RESOURCE_KEY
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -127,7 +133,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ldps.model.ResourceKey" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.ldps.model.ResourceKeyModel" >
     update RESOURCE_KEY
     <set >
       <if test="mac != null" >
@@ -169,7 +175,7 @@
     </set>
     where ID = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.ldps.model.ResourceKey" >
+  <update id="updateByPrimaryKey" parameterType="com.ldps.model.ResourceKeyModel" >
     update RESOURCE_KEY
     set MAC = #{mac,jdbcType=CHAR},
       PASSWORD = #{password,jdbcType=CHAR},
