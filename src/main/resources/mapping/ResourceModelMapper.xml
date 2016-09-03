@@ -522,6 +522,13 @@
 	AND PERMISSION_ATTR_ID != 1
   </select>
   
+  <select id="selectWithResKeysByName" resultMap="queryWithResKeyResultMap" >
+    select 
+    <include refid="With_ResKeys_Column_List" /> 
+    FROM RESOURCE R  LEFT JOIN RESOURCE_KEY RK ON R.ID=RK.RESOURCE_ID
+	WHERE R.NAME = #{name,jdbcType=INTEGER} 
+  </select>
+  
   <select id="selectBasicResByNodeIdList" resultMap="BaseResultMap" >
     select DISTINCT 
     <include refid="Base_Column_List" />
@@ -539,4 +546,15 @@
     from RESOURCE R, RESOURCE_KEY RK 
     where R.ID=RK.RESOURCE_ID AND RK.MAC = #{mac,jdbcType=VARCHAR}
   </select>
+  
+    
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.ldps.model.ResourceModel" >
+    select 
+    <include refid="Base_Column_List" />
+    from RESOURCE 
+    where 
+        NAME = #{name,jdbcType=VARCHAR} 
+  </select>
+  
+  
 </mapper>

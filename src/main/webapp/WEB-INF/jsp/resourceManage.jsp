@@ -306,6 +306,7 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 				<h4 class="modal-title" id="importModal">导入资源</h4>
+				<a href="<c:url value="/common/ResourceUploadSample.xlsx" />">示例文件下载</a>
 			</div>
 			<div class="modal-body">
 				<form action="uploadFile" id="uploadFileForm" method="post" enctype="multipart/form-data">
@@ -799,9 +800,12 @@ $('#jstree_resource').on("rename_node.jstree", function (e,node) {
 	        extra = data.extra, 
 	        response = data.response, 
 	        reader = data.reader;
-	        
-	        alert("资源导入成功！");
-	        $("#uploadModalClose").click();
+	        if(response.status != 0){
+	        	alert(response.message);
+	        }else {
+	        	alert("资源导入成功！");
+	        	$("#uploadModalClose").click();
+	        }
 	        //console.log('File uploaded triggered');
 	    });
 	});

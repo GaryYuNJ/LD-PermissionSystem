@@ -42,5 +42,9 @@ public interface ResourceModelMapper {
 	
 	List<ResourceModel>  selectPriResWIthKeysByBIdAndCusId (@Param("buildingId") Integer buildingId,
 			@Param("customerId") Long customerId);
+
+	ResourceModel selectWithResKeysByName(@Param("name") String name);
+
+	ResourceModel selectByCondition(ResourceModel newResModel);
 	
 }

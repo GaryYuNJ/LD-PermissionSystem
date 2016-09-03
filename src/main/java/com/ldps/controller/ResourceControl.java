@@ -1,9 +1,25 @@
 package com.ldps.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.util.StringUtil;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
@@ -12,11 +28,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSON;
 import com.ldps.data.APIMessage;
 import com.ldps.data.BootstrapTableData;
+import com.ldps.data.FileMeta;
+import com.ldps.data.FileMsg;
 import com.ldps.model.CustomerModel;
+import com.ldps.model.ResourceKeyModel;
 import com.ldps.model.ResourceModel;
 import com.ldps.service.IBuildingModelService;
 import com.ldps.service.IResourceService;
@@ -28,6 +48,10 @@ public class ResourceControl {
 	private IResourceService iResourceService;
 	@Resource(name = "iBuildingModelService")
 	private IBuildingModelService iBuildingModelService;
+	
+
+	@Value("#{configProperties['upload.dir']}")
+	private String uploadDir; 
 
 	@RequestMapping(value = "resourceManagePage", method = RequestMethod.GET)
 	public String resouceManage(ModelMap model) {
@@ -187,6 +211,66 @@ public class ResourceControl {
 		return JSON.toJSONString(bData);
 	}
 
+	//资源导入功能
+	@ResponseBody
+	@RequestMapping(value = "uploadFile")
+    public String uploadFileHandler(@RequestParam("file") MultipartFile file, 
+    		@RequestParam("nodeId") Integer nodeId) throws IOException {
+    
+		APIMessage message = new APIMessage();
+    	if (!file.isEmpty()) {
+    		//--上传--
+            InputStream in = null;
+            OutputStream out = null;
+
+            try {
+                // 获得在tomcat中项目的路径， 需要在web.xml配置ft.webapp
+            	if(StringUtils.isEmpty(uploadDir)){
+            		String webRootPath = System.getProperty("ft.webapp");
+            		uploadDir = webRootPath + File.separator + "uploadFiles";
+            	}
+            	File dir = new File(uploadDir);
+                if (!dir.exists())
+                    dir.mkdirs();
+                
+                File serverFile = new File(dir.getAbsolutePath() + File.separator + file.getOriginalFilename());
+                in = file.getInputStream();
+                out = new FileOutputStream(serverFile);
+                byte[] b = new byte[1024];
+                int len = 0;
+                while ((len = in.read(b)) > 0) {
+                    out.write(b, 0, len);
+                }
+                out.close();
+                in.close();
+                System.out.println("Server File Location=" + serverFile.getAbsolutePath());
+                
+                //--解析、导入--
+                message = iResourceService.importResFromExcel(serverFile.getAbsolutePath(),nodeId);
+
+            } catch (Exception e) {
+            	e.printStackTrace();
+            	message.setStatus(-1);
+            	message.setMessage("文件解析失败！");
+            } finally {
+                if (out != null) {
+                    out.close();
+                    out = null;
+                }
+
+                if (in != null) {
+                    in.close();
+                    in = null;
+                }
+            }
+        } else {
+        	message.setStatus(-1);
+        	message.setMessage("文件没有资源数据！");
+        }
+    	
+    	return JSON.toJSONString(message);
+    }
+    
 	public IResourceService getiResourceService() {
 		return iResourceService;
 	}
