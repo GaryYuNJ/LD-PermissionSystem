@@ -1,24 +1,14 @@
 package com.ldps.controller;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.util.StringUtil;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -33,10 +23,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.alibaba.fastjson.JSON;
 import com.ldps.data.APIMessage;
 import com.ldps.data.BootstrapTableData;
-import com.ldps.data.FileMeta;
-import com.ldps.data.FileMsg;
-import com.ldps.model.CustomerModel;
-import com.ldps.model.ResourceKeyModel;
 import com.ldps.model.ResourceModel;
 import com.ldps.service.IBuildingModelService;
 import com.ldps.service.IResourceService;
