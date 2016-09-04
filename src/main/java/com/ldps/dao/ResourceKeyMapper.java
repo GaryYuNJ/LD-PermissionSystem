@@ -2,6 +2,8 @@ package com.ldps.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.ldps.model.ResourceKeyModel;
 
 public interface ResourceKeyMapper {
@@ -18,4 +20,5 @@ public interface ResourceKeyMapper {
     int updateByPrimaryKey(ResourceKeyModel record);
     
     List<ResourceKeyModel> selectByResourceId(Integer id);
+    int deleteByReourceNotIn(@Param("resourceId")Integer resourceId,@Param("ids")List<Integer> ids);
 }

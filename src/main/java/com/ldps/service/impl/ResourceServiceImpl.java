@@ -1,7 +1,6 @@
 package com.ldps.service.impl;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -54,7 +53,18 @@ public class ResourceServiceImpl implements IResourceService {
 	public ResourceModel queryModelById(Integer sourceId) {
 		return resourceDao.selectByPrimaryKey(sourceId);
 	}
-
+	
+	public ResourceModel getReourceAndKeyById(Integer sourceId){
+		ResourceModel rm=queryModelById(sourceId);
+		if(rm!=null){
+			rm.setResourceKeys(queryKeyByresource(sourceId));
+		}
+		return rm;
+	}
+	
+	public List<ResourceKeyModel> queryKeyByresource(Integer resourceId){
+		return resourceKeyDao.selectByResourceId(resourceId);
+	}
 
 	/*
 	获取building里的公共资源基本信息
@@ -140,12 +150,28 @@ public class ResourceServiceImpl implements IResourceService {
 	@Override
 	public int updateResource(ResourceModel model) {
 		model.setCreateDate(new Date());
-		return resourceDao.updateByPrimaryKeySelective(model);
+		if(resourceDao.updateByPrimaryKeySelective(model)>0){
+			List<Integer> keyIds = new ArrayList<Integer>();
+			for(ResourceKeyModel resourceKey:model.getResourceKeys()){
+				keyIds.add(resourceKey.getId());
+			}
+			resourceKeyDao.deleteByReourceNotIn(model.getId(), keyIds);
+			for(ResourceKeyModel resourceKey:model.getResourceKeys()){
+				resourceKey.setResourceId(model.getId());
+				if(resourceKey.getId()==null){
+					resourceKeyDao.insertSelective(resourceKey);
+				}else{
+					resourceKeyDao.updateByPrimaryKeySelective(resourceKey);
+				}
+			}
+			return 1;
+		}
+		return 0;
 	}
 
 	@Override
 	public int deleteResource(Integer primaryId) {
-
+		resourceKeyDao.deleteByReourceNotIn(primaryId, null);
 		return resourceDao.deleteByPrimaryKey(primaryId);
 	}
 

@@ -169,11 +169,11 @@
                      				  </div>
                                   </div>
                                 </div>
+                                <input type="hidden" name="nodePath" value="根节点" id="newnodePath">
+                                <input type="hidden" name="nodeId" value="1"  id="newnodeId">
                                 </form>
                                 <hr>
                                 <form class="form-horizontal" role="form" id="newResourceKeyFormId">
-                                <input type="hidden" name="nodePath" value="根节点" id="newnodePath">
-                                <input type="hidden" name="nodeId" value="1"  id="newnodeId">
                                  <div class="form-group resourceKeyForm">
                               	 <label class="col-lg-2 control-label">钥匙信息</label>
                               	  <div class="col-lg-3">
@@ -220,9 +220,9 @@
                                   <div class="col-lg-4">
                                     <input type="text" class="form-control" placeholder="资源名称" name="name" id="updateResourceName">
                                   </div>
-                                   <label class="col-lg-2 control-label">Mac地址</label>
+ 									 <label class="col-lg-2 control-label">显示顺序</label>
                                   <div class="col-lg-4">
-                                    <input type="text" class="form-control" placeholder="设备Mac地址" name="mac"  id="updateResourceMac">
+                                    <input type="text" class="form-control" placeholder="1000" name="sequence" id="updateResourceSequenceId">
                                   </div>
                                 </div>
                                 <div class="form-group">
@@ -256,19 +256,6 @@
                                     </select>
                                   </div>
                                 </div>
-                                 <div class="form-group">
-                                  <label class="col-lg-2 control-label">生产厂家</label>
-                                  <div class="col-lg-4">
-	                                   <select class="form-control" name="manufacturerId" id="updateResourceManufacturerId">
-	                                   	  <option value="1">特斯连</option>
-	                                      <option value="2">立方</option>
-	                                    </select>
-                                  </div>
-                                   <label class="col-lg-2 control-label">显示顺序</label>
-                                  <div class="col-lg-4">
-                                    <input type="text" class="form-control" placeholder="1000" name="sequence" id="updateResourceSequenceId">
-                                  </div>
-                                </div>
                                 <div class="form-group">
                                   <label class="col-lg-2 control-label">可用状态</label>
                                   <div class="col-lg-4">
@@ -284,10 +271,15 @@
                                   </div>
                                 </div>
                                 <input type="hidden" name="id" id="updateResourceId">
-                              </form>
+                    </form>
+                    <hr>
+                    <form class="form-horizontal" role="form" id="updateResourceKeyFormId">
+                                
+                            </form>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				<button type="button" class="btn btn-primary" id="updateReourceKeyId"><i class="icon-plus"></i>新增钥匙</button>
 				<button type="button" class="btn btn-primary" id="updateResourceButtonId">保存</button>
 			</div>
 		</div>
@@ -329,9 +321,9 @@ function deleteKey(obj){
 	$(obj).parent().parent().remove();
 }
 //添加新钥匙
-$("#newReourceKeyId").click(
-		function(){
-			$("#newResourceKeyFormId").append('<div class="form-group resourceKeyForm">'+
+function addResourceKey(objForm){
+	console.log(objForm);
+			$(objForm).append('<div class="form-group resourceKeyForm">'+
 		    	 '<label class="col-lg-3 control-label">钥匙信息</label>'+
 		    	  '<div class="col-lg-3">'+
 		             '<select class="form-control keyName" name="manufacturerId">'+
@@ -349,8 +341,10 @@ $("#newReourceKeyId").click(
             	'<button type="button" class="btn btn-danger" onclick="deleteKey(this)"><i class="icon-remove"></i>删除</button>'+
             	'</div>'+
 		       ' </div>');
-       });
+       }
 
+$("#newReourceKeyId").click(function(){addResourceKey($("#newResourceKeyFormId"))});
+$("#updateReourceKeyId").click(function(){addResourceKey($("#updateResourceKeyFormId"))});
 //重命名节点触发
 $('#jstree_resource').on("rename_node.jstree", function (e,node) {
 	console.log(node);
@@ -442,6 +436,31 @@ $('#jstree_resource').on("rename_node.jstree", function (e,node) {
 				$("#updateResourceStatus").val(data.status);
 				$("#updateResourceSequenceId").val(data.sequence);
 				$("#updateResourceId").val(data.id);
+				$("#updateResourceKeyFormId").html("");
+				$.each(data.resourceKeys,function(n,value){
+					var tempHtml='<div class="form-group resourceKeyForm">'+
+					    	 '<label class="col-lg-3 control-label">钥匙信息</label>'+
+					    	  '<div class="col-lg-3">'+
+					             '<select class="form-control keyName" name="manufacturerId">';
+					if(value.manufacturerId==1)
+						tempHtml+='<option value="1">特斯连</option>';
+					else
+						tempHtml+='<option value="2">立方</option>';
+
+						tempHtml+='</select>'+
+					      	'</div>'+
+					        '<div class="col-lg-3">'+
+					        '<input type="text" class="form-control keyName" placeholder="设备Mac地址" name="mac" value="'+value.mac+'">'+
+					      	'</div>'+
+					        '<div class="col-lg-3">'+
+					        '<input type="text" class="form-control keyName" placeholder="密码" name="password" value="'+value.password+'">'+
+					       	' </div>'+
+					       	'<div class="col-lg-1">';
+					if(n>0)
+						tempHtml+='<button type="button" class="btn btn-danger" onclick="deleteKey(this)"><i class="icon-remove"></i>删除</button>';
+						tempHtml+='</div>'+'<input type="hidden" class="keyName" value="'+value.id+'" name="id"></div>';
+						$("#updateResourceKeyFormId").append(tempHtml);
+		        });
 			});
 		}
 		//更新资源数据
@@ -449,15 +468,27 @@ $('#jstree_resource').on("rename_node.jstree", function (e,node) {
 		    	$("#updateResourceButtonId").attr('disabled',"true");
 		        $('#updateResourceFormId').bootstrapValidator('validate');
 		        if($('#updateResourceFormId').data('bootstrapValidator').isValid()){
-		        	 var resourceModel = {};
-			            $.each($("#updateResourceFormId").serializeArray(), function(i, field) {  
-			                resourceModel[field.name] = field.value;  
-			            });  
-			            //console.log(JSON.stringify(resourceModel));
-			            var data=$("#updateResourceFormId").serializeArray();
-			            $.post("<c:url value='/manage/updateResource.json' />",data ,function(data){
-			            	console.log("1111");
-			             });
+		        	var resourceModel = {};
+		            $.each($("#updateResourceFormId").serializeArray(), function(i, field) {  
+		                resourceModel[field.name] = field.value;  
+		            });
+					var resourcekeys=new Array();
+					$.each($("#updateResourceKeyFormId .resourceKeyForm"), function(i) {  
+						var resourceKey = {};
+						$.each($($("#updateResourceKeyFormId .resourceKeyForm")[i]).find(".keyName").serializeArray(), function(i, field) {  
+							resourceKey[field.name] = field.value;  
+			            });
+						resourcekeys[i]=resourceKey;
+		            });
+					resourceModel["resourceKeys"]=resourcekeys;
+					//console.log(resourceModel);
+		            //console.log(JSON.stringify(resourceModel));
+		            //var data=$("#newResourceFormId").serializeArray();
+		            var data={"resourceModelJson":JSON.stringify(resourceModel)}
+		            $.post("<c:url value='/manage/updateResource.json' />",data ,function(data){
+		            	console.log("1111");
+		             });
+		            
 		        }
 		        $("#updateResourceButtonId").removeAttr('disabled');
 		});
@@ -675,73 +706,73 @@ $('#jstree_resource').on("rename_node.jstree", function (e,node) {
 			 
 			//添加资源
 			$('#newResourceFormId').bootstrapValidator({
-		        message: '输入值错误',
-		        feedbackIcons: {
-		            valid: 'glyphicon glyphicon-ok',
-		            invalid: 'glyphicon glyphicon-remove',
-		            validating: 'glyphicon glyphicon-refresh'
-		        },
-		        fields: {
-		            name: {
-		                validators: {
-		                    notEmpty: {
-		                        message: '资源名称不能为空'
-		                    }
-		                }
-		            },
-		            floor: {
-		                validators: {
-		                	stringLength: {
-		                        min: 0,
-		                        max: 10,
-		                        message: '不能超过10位'
-		                    },
-		                    integer: {
-		                        message: '楼层只能输入数字'
-		                    }
-		                }
-		            },
-		            sequence: {
-		                validators: {
-		                	stringLength: {
-		                        min: 0,
-		                        max: 10,
-		                        message: '不能超过10位'
-		                    },
-		                    integer: {
-		                        message: '排序只能使用数字'
-		                    }
-		                }
-		            }
-		        }
-		    });
-		    $('#newResourceId').click(function() {
-		    	$("#newResourceId").attr('disabled',"true");
-		        $('#newResourceFormId').bootstrapValidator('validate');
-		        if($('#newResourceFormId').data('bootstrapValidator').isValid()){
-		        	 	var resourceModel = {};
-			            $.each($("#newResourceFormId").serializeArray(), function(i, field) {  
-			                resourceModel[field.name] = field.value;  
-			            });
-						var resourcekeys=new Array();
-						$.each($("#newResourceKeyFormId .resourceKeyForm"), function(i) {  
-							var resourceKey = {};
-							$.each($($("#newResourceKeyFormId .resourceKeyForm")[i]).find(".keyName").serializeArray(), function(i, field) {  
-								resourceKey[field.name] = field.value;  
-				            });
-							resourcekeys[i]=resourceKey;
-			            });
-						resourceModel["resourceKeys"]=resourcekeys;
-						//console.log(resourceModel);
-			            //console.log(JSON.stringify(resourceModel));
-			            //var data=$("#newResourceFormId").serializeArray();
-			            var data={"resourceModelJson":JSON.stringify(resourceModel)}
-			            $.post("<c:url value='/manage/addResource.json' />",data ,function(data){
-			            	console.log("1111");
-			             });
-		        }
-		        $("#newResourceId").removeAttr('disabled');
-		    });
+				        message: '输入值错误',
+				        feedbackIcons: {
+				            valid: 'glyphicon glyphicon-ok',
+				            invalid: 'glyphicon glyphicon-remove',
+				            validating: 'glyphicon glyphicon-refresh'
+				        },
+				        fields: {
+				            name: {
+				                validators: {
+				                    notEmpty: {
+				                        message: '资源名称不能为空'
+				                    }
+				                }
+				            },
+				            floor: {
+				                validators: {
+				                	stringLength: {
+				                        min: 0,
+				                        max: 10,
+				                        message: '不能超过10位'
+				                    },
+				                    integer: {
+				                        message: '楼层只能输入数字'
+				                    }
+				                }
+				            },
+				            sequence: {
+				                validators: {
+				                	stringLength: {
+				                        min: 0,
+				                        max: 10,
+				                        message: '不能超过10位'
+				                    },
+				                    integer: {
+				                        message: '排序只能使用数字'
+				                    }
+				                }
+				            }
+				        }
+				    });
+				    $('#newResourceId').click(function() {
+				    	$("#newResourceId").attr('disabled',"true");
+				        $('#newResourceFormId').bootstrapValidator('validate');
+				        if($('#newResourceFormId').data('bootstrapValidator').isValid()){
+				        	 	var resourceModel = {};
+					            $.each($("#newResourceFormId").serializeArray(), function(i, field) {  
+					                resourceModel[field.name] = field.value;  
+					            });
+								var resourcekeys=new Array();
+								$.each($("#newResourceKeyFormId .resourceKeyForm"), function(i) {  
+									var resourceKey = {};
+									$.each($($("#newResourceKeyFormId .resourceKeyForm")[i]).find(".keyName").serializeArray(), function(i, field) {  
+										resourceKey[field.name] = field.value;  
+						            });
+									resourcekeys[i]=resourceKey;
+					            });
+								resourceModel["resourceKeys"]=resourcekeys;
+								//console.log(resourceModel);
+					            //console.log(JSON.stringify(resourceModel));
+					            //var data=$("#newResourceFormId").serializeArray();
+					            var data={"resourceModelJson":JSON.stringify(resourceModel)}
+					            $.post("<c:url value='/manage/addResource.json' />",data ,function(data){
+					            	console.log("1111");
+					             });
+				        }
+				        $("#newResourceId").removeAttr('disabled');
+				    });
 		</script>
 
 <script type="text/javascript">

@@ -1,10 +1,10 @@
 package com.ldps.service;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
 import com.ldps.data.APIMessage;
+import com.ldps.model.ResourceKeyModel;
 import com.ldps.model.ResourceModel;
 
 public interface IResourceService {
@@ -64,6 +64,9 @@ public interface IResourceService {
 
 	List<ResourceModel> queryPriResWithKeysByBIdAndCusId(Integer buildingId,
 			Long customerId);
-
+	
+	ResourceModel getReourceAndKeyById(Integer sourceId);
+	List<ResourceKeyModel> queryKeyByresource(Integer resourceId);
 	APIMessage importResFromExcel(String filePath, Integer nodeId) throws IOException;
+
 }

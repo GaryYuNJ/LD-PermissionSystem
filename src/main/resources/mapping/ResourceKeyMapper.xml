@@ -36,6 +36,18 @@
     delete from RESOURCE_KEY
     where ID = #{id,jdbcType=INTEGER}
   </delete>
+  
+  <delete id="deleteByReourceNotIn">
+    delete from RESOURCE_KEY
+    where RESOURCE_ID = #{resourceId,jdbcType=INTEGER}
+    <if test="ids!=null and ids.size()>0">
+	     AND ID NOT IN
+	   	<foreach item="item" index="index" collection="ids" open="(" separator="," close=")">  
+	  		#{item}  
+	 	</foreach>
+ 	</if>
+  </delete>
+
   <insert id="insert" parameterType="com.ldps.model.ResourceKeyModel" >
     insert into RESOURCE_KEY (ID, MAC, PASSWORD, 
       MANUFACTURER_ID, RESOURCE_ID, R_INT1, 
