@@ -13,6 +13,10 @@
     <result column="CREATE_DATE" property="createDate"  />
     <result column="CREATE_USER" property="createUser" jdbcType="INTEGER" />
   </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="com.ldps.model.ResourceGrpRelModel" >
+    delete from RESOURCE_GROUP_REL
+    where RGROUP_ID = #{rgroupId,jdbcType=INTEGER} and RESOURCE_ID = #{resourceId,jdbcType=INTEGER}
+  </delete>
   <insert id="insert" parameterType="com.ldps.model.ResourceGrpRelModel" >
     insert into RESOURCE_GROUP_REL (RGROUP_ID, RESOURCE_ID, CREATE_DATE, 
       CREATE_USER)

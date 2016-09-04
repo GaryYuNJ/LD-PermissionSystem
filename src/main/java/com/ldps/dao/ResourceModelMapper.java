@@ -46,5 +46,8 @@ public interface ResourceModelMapper {
 	ResourceModel selectWithResKeysByName(@Param("name") String name);
 
 	ResourceModel selectByCondition(ResourceModel newResModel);
-	
+	List<ResourceModel> selectResouceListByConditionWithGId(@Param("resourceModel")ResourceModel resourceModel,@Param("startRow") Integer startRow,
+			@Param("pageSize") Integer pageSize);
+	List<ResourceModel> selectCountConditionWithGId(@Param("resourceModel")ResourceModel resourceModel,@Param("startRow") Integer startRow,
+			@Param("pageSize") Integer pageSize);
 }

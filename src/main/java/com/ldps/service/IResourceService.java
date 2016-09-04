@@ -69,4 +69,5 @@ public interface IResourceService {
 	List<ResourceKeyModel> queryKeyByresource(Integer resourceId);
 	APIMessage importResFromExcel(String filePath, Integer nodeId) throws IOException;
 
+	List<ResourceModel> queryBasicResByConditionWithGId(ResourceModel model, Integer pageNo, Integer pageSize);
 }

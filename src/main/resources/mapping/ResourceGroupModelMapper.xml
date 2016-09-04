@@ -21,6 +21,11 @@
     <result column="CHR1" property="chr1" jdbcType="CHAR" />
     <result column="CHR2" property="chr2" jdbcType="CHAR" />
   </resultMap>
+  
+  <resultMap id="resultOfInteger" type="java.lang.Integer">  
+       <result column="totalCount" property="totalCount" jdbcType="INTEGER" />  
+  </resultMap>  
+  
   <sql id="Base_Column_List" >
     ID, NAME, STATUS, IS_PUBLIC, CREATE_DATE, CREATE_USER, NUM1, NUM2, VC1, VC2, CHR1, 
     CHR2
@@ -31,6 +36,28 @@
     from RESOURCE_GROUP
     where ID = #{id,jdbcType=INTEGER}
   </select>
+   <select id="selectCountByCondition" resultMap="resultOfInteger" parameterType="com.ldps.model.ResourceGroupModel" >
+	SELECT count(1) AS totalCount
+	FROM RESOURCE_GROUP 
+	<if test="resourceGroupModel!=null">
+    	<where>
+    		<if test="resourceGroupModel.name != null"><bind name="nameLike" value="'%' + resourceGroupModel.name + '%'" /> NAME like #{nameLike}</if>
+    	</where>
+     </if>
+  </select>
+  
+  <select id="selectResouceGroupListByCondition" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from RESOURCE_GROUP 
+   <if test="resourceGroupModel!=null">
+    	<where>
+    		<if test="resourceGroupModel.name != null"><bind name="nameLike" value="'%' + resourceGroupModel.name + '%'" /> NAME like #{nameLike}</if>
+    	</where>
+     </if>
+    limit #{startRow,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from RESOURCE_GROUP
     where ID = #{id,jdbcType=INTEGER}

@@ -19,7 +19,7 @@
 						<a href="<c:url value="/manage/resourceManagePage" />"><i class="icon-list-alt"></i> 资源管理 </a>
 					</li>
 					<li class="has_sub">
-						<a href="<c:url value="/manage/resourceManagePage" />"><i class="icon-list-alt"></i> 资源组管理 </a>
+						<a href="<c:url value="/manage/resourceGroupManagePage" />"><i class="icon-list-alt"></i> 资源组管理 </a>
 					</li>
 					<li class="has_sub">
 						<a href="<c:url value="/user/userManage" />"><i class="icon-list-alt"></i> 用户管理 </a>

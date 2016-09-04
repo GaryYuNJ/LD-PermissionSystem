@@ -411,4 +411,14 @@ public class ResourceServiceImpl implements IResourceService {
         
         return message;
 	}
+
+	@Override
+	public List<ResourceModel> queryBasicResByConditionWithGId(
+			ResourceModel model, Integer pageNo, Integer pageSize) {
+		if(model!=null){
+			if(StringUtils.isEmpty(model.getName()))
+				model.setName(null);
+		} 
+		return resourceDao.selectResouceListByConditionWithGId(model, pageNo, pageSize);
+	}
 }

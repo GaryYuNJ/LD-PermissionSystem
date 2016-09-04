@@ -58,7 +58,27 @@ public class ResourceModel {
     
     private CusGrpResourceRelModel cGrpResRelModel; //指定要查询关联情况的customer group Model
     
-    private List<ResourceKeyModel> resourceKeys;
+    private Integer resourceGroupId;
+    
+    private String ifBindGroup;// 是否需要查询绑定当前的
+    
+    public String getIfBindGroup() {
+		return ifBindGroup;
+	}
+
+	public void setIfBindGroup(String ifBindGroup) {
+		this.ifBindGroup = ifBindGroup;
+	}
+
+	public Integer getResourceGroupId() {
+		return resourceGroupId;
+	}
+
+	public void setResourceGroupId(Integer resourceGroupId) {
+		this.resourceGroupId = resourceGroupId;
+	}
+
+	private List<ResourceKeyModel> resourceKeys;
     
 	public List<ResourceKeyModel> getResourceKeys() {
 		return resourceKeys;

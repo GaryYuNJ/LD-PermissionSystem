@@ -147,11 +147,38 @@ public class ResourceControl {
 			bData.setTotal(iResourceService
 					.queryCountByCondition(resourceModel));
 		} else {
+			bData.setPage(0);
+			bData.setRows(new Object());
 			bData.setTotal(0);
 		}
 		return JSON.toJSONString(bData);
 	}
 
+	@ResponseBody
+	@RequestMapping(value = "resourceSearchWithGroup.json")
+	public String resourceSearchWithGroup(String search,
+			@RequestParam("limit") Integer limit,
+			@RequestParam("offset") Integer offset) {
+
+		ResourceModel resourceModel = JSON.parseObject(search,
+				ResourceModel.class);
+		BootstrapTableData bData = new BootstrapTableData();
+
+		List<ResourceModel> resourceList = iResourceService
+				.queryBasicResByConditionWithGId(resourceModel, offset, limit);
+		if (null != resourceList && resourceList.size() > 0) {
+			bData.setRows(resourceList);
+			bData.setPage(offset / limit + 1);
+			bData.setTotal(iResourceService
+					.queryCountByCondition(resourceModel));
+		} else {
+			bData.setPage(0);
+			bData.setRows(new Object());
+			bData.setTotal(0);
+		}
+		return JSON.toJSONString(bData);
+	}
+	
 	// 关联用户查询资源，返回用户是否有权限标识
 	@ResponseBody
 	@RequestMapping(value = "resourceSearchWithCusId.json")

@@ -8,11 +8,11 @@
 	<!-- Page heading -->
 	<div class="page-head">
 		<h2 class="pull-left">
-			<i class="icon-home"></i> 资源组管理页面
+			<i class="icon-home"></i> 资源管理页面
 		</h2>
 		<!-- Breadcrumb -->
 		<div class="bread-crumb pull-right">
-			<a href="index.html"><i class="icon-home"></i> 资源组管理页面</a>
+			<a href="index.html"><i class="icon-home"></i> 资源管理页面</a>
 			<!-- Divider -->
 			<span class="divider">/</span> <a href="#" class="bread-current">资源列表</a>
 		</div>
@@ -507,7 +507,6 @@ $('#jstree_resource').on("rename_node.jstree", function (e,node) {
 					    });  
 					    //参数转为json字符串，并赋给search变量 ,JSON.stringify <ie7不支持，有第三方解决插件  
 					    params.search = JSON.stringify(search)  
-					    
 					    return params;  
 				}  
 				console.info(params);  
