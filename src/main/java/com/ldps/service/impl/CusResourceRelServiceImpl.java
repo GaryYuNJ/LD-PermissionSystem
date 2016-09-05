@@ -11,7 +11,10 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ldps.dao.CusResourceRelModelMapper;
+import com.ldps.dao.CustomerResGroupRelModelMapper;
+import com.ldps.dao.ResourceGrpRelModelMapper;
 import com.ldps.model.CusResourceRelModel;
+import com.ldps.model.CustomerResGroupRelModel;
 import com.ldps.model.ResourceModel;
 import com.ldps.service.ICusResourceRelService;
 import com.ldps.service.INodeService;
@@ -28,6 +31,10 @@ public class CusResourceRelServiceImpl implements ICusResourceRelService {
 	
 	@Resource
 	private INodeService nodeService;
+	@Resource
+	ResourceGrpRelModelMapper resourceGrpRelModelDao;
+	@Resource
+	CustomerResGroupRelModelMapper cusResGroupRelModelDao;
 
 	@Override
 	public CusResourceRelModel queryModelByCustomerIdAndResId(Long customerId,
@@ -153,6 +160,45 @@ public class CusResourceRelServiceImpl implements ICusResourceRelService {
 		return flag;
 	}
 
+	
+	//连带授权资源组
+	@Override
+	public int jointAuthorizeResGrpPermission(Long customerId,
+			Integer rgroupId, Date startDate, Date endDate, Long createUser) {
+		//添加、更新customer & resGroup relation
+		
+		CustomerResGroupRelModel model = new CustomerResGroupRelModel();
+		model.setCreateDate(new Date());
+		model.setCreateUser(createUser);
+		model.setCustomerId(customerId);
+		model.setEndDate(endDate);
+		model.setRgroupId(rgroupId);
+		model.setStartDate(startDate);
+		
+		int flag = 0;
+		CustomerResGroupRelModel modelTem = cusResGroupRelModelDao.selectByCondition(model);
+		if(null != modelTem){
+			flag = cusResGroupRelModelDao.updateByCondition(model);
+		}else{
+			flag = cusResGroupRelModelDao.insertSelective(model);
+		}
+		
+		//添加customer & resource relation
+		//通过 resGroupId 获得resourceId list
+		List <Integer>resourceIds = resourceGrpRelModelDao.selectResIdsByGroupId(rgroupId);
+		
+		if(null != resourceIds){
+			//循环连带授权
+			for(Integer rId : resourceIds){
+				this.jointAuthorizeResPermission(customerId, rId, startDate, 
+						endDate, "N", createUser);
+			}
+		}
+		
+		return flag;
+	}
+
+	
 	@Override
 	public int updateByConditionSelective(CusResourceRelModel crModel) {
 
@@ -170,6 +216,12 @@ public class CusResourceRelServiceImpl implements ICusResourceRelService {
 		String disableFlag = "N";
 		Integer user = 0;
 		return customerResourceRelDao.disableBatchResourcePermission(disableFlag,user,customerIds,resourceId);
+	}
+
+	@Override
+	public int deleteResGrpPermission(CustomerResGroupRelModel crgModel) {
+		// TODO Auto-generated method stub
+		return cusResGroupRelModelDao.deleteByCondition(crgModel);
 	}
 
 }

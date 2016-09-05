@@ -27,6 +27,26 @@ public class ResourceGroupModel {
     private String chr1;
 
     private String chr2;
+    
+    private Long specificCusId;
+    
+    private CustomerResGroupRelModel cusResGrpRelModel;
+    
+	public Long getSpecificCusId() {
+		return specificCusId;
+	}
+
+	public void setSpecificCusId(Long specificCusId) {
+		this.specificCusId = specificCusId;
+	}
+
+	public CustomerResGroupRelModel getCusResGrpRelModel() {
+		return cusResGrpRelModel;
+	}
+
+	public void setCusResGrpRelModel(CustomerResGroupRelModel cusResGrpRelModel) {
+		this.cusResGrpRelModel = cusResGrpRelModel;
+	}
 
 	public Integer getId() {
         return id;

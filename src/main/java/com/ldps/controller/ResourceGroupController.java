@@ -142,4 +142,34 @@ public class ResourceGroupController {
 		}
 		return JSON.toJSONString(am);
 	}
+	
+	//资源组查询
+	@ResponseBody
+	@RequestMapping(value = "resGroupSearchWithCusId.json")
+	public String resGroupSearchWithCusId(String search,
+			@RequestParam("limit") Integer limit,
+			@RequestParam("offset") Integer offset) {
+
+		ResourceGroupModel resourceGroupModel = JSON.parseObject(search,
+				ResourceGroupModel.class);
+		BootstrapTableData bData = new BootstrapTableData();
+
+		List<ResourceGroupModel> resourceList = iResourceGroupService
+				.queryBasicResGroupWithCusId(resourceGroupModel, offset, limit);
+		
+		if (null != resourceList && resourceList.size() > 0) {
+			bData.setRows(resourceList);
+			bData.setPage(offset / limit + 1);
+			bData.setTotal(iResourceGroupService
+					.queryCountByCondition(resourceGroupModel));
+		} else {
+			bData.setTotal(0);
+		}
+		if(null == bData.getRows()){
+			bData.setPage(0);
+			bData.setRows(new Object());
+			bData.setTotal(0);
+		}
+		return JSON.toJSONString(bData);
+	}
 }

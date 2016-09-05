@@ -5,6 +5,7 @@ import com.ldps.data.CusResourceRelData;
 import com.ldps.data.CustomerData;
 import com.ldps.data.ResourceData;
 import com.ldps.model.CusResourceRelModel;
+import com.ldps.model.CustomerResGroupRelModel;
 
 import java.util.Date;
 import java.util.List;
@@ -87,4 +88,9 @@ public interface CustomerFacade {
 
 	public List<ResourceData> queryPrivateResWithKeysByBIdAndMobile(
 			Integer buildingId, String mobile);
+
+	public int jointAuthCusResGrpPermission(
+			CustomerResGroupRelModel cusResGrpRelModel);
+
+	public int deleteResGrpPermission(Long userId, Integer resGroupId);
 }

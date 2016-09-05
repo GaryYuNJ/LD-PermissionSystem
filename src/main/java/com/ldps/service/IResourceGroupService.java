@@ -19,4 +19,7 @@ public interface IResourceGroupService {
 	
 	int addResourceGroupRel(ResourceGrpRelModel model);
 	int deleteResourceGroupRel(ResourceGrpRelModel model);
+
+	List<ResourceGroupModel> queryBasicResGroupWithCusId(
+			ResourceGroupModel resourceGroupModel, Integer offset, Integer limit);
 }

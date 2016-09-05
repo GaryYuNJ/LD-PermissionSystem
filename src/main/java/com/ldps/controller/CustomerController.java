@@ -23,6 +23,7 @@ import com.ldps.data.CustomerData;
 import com.ldps.facade.CustomerFacade;
 import com.ldps.model.CusResourceRelModel;
 import com.ldps.model.CustomerModel;
+import com.ldps.model.CustomerResGroupRelModel;
 import com.ldps.model.ResourceModel;
 import com.ldps.service.ICustomerService;
 
@@ -214,6 +215,54 @@ public class CustomerController {
 		return JSON.toJSONString(apiMessage);
 	}
 
+	
+	//后台页面上更新\添加用户资源组权限
+	@RequestMapping(value="authCusResGrpPermission.json",method = { RequestMethod.GET,
+			RequestMethod.POST },produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public String authCusResGrpPermission( @RequestParam("modelJsonStr") String modelJsonStr ,
+			String startDateStr, String endDateStr, ModelMap model) throws ParseException{
+		APIMessage apiMessage = new APIMessage();
+		CustomerResGroupRelModel cusResGrpRelModel= JSON.parseObject(modelJsonStr, CustomerResGroupRelModel.class);
+		
+		SimpleDateFormat sf = new SimpleDateFormat("yyy-MM-dd HH:mm");
+		
+		if(!StringUtils.isEmpty(startDateStr)){
+			cusResGrpRelModel.setStartDate(sf.parse(startDateStr));
+		}
+		if(!StringUtils.isEmpty(endDateStr)){
+			cusResGrpRelModel.setEndDate(sf.parse(endDateStr));
+		}
+		
+		cusResGrpRelModel.setCreateUser(0L);
+		
+		int flag = 0;
+		//联合授权
+		flag = customerFacade.jointAuthCusResGrpPermission(cusResGrpRelModel);
+		
+		apiMessage.setStatus(flag);
+		
+		return JSON.toJSONString(apiMessage);
+	}
+	
+
+	//禁用资源组
+	@RequestMapping(value="disableresGroupPermission.json",method = { RequestMethod.GET,
+			RequestMethod.POST },produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public String disableresGroupPermission( @RequestParam("userId") Long userId , 
+			@RequestParam("resGroupId") Integer resGroupId , ModelMap model){
+		
+		APIMessage apiMessage = new APIMessage();
+		
+		int flag = customerFacade.deleteResGrpPermission(userId, resGroupId);
+		apiMessage.setStatus(flag);
+		
+		return JSON.toJSONString(apiMessage);
+	}
+
+	
+	
 	public CustomerModel getCustomer() {
 		return customer;
 	}

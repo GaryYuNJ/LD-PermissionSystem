@@ -30,12 +30,7 @@
 						<div class="widget-head">
 							<div class="pull-left">用户组列表</div>
 							<div class="widget-icons pull-right">
-								<a href="javascript:void(0);"  onclick = "$('#userGroupListTable').hide();" id="icon_user_list1" class="wminimize">
-									<i class="icon-chevron-up"></i>
-								</a>
-								<a href="javascript:void(0);"  onclick = "$('#userGroupListTable').show();" id="icon_user_list2" class="wminimize">
-									<i class="icon-chevron-down"></i>
-								</a>
+								<a href="#" class="wminimize" id="icon_group_list1"><i class="icon-chevron-up"></i></a>
 							</div>
 							<div class="clearfix"></div>
 						</div>
@@ -86,12 +81,7 @@
 						<div class="widget-head">
 							<div class="pull-left">用户组详情</div>
 							<div class="widget-icons pull-right">
-								<a href="javascript:void(0);"  onclick = "$('#userGroupDetailsTable').hide();" id="icon_user_list1" class="wminimize">
-									<i class="icon-chevron-up"></i>
-								</a>
-								<a href="javascript:void(0);"  onclick = "$('#userGroupDetailsTable').show();" id="icon_user_list2" class="wminimize">
-									<i class="icon-chevron-down"></i>
-								</a>
+								<a href="#" class="wminimize" id="icon_group_list2"><i class="icon-chevron-down"></i></a>
 							</div>
 							<div class="clearfix"></div>
 						</div>
@@ -355,6 +345,15 @@
 
 <%@ include file="/common/script.jsp"%>
 <script type="text/javascript">
+	
+	//显示详情内容
+	var showResourceGroup = function (resourceGroupId) {
+		  $("#icon_group_list1").click();
+		  if($("#icon_group_list2 i.icon-chevron-down").length>0){
+			  console.log("1");
+			  $("#icon_group_list2").click();
+			}
+	};
 	
 	var getUserURL = "<c:url value='/userGroup/showUserGroupList.json' />";
 	var pageNumber = 1;

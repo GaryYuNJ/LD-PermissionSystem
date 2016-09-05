@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.ldps.model.CusResourceRelModel;
+import com.ldps.model.CustomerResGroupRelModel;
 
 public interface ICusResourceRelService {
 
@@ -36,4 +37,9 @@ public interface ICusResourceRelService {
 
 	int disableBatchResourcePermission(List<Long> customerIds,
 			Integer resourceId);
+
+	int jointAuthorizeResGrpPermission(Long customerId, Integer rgroupId,
+			Date startDate, Date endDate, Long createUser);
+
+	int deleteResGrpPermission(CustomerResGroupRelModel crgModel);
 }

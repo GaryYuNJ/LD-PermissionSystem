@@ -6,6 +6,8 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.ldps.dao.CusGroupResGroupRelModelMapper;
+import com.ldps.dao.CustomerResGroupRelModelMapper;
 import com.ldps.dao.ResourceGroupModelMapper;
 import com.ldps.dao.ResourceGrpRelModelMapper;
 import com.ldps.model.ResourceGroupModel;
@@ -18,6 +20,8 @@ public class ReourceGroupServiceImpl implements IResourceGroupService {
 	private ResourceGroupModelMapper resourceGroupModelDao;
 	@Resource
 	private ResourceGrpRelModelMapper resourceGrpRelModelDao;
+	@Resource
+	private CustomerResGroupRelModelMapper cusResGroupRelModelMapper;
 	
 	@Override
 	public List<ResourceGroupModel> queryBasicResGroupByCondition(
@@ -54,6 +58,13 @@ public class ReourceGroupServiceImpl implements IResourceGroupService {
 	public int deleteResourceGroupRel(ResourceGrpRelModel model) {
 		// TODO Auto-generated method stub
 		return resourceGrpRelModelDao.deleteByPrimaryKey(model);
+	}
+
+	@Override
+	public List<ResourceGroupModel> queryBasicResGroupWithCusId(
+			ResourceGroupModel resourceGroupModel, Integer offset, Integer limit) {
+		// TODO Auto-generated method stub
+		return cusResGroupRelModelMapper.selectResGrpListWithSpecUserId(resourceGroupModel, offset, limit);
 	}
 
 }

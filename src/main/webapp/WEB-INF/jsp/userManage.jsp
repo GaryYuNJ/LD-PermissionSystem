@@ -30,13 +30,7 @@
 						<div class="widget-head">
 							<div class="pull-left">用户列表</div>
 							<div class="widget-icons pull-right">
-								<a href="javascript:void(0);"  onclick = "$('#userListTable').hide();" id="icon_user_list1" class="wminimize">
-									<i class="icon-chevron-up"></i>
-								</a>
-								<a href="javascript:void(0);"  onclick = "$('#userListTable').show();" id="icon_user_list2" class="wminimize">
-									<i class="icon-chevron-down"></i>
-								</a>
-								<!-- <a href="#" class="wclose"><i class="icon-remove"></i></a> -->
+								<a href="#" class="wminimize" id="icon_group_list1"><i class="icon-chevron-up"></i></a>
 							</div>
 							<div class="clearfix"></div>
 						</div>
@@ -83,12 +77,7 @@
 						<div class="widget-head">
 							<div class="pull-left">用户详情</div>
 							<div class="widget-icons pull-right">
-								<a href="javascript:void(0);"  onclick = "$('#userDetailsTable').hide();" id="icon_user_list1" class="wminimize">
-									<i class="icon-chevron-up"></i>
-								</a>
-								<a href="javascript:void(0);"  onclick = "$('#userDetailsTable').show();" id="icon_user_list2" class="wminimize">
-									<i class="icon-chevron-down"></i>
-								</a>
+								<a href="#" class="wminimize" id="icon_group_list2"><i class="icon-chevron-down"></i></a>
 							</div>
 							<div class="clearfix"></div>
 						</div>
@@ -103,131 +92,157 @@
 							    </ul>
 							       
 							    <div class="tab-content">
-							      <!-- 用户详情tab -->
-							      <div class="tab-pane active" id="home">
-							      		<!-- Bootstrap 表单 -->
-									  <form class="form-horizontal" role="form">
-										    <div class="form-group">
-				                                  <label class="col-lg-2 control-label">ID</label>
-				                                  <div class="col-lg-3">
-				                                    <input type="text" class="form-control" disabled="true" placeholder="ID" id="userId_InForm">
-				                                  </div>
-				                                   <label class="col-lg-2 control-label">用户名</label>
-				                                  <div class="col-lg-3">
-				                                    <input type="text" class="form-control"  disabled="true" id="userName_InForm" placeholder="用户名">
-				                                  </div>
-			                                </div>
-			                                <div class="form-group">
-				                                  <label class="col-lg-2 control-label">手机号</label>
-				                                  <div class="col-lg-3">
-				                                    <input type="text" class="form-control"  disabled="true" placeholder="手机号" id="userMobile_InForm">
-				                                  </div>
-				                                   <label class="col-lg-2 control-label">性别</label>
-				                                  <div class="col-lg-3">
-				                                    <input type="text" class="form-control"  disabled="true" id="userSex_InForm" placeholder="性别">
-				                                  </div>
-			                                </div>
-										    <div class="form-group">
-				                                  <label class="col-lg-2 control-label">邮箱</label>
-				                                  <div class="col-lg-3">
-				                                    <input type="text" class="form-control"  disabled="true" placeholder="邮箱" id="userEmail_InForm">
-				                                  </div>
-				                                   <label class="col-lg-2 control-label">生日</label>
-				                                  <div class="col-lg-3">
-				                                    <input type="text" class="form-control"  disabled="true" id="userBirth_InForm" placeholder="生日">
-				                                  </div>
-			                                </div>
-			                                <div class="form-group">
-			                                	  <label class="col-lg-2 control-label">客户关系</label>
-				                                  <div class="col-lg-3">
-				                                    <select class="form-control"  disabled="true"  id="userRelation_InForm">
-				                                      <option></option>
-				                                      <option value="1">来访</option>
-				                                      <option value="2">业主</option>
-				                                    </select>
-				                                  </div>
-			                                </div>
-									    	<div class="control-group">
-									          <label class="control-label"></label>
-									          <!-- Button -->
-									          <div class="controls">
-									            <button class="btn btn-success disabled">保存</button>
-									          </div>
-									        </div>
-									  </form>
-								  </div>
-								  
-								  <!-- usergroup tab -->
-							      <div class="tab-pane" id="userGroup">
-								      <div class="col-lg-9">
-											<hr>
-											<form class="form-horizontal" role="form">
-												<div class="form-group">
-													<label class="col-lg-2 control-label" style="width: 120px">用户组名称</label>
-													<div class="col-lg-3">
-														<input type="text" id="userGroupNameSearch" class="form-control" placeholder="用户组名称">
+								      <!-- 用户详情tab -->
+								      <div class="tab-pane active" id="home">
+								      		<!-- Bootstrap 表单 -->
+										  <form class="form-horizontal" role="form">
+											    <div class="form-group">
+					                                  <label class="col-lg-2 control-label">ID</label>
+					                                  <div class="col-lg-3">
+					                                    <input type="text" class="form-control" disabled="true" placeholder="ID" id="userId_InForm">
+					                                  </div>
+					                                   <label class="col-lg-2 control-label">用户名</label>
+					                                  <div class="col-lg-3">
+					                                    <input type="text" class="form-control"  disabled="true" id="userName_InForm" placeholder="用户名">
+					                                  </div>
+				                                </div>
+				                                <div class="form-group">
+					                                  <label class="col-lg-2 control-label">手机号</label>
+					                                  <div class="col-lg-3">
+					                                    <input type="text" class="form-control"  disabled="true" placeholder="手机号" id="userMobile_InForm">
+					                                  </div>
+					                                   <label class="col-lg-2 control-label">性别</label>
+					                                  <div class="col-lg-3">
+					                                    <input type="text" class="form-control"  disabled="true" id="userSex_InForm" placeholder="性别">
+					                                  </div>
+				                                </div>
+											    <div class="form-group">
+					                                  <label class="col-lg-2 control-label">邮箱</label>
+					                                  <div class="col-lg-3">
+					                                    <input type="text" class="form-control"  disabled="true" placeholder="邮箱" id="userEmail_InForm">
+					                                  </div>
+					                                   <label class="col-lg-2 control-label">生日</label>
+					                                  <div class="col-lg-3">
+					                                    <input type="text" class="form-control"  disabled="true" id="userBirth_InForm" placeholder="生日">
+					                                  </div>
+				                                </div>
+				                                <div class="form-group">
+				                                	  <label class="col-lg-2 control-label">客户关系</label>
+					                                  <div class="col-lg-3">
+					                                    <select class="form-control"  disabled="true"  id="userRelation_InForm">
+					                                      <option></option>
+					                                      <option value="1">来访</option>
+					                                      <option value="2">业主</option>
+					                                    </select>
+					                                  </div>
+				                                </div>
+										    	<div class="control-group">
+										          <label class="control-label"></label>
+										          <!-- Button -->
+										          <div class="controls">
+										            <button class="btn btn-success disabled">保存</button>
+										          </div>
+										        </div>
+										  </form>
+									  </div>
+									  
+									  <!-- usergroup tab -->
+								      <div class="tab-pane" id="userGroup">
+									      <div class="col-lg-9">
+												<hr>
+												<form class="form-horizontal" role="form">
+													<div class="form-group">
+														<label class="col-lg-2 control-label" style="width: 120px">用户组名称</label>
+														<div class="col-lg-3">
+															<input type="text" id="userGroupNameSearch" class="form-control" placeholder="用户组名称">
+														</div>
+														<div class="col-lg-3">
+															<button type="button" onclick = "$('#userGroupListTableId').bootstrapTable('refresh');" class="btn btn-primary">
+																<i class="icon-search"></i> 查询
+															</button>
+														</div>
 													</div>
+												</form>
+											</div>
+								      	<div class="col-lg-12">
+											<table class="table table-striped table-bordered table-hover"
+												id="userGroupListTableId">
+											</table>
+										</div>
+									  </div>
+									  
+									  <!-- 用户与资源关系tab -->
+								      <div class="tab-pane" id="userResource">
+								      		<!-- 资源树节点 -->
+								      		<div class="col-lg-3">
+													<div class="widget treeMinHeight" id="jstree_resource"></div>
+											</div>
+											<!-- 资源table -->
+										  	<div class="col-lg-9">
+											<hr>
+											<form class="form-horizontal" role="form" id="resourceSearchform">
+												<div class="form-group">
+													<div class="col-lg-2">
+														<input type="text" class="form-control" placeholder="资源名称" name="name">
+													</div>
+													<div class="col-lg-2">
+														<select class="form-control" name="deviceType">
+														  <option value="">资源属性</option>
+														  <option value="1">公共资源</option>
+														  <option value="2">基础资源</option>
+														  <option value="3">私有资源</option>
+														</select>
+													</div>
+													<div class="col-lg-2">
+														<select class="form-control" name="buildingId" id="buildingId">
+														  <option value="">选择楼栋</option>
+														</select>
+													</div>
+													
 													<div class="col-lg-3">
-														<button type="button" onclick = "$('#userGroupListTableId').bootstrapTable('refresh');" class="btn btn-primary">
+														<button type="button" class="btn btn-primary" id="doSearchResource">
 															<i class="icon-search"></i> 查询
 														</button>
 													</div>
 												</div>
+												<input type="hidden" id="userId_hidden" name="specificUserId">
+												<input type="hidden" id="resourceNodeId_hidden" name="nodeId">
 											</form>
+											<table class="table table-striped table-bordered table-hover"
+												id="resourceTableId">
+			
+											</table>
 										</div>
-							      	<div class="col-lg-12">
-										<table class="table table-striped table-bordered table-hover"
-											id="userGroupListTableId">
-										</table>
-									</div>
-								  </div>
-								  
-								  <!-- 用户与资源关系tab -->
-							      <div class="tab-pane" id="userResource">
-							      		<!-- 资源树节点 -->
-							      		<div class="col-lg-3">
-												<div class="widget treeMinHeight" id="jstree_resource"></div>
-										</div>
-										<!-- 资源table -->
-									  	<div class="col-lg-9">
-										<hr>
-										<form class="form-horizontal" role="form" id="resourceSearchform">
-											<div class="form-group">
-												<div class="col-lg-2">
-													<input type="text" class="form-control" placeholder="资源名称" name="name">
-												</div>
-												<div class="col-lg-2">
-													<select class="form-control" name="deviceType">
-													  <option value="">资源属性</option>
-													  <option value="1">公共资源</option>
-													  <option value="2">基础资源</option>
-													  <option value="3">私有资源</option>
-													</select>
-												</div>
-												<div class="col-lg-2">
-													<select class="form-control" name="buildingId" id="buildingId">
-													  <option value="">选择楼栋</option>
-													</select>
-												</div>
-												
-												<div class="col-lg-3">
-													<button type="button" class="btn btn-primary" id="doSearchResource">
-														<i class="icon-search"></i> 查询
-													</button>
-												</div>
+									  </div>
+									  
+									  <!-- 用户与资源组关系 -->
+								      <div class="tab-pane" id="userResourceGroup">
+										
+											<div class="col-lg-9">
+												<hr>
+												<form class="form-horizontal" role="form" id="groupSearchForm">
+													<div class="form-group">
+														<label class="col-lg-2 control-label" style="width: 120px">资源组名称</label>
+														<div class="col-lg-3">
+															<input type="text" name="name" class="form-control" placeholder="资源组名称">
+														</div>
+														<div class="col-lg-3">
+															<button type="button"  class="btn btn-primary" id="doGroupsearch">
+																<i class="icon-search"></i> 查询
+															</button>
+														</div>
+													</div>
+												</form>
 											</div>
-											<input type="hidden" id="userId_hidden" name="specificUserId">
-											<input type="hidden" id="resourceNodeId_hidden" name="nodeId">
-										</form>
-										<table class="table table-striped table-bordered table-hover"
-											id="resourceTableId">
-		
-										</table>
-									</div>
-								  </div>
-								  
-								  <!-- 用户与资源组关系 -->
-							      <div class="tab-pane" id="userResourceGroup">...</div>
+											
+											<div class="col-lg-12">
+												<table class="table table-striped table-bordered table-hover"
+													id="resourceGroupTableId">
+													
+												</table>
+											</div>
+	
+									 </div>
 							    </div>
 							</div>
 						</div>
@@ -244,6 +259,68 @@
 <!-- Content ends -->
 <!-- 弹窗 -->
 <!-- Modal -->
+<div class="modal fade" id="addResGroupPermissionLayer" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel">权限更新</h4>
+			</div>
+			<div class="modal-body">
+				<form class="form-horizontal" role="form" id="addResGrpPermissionForm">
+	                   <div class="form-group">
+	                      <label class="col-lg-2 control-label">资源组ID</label>
+	                     <div class="col-lg-4">
+	                       <input type="text" class="form-control" id="resGrpId_addGrpPer" name="rgroupId"  readonly="true" placeholder="资源组ID">
+	                     </div>
+	                      <label class="col-lg-2 control-label">资源组名称</label>
+	                     <div class="col-lg-4">
+	                       <input type="text" class="form-control"  id="reGrpName_addGrpPer" disabled="true" placeholder="资源组名称">
+	                     </div>
+	                   </div>
+	                   <div class="form-group">
+	                      <label class="col-lg-2 control-label">用户ID</label>
+	                     <div class="col-lg-4">
+	                       <input type="text" class="form-control" id="userId_addGrpPer" name="customerId"  readonly="true" placeholder="用户ID">
+	                     </div>
+	                      <label class="col-lg-2 control-label">用户名</label>
+	                     <div class="col-lg-4">
+	                       <input type="text" class="form-control"  id="userName_addGrpPer" disabled="true" placeholder="用户名">
+	                     </div>
+	                   </div>
+	                   
+	                    <div class="form-group">  
+	                    	<label class="col-lg-2 control-label">起始时间</label>
+			                <div class='input-group date col-lg-4 datetimepicker'  style='padding-left:15px;'>
+			                    <input type='text' class="form-control"  id="startDate_addGrpPer" name="startDateStr"  placeholder="无限制"/>
+			                    <span class="input-group-addon">
+			                        <span class="glyphicon glyphicon-calendar"></span>
+			                    </span>
+			                </div>
+                	   </div>  
+                	   <div class="form-group">  
+	                    	<label class="col-lg-2 control-label">过期时间</label>
+			                <div class='input-group date col-lg-4 datetimepicker'  style='padding-left:15px;' >
+			                    <input type='text' class="form-control" id="endDate_addGrpPer" name="endDateStr" placeholder="无限制"/>
+			                    <span class="input-group-addon">
+			                        <span class="glyphicon glyphicon-calendar"></span>
+			                    </span>
+			                </div>
+                	  </div>
+	             </form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="closeButton_addGrpPer" class="btn btn-default" data-dismiss="modal">关闭</button>
+				<button type="button" id="saveButton_addGrpPer" class="btn btn-primary">保存</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 <div class="modal fade" id="addPermissionLayer" tabindex="-1" role="dialog"
 	aria-labelledby="myModalLabel">
 	<div class="modal-dialog" role="document">
@@ -320,12 +397,22 @@
 		</div>
 	</div>
 </div>
+
 <input type="hidden" id="userName_hidden" name="specificUserId">
 
 <%@ include file="/common/script.jsp"%>
 
 <!-- user\usergroup tab js -->
 <script type="text/javascript">
+
+	//显示详情内容
+	var showResourceGroup = function (resourceGroupId) {
+		  $("#icon_group_list1").click();
+		  if($("#icon_group_list2 i.icon-chevron-down").length>0){
+			  console.log("1");
+			  $("#icon_group_list2").click();
+			}
+	};
 
 	//用户列表table
 	$('#userListTableId').bootstrapTable({
@@ -388,10 +475,10 @@
                    field: 'id',
                    align: 'center',
                    formatter:function(value,row,index){
-                 var e = '<a href="javascript:void(0);" mce_href="#" onclick="showUser(\''+ row.id + '\',\''+ row.name + '\')">详情</a> ';  
-                 //var d = '<a href="#" mce_href="#" onclick="delete(\''+ row.id +'\')">删除</a> ';  
-                 //   return e+d;
-                 return e; 
+	                 var e = '<a href="javascript:void(0);" mce_href="#" onclick="showUser(\''+ row.id + '\',\''+ row.name + '\')">详情</a> ';  
+	                 //var d = '<a href="#" mce_href="#" onclick="delete(\''+ row.id +'\')">删除</a> ';  
+	                 //   return e+d;
+	                 return e; 
                  } 
                }
            ],
@@ -978,6 +1065,231 @@
 		}
 	 });
 </script>
+
+<!-- 用户与资源组 -->
+<script type="text/javascript">
+	var getgroupURL = "<c:url value='/manage/resGroupSearchWithCusId.json' />";
+	var pageNumber = 1;
+	$('#resourceGroupTableId').bootstrapTable({
+		method: 'get',
+	    url: getgroupURL, 
+	    dataType: "json",
+	    queryParams: resrouceGroupQueryParams,
+	    pageSize: 10,
+	    pageList: [10, 25, 50],  //可供选择的每页的行数（*）
+	    pageNumber: pageNumber,
+	    pagination: true, //分页
+	    singleSelect: false,
+	    idField: "id",  //标识哪个字段为id主键
+	    locale: "zh-CN", //表格汉化
+	    sidePagination: "server", //服务端处理分页
+       	columns: [
+			{
+			    title: '用户组ID',
+			      field: 'id',
+			      align: 'center',
+			      valign: 'middle'
+			  }, 
+               {
+                 title: '用户组名称',
+                   field: 'name',
+                   align: 'center',
+                   valign: 'middle'
+               }, 
+               {
+                   title: '权限',
+                   field: 'cusResGrpRelModel',
+                   align: 'center',
+                   formatter:function (value, row, index) {
+               		   if(null != value ){
+                		   if((null == row.cusResGrpRelModel.startDate || new Date(row.cusResGrpRelModel.startDate) < new Date() )
+	                			   &&  (null == row.cusResGrpRelModel.endDate || new Date(row.cusResGrpRelModel.endDate) > new Date() )){
+                			   return '<span class="label label-success">有权限</span>';
+                		   }else{
+                			   return '<span class="label label-danger">已过期</span>';
+                		   }
+                	   }else{
+                		   return '<span class="label label-danger">无权限</span>';
+                	   }
+                	   
+                    }
+               },
+               {
+                   title: '权限起始时间',
+                   field: 'cusResGrpRelModel',
+                   align: 'center',
+                   formatter:function(value,row,index){
+               		   if(null != value){
+                		   if(null == value.startDate){
+                			   return "无限制";
+                		   }else{
+                			   return new Date(value.startDate).format("yyyy-MM-dd HH:mm");
+                		   }
+                	   }else{
+                		   return "-";
+                	   }
+                 } 
+               },
+               {
+                   title: '权限截至时间',
+                   field: 'cusResGrpRelModel',
+                   align: 'center',
+                   formatter:function(value,row,index){
+               		   if(null != value){
+                		   if(null == value.endDate){
+                			   return "无限制";
+                		   }else{
+                			   return new Date(value.endDate).format("yyyy-MM-dd HH:mm"); 
+                		   }
+                	   }else{
+                		   return "-";
+                	   }
+                 }
+               },
+               {
+                   title: '操作',
+                   field: 'id',
+                   align: 'center',
+                   formatter:function(value,row,index){
+                	   if(row.permissionAttrId == "1"){
+                		   return "-";
+                	   }else{
+	                	   if(null != row.cusResGrpRelModel 
+	                			   && (null == row.cusResGrpRelModel.startDate || new Date(row.cusResGrpRelModel.startDate) < new Date() ) 
+	                			   &&  (null == row.cusResGrpRelModel.endDate || new Date(row.cusResGrpRelModel.endDate) > new Date() ) ){
+	                		   var e ='<button type="button" class="btn btn-xs btn-warning"  onclick="removeResGroupPermission(\''+ row.id +'\')" data-toggle="modal" >禁用</button>';
+	                	   }else{
+	                		   var cusResGrpRelModel = null;
+	                		   var startDate = null;
+	                		   var endDate = null;
+	                		   if(null != row.cusResGrpRelModel ){
+	                			   if(null != row.cusResGrpRelModel.startDate){
+	                				   startDate = new Date(row.cusResGrpRelModel.startDate).format("yyyy-MM-dd HH:mm");
+	                			   }
+	                			   if(null != row.cusResGrpRelModel.endDate){
+	                				   endDate = new Date(row.cusResGrpRelModel.endDate).format("yyyy-MM-dd HH:mm");
+	                			   }
+	                		   }
+	                		   var e ='<button type="button" class="btn btn-xs btn-success" data-toggle="modal" onclick="addResGroupPermPreProcess(\''+ row.id +'\',\''+ row.name +'\',\''+ startDate +'\',\''+ endDate +'\')" data-target="#addResGroupPermissionLayer">授权</button>';
+	                	   }
+	                    	return e;  
+                	   }
+                 } 
+               }
+           ],
+		formatLoadingMessage: function () {
+	    	return "请稍等，正在加载中...";
+	  	}
+      });
+	  
+	function resrouceGroupQueryParams(params) {  //配置参数
+	    var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+	      pageNumber: params.pageNumber,  //页码
+	      limit: params.limit,   //页面行数大小
+	      offset: params.offset, //分页偏移量
+	      sort: params.sort,  //排序列名
+	      sortOrder: params.order ,//排位命令（desc，asc）
+	      search:function(){
+	    	 	var search = {};  
+			    $.each($("#groupSearchForm").serializeArray(), function(i, field) {  
+			        search[field.name] = field.value;  
+			    });
+			    search['specificCusId'] = $("#userId_hidden").val();  
+			    return JSON.stringify(search);
+	      }
+	    };
+	    return temp;
+	  }
+	
+	$('#doGroupsearch').click(function() {  
+		$('#resourceGroupTableId').bootstrapTable('refresh');
+    }); 
+	
+   function addResGroupPermPreProcess(resGrpId, resGrpName, startDate, endDate){
+	   $('#resGrpId_addGrpPer').val(resGrpId);
+	   $('#reGrpName_addGrpPer').val(resGrpName);
+	   $('#userId_addGrpPer').val($("#userId_hidden").val());
+	   $('#userName_addGrpPer').val($("#userName_hidden").val());
+	   if(null != startDate && startDate != 'null'){
+		   $('#startDate_addGrpPer').val(startDate);
+	   }
+	   if(null != endDate && endDate != 'null'){
+		   $('#endDate_addGrpPer').val(endDate);
+	   }
+   }
+   
+   
+	//更新用户与资源组权限
+	$('#saveButton_addGrpPer').click(function() {
+		 //button失效，防止重复提交
+		 //disabled="true"
+		 $('#saveButton_addGrpPer').attr("disabled", true);
+
+		 //关联用户组查询用户标识
+		 var jointAuthFlag = null;
+      //定义参数  
+      var array = {};  
+      //遍历form 组装json  
+      $.each($("#addResGrpPermissionForm").serializeArray(), function(i, field) {  
+          //可以添加提交验证  
+          if('' == field.value){
+          	array[field.name] = null;  
+          }else{
+          	array[field.name] = field.value;  
+          }
+      });  
+
+      //参数转为json字符串，并赋给变量 ,JSON.stringify <ie7不支持，有第三方解决插件  
+      var modelJsonStr = JSON.stringify(array);
+      
+      var startDateStr =$("#startDate_addGrpPer").val();
+      var endDateStr =$("#endDate_addGrpPer").val();
+	    $.ajax({
+		    url:"<c:url value='/user/authCusResGrpPermission.json' />",
+		    data:{   modelJsonStr : modelJsonStr, startDateStr : startDateStr, endDateStr : endDateStr },  
+		    type:'get',  
+		    cache:false,  
+		    dataType:'json',  
+		    success:function(data) {
+		    	if(data.status == 1){
+		    		$('#resourceGroupTableId').bootstrapTable('refresh');  
+		    		$("#closeButton_addGrpPer").click();
+		    	}else{
+		    		alert("操作失败！");
+		    	}
+		    	$('#saveButton_addGrpPer').attr("disabled", false);
+		     },  
+		     error : function() {  
+		          alert("系统异常！");  
+		         $('#saveButton_addGrpPer').attr("disabled", false);
+		     }  
+		});
+      
+	 });  
+	
+	//禁用资源
+	   function removeResGroupPermission(resGroupId){
+		   var userId = $("#userId_hidden").val();
+		   $.ajax({
+			    url:"<c:url value='/user/disableresGroupPermission.json' />",
+			    data:{   resGroupId : resGroupId, userId : userId },  
+			    type:'get',  
+			    cache:false,  
+			    dataType:'json',  
+			    success:function(data) {
+			    	if(data.status == 1){
+			    		$('#resourceGroupTableId').bootstrapTable('refresh');  
+			    	}else{
+			    		alert("操作失败！");
+			    	}
+			     },  
+			     error : function() {  
+			          alert("系统异常！");  
+			     }  
+			});
+	   }
+   
+</script>   
 
 <script type="text/javascript">
 	//时间选择器

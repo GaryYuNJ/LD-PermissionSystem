@@ -17,6 +17,7 @@ import com.ldps.facade.CustomerFacade;
 import com.ldps.model.CusGrpResourceRelModel;
 import com.ldps.model.CusResourceRelModel;
 import com.ldps.model.CustomerModel;
+import com.ldps.model.CustomerResGroupRelModel;
 import com.ldps.model.ResourceGroupModel;
 import com.ldps.model.CustomerGroupModel;
 import com.ldps.model.ResourceModel;
@@ -506,7 +507,7 @@ public class CustomerFacadeImpl implements CustomerFacade {
 		return iCusResourceRelService.authorizeResPermission(cusResourceRelModel);
 	}
 	
-	//连带授权 
+	//连带授权 资源
 	@Override
 	public int jointAuthCusResPermission(CusResourceRelModel cusResourceRelModel) {
 		// TODO Auto-generated method stub
@@ -515,6 +516,23 @@ public class CustomerFacadeImpl implements CustomerFacade {
 				cusResourceRelModel.getFromShared(), cusResourceRelModel.getCustomerId());
 	}
 
+	//连带授权 资源组
+	@Override
+	public int jointAuthCusResGrpPermission(
+			CustomerResGroupRelModel cusResGrpRelModel) {
+		return iCusResourceRelService.jointAuthorizeResGrpPermission(cusResGrpRelModel.getCustomerId(), 
+				cusResGrpRelModel.getRgroupId(), cusResGrpRelModel.getStartDate(), 
+				cusResGrpRelModel.getEndDate(), cusResGrpRelModel.getCreateUser());
+	}
+
+	@Override
+	public int deleteResGrpPermission(Long userId, Integer resGroupId) {
+		// TODO Auto-generated method stub
+		CustomerResGroupRelModel crgModel = new CustomerResGroupRelModel();
+		crgModel.setCustomerId(userId);
+		crgModel.setRgroupId(resGroupId);
+		return iCusResourceRelService.deleteResGrpPermission(crgModel);
+	}
 	
 	public ICustomerService getiCustomerSevice() {
 		return iCustomerSevice;
