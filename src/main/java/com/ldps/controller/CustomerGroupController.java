@@ -19,6 +19,7 @@ import com.ldps.data.APIMessage;
 import com.ldps.data.BootstrapTableData;
 import com.ldps.data.CustomerGroupData;
 import com.ldps.facade.CustomerGroupFacade;
+import com.ldps.model.CusGroupResGroupRelModel;
 import com.ldps.model.CusGrpResourceRelModel;
 import com.ldps.model.CusResourceRelModel;
 import com.ldps.model.CustomerModel;
@@ -219,6 +220,37 @@ public class CustomerGroupController {
 		APIMessage apiMessage = new APIMessage();
 		
 		int flag = customerGroupFacade.disableCusGrpResPermission(cusGrpId, resourceId);
+		apiMessage.setStatus(flag);
+		
+		return JSON.toJSONString(apiMessage);
+	}
+	
+
+	
+	//后台页面上更新\添加资源组资源权限
+	@RequestMapping(value="authResGrpPermission.json",method = { RequestMethod.GET,
+			RequestMethod.POST },produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public String authResGrpPermission( @RequestParam("modelJsonStr") String modelJsonStr ,
+			String startDateStr, String endDateStr, ModelMap model) throws ParseException{
+		APIMessage apiMessage = new APIMessage();
+		CusGroupResGroupRelModel cusGrpResourceRelModel= JSON.parseObject(modelJsonStr, CusGroupResGroupRelModel.class);
+		
+		SimpleDateFormat sf = new SimpleDateFormat("yyy-MM-dd HH:mm");
+		
+		if(!StringUtils.isEmpty(startDateStr)){
+			cusGrpResourceRelModel.setStartDate(sf.parse(startDateStr));
+		}
+		if(!StringUtils.isEmpty(endDateStr)){
+			cusGrpResourceRelModel.setEndDate(sf.parse(endDateStr));
+		}
+		
+		cusGrpResourceRelModel.setCreateUser(0L);
+		
+		int flag = 0;
+		//联合授权
+		flag = customerGroupFacade.jointAuthCusGrpResGrpPermission(cusGrpResourceRelModel);
+		
 		apiMessage.setStatus(flag);
 		
 		return JSON.toJSONString(apiMessage);

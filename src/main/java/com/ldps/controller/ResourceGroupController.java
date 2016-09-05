@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
-import com.ldps.dao.ResourceGrpRelModelMapper;
 import com.ldps.data.APIMessage;
 import com.ldps.data.BootstrapTableData;
 import com.ldps.model.ResourceGroupModel;
@@ -143,7 +142,7 @@ public class ResourceGroupController {
 		return JSON.toJSONString(am);
 	}
 	
-	//资源组查询
+	//资源组查询 with customerId
 	@ResponseBody
 	@RequestMapping(value = "resGroupSearchWithCusId.json")
 	public String resGroupSearchWithCusId(String search,
@@ -172,4 +171,52 @@ public class ResourceGroupController {
 		}
 		return JSON.toJSONString(bData);
 	}
+	
+	//资源组查询 with customerGroupId
+	@ResponseBody
+	@RequestMapping(value = "resGroupSearchWithCusGrpId.json")
+	public String resGroupSearchWithCusGrpId(String search,
+			@RequestParam("limit") Integer limit,
+			@RequestParam("offset") Integer offset) {
+
+		ResourceGroupModel resourceGroupModel = JSON.parseObject(search,
+				ResourceGroupModel.class);
+		BootstrapTableData bData = new BootstrapTableData();
+
+		List<ResourceGroupModel> resourceList = iResourceGroupService
+				.queryResGroupWithCusGrpId(resourceGroupModel, offset, limit);
+		
+		if (null != resourceList && resourceList.size() > 0) {
+			bData.setRows(resourceList);
+			bData.setPage(offset / limit + 1);
+			bData.setTotal(iResourceGroupService
+					.queryCountByCondition(resourceGroupModel));
+		} else {
+			bData.setTotal(0);
+		}
+		if(null == bData.getRows()){
+			bData.setPage(0);
+			bData.setRows(new Object());
+			bData.setTotal(0);
+		}
+		return JSON.toJSONString(bData);
+	}
+	
+
+	//禁用资源组
+	@RequestMapping(value="disableResGroupPermission.json",method = { RequestMethod.GET,
+			RequestMethod.POST },produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public String disableResGroupPermission( @RequestParam("userGrpId") Integer userGrpId , 
+			@RequestParam("resGroupId") Integer resGroupId , ModelMap model){
+		
+		APIMessage apiMessage = new APIMessage();
+		
+		int flag = iResourceGroupService.deleteResGrpPermission(userGrpId, resGroupId);
+		apiMessage.setStatus(flag);
+		
+		return JSON.toJSONString(apiMessage);
+	}
+
+	
 }

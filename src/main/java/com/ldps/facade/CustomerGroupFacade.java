@@ -3,6 +3,7 @@ package com.ldps.facade;
 import java.util.List;
 
 import com.ldps.data.CustomerGroupData;
+import com.ldps.model.CusGroupResGroupRelModel;
 import com.ldps.model.CusGrpResourceRelModel;
 import com.ldps.model.CusResourceRelModel;
 
@@ -38,6 +39,9 @@ public interface CustomerGroupFacade {
 
 	int jointAuthCusGrpResPermission(
 			CusGrpResourceRelModel cusGrpResourceRelModel);
+
+	int jointAuthCusGrpResGrpPermission(
+			CusGroupResGroupRelModel cusGrpResGrpRelModel);
 
 	
 }

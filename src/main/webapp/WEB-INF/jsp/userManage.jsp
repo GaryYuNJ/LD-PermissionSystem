@@ -512,6 +512,9 @@
 		  $("#userListTable").hide();
 		  $("#userDetailsTable").show();
 		  initUserDetailForm(userId);
+		  $('#resourceGroupTableId').bootstrapTable('refresh');
+		  $('#resourceTableId').bootstrapTable('refresh');  
+		  $("#userGroupListTableId").bootstrapTable('refresh');
 	  };
       
 	  //初始化 UserDetailForm 
@@ -683,6 +686,12 @@
         //点击tab调用对应function
           if($(this).attr("href") == "#userResource"){
         	  resourceTableInit();
+        	  //$("#userGroupListTableId").bootstrapTable('refresh');
+          } 
+        
+        //点击tab调用对应function
+          if($(this).attr("href") == "#userResourceGroup"){
+        	  resourceGroupTableInit();
         	  //$("#userGroupListTableId").bootstrapTable('refresh');
           } 
         })
@@ -1068,119 +1077,122 @@
 
 <!-- 用户与资源组 -->
 <script type="text/javascript">
-	var getgroupURL = "<c:url value='/manage/resGroupSearchWithCusId.json' />";
-	var pageNumber = 1;
-	$('#resourceGroupTableId').bootstrapTable({
-		method: 'get',
-	    url: getgroupURL, 
-	    dataType: "json",
-	    queryParams: resrouceGroupQueryParams,
-	    pageSize: 10,
-	    pageList: [10, 25, 50],  //可供选择的每页的行数（*）
-	    pageNumber: pageNumber,
-	    pagination: true, //分页
-	    singleSelect: false,
-	    idField: "id",  //标识哪个字段为id主键
-	    locale: "zh-CN", //表格汉化
-	    sidePagination: "server", //服务端处理分页
-       	columns: [
-			{
-			    title: '用户组ID',
-			      field: 'id',
-			      align: 'center',
-			      valign: 'middle'
-			  }, 
-               {
-                 title: '用户组名称',
-                   field: 'name',
-                   align: 'center',
-                   valign: 'middle'
-               }, 
-               {
-                   title: '权限',
-                   field: 'cusResGrpRelModel',
-                   align: 'center',
-                   formatter:function (value, row, index) {
-               		   if(null != value ){
-                		   if((null == row.cusResGrpRelModel.startDate || new Date(row.cusResGrpRelModel.startDate) < new Date() )
-	                			   &&  (null == row.cusResGrpRelModel.endDate || new Date(row.cusResGrpRelModel.endDate) > new Date() )){
-                			   return '<span class="label label-success">有权限</span>';
-                		   }else{
-                			   return '<span class="label label-danger">已过期</span>';
-                		   }
-                	   }else{
-                		   return '<span class="label label-danger">无权限</span>';
-                	   }
-                	   
-                    }
-               },
-               {
-                   title: '权限起始时间',
-                   field: 'cusResGrpRelModel',
-                   align: 'center',
-                   formatter:function(value,row,index){
-               		   if(null != value){
-                		   if(null == value.startDate){
-                			   return "无限制";
-                		   }else{
-                			   return new Date(value.startDate).format("yyyy-MM-dd HH:mm");
-                		   }
-                	   }else{
-                		   return "-";
-                	   }
-                 } 
-               },
-               {
-                   title: '权限截至时间',
-                   field: 'cusResGrpRelModel',
-                   align: 'center',
-                   formatter:function(value,row,index){
-               		   if(null != value){
-                		   if(null == value.endDate){
-                			   return "无限制";
-                		   }else{
-                			   return new Date(value.endDate).format("yyyy-MM-dd HH:mm"); 
-                		   }
-                	   }else{
-                		   return "-";
-                	   }
-                 }
-               },
-               {
-                   title: '操作',
-                   field: 'id',
-                   align: 'center',
-                   formatter:function(value,row,index){
-                	   if(row.permissionAttrId == "1"){
-                		   return "-";
-                	   }else{
-	                	   if(null != row.cusResGrpRelModel 
-	                			   && (null == row.cusResGrpRelModel.startDate || new Date(row.cusResGrpRelModel.startDate) < new Date() ) 
-	                			   &&  (null == row.cusResGrpRelModel.endDate || new Date(row.cusResGrpRelModel.endDate) > new Date() ) ){
-	                		   var e ='<button type="button" class="btn btn-xs btn-warning"  onclick="removeResGroupPermission(\''+ row.id +'\')" data-toggle="modal" >禁用</button>';
-	                	   }else{
-	                		   var cusResGrpRelModel = null;
-	                		   var startDate = null;
-	                		   var endDate = null;
-	                		   if(null != row.cusResGrpRelModel ){
-	                			   if(null != row.cusResGrpRelModel.startDate){
-	                				   startDate = new Date(row.cusResGrpRelModel.startDate).format("yyyy-MM-dd HH:mm");
-	                			   }
-	                			   if(null != row.cusResGrpRelModel.endDate){
-	                				   endDate = new Date(row.cusResGrpRelModel.endDate).format("yyyy-MM-dd HH:mm");
-	                			   }
+
+	function resourceGroupTableInit() {
+		var getgroupURL = "<c:url value='/manage/resGroupSearchWithCusId.json' />";
+		var pageNumber = 1;
+		$('#resourceGroupTableId').bootstrapTable({
+			method: 'get',
+		    url: getgroupURL, 
+		    dataType: "json",
+		    queryParams: resrouceGroupQueryParams,
+		    pageSize: 10,
+		    pageList: [10, 25, 50],  //可供选择的每页的行数（*）
+		    pageNumber: pageNumber,
+		    pagination: true, //分页
+		    singleSelect: false,
+		    idField: "id",  //标识哪个字段为id主键
+		    locale: "zh-CN", //表格汉化
+		    sidePagination: "server", //服务端处理分页
+	       	columns: [
+				{
+				    title: '用户组ID',
+				      field: 'id',
+				      align: 'center',
+				      valign: 'middle'
+				  }, 
+	               {
+	                 title: '用户组名称',
+	                   field: 'name',
+	                   align: 'center',
+	                   valign: 'middle'
+	               }, 
+	               {
+	                   title: '权限',
+	                   field: 'cusResGrpRelModel',
+	                   align: 'center',
+	                   formatter:function (value, row, index) {
+	               		   if(null != value ){
+	                		   if((null == row.cusResGrpRelModel.startDate || new Date(row.cusResGrpRelModel.startDate) < new Date() )
+		                			   &&  (null == row.cusResGrpRelModel.endDate || new Date(row.cusResGrpRelModel.endDate) > new Date() )){
+	                			   return '<span class="label label-success">有权限</span>';
+	                		   }else{
+	                			   return '<span class="label label-danger">已过期</span>';
 	                		   }
-	                		   var e ='<button type="button" class="btn btn-xs btn-success" data-toggle="modal" onclick="addResGroupPermPreProcess(\''+ row.id +'\',\''+ row.name +'\',\''+ startDate +'\',\''+ endDate +'\')" data-target="#addResGroupPermissionLayer">授权</button>';
+	                	   }else{
+	                		   return '<span class="label label-danger">无权限</span>';
 	                	   }
-	                    	return e;  
-                	   }
-                 } 
-               }
-           ],
-		formatLoadingMessage: function () {
-	    	return "请稍等，正在加载中...";
-	  	}
-      });
+	                	   
+	                    }
+	               },
+	               {
+	                   title: '权限起始时间',
+	                   field: 'cusResGrpRelModel',
+	                   align: 'center',
+	                   formatter:function(value,row,index){
+	               		   if(null != value){
+	                		   if(null == value.startDate){
+	                			   return "无限制";
+	                		   }else{
+	                			   return new Date(value.startDate).format("yyyy-MM-dd HH:mm");
+	                		   }
+	                	   }else{
+	                		   return "-";
+	                	   }
+	                 } 
+	               },
+	               {
+	                   title: '权限截至时间',
+	                   field: 'cusResGrpRelModel',
+	                   align: 'center',
+	                   formatter:function(value,row,index){
+	               		   if(null != value){
+	                		   if(null == value.endDate){
+	                			   return "无限制";
+	                		   }else{
+	                			   return new Date(value.endDate).format("yyyy-MM-dd HH:mm"); 
+	                		   }
+	                	   }else{
+	                		   return "-";
+	                	   }
+	                 }
+	               },
+	               {
+	                   title: '操作',
+	                   field: 'id',
+	                   align: 'center',
+	                   formatter:function(value,row,index){
+	                	   if(row.permissionAttrId == "1"){
+	                		   return "-";
+	                	   }else{
+		                	   if(null != row.cusResGrpRelModel 
+		                			   && (null == row.cusResGrpRelModel.startDate || new Date(row.cusResGrpRelModel.startDate) < new Date() ) 
+		                			   &&  (null == row.cusResGrpRelModel.endDate || new Date(row.cusResGrpRelModel.endDate) > new Date() ) ){
+		                		   var e ='<button type="button" class="btn btn-xs btn-warning"  onclick="removeResGroupPermission(\''+ row.id +'\')" data-toggle="modal" >禁用</button>';
+		                	   }else{
+		                		   var cusResGrpRelModel = null;
+		                		   var startDate = null;
+		                		   var endDate = null;
+		                		   if(null != row.cusResGrpRelModel ){
+		                			   if(null != row.cusResGrpRelModel.startDate){
+		                				   startDate = new Date(row.cusResGrpRelModel.startDate).format("yyyy-MM-dd HH:mm");
+		                			   }
+		                			   if(null != row.cusResGrpRelModel.endDate){
+		                				   endDate = new Date(row.cusResGrpRelModel.endDate).format("yyyy-MM-dd HH:mm");
+		                			   }
+		                		   }
+		                		   var e ='<button type="button" class="btn btn-xs btn-success" data-toggle="modal" onclick="addResGroupPermPreProcess(\''+ row.id +'\',\''+ row.name +'\',\''+ startDate +'\',\''+ endDate +'\')" data-target="#addResGroupPermissionLayer">授权</button>';
+		                	   }
+		                    	return e;  
+	                	   }
+	                 } 
+	               }
+	           ],
+			formatLoadingMessage: function () {
+		    	return "请稍等，正在加载中...";
+		  	}
+	      });
+	}
 	  
 	function resrouceGroupQueryParams(params) {  //配置参数
 	    var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的

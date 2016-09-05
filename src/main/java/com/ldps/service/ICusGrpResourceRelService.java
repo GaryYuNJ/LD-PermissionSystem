@@ -2,6 +2,7 @@ package com.ldps.service;
 
 import java.util.List;
 
+import com.ldps.model.CusGroupResGroupRelModel;
 import com.ldps.model.CusGrpResourceRelModel;
 import com.ldps.model.CusResourceRelModel;
 
@@ -17,7 +18,10 @@ public interface ICusGrpResourceRelService {
 	int authCusGrpResPermission(CusGrpResourceRelModel cusResourceRelModel);
 
 	int jointAuthCusGrpResPermission(
-			CusGrpResourceRelModel cusGrpResourceRelModel); 
+			CusGrpResourceRelModel cusGrpResourceRelModel);
+
+	int jointAuthCusGrpResGrpPermission(
+			CusGroupResGroupRelModel cusGrpResGrpRelModel); 
 
 	 
 }

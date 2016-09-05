@@ -10,6 +10,7 @@ import com.ldps.dao.CusGroupResGroupRelModelMapper;
 import com.ldps.dao.CustomerResGroupRelModelMapper;
 import com.ldps.dao.ResourceGroupModelMapper;
 import com.ldps.dao.ResourceGrpRelModelMapper;
+import com.ldps.model.CusGroupResGroupRelModel;
 import com.ldps.model.ResourceGroupModel;
 import com.ldps.model.ResourceGrpRelModel;
 import com.ldps.service.IResourceGroupService;
@@ -22,6 +23,8 @@ public class ReourceGroupServiceImpl implements IResourceGroupService {
 	private ResourceGrpRelModelMapper resourceGrpRelModelDao;
 	@Resource
 	private CustomerResGroupRelModelMapper cusResGroupRelModelMapper;
+	@Resource
+	private CusGroupResGroupRelModelMapper cusGroupResGroupRelModelDao;
 	
 	@Override
 	public List<ResourceGroupModel> queryBasicResGroupByCondition(
@@ -65,6 +68,22 @@ public class ReourceGroupServiceImpl implements IResourceGroupService {
 			ResourceGroupModel resourceGroupModel, Integer offset, Integer limit) {
 		// TODO Auto-generated method stub
 		return cusResGroupRelModelMapper.selectResGrpListWithSpecUserId(resourceGroupModel, offset, limit);
+	}
+
+	@Override
+	public List<ResourceGroupModel> queryResGroupWithCusGrpId(
+			ResourceGroupModel resourceGroupModel, Integer offset, Integer limit) {
+		return cusGroupResGroupRelModelDao.selectResGrpListWithSpecUserGrpId(resourceGroupModel, offset, limit);
+	}
+
+	@Override
+	public int deleteResGrpPermission(Integer userGrpId, Integer resGroupId) {
+		// TODO Auto-generated method stub
+		CusGroupResGroupRelModel model = new CusGroupResGroupRelModel();
+		model.setCgroupId(userGrpId);
+		model.setRgroupId(resGroupId);
+		
+		return cusGroupResGroupRelModelDao.deleteByCondition(model);
 	}
 
 }

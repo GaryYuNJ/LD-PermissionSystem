@@ -12,5 +12,10 @@ public interface CusGroupResGroupRelModelMapper {
 
     int insertSelective(CusGroupResGroupRelModel record);
     
+	List<ResourceGroupModel> selectResGrpListWithSpecUserGrpId(
+			@Param("resourceGroupModel")ResourceGroupModel resourceGroupModel, 
+    		@Param("startRow") Integer startRow, @Param("pageSize") Integer pageSize);
 
+	int deleteByCondition(CusGroupResGroupRelModel cusGrpResGrpRelModel);
+    
 }

@@ -20,5 +20,6 @@ public interface CustomerResGroupRelModelMapper {
 	int updateByCondition(CustomerResGroupRelModel model);
 
 	int deleteByCondition(CustomerResGroupRelModel crgModel);
-    
+
+
 }

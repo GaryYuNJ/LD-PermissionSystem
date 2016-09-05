@@ -22,4 +22,9 @@ public interface IResourceGroupService {
 
 	List<ResourceGroupModel> queryBasicResGroupWithCusId(
 			ResourceGroupModel resourceGroupModel, Integer offset, Integer limit);
+
+	List<ResourceGroupModel> queryResGroupWithCusGrpId(
+			ResourceGroupModel resourceGroupModel, Integer offset, Integer limit);
+
+	int deleteResGrpPermission(Integer userGrpId, Integer resGroupId);
 }

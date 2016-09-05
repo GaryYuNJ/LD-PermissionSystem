@@ -8,8 +8,10 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.ldps.dao.CusGroupResGroupRelModelMapper;
 import com.ldps.dao.CusGrpResourceRelModelMapper;
 import com.ldps.model.CusGroupRelModel;
+import com.ldps.model.CusGroupResGroupRelModel;
 import com.ldps.model.CusGrpResourceRelModel;
 import com.ldps.model.CusResourceRelModel;
 import com.ldps.service.ICusGrpResourceRelService;
@@ -24,6 +26,8 @@ public class CusGrpResourceRelServiceImpl implements ICusGrpResourceRelService {
 	ICusResourceRelService iCusResourceRelService;
 	@Resource
 	CustomerGroupRelServiceImpl iCustomerGroupRelService;
+	@Resource
+	CusGroupResGroupRelModelMapper cusGroupResGroupRelModelDao;
 
 	@Override
 	public CusGrpResourceRelModel queryModelByCidAndResId(CusGrpResourceRelModel model) {
@@ -113,6 +117,26 @@ public class CusGrpResourceRelServiceImpl implements ICusGrpResourceRelService {
 					}
 				}
 				return flag;
+	}
+
+
+	@Override
+	public int jointAuthCusGrpResGrpPermission(
+			CusGroupResGroupRelModel cusGrpResGrpRelModel) {
+		//添加customer group & resource group relation
+		int flag = cusGroupResGroupRelModelDao.insertSelective(cusGrpResGrpRelModel);
+		
+		//获取userIdList
+		List<CusGroupRelModel> cGroupRelModels = iCustomerGroupRelService.queryByGroupId(cusGrpResGrpRelModel.getRgroupId());
+		
+		//循环对单个用户、资源组授权
+		if(null != cGroupRelModels){
+			for(CusGroupRelModel model: cGroupRelModels){
+				iCusResourceRelService.jointAuthorizeResGrpPermission(model.getCustomerId(), cusGrpResGrpRelModel.getRgroupId(), 
+						cusGrpResGrpRelModel.getStartDate(), cusGrpResGrpRelModel.getEndDate(), cusGrpResGrpRelModel.getCreateUser());
+			}
+		}
+		return flag;
 	}
 
 }

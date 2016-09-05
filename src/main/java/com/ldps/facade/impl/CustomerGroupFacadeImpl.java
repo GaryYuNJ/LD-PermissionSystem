@@ -16,6 +16,7 @@ import com.ldps.data.CustomerGroupData;
 import com.ldps.data.ResourceData;
 import com.ldps.facade.CustomerFacade;
 import com.ldps.facade.CustomerGroupFacade;
+import com.ldps.model.CusGroupResGroupRelModel;
 import com.ldps.model.CusGrpResourceRelModel;
 import com.ldps.model.CusResourceRelModel;
 import com.ldps.model.CustomerModel;
@@ -131,6 +132,12 @@ public class CustomerGroupFacadeImpl implements CustomerGroupFacade {
 	public int jointAuthCusGrpResPermission(
 			CusGrpResourceRelModel cusGrpResourceRelModel) {
 		return  iCusGrpResourceRelService.jointAuthCusGrpResPermission(cusGrpResourceRelModel);
+	}
+
+	@Override
+	public int jointAuthCusGrpResGrpPermission(
+			CusGroupResGroupRelModel cusGrpResGrpRelModel) {
+		return  iCusGrpResourceRelService.jointAuthCusGrpResGrpPermission(cusGrpResGrpRelModel);
 	}
 
 }

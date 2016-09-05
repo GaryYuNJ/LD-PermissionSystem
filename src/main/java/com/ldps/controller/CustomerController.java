@@ -247,10 +247,10 @@ public class CustomerController {
 	
 
 	//禁用资源组
-	@RequestMapping(value="disableresGroupPermission.json",method = { RequestMethod.GET,
+	@RequestMapping(value="disableResGroupPermission.json",method = { RequestMethod.GET,
 			RequestMethod.POST },produces = "application/json; charset=utf-8")
 	@ResponseBody
-	public String disableresGroupPermission( @RequestParam("userId") Long userId , 
+	public String disableResGroupPermission( @RequestParam("userId") Long userId , 
 			@RequestParam("resGroupId") Integer resGroupId , ModelMap model){
 		
 		APIMessage apiMessage = new APIMessage();

@@ -9,6 +9,40 @@
     <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
     <result column="CREATE_USER" property="createUser" jdbcType="BIGINT" />
   </resultMap>
+  
+  <resultMap id="ResGrpModel_WithCusRelModelMap" type="com.ldps.model.ResourceGroupModel" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <association property="cusGrpResGrpRelModel" javaType="com.ldps.model.CusGroupResGroupRelModel">
+    	<result column="CGROUP_ID" property="cgroupId" jdbcType="BIGINT" />
+	    <result column="RGROUP_ID" property="rgroupId" jdbcType="INTEGER" />
+	    <result column="START_DATE" property="startDate" jdbcType="TIMESTAMP" />
+	    <result column="END_DATE" property="endDate" jdbcType="TIMESTAMP" />
+	    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+	    <result column="CREATE_USER" property="createUser" jdbcType="BIGINT" />
+    </association>
+  </resultMap>
+  
+  <select id="selectResGrpListWithSpecUserGrpId" resultMap="ResGrpModel_WithCusRelModelMap" >
+  	SELECT RG.ID, RG.NAME, CRR.CGROUP_ID, CRR.RGROUP_ID, CRR.START_DATE, CRR.END_DATE, CRR.CREATE_USER, CRR.CREATE_DATE 
+	FROM RESOURCE_GROUP RG 
+	LEFT JOIN CUSGROUP_RESGROUP_REL CRR ON CRR.RGROUP_ID=RG.ID 
+	AND CRR.CGROUP_ID  = #{resourceGroupModel.specificCusGrpId, jdbcType=BIGINT} 
+	 <if test="resourceGroupModel!=null">
+    	<where>
+    		<if test="resourceGroupModel.name != null"><bind name="nameLike" value="'%' + resourceGroupModel.name + '%'" /> NAME like #{nameLike}</if>
+    	</where>
+     </if>
+    limit #{startRow,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
+  </select>
+  
+  
+  <delete id="deleteByCondition" parameterType="com.ldps.model.CusGroupResGroupRelModel" >
+    	delete  From CUSGROUP_RESGROUP_REL 
+    	where CGROUP_ID = #{cgroupId} AND  RGROUP_ID = #{rgroupId}
+  </delete>
+  
+  
   <insert id="insert" parameterType="com.ldps.model.CusGroupResGroupRelModel" >
     insert into CUSGROUP_RESGROUP_REL (CGROUP_ID, RGROUP_ID, START_DATE, 
       END_DATE, CREATE_DATE, CREATE_USER
