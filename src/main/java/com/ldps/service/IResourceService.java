@@ -23,7 +23,7 @@ public interface IResourceService {
 	/*
 		获取building里的公共资源
 	 */
-	List<ResourceModel> selectValidPubResByBuildingId(Integer buildingId);
+	List<ResourceModel> queryValidPubResByBuildingId(Integer buildingId);
 
 	/*
 		获取building里用户有权限设备
@@ -60,7 +60,7 @@ public interface IResourceService {
 	List<ResourceModel> queryResByConditionWithCusGroupId(
 			ResourceModel resourceModel, Integer offset, Integer limit);
 
-	List<ResourceModel> selectPubResWithKeysByBuildingId(Integer buildingId);
+	List<ResourceModel> queryPubResWithKeysByBuildingId(Integer buildingId);
 
 	List<ResourceModel> queryPriResWithKeysByBIdAndCusId(Integer buildingId,
 			Long customerId);
@@ -70,4 +70,7 @@ public interface IResourceService {
 	APIMessage importResFromExcel(String filePath, Integer nodeId) throws IOException;
 
 	List<ResourceModel> queryBasicResByConditionWithGId(ResourceModel model, Integer pageNo, Integer pageSize);
+
+	List<ResourceModel> queryValidResByCIdAndMac(Long customerId,
+			Integer resourceId);
 }

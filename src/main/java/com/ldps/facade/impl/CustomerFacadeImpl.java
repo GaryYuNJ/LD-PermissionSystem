@@ -178,7 +178,7 @@ public class CustomerFacadeImpl implements CustomerFacade {
 	@Override
 	public List<ResourceData> queryPubResWithKeysByBuildingId(Integer buildingId) {
 
-		List<ResourceModel> rModels = iResourceService.selectPubResWithKeysByBuildingId(buildingId);
+		List<ResourceModel> rModels = iResourceService.queryPubResWithKeysByBuildingId(buildingId);
 		
 		return resourceModelConverter.processList(rModels);
 	}
@@ -296,6 +296,21 @@ public class CustomerFacadeImpl implements CustomerFacade {
 		List<CusResourceRelModel> cusResourceRelModel = iCusResourceRelService.queryByShareCustomerId(customerId);
 		return cusResourceRelModelConverter.processList(cusResourceRelModel);
 	}
+	
+	
+	//验证用户是否有权限操作某个特定资源，有的话返回资源信息
+	@Override
+	public  List<ResourceData> queryPermissionValidResByMobileAndMac(String mobile, String mac) {
+		
+		Long customerId = iCustomerSevice.getCustomerIdByMobile(mobile);
+		
+		Integer resourceId = iResourceService.queryResourceIdByMAC(mac);
+		
+		List<ResourceModel> rModels = iResourceService.queryValidResByCIdAndMac(customerId, resourceId);
+		
+		return resourceModelConverter.processList(rModels);
+	}
+	
 	
 	//验证用户是否有权限操作资源
 	@Override

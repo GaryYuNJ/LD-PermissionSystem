@@ -44,10 +44,15 @@ public interface ResourceModelMapper {
 			@Param("customerId") Long customerId);
 
 	ResourceModel selectWithResKeysByName(@Param("name") String name);
+	
+	ResourceModel selectWithResKeysById(@Param("resourceId") Integer resourceId);
 
 	ResourceModel selectByCondition(ResourceModel newResModel);
 	List<ResourceModel> selectResouceListByConditionWithGId(@Param("resourceModel")ResourceModel resourceModel,@Param("startRow") Integer startRow,
 			@Param("pageSize") Integer pageSize);
 	List<ResourceModel> selectCountConditionWithGId(@Param("resourceModel")ResourceModel resourceModel,@Param("startRow") Integer startRow,
 			@Param("pageSize") Integer pageSize);
+
+	List<ResourceModel> selectValidResByCIdAndMac(@Param("customerId")Long customerId,
+			@Param("resourceId")Integer resourceId);
 }

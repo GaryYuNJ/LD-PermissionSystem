@@ -93,4 +93,7 @@ public interface CustomerFacade {
 			CustomerResGroupRelModel cusResGrpRelModel);
 
 	public int deleteResGrpPermission(Long userId, Integer resGroupId);
+
+	List<ResourceData>  queryPermissionValidResByMobileAndMac(
+			String mobile, String mac);
 }

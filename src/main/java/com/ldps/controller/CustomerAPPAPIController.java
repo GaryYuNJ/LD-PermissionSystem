@@ -2,6 +2,7 @@ package com.ldps.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -38,14 +39,16 @@ public class CustomerAPPAPIController {
 			Model model){
 		APIMessage apiMessage = new APIMessage();
 		
-		String result = customerFacade.verification(mobile, mac);
+		//String result = customerFacade.verification(mobile, mac);
+		 List<ResourceData> datas = customerFacade.queryPermissionValidResByMobileAndMac(mobile, mac);
 		
-		if("0".equals(result)){
+		if(null != datas && datas.size()>0){
 			apiMessage.setStatus(1);
 			apiMessage.setMessage("");
+			apiMessage.setContent(datas);
 		}else{
 			apiMessage.setStatus(0);
-			apiMessage.setMessage(result);
+			apiMessage.setMessage("用户没有权限");
 		}
 		
 		return JSON.toJSONString(apiMessage);

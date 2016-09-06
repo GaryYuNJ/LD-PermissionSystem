@@ -70,7 +70,7 @@ public class ResourceServiceImpl implements IResourceService {
 	获取building里的公共资源基本信息
 	 */
 	@Override
-	public List<ResourceModel> selectValidPubResByBuildingId(Integer buildingId) {
+	public List<ResourceModel> queryValidPubResByBuildingId(Integer buildingId) {
 		return resourceDao.selectValidPubResByBuildingId(buildingId);
 	}
 
@@ -78,7 +78,7 @@ public class ResourceServiceImpl implements IResourceService {
 	获取building里的公共资源，resourceKeys同时返回
 	 */
 	@Override
-	public List<ResourceModel> selectPubResWithKeysByBuildingId(Integer buildingId) {
+	public List<ResourceModel> queryPubResWithKeysByBuildingId(Integer buildingId) {
 		return resourceDao.selectPubResWithKeysByBuildingId(buildingId);
 	}
 	
@@ -420,5 +420,25 @@ public class ResourceServiceImpl implements IResourceService {
 				model.setName(null);
 		} 
 		return resourceDao.selectResouceListByConditionWithGId(model, pageNo, pageSize);
+	}
+
+	@Override
+	public List<ResourceModel> queryValidResByCIdAndMac(Long customerId,
+			Integer resourceId) {
+		//线检查是否是公共资源
+		ResourceModel rModel = resourceDao.selectWithResKeysById(resourceId);
+		if(rModel == null){
+			return null;
+			
+		//如果是公共资源，直接返回资源详情
+		}else if (null != rModel.getPermissionAttrId() && rModel.getPermissionAttrId() == 1){
+			List<ResourceModel> rmodels = new ArrayList<ResourceModel>();
+			rmodels.add(rModel);
+			return rmodels;
+			
+		//如果不是公共资源，要检查权限，有权限就返回详情
+		}else{
+			return resourceDao.selectValidResByCIdAndMac(customerId, resourceId);
+		}
 	}
 }
