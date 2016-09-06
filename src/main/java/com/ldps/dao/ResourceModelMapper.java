@@ -53,6 +53,6 @@ public interface ResourceModelMapper {
 	List<ResourceModel> selectCountConditionWithGId(@Param("resourceModel")ResourceModel resourceModel,@Param("startRow") Integer startRow,
 			@Param("pageSize") Integer pageSize);
 
-	List<ResourceModel> selectValidResByCIdAndMac(@Param("customerId")Long customerId,
+	ResourceModel selectValidResByCIdAndMac(@Param("customerId")Long customerId,
 			@Param("resourceId")Integer resourceId);
 }

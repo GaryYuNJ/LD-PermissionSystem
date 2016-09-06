@@ -40,12 +40,12 @@ public class CustomerAPPAPIController {
 		APIMessage apiMessage = new APIMessage();
 		
 		//String result = customerFacade.verification(mobile, mac);
-		 List<ResourceData> datas = customerFacade.queryPermissionValidResByMobileAndMac(mobile, mac);
+		 ResourceData data = customerFacade.queryPermissionValidResByMobileAndMac(mobile, mac);
 		
-		if(null != datas && datas.size()>0){
+		if(null != data ){
 			apiMessage.setStatus(1);
 			apiMessage.setMessage("");
-			apiMessage.setContent(datas);
+			apiMessage.setContent(data);
 		}else{
 			apiMessage.setStatus(0);
 			apiMessage.setMessage("用户没有权限");

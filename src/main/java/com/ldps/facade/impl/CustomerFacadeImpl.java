@@ -300,15 +300,15 @@ public class CustomerFacadeImpl implements CustomerFacade {
 	
 	//验证用户是否有权限操作某个特定资源，有的话返回资源信息
 	@Override
-	public  List<ResourceData> queryPermissionValidResByMobileAndMac(String mobile, String mac) {
+	public  ResourceData queryPermissionValidResByMobileAndMac(String mobile, String mac) {
 		
 		Long customerId = iCustomerSevice.getCustomerIdByMobile(mobile);
 		
 		Integer resourceId = iResourceService.queryResourceIdByMAC(mac);
 		
-		List<ResourceModel> rModels = iResourceService.queryValidResByCIdAndMac(customerId, resourceId);
+		ResourceModel rModel = iResourceService.queryValidResByCIdAndMac(customerId, resourceId);
 		
-		return resourceModelConverter.processList(rModels);
+		return resourceModelConverter.process(rModel, null);
 	}
 	
 	

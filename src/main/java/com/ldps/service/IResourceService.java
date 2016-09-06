@@ -71,6 +71,6 @@ public interface IResourceService {
 
 	List<ResourceModel> queryBasicResByConditionWithGId(ResourceModel model, Integer pageNo, Integer pageSize);
 
-	List<ResourceModel> queryValidResByCIdAndMac(Long customerId,
+	ResourceModel queryValidResByCIdAndMac(Long customerId,
 			Integer resourceId);
 }

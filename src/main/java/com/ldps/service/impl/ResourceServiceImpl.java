@@ -375,7 +375,7 @@ public class ResourceServiceImpl implements IResourceService {
                     			}
                     		}
                 			newRKModel.setResourceId(currentModel.getId());
-                			if(null != newRKModel.getManufacturerId()){
+                			if(null != newRKModel.getId()){
                 				//更新
                 				resourceKeyDao.updateByPrimaryKeySelective(newRKModel);
                 				
@@ -423,7 +423,7 @@ public class ResourceServiceImpl implements IResourceService {
 	}
 
 	@Override
-	public List<ResourceModel> queryValidResByCIdAndMac(Long customerId,
+	public ResourceModel queryValidResByCIdAndMac(Long customerId,
 			Integer resourceId) {
 		//线检查是否是公共资源
 		ResourceModel rModel = resourceDao.selectWithResKeysById(resourceId);
@@ -432,9 +432,8 @@ public class ResourceServiceImpl implements IResourceService {
 			
 		//如果是公共资源，直接返回资源详情
 		}else if (null != rModel.getPermissionAttrId() && rModel.getPermissionAttrId() == 1){
-			List<ResourceModel> rmodels = new ArrayList<ResourceModel>();
-			rmodels.add(rModel);
-			return rmodels;
+
+			return rModel;
 			
 		//如果不是公共资源，要检查权限，有权限就返回详情
 		}else{
