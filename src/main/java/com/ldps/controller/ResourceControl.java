@@ -198,6 +198,7 @@ public class ResourceControl {
 			bData.setTotal(iResourceService
 					.queryCountByCondition(resourceModel));
 		} else {
+			bData.setRows(new Object());
 			bData.setTotal(0);
 		}
 		return JSON.toJSONString(bData);
@@ -222,6 +223,7 @@ public class ResourceControl {
 			bData.setTotal(iResourceService
 					.queryCountByCondition(resourceModel));
 		} else {
+			bData.setRows(new Object());
 			bData.setTotal(0);
 		}
 		return JSON.toJSONString(bData);

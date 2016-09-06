@@ -221,7 +221,7 @@ public class CustomerFacadeImpl implements CustomerFacade {
 	public int jointAuthResPermissionByCusId(Long customerId,
 			Integer resourceId, Date startDate, Date endDate, Long createUserId) {
 		return iCusResourceRelService.jointAuthorizeResPermission(customerId, resourceId, startDate, 
-				endDate, "N", createUserId);
+				endDate, "N", createUserId,null);
 	}
 
 	//连带资源授权接口(对一个资源授权，需要连带授权上层所有基础资源(要使用授权资源的前提资源)。
@@ -233,7 +233,7 @@ public class CustomerFacadeImpl implements CustomerFacade {
 		Integer resourceId = iResourceService.queryResourceIdByMAC(mac);
 		
 		return iCusResourceRelService.jointAuthorizeResPermission(customerId, resourceId, startDate, 
-				endDate, "N", createUserId);
+				endDate, "N", createUserId,null);
 	}
 	
 	//单个资源授权接口.by customerId、resourceId
@@ -250,7 +250,7 @@ public class CustomerFacadeImpl implements CustomerFacade {
 		cResRelModel.setCreateDate(new Date());
 		cResRelModel.setEnable("Y");
 		
-		return iCusResourceRelService.authorizeResPermission(cResRelModel);
+		return iCusResourceRelService.authorizeResPermission(cResRelModel,null);
 	}
 	
 	//单个资源授权接口
@@ -269,7 +269,7 @@ public class CustomerFacadeImpl implements CustomerFacade {
 		cResRelModel.setResourceId(resourceId);
 		cResRelModel.setCreateDate(new Date());
 		cResRelModel.setEnable("Y");
-		return iCusResourceRelService.authorizeResPermission(cResRelModel);
+		return iCusResourceRelService.authorizeResPermission(cResRelModel,null);
 	}
 
 
@@ -504,7 +504,7 @@ public class CustomerFacadeImpl implements CustomerFacade {
 	@Override
 	public int authCusResPermission(CusResourceRelModel cusResourceRelModel) {
 		// TODO Auto-generated method stub
-		return iCusResourceRelService.authorizeResPermission(cusResourceRelModel);
+		return iCusResourceRelService.authorizeResPermission(cusResourceRelModel,null);
 	}
 	
 	//连带授权 资源
@@ -513,7 +513,7 @@ public class CustomerFacadeImpl implements CustomerFacade {
 		// TODO Auto-generated method stub
 		return iCusResourceRelService.jointAuthorizeResPermission(cusResourceRelModel.getCustomerId(), cusResourceRelModel.getResourceId(),
 				cusResourceRelModel.getStartDate(), cusResourceRelModel.getEndDate(), 
-				cusResourceRelModel.getFromShared(), cusResourceRelModel.getCustomerId());
+				cusResourceRelModel.getFromShared(), cusResourceRelModel.getCustomerId(),null);
 	}
 
 	//连带授权 资源组
@@ -522,7 +522,7 @@ public class CustomerFacadeImpl implements CustomerFacade {
 			CustomerResGroupRelModel cusResGrpRelModel) {
 		return iCusResourceRelService.jointAuthorizeResGrpPermission(cusResGrpRelModel.getCustomerId(), 
 				cusResGrpRelModel.getRgroupId(), cusResGrpRelModel.getStartDate(), 
-				cusResGrpRelModel.getEndDate(), cusResGrpRelModel.getCreateUser());
+				cusResGrpRelModel.getEndDate(), cusResGrpRelModel.getCreateUser(),null);
 	}
 
 	@Override

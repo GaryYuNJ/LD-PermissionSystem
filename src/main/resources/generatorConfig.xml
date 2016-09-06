@@ -46,8 +46,12 @@
 		<table tableName="NODE" domainObjectName="NodeModel" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
 		<table tableName="NODE_REL" domainObjectName="NodeRelModel" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
 		<table tableName="NODE_RESOURCE_REL" domainObjectName="NodeResourceRelModel" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
-		 -->
+		 
 		 <table tableName="CUSTOMER_RESGROUP_REL" domainObjectName="CustomerResGroupRelModel" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
 		 <table tableName="CUSGROUP_RESGROUP_REL" domainObjectName="CusGroupResGroupRelModel" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+		 
+		 -->
+		 <table tableName="PERMISSION_RECORD" domainObjectName="PermissionRecordModel" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+		 
 	</context> 
 </generatorConfiguration> 

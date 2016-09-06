@@ -314,7 +314,7 @@
 	                   <div class="form-group">
 	                      <label class="col-lg-2 control-label">用户组ID</label>
 	                     <div class="col-lg-4">
-	                       <input type="text" class="form-control" id="cusGrpId_addPer" name="customerId"  readonly="true" placeholder="资源ID">
+	                       <input type="text" class="form-control" id="cusGrpId_addPer" name="cgroupId"  readonly="true" placeholder="资源ID">
 	                     </div>
 	                      <label class="col-lg-2 control-label">用户组名</label>
 	                     <div class="col-lg-4">

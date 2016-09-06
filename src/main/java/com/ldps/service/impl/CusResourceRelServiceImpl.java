@@ -12,9 +12,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ldps.dao.CusResourceRelModelMapper;
 import com.ldps.dao.CustomerResGroupRelModelMapper;
+import com.ldps.dao.PermissionRecordModelMapper;
 import com.ldps.dao.ResourceGrpRelModelMapper;
 import com.ldps.model.CusResourceRelModel;
 import com.ldps.model.CustomerResGroupRelModel;
+import com.ldps.model.PermissionRecordModel;
 import com.ldps.model.ResourceModel;
 import com.ldps.service.ICusResourceRelService;
 import com.ldps.service.INodeService;
@@ -35,7 +37,8 @@ public class CusResourceRelServiceImpl implements ICusResourceRelService {
 	ResourceGrpRelModelMapper resourceGrpRelModelDao;
 	@Resource
 	CustomerResGroupRelModelMapper cusResGroupRelModelDao;
-
+	@Resource
+	PermissionRecordModelMapper permissionRecordModelDao;
 	@Override
 	public CusResourceRelModel queryModelByCustomerIdAndResId(Long customerId,
 			Integer resourceId) {
@@ -79,7 +82,7 @@ public class CusResourceRelServiceImpl implements ICusResourceRelService {
 	//向用户针对一个资源授权
 	@Override
 	@Transactional(propagation=Propagation.SUPPORTS)
-	public int authorizeResPermission(CusResourceRelModel sourceModel) {
+	public int authorizeResPermission(CusResourceRelModel sourceModel, PermissionRecordModel permRecordModel) {
 		
 		int updateFlag = 0;
 		//如果已有权限，要看起止时间，取入参和已有时间中的最大范围时间保留或更新；
@@ -112,6 +115,23 @@ public class CusResourceRelServiceImpl implements ICusResourceRelService {
 			}
 		}
 		
+		//创建授权记录
+		try{
+			if(updateFlag == 1){
+				if(null == permRecordModel){
+					permRecordModel = new PermissionRecordModel();
+					permRecordModel.setObjectRelation(1); //'授权关系；1 用户与资源；2 用户与资源组；3 用户组与资源 ；4 用户组与资源组；
+					permRecordModel.setActionType(1); //
+					permRecordModel.setCreateDate(new Date());
+				}
+				permRecordModel.setCustomerId(sourceModel.getCustomerId());
+				permRecordModel.setResourceId(sourceModel.getResourceId());
+				//insert
+				permissionRecordModelDao.insertSelective(permRecordModel);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		return updateFlag;
 	}
 	
@@ -119,7 +139,7 @@ public class CusResourceRelServiceImpl implements ICusResourceRelService {
 	//联合授权-向用户授权指定的资源以及所有上层节点的所有基础资源
 	@Override
 	public int jointAuthorizeResPermission(Long customerId, Integer resourceId,
-			Date startDate, Date endDate, String fromShared, Long createUser) {
+			Date startDate, Date endDate, String fromShared, Long createUser, PermissionRecordModel perRecordModel) {
 		int flag = 0;
 		//通过resourceId查找到直接对应的nodeId
 		ResourceModel rModel = iResourceService.queryModelById(resourceId);
@@ -150,7 +170,7 @@ public class CusResourceRelServiceImpl implements ICusResourceRelService {
 				cResRelModel.setResourceId(rModel1.getId());
 				cResRelModel.setCreateDate(new Date());
 				cResRelModel.setEnable("Y");
-				this.authorizeResPermission(cResRelModel);
+				this.authorizeResPermission(cResRelModel,perRecordModel);
 				flag = 1;
 			}catch(Exception e){
 				flag = -1;
@@ -164,23 +184,45 @@ public class CusResourceRelServiceImpl implements ICusResourceRelService {
 	//连带授权资源组
 	@Override
 	public int jointAuthorizeResGrpPermission(Long customerId,
-			Integer rgroupId, Date startDate, Date endDate, Long createUser) {
-		//添加、更新customer & resGroup relation
-		
-		CustomerResGroupRelModel model = new CustomerResGroupRelModel();
-		model.setCreateDate(new Date());
-		model.setCreateUser(createUser);
-		model.setCustomerId(customerId);
-		model.setEndDate(endDate);
-		model.setRgroupId(rgroupId);
-		model.setStartDate(startDate);
-		
+			Integer rgroupId, Date startDate, Date endDate, Long createUser, PermissionRecordModel permRecordModel) {
 		int flag = 0;
-		CustomerResGroupRelModel modelTem = cusResGroupRelModelDao.selectByCondition(model);
-		if(null != modelTem){
-			flag = cusResGroupRelModelDao.updateByCondition(model);
-		}else{
-			flag = cusResGroupRelModelDao.insertSelective(model);
+
+		//如果来源就是用户与资源组授权关系：
+		if(null == permRecordModel){
+			//添加、更新customer & resGroup relation
+			CustomerResGroupRelModel model = new CustomerResGroupRelModel();
+			model.setCreateDate(new Date());
+			model.setCreateUser(createUser);
+			model.setCustomerId(customerId);
+			model.setEndDate(endDate);
+			model.setRgroupId(rgroupId);
+			model.setStartDate(startDate);
+			
+			
+			CustomerResGroupRelModel modelTem = cusResGroupRelModelDao.selectByCondition(model);
+			if(null != modelTem){
+				flag = cusResGroupRelModelDao.updateByCondition(model);
+			}else{
+				flag = cusResGroupRelModelDao.insertSelective(model);
+			}
+			
+			//创建授权记录
+			try{
+				if(flag == 1 ){
+					permRecordModel = new PermissionRecordModel();
+					permRecordModel.setObjectRelation(2); //'授权关系；1 用户与资源；2 用户与资源组；3 用户组与资源 ；4 用户组与资源组；
+					permRecordModel.setRgroupId(rgroupId);
+					permRecordModel.setActionType(1); //
+					permRecordModel.setCustomerId(customerId);
+					permRecordModel.setCreateUser(createUser);
+					permRecordModel.setCreateDate(new Date());
+					//insert
+					permissionRecordModelDao.insertSelective(permRecordModel);
+				}
+			}
+			catch(Exception e){
+				e.printStackTrace();
+			}
 		}
 		
 		//添加customer & resource relation
@@ -188,10 +230,11 @@ public class CusResourceRelServiceImpl implements ICusResourceRelService {
 		List <Integer>resourceIds = resourceGrpRelModelDao.selectResIdsByGroupId(rgroupId);
 		
 		if(null != resourceIds){
+			
 			//循环连带授权
 			for(Integer rId : resourceIds){
 				this.jointAuthorizeResPermission(customerId, rId, startDate, 
-						endDate, "N", createUser);
+						endDate, "N", createUser, permRecordModel);
 			}
 		}
 		

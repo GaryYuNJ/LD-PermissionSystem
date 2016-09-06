@@ -131,7 +131,7 @@ public class CustomerGroupFacadeImpl implements CustomerGroupFacade {
 	@Override
 	public int jointAuthCusGrpResPermission(
 			CusGrpResourceRelModel cusGrpResourceRelModel) {
-		return  iCusGrpResourceRelService.jointAuthCusGrpResPermission(cusGrpResourceRelModel);
+		return  iCusGrpResourceRelService.jointAuthCusGrpResPermission(cusGrpResourceRelModel, null);
 	}
 
 	@Override

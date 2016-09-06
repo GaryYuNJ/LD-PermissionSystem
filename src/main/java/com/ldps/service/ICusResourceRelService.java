@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.ldps.model.CusResourceRelModel;
 import com.ldps.model.CustomerResGroupRelModel;
+import com.ldps.model.PermissionRecordModel;
 
 public interface ICusResourceRelService {
 
@@ -25,21 +26,25 @@ public interface ICusResourceRelService {
 	
 	
 	//联合授权-向用户授权指定的资源以及所有上层节点的所有基础资源
-	int jointAuthorizeResPermission(Long customerId, Integer resourceId, Date startDate, 
-			Date endDate, String fromShared, Long createUserId);
+	int jointAuthorizeResPermission(Long customerId, Integer resourceId,
+			Date startDate, Date endDate, String fromShared, Long createUser,
+			PermissionRecordModel perRecordModel);
 
 	int updateByConditionSelective(CusResourceRelModel crModel);
 
 	//向用户授权指定的资源
-	int authorizeResPermission(CusResourceRelModel sourceModel);
+	int authorizeResPermission(CusResourceRelModel sourceModel,
+			PermissionRecordModel perRecordModel);
 
 	int disableResourcePermission(CusResourceRelModel crModel);
 
 	int disableBatchResourcePermission(List<Long> customerIds,
 			Integer resourceId);
 
-	int jointAuthorizeResGrpPermission(Long customerId, Integer rgroupId,
-			Date startDate, Date endDate, Long createUser);
-
 	int deleteResGrpPermission(CustomerResGroupRelModel crgModel);
+
+	int jointAuthorizeResGrpPermission(Long customerId, Integer rgroupId,
+			Date startDate, Date endDate, Long createUser,
+			PermissionRecordModel permRecordModel);
+
 }

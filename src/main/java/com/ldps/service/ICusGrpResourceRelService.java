@@ -5,6 +5,7 @@ import java.util.List;
 import com.ldps.model.CusGroupResGroupRelModel;
 import com.ldps.model.CusGrpResourceRelModel;
 import com.ldps.model.CusResourceRelModel;
+import com.ldps.model.PermissionRecordModel;
 
 public interface ICusGrpResourceRelService {
 
@@ -17,11 +18,12 @@ public interface ICusGrpResourceRelService {
 
 	int authCusGrpResPermission(CusGrpResourceRelModel cusResourceRelModel);
 
-	int jointAuthCusGrpResPermission(
-			CusGrpResourceRelModel cusGrpResourceRelModel);
-
 	int jointAuthCusGrpResGrpPermission(
-			CusGroupResGroupRelModel cusGrpResGrpRelModel); 
+			CusGroupResGroupRelModel cusGrpResGrpRelModel);
+
+	int jointAuthCusGrpResPermission(
+			CusGrpResourceRelModel cusGrpResourceRelModel,
+			PermissionRecordModel permRecordModel); 
 
 	 
 }

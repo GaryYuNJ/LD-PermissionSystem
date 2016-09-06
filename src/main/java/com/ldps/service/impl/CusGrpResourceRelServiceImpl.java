@@ -10,10 +10,12 @@ import org.springframework.stereotype.Service;
 
 import com.ldps.dao.CusGroupResGroupRelModelMapper;
 import com.ldps.dao.CusGrpResourceRelModelMapper;
+import com.ldps.dao.PermissionRecordModelMapper;
 import com.ldps.model.CusGroupRelModel;
 import com.ldps.model.CusGroupResGroupRelModel;
 import com.ldps.model.CusGrpResourceRelModel;
 import com.ldps.model.CusResourceRelModel;
+import com.ldps.model.PermissionRecordModel;
 import com.ldps.service.ICusGrpResourceRelService;
 import com.ldps.service.ICusResourceRelService;
 
@@ -28,6 +30,8 @@ public class CusGrpResourceRelServiceImpl implements ICusGrpResourceRelService {
 	CustomerGroupRelServiceImpl iCustomerGroupRelService;
 	@Resource
 	CusGroupResGroupRelModelMapper cusGroupResGroupRelModelDao;
+	@Resource
+	PermissionRecordModelMapper permissionRecordModelDao;
 
 	@Override
 	public CusGrpResourceRelModel queryModelByCidAndResId(CusGrpResourceRelModel model) {
@@ -69,13 +73,31 @@ public class CusGrpResourceRelServiceImpl implements ICusGrpResourceRelService {
 		return flag;
 	}
 
-	//单个用户组对资源授权
+	//用户组对单个资源授权
 	@Override
 	public int authCusGrpResPermission(CusGrpResourceRelModel cusGrpResourceRelModel) {
 		//先更新用户组与资源关系
 		int flag = customerGrpResourceRelDao.updateByConditionSelective(cusGrpResourceRelModel);
 		//更新用户组里的用户与资源关系(批量更新)
 		if(flag == 1){
+			
+			//创建授权记录
+			PermissionRecordModel permRecordModel = null;
+			try{
+				permRecordModel = new PermissionRecordModel();
+				permRecordModel.setObjectRelation(3); //'授权关系；1 用户与资源；2 用户与资源组；3 用户组与资源 ；4 用户组与资源组；
+				permRecordModel.setResourceId(cusGrpResourceRelModel.getResourceId());
+				permRecordModel.setActionType(1); //'动作；1 授权；0 撤销权限
+				permRecordModel.setCgroupId(cusGrpResourceRelModel.getCgroupId());
+				permRecordModel.setCreateUser(Long.parseLong(cusGrpResourceRelModel.getCreateUser().toString()));
+				permRecordModel.setCreateDate(new Date());
+				//insert
+				permissionRecordModelDao.insertSelective(permRecordModel);
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+				
+			
 			List<CusGroupRelModel> cGrpRelModels = new ArrayList<CusGroupRelModel> ();
 			//获取用户组ids
 			cGrpRelModels = iCustomerGroupRelService.queryByGroupId(cusGrpResourceRelModel.getCgroupId());
@@ -91,51 +113,99 @@ public class CusGrpResourceRelServiceImpl implements ICusGrpResourceRelService {
 				cResRelmodel.setEndDate(cusGrpResourceRelModel.getEndDate());
 				cResRelmodel.setFromShared("N");
 				cResRelmodel.setStartDate(cusGrpResourceRelModel.getStartDate());
-				iCusResourceRelService.authorizeResPermission(cResRelmodel);
+				iCusResourceRelService.authorizeResPermission(cResRelmodel, permRecordModel);
 			}
 		}
 		return flag;
 	}
 
 
+	//连带授权用户组与资源关系
 	@Override
-	public int jointAuthCusGrpResPermission(
-			CusGrpResourceRelModel cusGrpResourceRelModel) {
+	public int jointAuthCusGrpResPermission(CusGrpResourceRelModel cusGrpResourceRelModel, PermissionRecordModel permRecordModel) {
 		//先更新用户组与资源关系
-				int flag = customerGrpResourceRelDao.updateByConditionSelective(cusGrpResourceRelModel);
-				//更新用户组里的用户与资源关系(批量更新)
-				if(flag == 1){
-					List<CusGroupRelModel> cGrpRelModels = new ArrayList<CusGroupRelModel> ();
-					//获取用户组ids
-					cGrpRelModels = iCustomerGroupRelService.queryByGroupId(cusGrpResourceRelModel.getCgroupId());
-					
-					//循环赋权(是否可以异步实现)
-					for(CusGroupRelModel model : cGrpRelModels){
-						iCusResourceRelService.jointAuthorizeResPermission(model.getCustomerId(), cusGrpResourceRelModel.getResourceId(),
-								cusGrpResourceRelModel.getStartDate(), cusGrpResourceRelModel.getEndDate(), "N", 
-								null == cusGrpResourceRelModel.getCreateUser()? null:Long.parseLong(cusGrpResourceRelModel.getCreateUser().toString()));
-					}
-				}
-				return flag;
+		int flag = 0;
+		CusGrpResourceRelModel modelTmp = customerGrpResourceRelDao.selectByGrpIdAndResId(cusGrpResourceRelModel);
+		if(null != modelTmp){
+			flag = customerGrpResourceRelDao.updateByConditionSelective(cusGrpResourceRelModel);
+		}else{
+			flag = customerGrpResourceRelDao.insertSelective(cusGrpResourceRelModel);
+		}
+		
+		
+		//创建授权记录
+		try{
+			if(flag == 1 && null == permRecordModel){
+				permRecordModel = new PermissionRecordModel();
+				permRecordModel.setObjectRelation(3); //'授权关系；1 用户与资源；2 用户与资源组；3 用户组与资源 ；4 用户组与资源组；
+				permRecordModel.setResourceId(cusGrpResourceRelModel.getResourceId());
+				permRecordModel.setActionType(1); //
+				permRecordModel.setCreateUser(Long.parseLong(cusGrpResourceRelModel.getCreateUser().toString()));
+				permRecordModel.setCgroupId(cusGrpResourceRelModel.getCgroupId());
+				permRecordModel.setCreateDate(new Date());
+				//insert
+				permissionRecordModelDao.insertSelective(permRecordModel);
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		//更新用户组里的用户与资源关系(批量更新)
+		if(flag == 1){
+			List<CusGroupRelModel> cGrpRelModels = new ArrayList<CusGroupRelModel> ();
+			//获取用户组ids
+			cGrpRelModels = iCustomerGroupRelService.queryByGroupId(cusGrpResourceRelModel.getCgroupId());
+			
+			//循环赋权(是否可以异步实现)
+			for(CusGroupRelModel model : cGrpRelModels){
+				iCusResourceRelService.jointAuthorizeResPermission(model.getCustomerId(), cusGrpResourceRelModel.getResourceId(),
+						cusGrpResourceRelModel.getStartDate(), cusGrpResourceRelModel.getEndDate(), "N", 
+						null == cusGrpResourceRelModel.getCreateUser()? null:Long.parseLong(cusGrpResourceRelModel.getCreateUser().toString()),
+								permRecordModel);
+			}
+		}
+		return flag;
 	}
 
-
+	//授权用户组与资源组关系
 	@Override
 	public int jointAuthCusGrpResGrpPermission(
 			CusGroupResGroupRelModel cusGrpResGrpRelModel) {
 		//添加customer group & resource group relation
 		int flag = cusGroupResGroupRelModelDao.insertSelective(cusGrpResGrpRelModel);
+		PermissionRecordModel permRecordModel = null;
 		
-		//获取userIdList
-		List<CusGroupRelModel> cGroupRelModels = iCustomerGroupRelService.queryByGroupId(cusGrpResGrpRelModel.getRgroupId());
-		
-		//循环对单个用户、资源组授权
-		if(null != cGroupRelModels){
-			for(CusGroupRelModel model: cGroupRelModels){
-				iCusResourceRelService.jointAuthorizeResGrpPermission(model.getCustomerId(), cusGrpResGrpRelModel.getRgroupId(), 
-						cusGrpResGrpRelModel.getStartDate(), cusGrpResGrpRelModel.getEndDate(), cusGrpResGrpRelModel.getCreateUser());
+		if(flag == 1 ){
+			//创建授权记录
+			try{
+				permRecordModel = new PermissionRecordModel();
+				permRecordModel.setObjectRelation(4); //'授权关系；1 用户与资源；2 用户与资源组；3 用户组与资源 ；4 用户组与资源组；
+				permRecordModel.setRgroupId(cusGrpResGrpRelModel.getRgroupId());
+				permRecordModel.setActionType(1); //
+				permRecordModel.setCgroupId(cusGrpResGrpRelModel.getCgroupId());
+				permRecordModel.setCreateUser(cusGrpResGrpRelModel.getCreateUser());
+				permRecordModel.setCreateDate(new Date());
+				//insert
+				permissionRecordModelDao.insertSelective(permRecordModel);
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+			
+			
+			//获取userIdList
+			List<CusGroupRelModel> cGroupRelModels = iCustomerGroupRelService.queryByGroupId(cusGrpResGrpRelModel.getRgroupId());
+			
+			//循环对单个用户、资源组授权
+			if(null != cGroupRelModels){
+				for(CusGroupRelModel model: cGroupRelModels){
+					iCusResourceRelService.jointAuthorizeResGrpPermission(model.getCustomerId(), cusGrpResGrpRelModel.getRgroupId(), 
+							cusGrpResGrpRelModel.getStartDate(), cusGrpResGrpRelModel.getEndDate(), cusGrpResGrpRelModel.getCreateUser(),
+							permRecordModel);
+				}
 			}
 		}
+		
 		return flag;
 	}
 
