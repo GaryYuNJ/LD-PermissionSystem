@@ -17,5 +17,7 @@ public interface CusGroupResGroupRelModelMapper {
     		@Param("startRow") Integer startRow, @Param("pageSize") Integer pageSize);
 
 	int deleteByCondition(CusGroupResGroupRelModel cusGrpResGrpRelModel);
-    
+	
+	List<CusGroupResGroupRelModel> selectByCusGroupId(@Param("cusGroupId")Integer cusGroupId);
+	List<CusGroupResGroupRelModel> selectByResGroupId(@Param("resGroupId")Integer resGroupId);
 }

@@ -94,7 +94,6 @@ public class CusResourceRelServiceImpl implements ICusResourceRelService {
 			updateFlag = this.customerResourceRelDao.insertSelective(sourceModel);
 		}else{
 			
-			
 			//如果用户已有权限，并且操作来自分享，分享的时间配置不能覆盖已有的最大时间范围
 			if("Y".equals(sourceModel.getFromShared()) && "Y".equals(currentModel.getEnable()) ){
 				if(null == currentModel.getStartDate() || currentModel.getStartDate().before(sourceModel.getStartDate())){

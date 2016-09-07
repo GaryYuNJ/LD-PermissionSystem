@@ -36,6 +36,19 @@
     limit #{startRow,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
   </select>
   
+  <select id="selectByCusGroupId" resultMap="BaseResultMap" >
+  	SELECT 
+  	CGROUP_ID, RGROUP_ID, START_DATE, END_DATE, CREATE_USER, CREATE_DATE 
+	FROM CUSGROUP_RESGROUP_REL
+	WHERE CGROUP_ID  = #{cusGroupId, jdbcType=INTEGER} 
+  </select>
+  
+  <select id="selectByResGroupId" resultMap="BaseResultMap" >
+  	SELECT 
+  	CGROUP_ID, RGROUP_ID, START_DATE, END_DATE, CREATE_USER, CREATE_DATE 
+	FROM CUSGROUP_RESGROUP_REL
+	WHERE RGROUP_ID  = #{resGroupId, jdbcType=INTEGER} 
+  </select>
   
   <delete id="deleteByCondition" parameterType="com.ldps.model.CusGroupResGroupRelModel" >
     	delete  From CUSGROUP_RESGROUP_REL 

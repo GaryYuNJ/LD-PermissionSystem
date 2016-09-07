@@ -4,12 +4,18 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import com.ldps.dao.CusGroupResGroupRelModelMapper;
 import com.ldps.dao.CustomerResGroupRelModelMapper;
 import com.ldps.dao.ResourceGroupModelMapper;
 import com.ldps.dao.ResourceGrpRelModelMapper;
+import com.ldps.data.AddCusToCusGroupPermChangeEventData;
+import com.ldps.data.AddResToResGroupPermChangeEventData;
+import com.ldps.event.AddCusToCusGroupPermChangeEvent;
+import com.ldps.event.AddResToResGroupPermChangeEvent;
 import com.ldps.model.CusGroupResGroupRelModel;
 import com.ldps.model.ResourceGroupModel;
 import com.ldps.model.ResourceGrpRelModel;
@@ -25,6 +31,8 @@ public class ReourceGroupServiceImpl implements IResourceGroupService {
 	private CustomerResGroupRelModelMapper cusResGroupRelModelMapper;
 	@Resource
 	private CusGroupResGroupRelModelMapper cusGroupResGroupRelModelDao;
+	@Autowired  
+	private ApplicationContext applicationContext;  
 	
 	@Override
 	public List<ResourceGroupModel> queryBasicResGroupByCondition(
@@ -54,7 +62,16 @@ public class ReourceGroupServiceImpl implements IResourceGroupService {
 
 	@Override
 	public int addResourceGroupRel(ResourceGrpRelModel model) {
-		return resourceGrpRelModelDao.insertSelective(model);
+		int flag =  resourceGrpRelModelDao.insertSelective(model);
+		
+		//资源组的权限关系也要复制给资源
+		//构造异步 event data
+		AddResToResGroupPermChangeEventData eData = new AddResToResGroupPermChangeEventData();
+		eData.setResGroupId(model.getRgroupId());
+		eData.setResourceId(model.getResourceId());
+		applicationContext.publishEvent(new AddResToResGroupPermChangeEvent(eData));
+		
+		return flag;
 	}
 
 	@Override

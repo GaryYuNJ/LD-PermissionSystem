@@ -16,11 +16,11 @@
   </resultMap>
   
   <resultMap id="resultOfInteger" type="java.lang.Integer">  
-       <result column="id" property="id" jdbcType="INTEGER" />  
+       <result column="ID" property="id" jdbcType="INTEGER" />  
   </resultMap>  
   
   <select id="selectResIdsByGroupId" resultMap="resultOfInteger">
-  	select RESOURCE_ID from RESOURCE_GROUP_REL
+  	select RESOURCE_ID ID from RESOURCE_GROUP_REL
     where RGROUP_ID = #{rgroupId,jdbcType=INTEGER} 
   </select>
   

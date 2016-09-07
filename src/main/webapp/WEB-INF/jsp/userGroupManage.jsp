@@ -92,7 +92,7 @@
 							      <li class="active"><a href="#home">用户组详情</a></li>
 							      <li><a href="#userAndUserGroup" >用户组与用户</a></li>
 							      <li><a href="#userGroupResource"  >用户组与资源</a></li>
-							      <li><a href="#userGroupResourceGroup"  >用户与资源组</a></li>
+							      <li><a href="#userGroupResourceGroup"  >用户组与资源组</a></li>
 							    </ul>
 							    <div class="tab-content">
 							      <div class="tab-pane active" id="home">

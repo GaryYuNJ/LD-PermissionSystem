@@ -16,13 +16,16 @@ public interface ICusGrpResourceRelService {
 
 	int disableCusGrpResPermission(Integer cusGrpId, Integer resourceId);
 
-	int authCusGrpResPermission(CusGrpResourceRelModel cusResourceRelModel);
-
 	int jointAuthCusGrpResGrpPermission(
 			CusGroupResGroupRelModel cusGrpResGrpRelModel);
 
 	int jointAuthCusGrpResPermission(
 			CusGrpResourceRelModel cusGrpResourceRelModel,
+			PermissionRecordModel permRecordModel);
+
+	List<CusGrpResourceRelModel> queryByCusGroupId(Integer groupId);
+
+	int authCusGrpResPermission(CusGrpResourceRelModel cusGrpResourceRelModel,
 			PermissionRecordModel permRecordModel); 
 
 	 

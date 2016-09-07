@@ -16,6 +16,8 @@ public interface CustomerResGroupRelModelMapper {
     		@Param("startRow") Integer startRow, @Param("pageSize") Integer pageSize);
 
     CustomerResGroupRelModel selectByCondition(CustomerResGroupRelModel model);
+    
+    List<CustomerResGroupRelModel> selectByResGroupId(@Param("rgroupId") Integer rgroupId);
 
 	int updateByCondition(CustomerResGroupRelModel model);
 

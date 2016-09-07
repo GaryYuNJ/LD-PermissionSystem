@@ -339,6 +339,17 @@
     R.NODE_PATH, R.IS_VIRTUAL_RESOURCE, R.PERMISSION_ATTR_ID, R.DEVICE_TYPE, R.NODE_ID
   </sql>
   
+  <sql id="ResourceWith_ResKeys_Column_List" >
+    R.ID, R.NAME, R.TYPE_ID, R.STATUS, R.CREATE_DATE, R.CREATE_USER,  R.BUILDING_ID, R.FLOOR,
+    R.SEQUENCE, R.SHARE_ENABLE, R.NODE_PATH, R.IS_VIRTUAL_RESOURCE, R.PERMISSION_ATTR_ID, R.DEVICE_TYPE, 
+    R.NODE_ID,  R.R_INT1, R.R_INT2, R.NUM1, R.NUM2, R.VC1, R.VC2, R.CHR1, R.CHR2,
+    RK.ID RK_ID , RK.MAC RK_MAC, RK.PASSWORD RK_PASSWORD, RK.MANUFACTURER_ID RK_MANUFACTURER_ID, 
+    RK.RESOURCE_ID RK_RESOURCE_ID, RK.R_INT1 RK_R_INT1, 
+    RK.R_INT2 RK_R_INT2, RK.NUM1 RK_NUM1, RK.NUM2 RK_NUM2, RK.VC1 RK_VC1, 
+    RK.VC2 RK_VC2, RK.CHR1 RK_CHR1, RK.CHR2 RK_CHR2
+  </sql>
+ 
+  
   <select id="selectSharableResourceById" resultMap="Resource_BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Resource_Base_Column_List_WithLable" /> 
@@ -362,7 +373,7 @@
   
   <select id="selectPriResWIthKeysByBIdAndCusId" resultMap="Resource_WithResKeyResultMap" >
     select 
-    <include refid="Resource_Base_Column_List_WithLable" /> 
+    <include refid="ResourceWith_ResKeys_Column_List" /> 
     FROM RESOURCE R  LEFT JOIN RESOURCE_KEY RK ON R.ID=RK.RESOURCE_ID, CUSTOMER_RESOURCE_REL CR 
 	WHERE CR.RESOURCE_ID=R.ID AND R.STATUS='Y' AND CR.ENABLE='Y'
 	<![CDATA[ AND (CR.START_DATE IS NULL OR CR.START_DATE < now()) AND (CR.END_DATE IS NULL OR CR.END_DATE > now()) ]]> 
@@ -373,7 +384,7 @@
   
   <select id="selectValidResByCIdAndMac" resultMap="Resource_WithResKeyResultMap" >
     select 
-    <include refid="Resource_Base_Column_List_WithLable" /> 
+    <include refid="ResourceWith_ResKeys_Column_List" /> 
     FROM RESOURCE R  LEFT JOIN RESOURCE_KEY RK ON R.ID=RK.RESOURCE_ID, CUSTOMER_RESOURCE_REL CR 
 	WHERE CR.RESOURCE_ID=R.ID AND R.STATUS='Y' AND CR.ENABLE='Y'
 	<![CDATA[ AND (CR.START_DATE IS NULL OR CR.START_DATE < now()) AND (CR.END_DATE IS NULL OR CR.END_DATE > now()) ]]> 

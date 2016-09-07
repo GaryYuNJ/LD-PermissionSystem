@@ -199,6 +199,7 @@ public class ResourceGroupController {
 			bData.setRows(new Object());
 			bData.setTotal(0);
 		}
+		System.out.println(JSON.toJSONString(bData));
 		return JSON.toJSONString(bData);
 	}
 	

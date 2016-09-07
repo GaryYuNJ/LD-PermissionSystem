@@ -46,7 +46,13 @@ public class CusGrpResourceRelServiceImpl implements ICusGrpResourceRelService {
 		return customerGrpResourceRelDao.selectByGroupIdListAndResId(groupIds,resourceId);
 	}
 
+	@Override
+	public  List<CusGrpResourceRelModel> queryByCusGroupId(Integer groupId) {
+		// TODO Auto-generated method stub
+		return customerGrpResourceRelDao.selectByCusGroupId(groupId);
+	}
 
+	
 	@Override
 	public int disableCusGrpResPermission(Integer cusGrpId, Integer resourceId) {
 		
@@ -75,28 +81,29 @@ public class CusGrpResourceRelServiceImpl implements ICusGrpResourceRelService {
 
 	//用户组对单个资源授权
 	@Override
-	public int authCusGrpResPermission(CusGrpResourceRelModel cusGrpResourceRelModel) {
+	public int authCusGrpResPermission(CusGrpResourceRelModel cusGrpResourceRelModel, PermissionRecordModel permRecordModel) {
 		//先更新用户组与资源关系
 		int flag = customerGrpResourceRelDao.updateByConditionSelective(cusGrpResourceRelModel);
 		//更新用户组里的用户与资源关系(批量更新)
 		if(flag == 1){
 			
 			//创建授权记录
-			PermissionRecordModel permRecordModel = null;
-			try{
-				permRecordModel = new PermissionRecordModel();
-				permRecordModel.setObjectRelation(3); //'授权关系；1 用户与资源；2 用户与资源组；3 用户组与资源 ；4 用户组与资源组；
-				permRecordModel.setResourceId(cusGrpResourceRelModel.getResourceId());
-				permRecordModel.setActionType(1); //'动作；1 授权；0 撤销权限
-				permRecordModel.setCgroupId(cusGrpResourceRelModel.getCgroupId());
-				permRecordModel.setCreateUser(Long.parseLong(cusGrpResourceRelModel.getCreateUser().toString()));
-				permRecordModel.setCreateDate(new Date());
-				//insert
-				permissionRecordModelDao.insertSelective(permRecordModel);
-			}catch(Exception e){
-				e.printStackTrace();
+			if (permRecordModel == null){
+				try{
+					permRecordModel = new PermissionRecordModel();
+					permRecordModel.setObjectRelation(3); //'授权关系；1 用户与资源；2 用户与资源组；3 用户组与资源 ；4 用户组与资源组；
+					permRecordModel.setResourceId(cusGrpResourceRelModel.getResourceId());
+					permRecordModel.setActionType(1); //'动作；1 授权；0 撤销权限
+					permRecordModel.setCgroupId(cusGrpResourceRelModel.getCgroupId());
+					permRecordModel.setCreateUser(Long.parseLong(cusGrpResourceRelModel.getCreateUser().toString()));
+					permRecordModel.setCreateDate(new Date());
+					//insert
+					permissionRecordModelDao.insertSelective(permRecordModel);
+				}catch(Exception e){
+					e.printStackTrace();
+				}
+					
 			}
-				
 			
 			List<CusGroupRelModel> cGrpRelModels = new ArrayList<CusGroupRelModel> ();
 			//获取用户组ids

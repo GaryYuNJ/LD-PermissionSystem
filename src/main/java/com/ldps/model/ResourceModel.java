@@ -88,11 +88,11 @@ public class ResourceModel {
 		this.resourceKeys = resourceKeys;
 	}
 
-	public CusGrpResourceRelModel getcGrpResRelModel() {
+	public CusGrpResourceRelModel getCGrpResRelModel() {
 		return cGrpResRelModel;
 	}
 
-	public void setcGrpResRelModel(CusGrpResourceRelModel cGrpResRelModel) {
+	public void setCGrpResRelModel(CusGrpResourceRelModel cGrpResRelModel) {
 		this.cGrpResRelModel = cGrpResRelModel;
 	}
 

@@ -46,6 +46,12 @@
     	</where>
     </select>
     
+    <select id="selectByResGroupId" resultMap="BaseResultMap" >
+    	SELECT CUSTOMER_ID, RGROUP_ID,START_DATE,END_DATE,CREATE_DATE,CREATE_USER
+    	From CUSTOMER_RESGROUP_REL 
+    	WHERE RGROUP_ID = #{rgroupId}
+    </select>
+    
     <delete id="deleteByCondition"  parameterType="com.ldps.model.CustomerResGroupRelModel" >
     	delete  From CUSTOMER_RESGROUP_REL 
     	where CUSTOMER_ID = #{customerId} AND  RGROUP_ID = #{rgroupId}

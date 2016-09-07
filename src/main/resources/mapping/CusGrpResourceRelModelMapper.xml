@@ -140,6 +140,14 @@
    	</foreach>
   </select>
   
+  <select id="selectByCusGroupId" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from CGROUP_RESOURCE_REL
+    where ENABLE='Y' 
+    AND CGROUP_ID=#{groupId,jdbcType=INTEGER}
+  </select>
+  
     <select id="selectResouceListWithSpecCusGroupId" resultMap="Resource_With_CusGrp_RelModelMap" >
     select 
     <include refid="Resource_With_CusGrp_RelModel_List" /> 
@@ -151,6 +159,7 @@
     		<if test="resourceModel.buildingId != null"> AND  BUILDING_ID = #{resourceModel.buildingId}</if>
     		<if test="resourceModel.deviceType != null"> AND  DEVICE_TYPE = #{resourceModel.deviceType}</if>
     		<if test="resourceModel.nodeId != null"> AND  NODE_ID = #{resourceModel.nodeId}</if>
+    		<if test="resourceModel.permissionAttrId != null"> AND  PERMISSION_ATTR_ID = #{resourceModel.permissionAttrId}</if>
     	</where>
      </if>
     limit #{startRow,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}

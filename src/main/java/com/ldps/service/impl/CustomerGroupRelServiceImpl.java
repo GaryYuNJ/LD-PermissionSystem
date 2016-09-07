@@ -6,10 +6,16 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import com.ldps.dao.CusGroupRelModelMapper;
+import com.ldps.dao.CusGroupResGroupRelModelMapper;
+import com.ldps.data.AddCusToCusGroupPermChangeEventData;
+import com.ldps.event.AddCusToCusGroupPermChangeEvent;
 import com.ldps.model.CusGroupRelModel;
+import com.ldps.service.ICusGrpResourceRelService;
 import com.ldps.service.ICustomerGroupRelService;
 
 @Service("iCustomerGroupRelService")
@@ -18,7 +24,12 @@ public class CustomerGroupRelServiceImpl implements ICustomerGroupRelService {
 
 	@Resource
 	private CusGroupRelModelMapper customerGroupRelDao;
-	
+	@Resource
+	private ICusGrpResourceRelService iCusGrpResourceRelService;
+	@Autowired  
+	private ApplicationContext applicationContext;  
+	@Resource
+	private CusGroupResGroupRelModelMapper cusGroupResGroupRelDao;
 
 	@Override
 	public int delUserGroupRelation(Long userId, Integer groupId) {
@@ -35,7 +46,16 @@ public class CustomerGroupRelServiceImpl implements ICustomerGroupRelService {
 		model.setCustomerId(userId);
 		model.setCreateDate(new Date());
 		model.setCreateUser(0); //session User
-		return customerGroupRelDao.insert(model);
+		int flag = customerGroupRelDao.insert(model);
+		
+		//用户组的权限也要授权给用户
+		//构造异步 event data
+		AddCusToCusGroupPermChangeEventData eData = new AddCusToCusGroupPermChangeEventData();
+		eData.setCusGroupId(groupId);
+		eData.setCustomerId(userId);
+		applicationContext.publishEvent(new AddCusToCusGroupPermChangeEvent(eData));
+		
+		return flag;
 	}
 	
 	@Override

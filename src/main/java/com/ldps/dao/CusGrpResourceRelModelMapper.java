@@ -18,6 +18,7 @@ public interface CusGrpResourceRelModelMapper {
     List<CusGrpResourceRelModel> selectByGroupIdListAndResId(@Param("groupIds")List<Integer> groupIds, 
     		@Param("resourceId")Integer resourceId);
     
+    List<CusGrpResourceRelModel> selectByCusGroupId(@Param("groupId") Integer groupId);
 
 	List<ResourceModel> selectResouceListWithSpecCusGroupId(@Param("resourceModel")ResourceModel resourceModel,@Param("startRow") Integer startRow,
 			@Param("pageSize") Integer pageSize);
