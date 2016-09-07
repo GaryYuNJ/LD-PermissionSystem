@@ -278,7 +278,7 @@
                             </form>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal" id="closeNewReourceModal">关闭</button>
 				<button type="button" class="btn btn-primary" id="updateReourceKeyId"><i class="icon-plus"></i>新增钥匙</button>
 				<button type="button" class="btn btn-primary" id="updateResourceButtonId">保存</button>
 			</div>
@@ -486,7 +486,13 @@ $('#jstree_resource').on("rename_node.jstree", function (e,node) {
 		            //var data=$("#newResourceFormId").serializeArray();
 		            var data={"resourceModelJson":JSON.stringify(resourceModel)}
 		            $.post("<c:url value='/manage/updateResource.json' />",data ,function(data){
-		            	console.log("1111");
+		            	if(0 == data.status){
+		            		alert("保存成功！");
+		            		$('#closeNewReourceModal').click();
+		            	}else{
+		            		alert("后台异常！");
+		            	}
+		            	//console.log("1111");
 		             });
 		            
 		        }
@@ -628,7 +634,7 @@ $('#jstree_resource').on("rename_node.jstree", function (e,node) {
 				method: 'get',
 			    url: "<c:url value='/manage/resourceSearch.json' />", 
 			    dataType: "json",
-			    pageSize: 2,
+			    pageSize: 10,
 			    pageList: [10, 25, 50],  //可供选择的每页的行数（*）
 			    pageNumber: pageNumber,
 			    pagination: true, //分页
