@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.ldps.dao.CusGroupRelModelMapper;
+import com.ldps.dao.CusResourceRelModelMapper;
 import com.ldps.dao.CustomerModelMapper;
 import com.ldps.dao.ResourceModelMapper;
 import com.ldps.model.CustomerModel;
@@ -24,7 +25,8 @@ public class CustomerServiceImpl implements ICustomerService {
 	private ResourceModelMapper resourceDao;
 	@Resource
 	private CusGroupRelModelMapper cusGroupRelDao;
-	
+	@Resource
+	private CusResourceRelModelMapper cusResourceRelDao;
 	
 	@Override
 	public List<CustomerModel> queryAllWithPageIndex(Integer startRow, Integer pageSize) {
@@ -85,7 +87,7 @@ public class CustomerServiceImpl implements ICustomerService {
 	*/
 	@Override
 	public List<ResourceModel> querySharableResource(Long customerId) {
-		return resourceDao.selectSharableResourceById(customerId);
+		return cusResourceRelDao.selectSharableResourceById(customerId);
 	}
 
 	@Override

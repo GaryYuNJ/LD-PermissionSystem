@@ -25,14 +25,11 @@ public interface ResourceModelMapper {
     
     ResourceModel selectIdByMac(String mac);
     
-    List<ResourceModel>  selectSharableResourceById(Long customerId);
 
 	List<ResourceModel> selectValidPubResByBuildingId(Integer buildingId);
 	
 	List<ResourceModel> selectPubResWithKeysByBuildingId(Integer buildingId);
 
-	List<ResourceModel> selectPrivateResByBIdAndCusId(@Param("buildingId") Integer buildingId,
-			@Param("customerId") Long customerId);
 
 	List<ResourceModel> selectBasicResByNodeIdList(@Param("nodeIds")List<Integer> nodeIds);
 	
@@ -40,8 +37,6 @@ public interface ResourceModelMapper {
 			@Param("pageSize") Integer pageSize);
 	int selectCountByCondition(@Param("resourceModel")ResourceModel resourceModel);
 	
-	List<ResourceModel>  selectPriResWIthKeysByBIdAndCusId (@Param("buildingId") Integer buildingId,
-			@Param("customerId") Long customerId);
 
 	ResourceModel selectWithResKeysByName(@Param("name") String name);
 	
@@ -53,6 +48,4 @@ public interface ResourceModelMapper {
 	List<ResourceModel> selectCountConditionWithGId(@Param("resourceModel")ResourceModel resourceModel,@Param("startRow") Integer startRow,
 			@Param("pageSize") Integer pageSize);
 
-	ResourceModel selectValidResByCIdAndMac(@Param("customerId")Long customerId,
-			@Param("resourceId")Integer resourceId);
 }

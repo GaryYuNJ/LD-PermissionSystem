@@ -38,7 +38,7 @@ public class ResourceServiceImpl implements IResourceService {
 	private CusGrpResourceRelModelMapper cusGrpResRelDao;
 	@Resource
 	private ResourceKeyMapper resourceKeyDao;
-
+	
 	@Override
 	public ResourceModel queryResourceByMAC(String mac) {
 		return resourceDao.selectByMac(mac);
@@ -88,7 +88,7 @@ public class ResourceServiceImpl implements IResourceService {
 	@Override
 	public List<ResourceModel> queryPrivateResByBIdAndCusId(
 			Integer buildingId, Long customerId) {
-		return resourceDao.selectPrivateResByBIdAndCusId(buildingId,customerId);
+		return cusResourceRelDao.selectPrivateResByBIdAndCusId(buildingId,customerId);
 	}
 
 	/*
@@ -228,7 +228,7 @@ public class ResourceServiceImpl implements IResourceService {
 	@Override
 	public List<ResourceModel> queryPriResWithKeysByBIdAndCusId(
 			Integer buildingId, Long customerId) {
-		return resourceDao.selectPriResWIthKeysByBIdAndCusId(buildingId, customerId);
+		return cusResourceRelDao.selectPriResWIthKeysByBIdAndCusId(buildingId, customerId);
 	}
 
 	@Override
@@ -437,7 +437,7 @@ public class ResourceServiceImpl implements IResourceService {
 			
 		//如果不是公共资源，要检查权限，有权限就返回详情
 		}else{
-			return resourceDao.selectValidResByCIdAndMac(customerId, resourceId);
+			return cusResourceRelDao.selectValidResByCIdAndMac(customerId, resourceId);
 		}
 	}
 }

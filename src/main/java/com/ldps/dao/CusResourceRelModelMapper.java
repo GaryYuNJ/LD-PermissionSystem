@@ -27,5 +27,15 @@ public interface CusResourceRelModelMapper {
 
 	int disableBatchResourcePermission(@Param("disableFlag")String disableFlag, @Param("user")Integer user,
 			@Param("customerIds") List<Long> customerIds, @Param("resourceId") Integer resourceId);
+	
+    List<ResourceModel>  selectSharableResourceById(Long customerId);
+    
+	List<ResourceModel> selectPrivateResByBIdAndCusId(@Param("buildingId") Integer buildingId,
+			@Param("customerId") Long customerId);
+	
+	List<ResourceModel>  selectPriResWIthKeysByBIdAndCusId (@Param("buildingId") Integer buildingId,
+			@Param("customerId") Long customerId);
 
+	ResourceModel selectValidResByCIdAndMac(@Param("customerId")Long customerId,
+			@Param("resourceId")Integer resourceId);
 }
