@@ -73,4 +73,6 @@ public interface IResourceService {
 
 	ResourceModel queryValidResByCIdAndMac(Long customerId,
 			Integer resourceId);
+
+	int selectCountConditionWithGId(ResourceModel model);
 }

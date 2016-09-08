@@ -20,6 +20,7 @@ import org.springframework.util.StringUtils;
 
 import com.ldps.dao.CusGrpResourceRelModelMapper;
 import com.ldps.dao.CusResourceRelModelMapper;
+import com.ldps.dao.ResourceGrpRelModelMapper;
 import com.ldps.dao.ResourceKeyMapper;
 import com.ldps.dao.ResourceModelMapper;
 import com.ldps.data.APIMessage;
@@ -38,6 +39,8 @@ public class ResourceServiceImpl implements IResourceService {
 	private CusGrpResourceRelModelMapper cusGrpResRelDao;
 	@Resource
 	private ResourceKeyMapper resourceKeyDao;
+	@Resource
+	private ResourceGrpRelModelMapper resourceGrpRelDao;
 	
 	@Override
 	public ResourceModel queryResourceByMAC(String mac) {
@@ -419,8 +422,14 @@ public class ResourceServiceImpl implements IResourceService {
 			if(StringUtils.isEmpty(model.getName()))
 				model.setName(null);
 		} 
-		return resourceDao.selectResouceListByConditionWithGId(model, pageNo, pageSize);
+		return resourceGrpRelDao.selectResouceListByConditionWithGId(model, pageNo, pageSize);
 	}
+	
+	@Override
+	public int selectCountConditionWithGId(ResourceModel model) {
+		return resourceGrpRelDao.selectResouceCountConditionWithGId(model);
+	}
+	
 
 	@Override
 	public ResourceModel queryValidResByCIdAndMac(Long customerId,

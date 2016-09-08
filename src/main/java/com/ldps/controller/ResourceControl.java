@@ -170,7 +170,7 @@ public class ResourceControl {
 			bData.setRows(resourceList);
 			bData.setPage(offset / limit + 1);
 			bData.setTotal(iResourceService
-					.queryCountByCondition(resourceModel));
+					.selectCountConditionWithGId(resourceModel));
 		} else {
 			bData.setPage(0);
 			bData.setRows(new Object());

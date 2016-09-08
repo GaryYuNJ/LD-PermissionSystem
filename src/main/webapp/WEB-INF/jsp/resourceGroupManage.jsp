@@ -518,7 +518,9 @@
 	 $('#doSearchResource').click(function() {
 	        //var params = $('#resourceTableId').bootstrapTable('getOptions');  
 	        $("#resourceNodeId_hidden").val(null);
-	        $('#resourceTableId').bootstrapTable('refresh');  
+	        $("#resourceTableId").bootstrapTable('destroy');
+	        resourceTableInit();
+	        //$('#resourceTableId').bootstrapTable('refresh');   //直接用 refresh会有页码数缓存问题
 	        //console.info(params);  
     });
 	

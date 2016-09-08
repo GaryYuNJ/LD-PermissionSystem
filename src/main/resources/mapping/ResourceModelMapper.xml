@@ -216,7 +216,7 @@
     	</where>
      </if>
   </select>
-  
+  <!-- 
    <select id="selectCountConditionWithGId" resultMap="resultOfInteger" parameterType="com.ldps.model.ResourceModel" >
 	SELECT count(1) AS totalCount
 	FROM RESOURCE R LEFT JOIN RESOURCE_GROUP_REL RGR ON R.ID=RGR.RESOURCE_ID
@@ -247,7 +247,7 @@
     	</where>
      </if>
   </select>
-  
+   -->
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
