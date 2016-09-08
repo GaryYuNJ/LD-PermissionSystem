@@ -1283,7 +1283,7 @@
 	   function removeResGroupPermission(resGroupId){
 		   var userId = $("#userId_hidden").val();
 		   $.ajax({
-			    url:"<c:url value='/user/disableresGroupPermission.json' />",
+			    url:"<c:url value='/user/disableResGroupPermission.json' />",
 			    data:{   resGroupId : resGroupId, userId : userId },  
 			    type:'get',  
 			    cache:false,  
