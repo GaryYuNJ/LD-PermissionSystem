@@ -204,16 +204,16 @@ public class ResourceGroupController {
 	}
 	
 
-	//禁用资源组
+	//删除用户组与资源组权限关系
 	@RequestMapping(value="disableResGroupPermission.json",method = { RequestMethod.GET,
 			RequestMethod.POST },produces = "application/json; charset=utf-8")
 	@ResponseBody
-	public String disableResGroupPermission( @RequestParam("userGrpId") Integer userGrpId , 
+	public String disableCusGrpResGrpPermission( @RequestParam("userGrpId") Integer userGrpId , 
 			@RequestParam("resGroupId") Integer resGroupId , ModelMap model){
 		
 		APIMessage apiMessage = new APIMessage();
 		
-		int flag = iResourceGroupService.deleteResGrpPermission(userGrpId, resGroupId);
+		int flag = iResourceGroupService.deleteCusGrpResGrpPermission(userGrpId, resGroupId);
 		apiMessage.setStatus(flag);
 		
 		return JSON.toJSONString(apiMessage);

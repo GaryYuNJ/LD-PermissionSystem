@@ -16,6 +16,9 @@ public interface ResourceGrpRelModelMapper {
     
     List <Integer> selectResIdsByGroupId(@Param("rgroupId") Integer rgroupId);
     
+    List <Integer> selectResIdsByResGroupIdList(@Param("rgroupIds") List<Integer> rgroupIds);
+
+    
     List<ResourceModel> selectResouceListByConditionWithGId(@Param("resourceModel")ResourceModel resourceModel,@Param("startRow") Integer startRow,
 			@Param("pageSize") Integer pageSize);
     

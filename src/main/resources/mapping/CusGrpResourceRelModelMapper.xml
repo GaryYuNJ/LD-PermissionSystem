@@ -165,20 +165,11 @@
     limit #{startRow,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
   </select>
   
-  <update id="disableResourcePermission" parameterType="com.ldps.model.CusGrpResourceRelModel" >
-    update CGROUP_RESOURCE_REL
-    <set>
-      <if test="enable != null" >
-        ENABLE = #{enable,jdbcType=CHAR},
-      </if>
-      <if test="createUser != null" >
-        CREATE_USER = #{createUser,jdbcType=BIGINT}, 
-      </if>
-      UPDATE_DATE = now()
-    </set>
+  <delete id="deleteResourcePermission" parameterType="com.ldps.model.CusGrpResourceRelModel" >
+    delete from  CGROUP_RESOURCE_REL
     where CGROUP_ID = #{cgroupId,jdbcType=INTEGER}
     AND RESOURCE_ID = #{resourceId,jdbcType=INTEGER}
-  </update>
+  </delete>
   
    <update id="updateByConditionSelective" parameterType="com.ldps.model.CusGrpResourceRelModel" >
     update CGROUP_RESOURCE_REL

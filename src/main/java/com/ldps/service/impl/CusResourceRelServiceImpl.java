@@ -120,11 +120,13 @@ public class CusResourceRelServiceImpl implements ICusResourceRelService {
 				if(null == permRecordModel){
 					permRecordModel = new PermissionRecordModel();
 					permRecordModel.setObjectRelation(1); //'授权关系；1 用户与资源；2 用户与资源组；3 用户组与资源 ；4 用户组与资源组；
-					permRecordModel.setActionType(1); //
+					permRecordModel.setActionType(1); //1 授权；0 删除权限
 					permRecordModel.setCreateDate(new Date());
 				}
 				permRecordModel.setCustomerId(sourceModel.getCustomerId());
 				permRecordModel.setResourceId(sourceModel.getResourceId());
+				permRecordModel.setStartDate(sourceModel.getStartDate());
+				permRecordModel.setEndDate(sourceModel.getEndDate());
 				//insert
 				permissionRecordModelDao.insertSelective(permRecordModel);
 			}
@@ -215,6 +217,8 @@ public class CusResourceRelServiceImpl implements ICusResourceRelService {
 					permRecordModel.setCustomerId(customerId);
 					permRecordModel.setCreateUser(createUser);
 					permRecordModel.setCreateDate(new Date());
+					permRecordModel.setStartDate(startDate);
+					permRecordModel.setEndDate(endDate);
 					//insert
 					permissionRecordModelDao.insertSelective(permRecordModel);
 				}
@@ -249,21 +253,72 @@ public class CusResourceRelServiceImpl implements ICusResourceRelService {
 
 	@Override
 	public int disableResourcePermission(CusResourceRelModel crModel) {
-		return customerResourceRelDao.disableResourcePermission(crModel);
+		return customerResourceRelDao.delteResourcePermission(crModel);
 	}
 
 	@Override
 	public int disableBatchResourcePermission(List<Long> customerIds,
-			Integer resourceId) {
-		String disableFlag = "N";
-		Integer user = 0;
-		return customerResourceRelDao.disableBatchResourcePermission(disableFlag,user,customerIds,resourceId);
+			Integer resourceId, PermissionRecordModel permRecordModel) {
+		
+		int flag = 0;
+		if(null != customerIds && customerIds.size()> 0){
+			String disableFlag = "N";
+			Integer user = 0;
+			flag= customerResourceRelDao.deleteByCusIdListAndResId(disableFlag, user, customerIds,resourceId);
+			
+			if(null == permRecordModel){
+				permRecordModel = new PermissionRecordModel();
+				permRecordModel.setObjectRelation(1); //'授权关系；1 用户与资源；2 用户与资源组；3 用户组与资源 ；4 用户组与资源组；
+				permRecordModel.setActionType(0); //撤销权限
+				permRecordModel.setCreateUser(0L);
+				permRecordModel.setCreateDate(new Date());
+				permRecordModel.setResourceId(resourceId);
+				
+				for(Long customerId: customerIds){
+					permRecordModel.setCustomerId(customerId);
+					//insert
+					permissionRecordModelDao.insertSelective(permRecordModel);
+				}
+			}
+		}
+		
+		return flag;
 	}
 
 	@Override
 	public int deleteResGrpPermission(CustomerResGroupRelModel crgModel) {
 		// TODO Auto-generated method stub
-		return cusResGroupRelModelDao.deleteByCondition(crgModel);
+		int flag = cusResGroupRelModelDao.deleteByCondition(crgModel);
+		
+		if(flag == 1){
+			PermissionRecordModel permRecordModel = new PermissionRecordModel();
+			permRecordModel.setObjectRelation(-2); //授权关系；1 用户与资源；2 用户与资源组；3 用户组与资源 ；4 用户组与资源组；5 用户组添加用户；6 资源组添加资源；取消权限操作，对应负值
+			permRecordModel.setRgroupId(crgModel.getRgroupId());
+			permRecordModel.setActionType(0); //移除权限
+			permRecordModel.setCustomerId(crgModel.getCustomerId());
+			permRecordModel.setCreateUser(0L);
+			permRecordModel.setCreateDate(new Date());
+			//记录用户与资源组的权限变化
+			//insert
+			permissionRecordModelDao.insertSelective(permRecordModel);
+			try{
+				List<Integer> resourceIds = resourceGrpRelModelDao.selectResIdsByGroupId(crgModel.getRgroupId());
+				if(null != resourceIds && resourceIds.size()> 0){
+					//删除用户与资源的关系
+					customerResourceRelDao.deleteByCusIdAndResIdList(crgModel.getCustomerId(),resourceIds);
+					
+					//循环插入用户与资源权限变化
+					for(Integer resourceId: resourceIds){
+						permRecordModel.setResourceId(resourceId);
+						//insert
+						permissionRecordModelDao.insertSelective(permRecordModel);
+					}
+				}
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		return flag;
 	}
 
 }

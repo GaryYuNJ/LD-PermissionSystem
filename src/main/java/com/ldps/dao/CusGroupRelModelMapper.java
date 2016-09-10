@@ -42,4 +42,6 @@ public interface CusGroupRelModelMapper {
 	
 	
 	List<CusGroupRelModel> selectByGroupId(@Param("userGroupId")Integer userGroupId);
+	
+	List<Long> selectCusIdListByGroupId(@Param("userGroupId")Integer userGroupId);
 }

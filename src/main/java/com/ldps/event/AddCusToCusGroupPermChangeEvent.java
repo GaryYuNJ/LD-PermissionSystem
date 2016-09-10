@@ -1,11 +1,8 @@
 package com.ldps.event;
 
 import org.springframework.context.ApplicationEvent;
-import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.context.ApplicationEventPublisherAware;
 
 import com.ldps.data.AddCusToCusGroupPermChangeEventData;
-import com.ldps.data.AuthCusAndResPermissionEventData;
 
 public class AddCusToCusGroupPermChangeEvent extends ApplicationEvent{
 	/**

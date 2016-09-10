@@ -120,7 +120,7 @@ public class CustomerGroupFacadeImpl implements CustomerGroupFacade {
 	//解除用户组对某资源的权限
 	@Override
 	public int disableCusGrpResPermission(Integer cusGrpId, Integer resourceId) {
-		return  iCusGrpResourceRelService.disableCusGrpResPermission(cusGrpId, resourceId);
+		return  iCusGrpResourceRelService.disableCusGrpResPermission(cusGrpId, resourceId,null);
 	}
 
 	@Override

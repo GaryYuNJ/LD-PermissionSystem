@@ -26,5 +26,5 @@ public interface IResourceGroupService {
 	List<ResourceGroupModel> queryResGroupWithCusGrpId(
 			ResourceGroupModel resourceGroupModel, Integer offset, Integer limit);
 
-	int deleteResGrpPermission(Integer userGrpId, Integer resGroupId);
+	int deleteCusGrpResGrpPermission(Integer userGrpId, Integer resGroupId);
 }

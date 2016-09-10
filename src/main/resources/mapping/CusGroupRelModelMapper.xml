@@ -26,7 +26,11 @@
     <result column="EXTEND_SPECIF_GROUPID" property="extendSpecificFlag" jdbcType="INTEGER" />
   </resultMap>
   
-   <resultMap id="ResultOfInteger" type="java.lang.Integer">  
+   <resultMap id="ResultOfLong" type="java.lang.Long">  
+       <result column="CUSTOMER_ID" property="customerId" jdbcType="BIGINT" />  
+   </resultMap>  
+   
+      <resultMap id="ResultOfInteger" type="java.lang.Integer">  
        <result column="totalCount" property="totalCount" jdbcType="INTEGER" />  
    </resultMap>  
   
@@ -84,6 +88,14 @@
    <select id="selectByGroupId" resultMap="BaseResultMap"  >
     select 
     <include refid="Base_Column_List" />
+    from CGROUP_REL
+    where CGROUP_ID=#{userGroupId,jdbcType=INTEGER}
+  </select>
+  
+  
+  <select id="selectCusIdListByGroupId" resultMap="ResultOfLong"  >
+    select 
+    CUSTOMER_ID 
     from CGROUP_REL
     where CGROUP_ID=#{userGroupId,jdbcType=INTEGER}
   </select>

@@ -23,7 +23,9 @@ public interface CusGrpResourceRelModelMapper {
 	List<ResourceModel> selectResouceListWithSpecCusGroupId(@Param("resourceModel")ResourceModel resourceModel,@Param("startRow") Integer startRow,
 			@Param("pageSize") Integer pageSize);
 	
-	  int disableResourcePermission(CusGrpResourceRelModel record);
+	  //int disableResourcePermission(CusGrpResourceRelModel record);
+	  
+	  int deleteResourcePermission(CusGrpResourceRelModel record);
 	  
 	  int updateByConditionSelective(CusGrpResourceRelModel record);
 }

@@ -13,7 +13,9 @@ import org.springframework.stereotype.Service;
 import com.ldps.dao.CusGroupRelModelMapper;
 import com.ldps.dao.CusGroupResGroupRelModelMapper;
 import com.ldps.data.AddCusToCusGroupPermChangeEventData;
+import com.ldps.data.RemoveCusFromCusGrpPermChangeEventData;
 import com.ldps.event.AddCusToCusGroupPermChangeEvent;
+import com.ldps.event.RemoveCusFromCusGrpPermChangeEvent;
 import com.ldps.model.CusGroupRelModel;
 import com.ldps.service.ICusGrpResourceRelService;
 import com.ldps.service.ICustomerGroupRelService;
@@ -34,7 +36,16 @@ public class CustomerGroupRelServiceImpl implements ICustomerGroupRelService {
 	@Override
 	public int delUserGroupRelation(Long userId, Integer groupId) {
 		// TODO Auto-generated method stub
-		return customerGroupRelDao.delUserGroupRelation(userId, groupId);
+		int flag = customerGroupRelDao.delUserGroupRelation(userId, groupId);
+		
+		//用户组删除用户带来的权限更新
+		//构造异步 event 
+		RemoveCusFromCusGrpPermChangeEventData eData = new RemoveCusFromCusGrpPermChangeEventData();
+		eData.setCusGrpId(groupId);
+		eData.setCustomerId(userId);
+		applicationContext.publishEvent(new RemoveCusFromCusGrpPermChangeEvent(eData));
+		
+		return flag;
 	}
 
 

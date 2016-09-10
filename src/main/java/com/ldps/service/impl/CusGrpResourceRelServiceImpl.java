@@ -54,16 +54,31 @@ public class CusGrpResourceRelServiceImpl implements ICusGrpResourceRelService {
 
 	
 	@Override
-	public int disableCusGrpResPermission(Integer cusGrpId, Integer resourceId) {
+	public int disableCusGrpResPermission(Integer cusGrpId, Integer resourceId, PermissionRecordModel permRecordModel) {
 		
 		CusGrpResourceRelModel cmodel = new CusGrpResourceRelModel();
 		cmodel.setCgroupId(cusGrpId);
 		cmodel.setResourceId(resourceId);
-		cmodel.setEnable("Y");
+		cmodel.setEnable("N");
 		//先更新用户组与资源关系
-		int flag = customerGrpResourceRelDao.disableResourcePermission(cmodel);
-		//更新用户组里的用户与资源关系(批量更新)
+		int flag = customerGrpResourceRelDao.deleteResourcePermission(cmodel);
+		
+		
 		if(flag == 1){
+			if(null == permRecordModel){
+				permRecordModel = new PermissionRecordModel();
+				permRecordModel.setObjectRelation(-3); //授权关系；1 用户与资源；2 用户与资源组；3 用户组与资源 ；4 用户组与资源组；5 用户组添加用户；6 资源组添加资源；取消权限操作，对应负值
+				permRecordModel.setResourceId(resourceId);
+				permRecordModel.setActionType(0); //移除权限
+				permRecordModel.setCgroupId(cusGrpId);
+				permRecordModel.setCreateUser(0L);
+				permRecordModel.setCreateDate(new Date());
+				//记录用户与资源组的权限变化
+				//insert
+				permissionRecordModelDao.insertSelective(permRecordModel);
+			}
+			
+			//更新用户组里的用户与资源关系(批量更新)
 			List<Long> customerIds = new ArrayList<Long> ();
 			//获取用户组ids
 			List<CusGroupRelModel> cGrpRelModels = new ArrayList<CusGroupRelModel> ();
@@ -73,7 +88,7 @@ public class CusGrpResourceRelServiceImpl implements ICusGrpResourceRelService {
 			for(CusGroupRelModel model : cGrpRelModels){
 				customerIds.add(model.getCustomerId());
 			}
-			iCusResourceRelService.disableBatchResourcePermission(customerIds, resourceId );
+			iCusResourceRelService.disableBatchResourcePermission(customerIds, resourceId, permRecordModel );
 		}
 		
 		return flag;
@@ -97,6 +112,8 @@ public class CusGrpResourceRelServiceImpl implements ICusGrpResourceRelService {
 					permRecordModel.setCgroupId(cusGrpResourceRelModel.getCgroupId());
 					permRecordModel.setCreateUser(Long.parseLong(cusGrpResourceRelModel.getCreateUser().toString()));
 					permRecordModel.setCreateDate(new Date());
+					permRecordModel.setStartDate(cusGrpResourceRelModel.getStartDate());
+					permRecordModel.setEndDate(cusGrpResourceRelModel.getEndDate());
 					//insert
 					permissionRecordModelDao.insertSelective(permRecordModel);
 				}catch(Exception e){
@@ -150,6 +167,8 @@ public class CusGrpResourceRelServiceImpl implements ICusGrpResourceRelService {
 				permRecordModel.setCreateUser(Long.parseLong(cusGrpResourceRelModel.getCreateUser().toString()));
 				permRecordModel.setCgroupId(cusGrpResourceRelModel.getCgroupId());
 				permRecordModel.setCreateDate(new Date());
+				permRecordModel.setStartDate(cusGrpResourceRelModel.getStartDate());
+				permRecordModel.setEndDate(cusGrpResourceRelModel.getEndDate());
 				//insert
 				permissionRecordModelDao.insertSelective(permRecordModel);
 			}
@@ -193,6 +212,8 @@ public class CusGrpResourceRelServiceImpl implements ICusGrpResourceRelService {
 				permRecordModel.setCgroupId(cusGrpResGrpRelModel.getCgroupId());
 				permRecordModel.setCreateUser(cusGrpResGrpRelModel.getCreateUser());
 				permRecordModel.setCreateDate(new Date());
+				permRecordModel.setStartDate(cusGrpResGrpRelModel.getStartDate());
+				permRecordModel.setEndDate(cusGrpResGrpRelModel.getEndDate());
 				//insert
 				permissionRecordModelDao.insertSelective(permRecordModel);
 			}catch(Exception e){

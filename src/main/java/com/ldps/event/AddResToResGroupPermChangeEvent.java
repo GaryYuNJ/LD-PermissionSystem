@@ -3,7 +3,6 @@ package com.ldps.event;
 import org.springframework.context.ApplicationEvent;
 
 import com.ldps.data.AddResToResGroupPermChangeEventData;
-import com.ldps.data.AuthCusAndResPermissionEventData;
 
 public class AddResToResGroupPermChangeEvent extends ApplicationEvent {
 	/**

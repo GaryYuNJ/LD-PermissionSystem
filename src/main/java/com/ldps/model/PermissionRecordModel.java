@@ -19,6 +19,10 @@ public class PermissionRecordModel {
 
     private Long createUser;
 
+    private Date startDate;
+
+    private Date endDate;
+
     public Integer getObjectRelation() {
         return objectRelation;
     }
@@ -81,5 +85,21 @@ public class PermissionRecordModel {
 
     public void setCreateUser(Long createUser) {
         this.createUser = createUser;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 }

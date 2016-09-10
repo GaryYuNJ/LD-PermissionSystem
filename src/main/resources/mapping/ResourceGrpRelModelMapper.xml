@@ -24,6 +24,15 @@
     where RGROUP_ID = #{rgroupId,jdbcType=INTEGER} 
   </select>
   
+   <select id="selectResIdsByResGroupIdList" resultMap="resultOfInteger" >
+   	select distinct RESOURCE_ID ID 
+   	from RESOURCE_GROUP_REL
+   	where RGROUP_ID  in  
+   	<foreach item="item" index="index" collection="rgroupIds" open="(" separator="," close=")">
+   		#{item,jdbcType=INTEGER}
+   	</foreach>
+   </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="com.ldps.model.ResourceGrpRelModel" >
     delete from RESOURCE_GROUP_REL
     where RGROUP_ID = #{rgroupId,jdbcType=INTEGER} and RESOURCE_ID = #{resourceId,jdbcType=INTEGER}

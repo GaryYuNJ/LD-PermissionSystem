@@ -23,10 +23,10 @@ public interface CusResourceRelModelMapper {
 	List<ResourceModel> selectResouceListWithSpecUserId(@Param("resourceModel")ResourceModel resourceModel,@Param("startRow") Integer startRow,
 			@Param("pageSize") Integer pageSize);
 
-	int disableResourcePermission(CusResourceRelModel crModel);
+	//int disableResourcePermission(CusResourceRelModel crModel);
 
-	int disableBatchResourcePermission(@Param("disableFlag")String disableFlag, @Param("user")Integer user,
-			@Param("customerIds") List<Long> customerIds, @Param("resourceId") Integer resourceId);
+//	int disableBatchResourcePermission(@Param("disableFlag")String disableFlag, @Param("user")Integer user,
+//			@Param("customerIds") List<Long> customerIds, @Param("resourceId") Integer resourceId);
 	
     List<ResourceModel>  selectSharableResourceById(Long customerId);
     
@@ -38,4 +38,10 @@ public interface CusResourceRelModelMapper {
 
 	ResourceModel selectValidResByCIdAndMac(@Param("customerId")Long customerId,
 			@Param("resourceId")Integer resourceId);
+	
+	int delteResourcePermission(CusResourceRelModel crModel);
+	int deleteByCusIdListAndResId(@Param("disableFlag")String disableFlag, @Param("user")Integer user,
+			@Param("customerIds") List<Long> customerIds, @Param("resourceId") Integer resourceId);
+
+	void deleteByCusIdAndResIdList(Long customerId, List<Integer> resourceIds);
 }

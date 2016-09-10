@@ -195,6 +195,7 @@
     AND RESOURCE_ID = #{resourceId,jdbcType=INTEGER}
   </update>
   
+  <!-- 
   <update id="disableResourcePermission" parameterType="com.ldps.model.CusResourceRelModel" >
     update CUSTOMER_RESOURCE_REL
     <set>
@@ -208,7 +209,7 @@
     where CUSTOMER_ID = #{customerId,jdbcType=BIGINT}
     AND RESOURCE_ID = #{resourceId,jdbcType=INTEGER}
   </update>
-  
+   
   <update id="disableBatchResourcePermission"  >
     update CUSTOMER_RESOURCE_REL
     <set>
@@ -225,7 +226,7 @@
    			#{item,jdbcType=Long}
    		</foreach>
   </update>
-  
+  -->
   <select id="selectByCusIdAndResourceId" resultMap="BaseResultMap" parameterType="com.ldps.model.CusResourceRelModel" >
     select 
     <include refid="Base_Column_List" />
@@ -391,4 +392,29 @@
 	AND CR.CUSTOMER_ID = #{customerId,jdbcType=BIGINT}
 	AND R.ID = #{resourceId,jdbcType=INTEGER} 
   </select>
+  
+  <delete id="delteResourcePermission" parameterType="com.ldps.model.CusResourceRelModel" >
+    delete from CUSTOMER_RESOURCE_REL
+    where CUSTOMER_ID = #{customerId,jdbcType=BIGINT}
+    AND RESOURCE_ID = #{resourceId,jdbcType=INTEGER}
+  </delete>
+  
+  <delete id="deleteByCusIdListAndResId"  >
+    delete from CUSTOMER_RESOURCE_REL
+    where RESOURCE_ID = #{resourceId,jdbcType=INTEGER}
+     AND CUSTOMER_ID in 
+   		<foreach item="item" index="index" collection="customerIds" open="(" separator="," close=")">
+   			#{item,jdbcType=Long}
+   		</foreach>
+  </delete>
+  
+  <delete id="deleteByCusIdAndResIdList"  >
+    delete from CUSTOMER_RESOURCE_REL
+    where CUSTOMER_ID = #{customerId,jdbcType=Long}
+     AND RESOURCE_ID in 
+   		<foreach item="item" index="index" collection="resourceIds" open="(" separator="," close=")">
+   			#{item,jdbcType=INTEGER}
+   		</foreach>
+  </delete>
+  
 </mapper>

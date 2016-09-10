@@ -39,7 +39,7 @@ public interface ICusResourceRelService {
 	int disableResourcePermission(CusResourceRelModel crModel);
 
 	int disableBatchResourcePermission(List<Long> customerIds,
-			Integer resourceId);
+			Integer resourceId, PermissionRecordModel permRecordModel);
 
 	int deleteResGrpPermission(CustomerResGroupRelModel crgModel);
 

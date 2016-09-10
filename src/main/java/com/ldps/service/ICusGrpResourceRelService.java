@@ -14,8 +14,6 @@ public interface ICusGrpResourceRelService {
 	List<CusGrpResourceRelModel> queryByGroupIdListAndResId(List<Integer> groupIds,
 			Integer resourceId);
 
-	int disableCusGrpResPermission(Integer cusGrpId, Integer resourceId);
-
 	int jointAuthCusGrpResGrpPermission(
 			CusGroupResGroupRelModel cusGrpResGrpRelModel);
 
@@ -26,6 +24,9 @@ public interface ICusGrpResourceRelService {
 	List<CusGrpResourceRelModel> queryByCusGroupId(Integer groupId);
 
 	int authCusGrpResPermission(CusGrpResourceRelModel cusGrpResourceRelModel,
+			PermissionRecordModel permRecordModel);
+
+	int disableCusGrpResPermission(Integer cusGrpId, Integer resourceId,
 			PermissionRecordModel permRecordModel); 
 
 	 
