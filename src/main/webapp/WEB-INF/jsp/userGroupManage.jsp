@@ -1089,7 +1089,7 @@
    
    //禁用资源
    function removePermission(resourceId){
-	   var cusGrpId = $("#userId_hidden").val();
+	   var cusGrpId = $("#userGroupId_hidden").val();
 	   $.ajax({
 		    url:"<c:url value='/userGroup/disableCusGrpResPermission.json' />",
 		    data:{   resourceId : resourceId, cusGrpId : cusGrpId },  

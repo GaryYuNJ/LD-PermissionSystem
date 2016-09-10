@@ -10,7 +10,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import com.ldps.dao.CusGroupResGroupRelModelMapper;
-import com.ldps.data.AddCusToCusGroupPermChangeEventData;
+import com.ldps.data.CusAndCusGrpRelChangeEventData;
 import com.ldps.event.AddCusToCusGroupPermChangeEvent;
 import com.ldps.model.CusGroupResGroupRelModel;
 import com.ldps.model.CusGrpResourceRelModel;
@@ -37,7 +37,7 @@ public class AddCusToCusGroupPermChangeListener implements ApplicationListener<A
 	@Override
 	public void onApplicationEvent(AddCusToCusGroupPermChangeEvent event) {
 		// TODO Auto-generated method stub
-		AddCusToCusGroupPermChangeEventData eData = (AddCusToCusGroupPermChangeEventData)event.getSource();
+		CusAndCusGrpRelChangeEventData eData = (CusAndCusGrpRelChangeEventData)event.getSource();
 
 		//用户对资源的关系
 		PermissionRecordModel permRecordModel = new PermissionRecordModel();

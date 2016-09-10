@@ -20,4 +20,5 @@ public interface CusGroupResGroupRelModelMapper {
 	
 	List<CusGroupResGroupRelModel> selectByCusGroupId(@Param("cusGroupId")Integer cusGroupId);
 	List<CusGroupResGroupRelModel> selectByResGroupId(@Param("resGroupId")Integer resGroupId);
+	List<Integer> selectCusGrpIdListByResGroupId(@Param("resGroupId")Integer resGroupId);
 }

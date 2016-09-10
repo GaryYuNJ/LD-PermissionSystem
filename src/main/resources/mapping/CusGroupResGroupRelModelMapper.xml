@@ -23,6 +23,10 @@
     </association>
   </resultMap>
   
+   <resultMap id="resultOfInteger" type="java.lang.Integer">  
+       <result column="ID" property="id" jdbcType="INTEGER" />  
+  </resultMap>  
+  
   <select id="selectResGrpListWithSpecUserGrpId" resultMap="ResGrpModel_WithCusRelModelMap" >
   	SELECT RG.ID, RG.NAME, CRR.CGROUP_ID, CRR.RGROUP_ID, CRR.START_DATE, CRR.END_DATE, CRR.CREATE_USER, CRR.CREATE_DATE 
 	FROM RESOURCE_GROUP RG 
@@ -46,6 +50,13 @@
   <select id="selectByResGroupId" resultMap="BaseResultMap" >
   	SELECT 
   	CGROUP_ID, RGROUP_ID, START_DATE, END_DATE, CREATE_USER, CREATE_DATE 
+	FROM CUSGROUP_RESGROUP_REL
+	WHERE RGROUP_ID  = #{resGroupId, jdbcType=INTEGER} 
+  </select>
+  
+   <select id="selectCusGrpIdListByResGroupId" resultMap="resultOfInteger" >
+  	SELECT 
+  	CGROUP_ID ID
 	FROM CUSGROUP_RESGROUP_REL
 	WHERE RGROUP_ID  = #{resGroupId, jdbcType=INTEGER} 
   </select>

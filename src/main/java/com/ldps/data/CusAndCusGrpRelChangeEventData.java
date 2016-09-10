@@ -1,16 +1,17 @@
 package com.ldps.data;
 
 
-//向用户组添加用户事件 data
-public class AddCusToCusGroupPermChangeEventData {
+//用户组添加、删除用户事件 data
+public class CusAndCusGrpRelChangeEventData {
 	
-	private Long CustomerId;
+	private Long customerId;
 	private Integer cusGroupId;
+	
 	public Long getCustomerId() {
-		return CustomerId;
+		return customerId;
 	}
 	public void setCustomerId(Long customerId) {
-		CustomerId = customerId;
+		this.customerId = customerId;
 	}
 	public Integer getCusGroupId() {
 		return cusGroupId;
@@ -18,6 +19,5 @@ public class AddCusToCusGroupPermChangeEventData {
 	public void setCusGroupId(Integer cusGroupId) {
 		this.cusGroupId = cusGroupId;
 	}
-	
 	
 }

@@ -18,6 +18,8 @@ public interface CustomerResGroupRelModelMapper {
     CustomerResGroupRelModel selectByCondition(CustomerResGroupRelModel model);
     
     List<CustomerResGroupRelModel> selectByResGroupId(@Param("rgroupId") Integer rgroupId);
+    
+    List<Long> selectCusIdListByResGroupId(@Param("rgroupId") Integer rgroupId);
 
 	int updateByCondition(CustomerResGroupRelModel model);
 

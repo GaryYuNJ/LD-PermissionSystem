@@ -1,8 +1,8 @@
 package com.ldps.data;
 
 
-//向资源组组添加资源事件 data
-public class AddResToResGroupPermChangeEventData {
+//向资源组组添加、删除资源事件 data
+public class ResAndResGroupRelChangeEventData {
 
 	private Integer resourceId;
 	private Integer resGroupId;

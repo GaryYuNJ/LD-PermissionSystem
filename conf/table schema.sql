@@ -393,7 +393,7 @@ CREATE TABLE CUSGROUP_RESGROUP_REL (
 --授权记录表
 --drop table PERMISSION_RECORD;
 CREATE TABLE PERMISSION_RECORD    (
-	OBJECT_RELATION int(1) NOT NULL COMMENT '授权关系；1 用户与资源；2 用户与资源组；3 用户组与资源 ；4 用户组与资源组；5 用户组添加用户；6 资源组添加资源；取消权限操作，对应负值',
+	OBJECT_RELATION int(1) NOT NULL COMMENT '授权关系；1 用户与资源；2 用户与资源组；3 用户组与资源 ；4 用户组与资源组；5 用户组添加用户；6 资源组添加资源；取消权限、相反操作，对应负值',
 	CUSTOMER_Id bigint(20) COMMENT '会员ID', 
 	RESOURCE_ID int(12) COMMENT '资源ID',
   	CGROUP_ID int(10)  COMMENT '会员组Id',

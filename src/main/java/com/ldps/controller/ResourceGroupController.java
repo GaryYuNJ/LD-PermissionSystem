@@ -123,6 +123,7 @@ public class ResourceGroupController {
 		}
 		return JSON.toJSONString(am);
 	}
+	
 	@ResponseBody
 	@RequestMapping(value = "addResourceGroupRel.json")
 	public String addResourceGroupRel(@RequestParam("resourceId") Integer resourceId,@RequestParam("resourceGroupId") Integer resourceGroupId) {

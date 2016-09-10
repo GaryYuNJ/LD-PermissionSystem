@@ -4,13 +4,13 @@ import org.springframework.context.ApplicationEvent;
 
 import com.ldps.data.ResAndResGroupRelChangeEventData;
 
-public class AddResToResGroupPermChangeEvent extends ApplicationEvent {
+public class RemoveResFromResGroupPermChangeEvent extends ApplicationEvent {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	public AddResToResGroupPermChangeEvent(ResAndResGroupRelChangeEventData source) {
+	public RemoveResFromResGroupPermChangeEvent(ResAndResGroupRelChangeEventData source) {
 		super(source);
 		// TODO Auto-generated constructor stub
 	}

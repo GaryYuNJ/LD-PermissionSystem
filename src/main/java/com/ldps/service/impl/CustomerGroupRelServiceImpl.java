@@ -12,8 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.ldps.dao.CusGroupRelModelMapper;
 import com.ldps.dao.CusGroupResGroupRelModelMapper;
-import com.ldps.data.AddCusToCusGroupPermChangeEventData;
-import com.ldps.data.RemoveCusFromCusGrpPermChangeEventData;
+import com.ldps.data.CusAndCusGrpRelChangeEventData;
 import com.ldps.event.AddCusToCusGroupPermChangeEvent;
 import com.ldps.event.RemoveCusFromCusGrpPermChangeEvent;
 import com.ldps.model.CusGroupRelModel;
@@ -40,8 +39,8 @@ public class CustomerGroupRelServiceImpl implements ICustomerGroupRelService {
 		
 		//用户组删除用户带来的权限更新
 		//构造异步 event 
-		RemoveCusFromCusGrpPermChangeEventData eData = new RemoveCusFromCusGrpPermChangeEventData();
-		eData.setCusGrpId(groupId);
+		CusAndCusGrpRelChangeEventData eData = new CusAndCusGrpRelChangeEventData();
+		eData.setCusGroupId(groupId);
 		eData.setCustomerId(userId);
 		applicationContext.publishEvent(new RemoveCusFromCusGrpPermChangeEvent(eData));
 		
@@ -61,7 +60,7 @@ public class CustomerGroupRelServiceImpl implements ICustomerGroupRelService {
 		
 		//用户组的权限也要授权给用户
 		//构造异步 event data
-		AddCusToCusGroupPermChangeEventData eData = new AddCusToCusGroupPermChangeEventData();
+		CusAndCusGrpRelChangeEventData eData = new CusAndCusGrpRelChangeEventData();
 		eData.setCusGroupId(groupId);
 		eData.setCustomerId(userId);
 		applicationContext.publishEvent(new AddCusToCusGroupPermChangeEvent(eData));

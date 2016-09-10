@@ -24,6 +24,10 @@
     </association>
   </resultMap>
   
+  <resultMap id="resultOfLong" type="java.lang.Long">  
+       <result column="ID" property="id" jdbcType="BIGINT" />  
+  </resultMap>  
+  
   <select id="selectResGrpListWithSpecUserId" resultMap="ResGrpModel_WithCusRelModelMap" >
   	SELECT RG.ID, RG.NAME, CRR.START_DATE, CRR.END_DATE, CRR.CREATE_USER, CRR.CREATE_DATE 
 	FROM RESOURCE_GROUP RG 
@@ -51,6 +55,13 @@
     	From CUSTOMER_RESGROUP_REL 
     	WHERE RGROUP_ID = #{rgroupId}
     </select>
+    
+    <select id="selectCusIdListByResGroupId" resultMap="resultOfLong" >
+    	SELECT CUSTOMER_ID 
+    	From CUSTOMER_RESGROUP_REL 
+    	WHERE RGROUP_ID = #{rgroupId}
+    </select>
+    
     
     <delete id="deleteByCondition"  parameterType="com.ldps.model.CustomerResGroupRelModel" >
     	delete  From CUSTOMER_RESGROUP_REL 

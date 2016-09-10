@@ -40,8 +40,7 @@ public interface CusResourceRelModelMapper {
 			@Param("resourceId")Integer resourceId);
 	
 	int delteResourcePermission(CusResourceRelModel crModel);
-	int deleteByCusIdListAndResId(@Param("disableFlag")String disableFlag, @Param("user")Integer user,
-			@Param("customerIds") List<Long> customerIds, @Param("resourceId") Integer resourceId);
+	int deleteByCusIdListAndResId(@Param("customerIds") List<Long> customerIds, @Param("resourceId") Integer resourceId);
 
-	void deleteByCusIdAndResIdList(Long customerId, List<Integer> resourceIds);
+	void deleteByCusIdAndResIdList(@Param("customerId")Long customerId, @Param("resourceIds")List<Integer> resourceIds);
 }

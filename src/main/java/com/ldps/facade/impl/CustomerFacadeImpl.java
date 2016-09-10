@@ -512,7 +512,7 @@ public class CustomerFacadeImpl implements CustomerFacade {
 		crModel.setCustomerId(customerId);
 		crModel.setResourceId(resourceId);
 		crModel.setEnable("N");
-		return iCusResourceRelService.disableResourcePermission(crModel);
+		return iCusResourceRelService.disableResourcePermission(crModel, null);
 	}
 
 	//更新\添加用户资源权限
@@ -546,7 +546,7 @@ public class CustomerFacadeImpl implements CustomerFacade {
 		CustomerResGroupRelModel crgModel = new CustomerResGroupRelModel();
 		crgModel.setCustomerId(userId);
 		crgModel.setRgroupId(resGroupId);
-		return iCusResourceRelService.deleteResGrpPermission(crgModel);
+		return iCusResourceRelService.deleteCusResGrpPermission(crgModel,null);
 	}
 	
 	public ICustomerService getiCustomerSevice() {

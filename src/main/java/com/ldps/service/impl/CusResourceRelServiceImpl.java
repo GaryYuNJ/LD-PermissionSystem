@@ -122,6 +122,7 @@ public class CusResourceRelServiceImpl implements ICusResourceRelService {
 					permRecordModel.setObjectRelation(1); //'授权关系；1 用户与资源；2 用户与资源组；3 用户组与资源 ；4 用户组与资源组；
 					permRecordModel.setActionType(1); //1 授权；0 删除权限
 					permRecordModel.setCreateDate(new Date());
+					permRecordModel.setCreateUser(0L);
 				}
 				permRecordModel.setCustomerId(sourceModel.getCustomerId());
 				permRecordModel.setResourceId(sourceModel.getResourceId());
@@ -199,7 +200,6 @@ public class CusResourceRelServiceImpl implements ICusResourceRelService {
 			model.setRgroupId(rgroupId);
 			model.setStartDate(startDate);
 			
-			
 			CustomerResGroupRelModel modelTem = cusResGroupRelModelDao.selectByCondition(model);
 			if(null != modelTem){
 				flag = cusResGroupRelModelDao.updateByCondition(model);
@@ -252,8 +252,24 @@ public class CusResourceRelServiceImpl implements ICusResourceRelService {
 	}
 
 	@Override
-	public int disableResourcePermission(CusResourceRelModel crModel) {
-		return customerResourceRelDao.delteResourcePermission(crModel);
+	public int disableResourcePermission(CusResourceRelModel crModel, PermissionRecordModel permRecordModel) {
+		int flag = customerResourceRelDao.delteResourcePermission(crModel);
+		
+		if(flag == 1){
+			if(null == permRecordModel){
+				permRecordModel = new PermissionRecordModel();
+				permRecordModel.setObjectRelation(-1); //'授权关系；1 用户与资源；2 用户与资源组；3 用户组与资源 ；4 用户组与资源组；5 用户组添加用户；6 资源组添加资源；取消权限操作，对应负值
+				permRecordModel.setActionType(0); //撤销权限
+				permRecordModel.setCreateUser(0L);
+				permRecordModel.setCreateDate(new Date());
+			}
+			
+			permRecordModel.setResourceId(crModel.getResourceId());
+			permRecordModel.setCustomerId(crModel.getCustomerId());
+			//insert
+			permissionRecordModelDao.insertSelective(permRecordModel);
+		}
+		return flag;
 	}
 
 	@Override
@@ -262,17 +278,17 @@ public class CusResourceRelServiceImpl implements ICusResourceRelService {
 		
 		int flag = 0;
 		if(null != customerIds && customerIds.size()> 0){
-			String disableFlag = "N";
-			Integer user = 0;
-			flag= customerResourceRelDao.deleteByCusIdListAndResId(disableFlag, user, customerIds,resourceId);
+			flag= customerResourceRelDao.deleteByCusIdListAndResId(customerIds,resourceId);
 			
-			if(null == permRecordModel){
-				permRecordModel = new PermissionRecordModel();
-				permRecordModel.setObjectRelation(1); //'授权关系；1 用户与资源；2 用户与资源组；3 用户组与资源 ；4 用户组与资源组；
-				permRecordModel.setActionType(0); //撤销权限
-				permRecordModel.setCreateUser(0L);
-				permRecordModel.setCreateDate(new Date());
-				permRecordModel.setResourceId(resourceId);
+			if(flag > 0){
+				if(null == permRecordModel){
+					permRecordModel = new PermissionRecordModel();
+					permRecordModel.setObjectRelation(-1); //'授权关系；1 用户与资源；2 用户与资源组；3 用户组与资源 ；4 用户组与资源组；5 用户组添加用户；6 资源组添加资源；取消权限操作，对应负值
+					permRecordModel.setActionType(0); //撤销权限
+					permRecordModel.setCreateUser(0L);
+					permRecordModel.setCreateDate(new Date());
+					permRecordModel.setResourceId(resourceId);
+				}
 				
 				for(Long customerId: customerIds){
 					permRecordModel.setCustomerId(customerId);
@@ -286,33 +302,46 @@ public class CusResourceRelServiceImpl implements ICusResourceRelService {
 	}
 
 	@Override
-	public int deleteResGrpPermission(CustomerResGroupRelModel crgModel) {
+	public int deleteCusResGrpPermission(CustomerResGroupRelModel crgModel, PermissionRecordModel permRecordModel) {
 		// TODO Auto-generated method stub
 		int flag = cusResGroupRelModelDao.deleteByCondition(crgModel);
 		
 		if(flag == 1){
-			PermissionRecordModel permRecordModel = new PermissionRecordModel();
-			permRecordModel.setObjectRelation(-2); //授权关系；1 用户与资源；2 用户与资源组；3 用户组与资源 ；4 用户组与资源组；5 用户组添加用户；6 资源组添加资源；取消权限操作，对应负值
+			if(null == permRecordModel){
+				permRecordModel = new PermissionRecordModel();
+				permRecordModel.setObjectRelation(-2); //授权关系；1 用户与资源；2 用户与资源组；3 用户组与资源 ；4 用户组与资源组；5 用户组添加用户；6 资源组添加资源；取消权限操作，对应负值
+				permRecordModel.setActionType(0); //移除权限
+				permRecordModel.setCreateUser(0L);
+				permRecordModel.setCreateDate(new Date());
+			}
 			permRecordModel.setRgroupId(crgModel.getRgroupId());
-			permRecordModel.setActionType(0); //移除权限
 			permRecordModel.setCustomerId(crgModel.getCustomerId());
-			permRecordModel.setCreateUser(0L);
-			permRecordModel.setCreateDate(new Date());
 			//记录用户与资源组的权限变化
 			//insert
 			permissionRecordModelDao.insertSelective(permRecordModel);
+			
+			//移除用户与资源的关系
 			try{
 				List<Integer> resourceIds = resourceGrpRelModelDao.selectResIdsByGroupId(crgModel.getRgroupId());
 				if(null != resourceIds && resourceIds.size()> 0){
 					//删除用户与资源的关系
-					customerResourceRelDao.deleteByCusIdAndResIdList(crgModel.getCustomerId(),resourceIds);
-					
-					//循环插入用户与资源权限变化
 					for(Integer resourceId: resourceIds){
-						permRecordModel.setResourceId(resourceId);
-						//insert
-						permissionRecordModelDao.insertSelective(permRecordModel);
+						
+						CusResourceRelModel cusResRelModel = new CusResourceRelModel();
+						cusResRelModel.setCustomerId(crgModel.getCustomerId());
+						cusResRelModel.setResourceId(resourceId);
+						
+						this.disableResourcePermission(cusResRelModel, permRecordModel);
 					}
+					
+//					customerResourceRelDao.deleteByCusIdAndResIdList(crgModel.getCustomerId(),resourceIds);
+//					
+//					//循环插入用户与资源权限变化
+//					for(Integer resourceId: resourceIds){
+//						permRecordModel.setResourceId(resourceId);
+//						//insert
+//						permissionRecordModelDao.insertSelective(permRecordModel);
+//					}
 				}
 			}catch(Exception e){
 				e.printStackTrace();

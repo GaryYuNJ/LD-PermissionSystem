@@ -404,7 +404,7 @@
     where RESOURCE_ID = #{resourceId,jdbcType=INTEGER}
      AND CUSTOMER_ID in 
    		<foreach item="item" index="index" collection="customerIds" open="(" separator="," close=")">
-   			#{item,jdbcType=Long}
+   			#{item,jdbcType=BIGINT}
    		</foreach>
   </delete>
   

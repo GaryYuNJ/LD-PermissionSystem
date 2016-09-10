@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 import com.ldps.dao.CusGroupResGroupRelModelMapper;
 import com.ldps.dao.CustomerResGroupRelModelMapper;
-import com.ldps.data.AddResToResGroupPermChangeEventData;
+import com.ldps.data.ResAndResGroupRelChangeEventData;
 import com.ldps.data.AuthCusAndResPermissionEventData;
 import com.ldps.event.AddResToResGroupPermChangeEvent;
 import com.ldps.event.AuthCusAndResPermissionEvent;
@@ -43,7 +43,7 @@ public class AddResToResGroupPermChangeListener implements ApplicationListener<A
 	@Override
 	public void onApplicationEvent(AddResToResGroupPermChangeEvent event) {
 		// TODO Auto-generated method stub
-		AddResToResGroupPermChangeEventData eData = (AddResToResGroupPermChangeEventData)event.getSource();
+		ResAndResGroupRelChangeEventData eData = (ResAndResGroupRelChangeEventData)event.getSource();
 		
 		//用户对资源的关系
 		PermissionRecordModel permRecordModel = new PermissionRecordModel();
