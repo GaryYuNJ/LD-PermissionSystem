@@ -57,7 +57,7 @@
     </select>
     
     <select id="selectCusIdListByResGroupId" resultMap="resultOfLong" >
-    	SELECT CUSTOMER_ID 
+    	SELECT CUSTOMER_ID ID 
     	From CUSTOMER_RESGROUP_REL 
     	WHERE RGROUP_ID = #{rgroupId}
     </select>

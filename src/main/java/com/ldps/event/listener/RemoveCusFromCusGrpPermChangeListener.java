@@ -105,9 +105,9 @@ public class RemoveCusFromCusGrpPermChangeListener implements ApplicationListene
 		}
 		
 		//找到了要检查的资源，循环对每个资源关系处理
-		CusResourceRelModel relModel = new CusResourceRelModel();
+		CusResourceRelModel relModel = null;
 		for(Integer resId : resourceIds){
-			
+			relModel = new CusResourceRelModel();
 			relModel.setCustomerId(eData.getCustomerId());
 			relModel.setResourceId(resId);
 			//查看现有的资源与用户关系
@@ -132,7 +132,8 @@ public class RemoveCusFromCusGrpPermChangeListener implements ApplicationListene
 				
 				//最后一次授权是否是当前用户组连带授权带来的
 				//如果是
-				if(null != permRecordList.get(0).getCgroupId() && eData.getCusGroupId() == permRecordList.get(0).getCgroupId()){
+				if(null != permRecordList.get(0).getCgroupId() 
+						&& eData.getCusGroupId().intValue() == permRecordList.get(0).getCgroupId().intValue()){
 					//如果只有一条授权记录，不做处理；如果有大于1条记录，恢复第二条记录的状态
 					if(permRecordList.size() > 1){
 						permRecord = permRecordList.get(1);
@@ -140,8 +141,10 @@ public class RemoveCusFromCusGrpPermChangeListener implements ApplicationListene
 						continue;
 					}
 					
-					if(permRecord.getActionType() == 0){
-						//没有权限记录，直接删除关系（连带保存取消授权记录）
+					if(permRecord.getActionType() == 0 
+							|| (null != permRecord.getCgroupId() 
+								&& eData.getCusGroupId().intValue() == permRecord.getCgroupId().intValue())){
+						//没有权限记录，，或者 授权也是由这个cusGroup带来的，直接删除关系
 						
 						permRecord.setActionType(0); //取消权限
 						permRecord.setCreateDate(new Date());

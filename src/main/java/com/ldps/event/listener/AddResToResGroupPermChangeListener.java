@@ -81,8 +81,8 @@ public class AddResToResGroupPermChangeListener implements ApplicationListener<A
 			try{
 				relModelTemp = new CusResourceRelModel();
 				relModelTemp.setEnable("Y");
-				relModelTemp.setEndDate(cusResGrpRelModel.getStartDate());
-				relModelTemp.setStartDate(cusResGrpRelModel.getEndDate());
+				relModelTemp.setEndDate(cusResGrpRelModel.getEndDate());
+				relModelTemp.setStartDate(cusResGrpRelModel.getStartDate());
 				relModelTemp.setResourceId(eData.getResourceId());
 				relModelTemp.setCustomerId(cusResGrpRelModel.getCustomerId());
 				relModelTemp.setFromShared("N");
