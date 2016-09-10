@@ -152,6 +152,10 @@ public class ResourceServiceImpl implements IResourceService {
 	//更新资源
 	@Override
 	public int updateResource(ResourceModel model) {
+		if(null==model)
+			return 0;
+		if(null==model.getId())
+			return createResource(model);
 		model.setCreateDate(new Date());
 		if(resourceDao.updateByPrimaryKeySelective(model)>0){
 			List<Integer> keyIds = new ArrayList<Integer>();
