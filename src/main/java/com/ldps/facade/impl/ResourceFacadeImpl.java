@@ -99,6 +99,4 @@ public class ResourceFacadeImpl implements ResourceFacade {
 		this.resourceModelConverter = resourceModelConverter;
 	}
 
-
-
 }
