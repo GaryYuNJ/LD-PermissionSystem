@@ -25,4 +25,9 @@ public class UserServiceImpl implements IUserService {
 		return userMapper.selectByUnamePword(userName, password);
 	}
 
+	@Override
+	public int changePassword(UserModel currentUserModel, String newPassword) {
+		currentUserModel.setPassword(newPassword);
+		return userMapper.updateByPrimaryKeySelective(currentUserModel);
+	}
 }

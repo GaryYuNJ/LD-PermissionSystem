@@ -7,10 +7,8 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,7 +22,6 @@ import com.ldps.facade.CustomerFacade;
 import com.ldps.model.CusResourceRelModel;
 import com.ldps.model.CustomerModel;
 import com.ldps.model.CustomerResGroupRelModel;
-import com.ldps.model.ResourceModel;
 import com.ldps.service.ICustomerService;
 
 @Controller
@@ -42,7 +39,7 @@ public class CustomerController {
 	@RequestMapping(value="userManage",method=RequestMethod.GET)
 	public String userManage( ModelMap model){
 		//页面菜单样式需要
-		model.put("pageIndex", 3);
+		model.put("pageIndex", 2);
 		
 		return "userManage";
 	}

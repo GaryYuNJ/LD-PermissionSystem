@@ -31,7 +31,7 @@ public class ResourceGroupController {
 	@RequestMapping(value = "resourceGroupManagePage", method = RequestMethod.GET)
 	public String resouceManage(ModelMap model) {
 		// 页面菜单样式需要
-		model.put("pageIndex", 2);
+		model.put("pageIndex", 1);
 		return "resourceGroupManage";
 	}
 	

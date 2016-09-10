@@ -72,14 +72,16 @@
 			<bean class="com.ldps.interceptor.APPInterceptor" />
 		</mvc:interceptor>
 		
-		<!-- 
 		<mvc:interceptor>
 			<mvc:mapping path="/manage/**" />
+			<mvc:mapping path="/user/**" />
+			<mvc:mapping path="/userGroup/**" />
 			<mvc:exclude-mapping path="/login"/> 
 			<mvc:exclude-mapping path="/appApi/*"/> 
+			<mvc:exclude-mapping path="/crmApi/*"/>
+			
 			<bean class="com.ldps.interceptor.LoginInterceptor" />
 		</mvc:interceptor>
-		-->
 	</mvc:interceptors>
 
     <!-- 开启@AspectJ AOP代理 -->  

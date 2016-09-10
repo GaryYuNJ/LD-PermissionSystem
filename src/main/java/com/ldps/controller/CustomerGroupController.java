@@ -39,7 +39,7 @@ public class CustomerGroupController {
 	public String showUserGroups( String search, @RequestParam("limit") Integer limit, 
 			@RequestParam("offset") Integer offset, ModelMap model){
 		//页面菜单样式需要
-		model.put("pageIndex", 4);
+		model.put("pageIndex", 3);
 		
 		BootstrapTableData bData = new BootstrapTableData();
 		
@@ -164,7 +164,7 @@ public class CustomerGroupController {
 	@RequestMapping(value="userGroupManage",method=RequestMethod.GET)
 	public String userGroupManage(ModelMap model){
 		//页面菜单样式需要
-		model.put("pageIndex", 4);
+		model.put("pageIndex", 3);
 		return "userGroupManage";
 	}
 	

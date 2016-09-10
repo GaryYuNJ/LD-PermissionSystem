@@ -11,7 +11,6 @@ import com.ldps.model.UserModel;
 
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 	
-	public static String TOKEN_KEY = "123qweASDzxc";
 	private static Logger logger = Logger
 			.getLogger(LoginInterceptor.class);
 

@@ -80,5 +80,11 @@
 <!-- JS -->
 <script src="<c:url value="/js/jquery.js" />"></script>
 <script src="<c:url value="/js/bootstrap.js" />"></script>
+
+<script >
+	if("${userVerifyResult}" == 'false'){
+		alert("用户名密码错误！");
+	}
+</script>
 </body>
 </html>

@@ -41,7 +41,7 @@ public class ResourceControl {
 	@RequestMapping(value = "resourceManagePage", method = RequestMethod.GET)
 	public String resouceManage(ModelMap model) {
 		// 页面菜单样式需要
-		model.put("pageIndex", 1);
+		model.put("pageIndex", 0);
 		return "resourceManage";
 	}
 
