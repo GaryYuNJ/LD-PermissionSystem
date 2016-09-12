@@ -84,6 +84,8 @@
 		</mvc:interceptor>
 	</mvc:interceptors>
 
+	<mvc:view-controller path="/" view-name="redirect:/manage/resourceManagePage"/>
+
     <!-- 开启@AspectJ AOP代理 -->  
     <aop:aspectj-autoproxy proxy-target-class="true"/>  
     <!-- 任务调度器 -->  
