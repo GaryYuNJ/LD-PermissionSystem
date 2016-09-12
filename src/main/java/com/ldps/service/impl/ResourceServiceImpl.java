@@ -27,6 +27,7 @@ import com.ldps.data.APIMessage;
 import com.ldps.model.ResourceKeyModel;
 import com.ldps.model.ResourceModel;
 import com.ldps.service.IResourceService;
+import com.ldps.service.IUserService;
 
 @Service("iResourceService")
 public class ResourceServiceImpl implements IResourceService {
@@ -41,6 +42,8 @@ public class ResourceServiceImpl implements IResourceService {
 	private ResourceKeyMapper resourceKeyDao;
 	@Resource
 	private ResourceGrpRelModelMapper resourceGrpRelDao;
+	@Resource
+	private IUserService userService;
 	
 	@Override
 	public ResourceModel queryResourceByMAC(String mac) {
@@ -334,7 +337,7 @@ public class ResourceServiceImpl implements IResourceService {
 	                	}
 	                }
 	                rModel.setCreateDate(new Date());
-	                rModel.setCreateUser(0);
+	                rModel.setCreateUser(userService.getSessionUserId());
 	                rKModelList.add(rKModel);
 	                rModel.setResourceKeys(rKModelList);
 	                rModelList.add(rModel);

@@ -23,6 +23,7 @@ import com.ldps.model.CusResourceRelModel;
 import com.ldps.model.PermissionRecordModel;
 import com.ldps.service.ICusGrpResourceRelService;
 import com.ldps.service.ICusResourceRelService;
+import com.ldps.service.IUserService;
 
 
 /*
@@ -63,6 +64,8 @@ public class RemoveCusFromCusGrpPermChangeListener implements ApplicationListene
 	private CusResourceRelModelMapper customerResourceRelDao;
 	@Resource
 	PermissionRecordModelMapper permissionRecordDao;
+	@Resource
+	private IUserService userService;
 	
 	@Async
 	@Override
@@ -148,7 +151,7 @@ public class RemoveCusFromCusGrpPermChangeListener implements ApplicationListene
 						
 						permRecord.setActionType(0); //取消权限
 						permRecord.setCreateDate(new Date());
-						permRecord.setCreateUser(0L);
+						permRecord.setCreateUser(userService.getSessionUserId());
 						permRecord.setObjectRelation(-5); //用户组移除用户
 						permRecord.setRgroupId(null);
 						permRecord.setStartDate(null);
@@ -163,7 +166,7 @@ public class RemoveCusFromCusGrpPermChangeListener implements ApplicationListene
 
 						permRecord.setActionType(1); //权限
 						permRecord.setCreateDate(new Date());
-						permRecord.setCreateUser(0L);
+						permRecord.setCreateUser(userService.getSessionUserId());
 						permRecord.setObjectRelation(-5); //用户组移除用户造成的上个权限恢复
 						permRecord.setRgroupId(null);
 						permRecord.setStartDate(null);
@@ -180,7 +183,7 @@ public class RemoveCusFromCusGrpPermChangeListener implements ApplicationListene
 				//记录权限更新
 				permRecord.setActionType(0);
 				permRecord.setObjectRelation(-5);
-				permRecord.setCreateUser(0L);
+				permRecord.setCreateUser(userService.getSessionUserId());
 				permRecord.setCreateDate(new Date());
 				permRecord.setCgroupId(eData.getCusGroupId());
 				

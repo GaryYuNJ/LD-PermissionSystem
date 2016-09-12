@@ -13,7 +13,7 @@ public class CusGrpResourceRelModel {
 
     private Date updateDate;
 
-    private Integer createUser;
+    private Long createUser;
 
     private Date startDate;
     
@@ -75,11 +75,11 @@ public class CusGrpResourceRelModel {
         this.updateDate = updateDate;
     }
 
-    public Integer getCreateUser() {
+    public Long getCreateUser() {
         return createUser;
     }
 
-    public void setCreateUser(Integer createUser) {
+    public void setCreateUser(Long createUser) {
         this.createUser = createUser;
     }
 }

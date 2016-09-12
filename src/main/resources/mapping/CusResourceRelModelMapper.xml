@@ -24,7 +24,7 @@
     <result column="ENABLE" property="enable" jdbcType="CHAR" />
     <result column="FROM_SHARED" property="fromShared" jdbcType="CHAR" />
     <result column="CREATE_DATE" property="createDate"  />
-    <result column="CREATE_USER" property="createUser" jdbcType="INTEGER" />
+    <result column="CREATE_USER" property="createUser" jdbcType="BIGINT" />
     <result column="START_DATE" property="startDate"  />
     <result column="END_DATE" property="endDate"  />
     
@@ -34,7 +34,7 @@
 	    <result column="R_TYPE_ID" property="typeId" jdbcType="INTEGER" />
 	    <result column="R_STATUS" property="status" jdbcType="CHAR" />
 	    <result column="R_CREATE_DATE" property="createDate"  />
-	    <result column="R_CREATE_USER" property="createUser" jdbcType="INTEGER" />
+	    <result column="R_CREATE_USER" property="createUser" jdbcType="BIGINT" />
 	    <result column="R_BUILDING_ID" property="buildingId" jdbcType="INTEGER" />
 	    <result column="R_FLOOR" property="floor" jdbcType="INTEGER" />
 	    <result column="R_SEQUENCE" property="sequence" jdbcType="INTEGER" />
@@ -62,7 +62,7 @@
     <result column="TYPE_ID" property="typeId" jdbcType="INTEGER" />
     <result column="STATUS" property="status" jdbcType="CHAR" />
     <result column="CREATE_DATE" property="createDate"  />
-    <result column="CREATE_USER" property="createUser" jdbcType="INTEGER" />
+    <result column="CREATE_USER" property="createUser" jdbcType="BIGINT" />
     <result column="BUILDING_ID" property="buildingId" jdbcType="INTEGER" />
     <result column="FLOOR" property="floor" jdbcType="INTEGER" />
     <result column="SEQUENCE" property="sequence" jdbcType="INTEGER" />
@@ -272,7 +272,7 @@
     <result column="TYPE_ID" property="typeId" jdbcType="INTEGER" />
     <result column="STATUS" property="status" jdbcType="CHAR" />
     <result column="CREATE_DATE" property="createDate"  />
-    <result column="CREATE_USER" property="createUser" jdbcType="INTEGER" />
+    <result column="CREATE_USER" property="createUser" jdbcType="BIGINT" />
     <result column="BUILDING_ID" property="buildingId" jdbcType="INTEGER" />
     <result column="FLOOR" property="floor" jdbcType="INTEGER" />
     <result column="SEQUENCE" property="sequence" jdbcType="INTEGER" />
@@ -298,7 +298,7 @@
     <result column="TYPE_ID" property="typeId" jdbcType="INTEGER" />
     <result column="STATUS" property="status" jdbcType="CHAR" />
     <result column="CREATE_DATE" property="createDate"  />
-    <result column="CREATE_USER" property="createUser" jdbcType="INTEGER" />
+    <result column="CREATE_USER" property="createUser" jdbcType="BIGINT" />
     <result column="BUILDING_ID" property="buildingId" jdbcType="INTEGER" />
     <result column="FLOOR" property="floor" jdbcType="INTEGER" />
     <result column="SEQUENCE" property="sequence" jdbcType="INTEGER" />

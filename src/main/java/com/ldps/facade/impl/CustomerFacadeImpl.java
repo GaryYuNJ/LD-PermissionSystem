@@ -27,6 +27,7 @@ import com.ldps.service.ICustomerGroupRelService;
 import com.ldps.service.ICustomerGroupService;
 import com.ldps.service.ICustomerService;
 import com.ldps.service.IResourceService;
+import com.ldps.service.IUserService;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -58,7 +59,8 @@ public class CustomerFacadeImpl implements CustomerFacade {
 	ICustomerGroupService iCustomerGroupService;
 	@Resource
 	ICustomerGroupRelService iCustomerGroupRelService;
-	
+	@Resource
+	private IUserService userService;
 
 	@Override
 	public int delUserGroupRelation(Long userId, Integer groupId) {
@@ -219,9 +221,9 @@ public class CustomerFacadeImpl implements CustomerFacade {
 	//by customerId、resourceId
 	@Override
 	public int jointAuthResPermissionByCusId(Long customerId,
-			Integer resourceId, Date startDate, Date endDate, Long createUserId) {
+			Integer resourceId, Date startDate, Date endDate) {
 		return iCusResourceRelService.jointAuthorizeResPermission(customerId, resourceId, startDate, 
-				endDate, "N", createUserId,null);
+				endDate, "N", userService.getSessionUserId(),null);
 	}
 
 	//连带资源授权接口(对一个资源授权，需要连带授权上层所有基础资源(要使用授权资源的前提资源)。
@@ -239,9 +241,9 @@ public class CustomerFacadeImpl implements CustomerFacade {
 	//单个资源授权接口.by customerId、resourceId
 	@Override
 	public int authResPermissionByCusId(Long customerId, Integer resourceId,
-			Date startDate, Date endDate, Long createUserId) {
+			Date startDate, Date endDate) {
 		CusResourceRelModel cResRelModel = new CusResourceRelModel();
-		cResRelModel.setCreateUser(createUserId);
+		cResRelModel.setCreateUser(userService.getSessionUserId());
 		cResRelModel.setCustomerId(customerId);
 		cResRelModel.setEndDate(endDate);
 		cResRelModel.setStartDate(startDate);

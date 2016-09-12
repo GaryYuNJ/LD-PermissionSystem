@@ -2281,7 +2281,7 @@
 	    <result column="CG_NAME" property="name" jdbcType="VARCHAR" />
 	    <result column="CG_STATUS" property="status" jdbcType="CHAR" />
 	    <result column="CG_CREATE_DATE" property="createDate"  />
-	    <result column="CG_CREATE_USER" property="createUser" jdbcType="INTEGER" />
+	    <result column="CG_CREATE_USER" property="createUser" jdbcType="BIGINT" />
 	    <result column="CG_NUM1" property="num1" jdbcType="DECIMAL" />
 	    <result column="CG_NUM2" property="num2" jdbcType="DECIMAL" />
 	    <result column="CG_VC1" property="vc1" jdbcType="VARCHAR" />

@@ -27,6 +27,7 @@ import com.ldps.model.ResourceGrpRelModel;
 import com.ldps.service.ICusGrpResourceRelService;
 import com.ldps.service.ICusResourceRelService;
 import com.ldps.service.IResourceGroupService;
+import com.ldps.service.IUserService;
 @Service("iResourceGroupService")
 public class ReourceGroupServiceImpl implements IResourceGroupService {
 
@@ -48,6 +49,8 @@ public class ReourceGroupServiceImpl implements IResourceGroupService {
 	private ICusGrpResourceRelService iCusGrpResourceRelService;
 	@Resource
 	private ICusResourceRelService iCusResourceRelService;
+	@Resource
+	private IUserService userService;
 	
 	@Override
 	public List<ResourceGroupModel> queryBasicResGroupByCondition(
@@ -133,7 +136,7 @@ public class ReourceGroupServiceImpl implements IResourceGroupService {
 			permRecordModel.setRgroupId(resGroupId);
 			permRecordModel.setActionType(0); //移除权限
 			permRecordModel.setCgroupId(userGrpId);
-			permRecordModel.setCreateUser(0L);
+			permRecordModel.setCreateUser(userService.getSessionUserId());
 			permRecordModel.setCreateDate(new Date());
 			//记录用户组与资源组的权限变化
 			//insert

@@ -11,7 +11,7 @@
     <result column="CGROUP_ID" property="cgroupId" jdbcType="INTEGER" />
     <result column="CUSTOMER_ID" property="customerId" jdbcType="BIGINT" />
     <result column="CREATE_DATE" property="createDate"  />
-    <result column="CREATE_USER" property="createUser" jdbcType="INTEGER" />
+    <result column="CREATE_USER" property="createUser" jdbcType="BIGINT" />
   </resultMap>
   
   <resultMap id="SimpleResultMap" type="com.ldps.model.CustomerModel" >
@@ -46,7 +46,7 @@
     insert into CGROUP_REL (CGROUP_ID, CUSTOMER_ID, CREATE_DATE, 
       CREATE_USER)
     values (#{cgroupId,jdbcType=INTEGER}, #{customerId,jdbcType=BIGINT}, #{createDate}, 
-      #{createUser,jdbcType=INTEGER})
+      #{createUser,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="com.ldps.model.CusGroupRelModel" >
     insert into CGROUP_REL
@@ -75,7 +75,7 @@
         #{createDate},
       </if>
       <if test="createUser != null" >
-        #{createUser,jdbcType=INTEGER},
+        #{createUser,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>

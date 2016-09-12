@@ -12,7 +12,7 @@
     <result column="NAME" property="name" jdbcType="VARCHAR" />
     <result column="STATUS" property="status" jdbcType="CHAR" />
     <result column="CREATE_DATE" property="createDate"  />
-    <result column="CREATE_USER" property="createUser" jdbcType="INTEGER" />
+    <result column="CREATE_USER" property="createUser" jdbcType="BIGINT" />
     <result column="NUM1" property="num1" jdbcType="DECIMAL" />
     <result column="NUM2" property="num2" jdbcType="DECIMAL" />
     <result column="VC1" property="vc1" jdbcType="VARCHAR" />
@@ -26,7 +26,7 @@
     <result column="NAME" property="name" jdbcType="VARCHAR" />
     <result column="STATUS" property="status" jdbcType="CHAR" />
     <result column="CREATE_DATE" property="createDate"  />
-    <result column="CREATE_USER" property="createUser" jdbcType="INTEGER" />
+    <result column="CREATE_USER" property="createUser" jdbcType="BIGINT" />
     <result column="NUM1" property="num1" jdbcType="DECIMAL" />
     <result column="NUM2" property="num2" jdbcType="DECIMAL" />
     <result column="VC1" property="vc1" jdbcType="VARCHAR" />
@@ -102,7 +102,7 @@
       NUM2, VC1, VC2, CHR1, 
       CHR2)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, 
-      #{createDate}, #{createUser,jdbcType=INTEGER}, #{num1,jdbcType=DECIMAL}, 
+      #{createDate}, #{createUser,jdbcType=BIGINT}, #{num1,jdbcType=DECIMAL}, 
       #{num2,jdbcType=DECIMAL}, #{vc1,jdbcType=VARCHAR}, #{vc2,jdbcType=VARCHAR}, #{chr1,jdbcType=CHAR}, 
       #{chr2,jdbcType=CHAR})
   </insert>
@@ -157,7 +157,7 @@
         #{createDate},
       </if>
       <if test="createUser != null" >
-        #{createUser,jdbcType=INTEGER},
+        #{createUser,jdbcType=BIGINT},
       </if>
       <if test="num1 != null" >
         #{num1,jdbcType=DECIMAL},
@@ -192,7 +192,7 @@
         CREATE_DATE = #{createDate},
       </if>
       <if test="createUser != null" >
-        CREATE_USER = #{createUser,jdbcType=INTEGER},
+        CREATE_USER = #{createUser,jdbcType=BIGINT},
       </if>
       <if test="num1 != null" >
         NUM1 = #{num1,jdbcType=DECIMAL},
@@ -220,7 +220,7 @@
     set NAME = #{name,jdbcType=VARCHAR},
       STATUS = #{status,jdbcType=CHAR},
       CREATE_DATE = #{createDate},
-      CREATE_USER = #{createUser,jdbcType=INTEGER},
+      CREATE_USER = #{createUser,jdbcType=BIGINT},
       NUM1 = #{num1,jdbcType=DECIMAL},
       NUM2 = #{num2,jdbcType=DECIMAL},
       VC1 = #{vc1,jdbcType=VARCHAR},

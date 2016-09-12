@@ -12,7 +12,7 @@
     <result column="RGROUP_ID" property="rgroupId" jdbcType="INTEGER" />
     <result column="RESOURCE_ID" property="resourceId" jdbcType="INTEGER" />
     <result column="CREATE_DATE" property="createDate"  />
-    <result column="CREATE_USER" property="createUser" jdbcType="INTEGER" />
+    <result column="CREATE_USER" property="createUser" jdbcType="BIGINT" />
   </resultMap>
   
   <resultMap id="resultOfInteger" type="java.lang.Integer">  
@@ -42,7 +42,7 @@
     insert into RESOURCE_GROUP_REL (RGROUP_ID, RESOURCE_ID, CREATE_DATE, 
       CREATE_USER)
     values (#{rgroupId,jdbcType=INTEGER}, #{resourceId,jdbcType=INTEGER}, #{createDate}, 
-      #{createUser,jdbcType=INTEGER})
+      #{createUser,jdbcType=BIGINT})
   </insert>
   
   <insert id="insertSelective" parameterType="com.ldps.model.ResourceGrpRelModel" >
@@ -72,7 +72,7 @@
         #{createDate},
       </if>
       <if test="createUser != null" >
-        #{createUser,jdbcType=INTEGER},
+        #{createUser,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>
@@ -85,7 +85,7 @@
     <result column="TYPE_ID" property="typeId" jdbcType="INTEGER" />
     <result column="STATUS" property="status" jdbcType="CHAR" />
     <result column="CREATE_DATE" property="createDate"  />
-    <result column="CREATE_USER" property="createUser" jdbcType="INTEGER" />
+    <result column="CREATE_USER" property="createUser" jdbcType="BIGINT" />
     <result column="BUILDING_ID" property="buildingId" jdbcType="INTEGER" />
     <result column="FLOOR" property="floor" jdbcType="INTEGER" />
     <result column="SEQUENCE" property="sequence" jdbcType="INTEGER" />

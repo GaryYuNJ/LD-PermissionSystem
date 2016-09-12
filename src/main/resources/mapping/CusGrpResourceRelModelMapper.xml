@@ -13,7 +13,7 @@
     <result column="ENABLE" property="enable" jdbcType="CHAR" />
     <result column="CREATE_DATE" property="createDate"  />
     <result column="UPDATE_DATE" property="updateDate"  />
-    <result column="CREATE_USER" property="createUser" jdbcType="INTEGER" />
+    <result column="CREATE_USER" property="createUser" jdbcType="BIGINT" />
     <result column="START_DATE" property="startDate"  />
     <result column="END_DATE" property="endDate"  />
   </resultMap>
@@ -24,7 +24,7 @@
     <result column="TYPE_ID" property="typeId" jdbcType="INTEGER" />
     <result column="STATUS" property="status" jdbcType="CHAR" />
     <result column="CREATE_DATE" property="createDate"  />
-    <result column="CREATE_USER" property="createUser" jdbcType="INTEGER" />
+    <result column="CREATE_USER" property="createUser" jdbcType="BIGINT" />
     <result column="BUILDING_ID" property="buildingId" jdbcType="INTEGER" />
     <result column="FLOOR" property="floor" jdbcType="INTEGER" />
     <result column="SEQUENCE" property="sequence" jdbcType="INTEGER" />
@@ -62,7 +62,7 @@
       CREATE_DATE, UPDATE_DATE, CREATE_USER,START_DATE, END_DATE
       )
     values (#{cgroupId,jdbcType=INTEGER}, #{resourceId,jdbcType=INTEGER}, #{enable,jdbcType=CHAR}, 
-      #{createDate}, #{updateDate}, #{createUser,jdbcType=INTEGER}, 
+      #{createDate}, #{updateDate}, #{createUser,jdbcType=BIGINT}, 
       #{startDate}, #{endDate}
       )
   </insert>
@@ -111,7 +111,7 @@
         #{updateDate},
       </if>
       <if test="createUser != null" >
-        #{createUser,jdbcType=INTEGER},
+        #{createUser,jdbcType=BIGINT},
       </if>
       <if test="startDate != null" >
         #{startDate,jdbcType=INTEGER},

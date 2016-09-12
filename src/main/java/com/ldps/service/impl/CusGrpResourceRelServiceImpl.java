@@ -18,6 +18,7 @@ import com.ldps.model.CusResourceRelModel;
 import com.ldps.model.PermissionRecordModel;
 import com.ldps.service.ICusGrpResourceRelService;
 import com.ldps.service.ICusResourceRelService;
+import com.ldps.service.IUserService;
 
 @Service("iCusGrpResourceRelService")
 public class CusGrpResourceRelServiceImpl implements ICusGrpResourceRelService {
@@ -32,6 +33,8 @@ public class CusGrpResourceRelServiceImpl implements ICusGrpResourceRelService {
 	CusGroupResGroupRelModelMapper cusGroupResGroupRelModelDao;
 	@Resource
 	PermissionRecordModelMapper permissionRecordModelDao;
+	@Resource
+	private IUserService userService;
 
 	@Override
 	public CusGrpResourceRelModel queryModelByCidAndResId(CusGrpResourceRelModel model) {
@@ -71,7 +74,7 @@ public class CusGrpResourceRelServiceImpl implements ICusGrpResourceRelService {
 				permRecordModel.setResourceId(resourceId);
 				permRecordModel.setActionType(0); //移除权限
 				permRecordModel.setCgroupId(cusGrpId);
-				permRecordModel.setCreateUser(0L);
+				permRecordModel.setCreateUser(userService.getSessionUserId());
 				permRecordModel.setCreateDate(new Date());
 				//记录用户与资源组的权限变化
 				//insert

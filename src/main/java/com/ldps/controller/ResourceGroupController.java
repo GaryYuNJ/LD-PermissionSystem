@@ -19,6 +19,7 @@ import com.ldps.data.BootstrapTableData;
 import com.ldps.model.ResourceGroupModel;
 import com.ldps.model.ResourceGrpRelModel;
 import com.ldps.service.IResourceGroupService;
+import com.ldps.service.IUserService;
 
 @Controller
 @RequestMapping(value = "manage")
@@ -26,7 +27,8 @@ public class ResourceGroupController {
 	
 	@Resource(name = "iResourceGroupService")
 	private IResourceGroupService iResourceGroupService;
-	
+	@Resource
+	private IUserService userService;
 	
 	@RequestMapping(value = "resourceGroupManagePage", method = RequestMethod.GET)
 	public String resouceManage(ModelMap model) {
@@ -75,7 +77,7 @@ public class ResourceGroupController {
 		ResourceGroupModel model=new ResourceGroupModel(); 
 		model.setName(resourceGroupName);
 		model.setCreateDate(new Date());
-		model.setCreateUser(1);
+		model.setCreateUser(userService.getSessionUserId());
 		if (iResourceGroupService.addNewGroup(model) > 0) {
 			am.setStatus(1);
 		}
@@ -101,7 +103,7 @@ public class ResourceGroupController {
 		model.setId(resourceGroupId);
 		model.setName(resourceGroupName);
 		model.setCreateDate(new Date());
-		model.setCreateUser(1);
+		model.setCreateUser(userService.getSessionUserId());
 		if (iResourceGroupService.updateResourceGroup(model) > 0) {
 			am.setStatus(1);
 		}
@@ -134,7 +136,7 @@ public class ResourceGroupController {
 		
 		ResourceGrpRelModel rgm=new ResourceGrpRelModel();
 		rgm.setCreateDate(new Date());
-		rgm.setCreateUser(1);
+		rgm.setCreateUser(userService.getSessionUserId());
 		rgm.setResourceId(resourceId);
 		rgm.setRgroupId(resourceGroupId);
 		if (iResourceGroupService.addResourceGroupRel(rgm) > 0) {

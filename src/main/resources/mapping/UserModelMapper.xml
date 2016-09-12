@@ -15,7 +15,7 @@
     <result column="PASSWORD" property="password" jdbcType="VARCHAR" />
     <result column="STATUS" property="status" jdbcType="CHAR" />
     <result column="CREATE_DATE" property="createDate"  />
-    <result column="CREATE_USER" property="createUser" jdbcType="INTEGER" />
+    <result column="CREATE_USER" property="createUser" jdbcType="BIGINT" />
   </resultMap>
   <sql id="Base_Column_List" >
     ID, NAME, PASSWORD, STATUS, CREATE_DATE, CREATE_USER
@@ -43,7 +43,7 @@
       STATUS, CREATE_DATE, CREATE_USER
       )
     values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{status,jdbcType=CHAR}, #{createDate}, #{createUser,jdbcType=INTEGER}
+      #{status,jdbcType=CHAR}, #{createDate}, #{createUser,jdbcType=BIGINT}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.ldps.model.UserModel" >
@@ -85,7 +85,7 @@
         #{createDate},
       </if>
       <if test="createUser != null" >
-        #{createUser,jdbcType=INTEGER},
+        #{createUser,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>
@@ -105,7 +105,7 @@
         CREATE_DATE = #{createDate},
       </if>
       <if test="createUser != null" >
-        CREATE_USER = #{createUser,jdbcType=INTEGER},
+        CREATE_USER = #{createUser,jdbcType=BIGINT},
       </if>
     </set>
     where ID = #{id,jdbcType=BIGINT}
@@ -116,7 +116,7 @@
       PASSWORD = #{password,jdbcType=VARCHAR},
       STATUS = #{status,jdbcType=CHAR},
       CREATE_DATE = #{createDate},
-      CREATE_USER = #{createUser,jdbcType=INTEGER}
+      CREATE_USER = #{createUser,jdbcType=BIGINT}
     where ID = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

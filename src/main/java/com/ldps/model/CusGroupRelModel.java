@@ -9,7 +9,7 @@ public class CusGroupRelModel {
 
     private Date createDate;
 
-    private Integer createUser;
+    private Long createUser;
 
     public Integer getCgroupId() {
         return cgroupId;
@@ -35,11 +35,11 @@ public class CusGroupRelModel {
         this.createDate = createDate;
     }
 
-    public Integer getCreateUser() {
+    public Long getCreateUser() {
         return createUser;
     }
 
-    public void setCreateUser(Integer createUser) {
+    public void setCreateUser(Long createUser) {
         this.createUser = createUser;
     }
 }

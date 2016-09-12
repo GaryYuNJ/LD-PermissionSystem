@@ -18,6 +18,7 @@ import com.ldps.model.CusResourceRelModel;
 import com.ldps.model.PermissionRecordModel;
 import com.ldps.service.ICusGrpResourceRelService;
 import com.ldps.service.ICusResourceRelService;
+import com.ldps.service.IUserService;
 
 
 /*
@@ -32,6 +33,8 @@ public class AddCusToCusGroupPermChangeListener implements ApplicationListener<A
 	ICusGrpResourceRelService iCusGrpResourceRelService;
 	@Resource
 	private CusGroupResGroupRelModelMapper cusGroupResGroupRelDao;
+	@Resource
+	private IUserService userService;
 	
 	@Async
 	@Override
@@ -54,7 +57,7 @@ public class AddCusToCusGroupPermChangeListener implements ApplicationListener<A
 			try{
 				iCusResourceRelService.jointAuthorizeResGrpPermission(eData.getCustomerId(), cusGrpResGrpRelModel.getRgroupId(), 
 						cusGrpResGrpRelModel.getStartDate(), cusGrpResGrpRelModel.getEndDate(), 
-						0L, permRecordModel);
+						userService.getSessionUserId(), permRecordModel);
 			}catch(Exception e){
 				e.printStackTrace();
 			}
@@ -73,7 +76,7 @@ public class AddCusToCusGroupPermChangeListener implements ApplicationListener<A
 				relModelTemp.setCustomerId(eData.getCustomerId());
 				relModelTemp.setFromShared("N");
 				relModelTemp.setCreateDate(new Date());
-				relModelTemp.setCreateUser(0L);
+				relModelTemp.setCreateUser(userService.getSessionUserId());
 				
 				iCusResourceRelService.authorizeResPermission(relModelTemp, permRecordModel);
 			}catch(Exception e){

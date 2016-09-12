@@ -21,6 +21,7 @@ import com.ldps.model.ResourceModel;
 import com.ldps.service.ICusResourceRelService;
 import com.ldps.service.INodeService;
 import com.ldps.service.IResourceService;
+import com.ldps.service.IUserService;
 
 @Service("iCusResourceRelService")
 public class CusResourceRelServiceImpl implements ICusResourceRelService {
@@ -39,6 +40,9 @@ public class CusResourceRelServiceImpl implements ICusResourceRelService {
 	CustomerResGroupRelModelMapper cusResGroupRelModelDao;
 	@Resource
 	PermissionRecordModelMapper permissionRecordModelDao;
+	@Resource
+	private IUserService userService;
+	
 	@Override
 	public CusResourceRelModel queryModelByCustomerIdAndResId(Long customerId,
 			Integer resourceId) {
@@ -122,7 +126,7 @@ public class CusResourceRelServiceImpl implements ICusResourceRelService {
 					permRecordModel.setObjectRelation(1); //'授权关系；1 用户与资源；2 用户与资源组；3 用户组与资源 ；4 用户组与资源组；
 					permRecordModel.setActionType(1); //1 授权；0 删除权限
 					permRecordModel.setCreateDate(new Date());
-					permRecordModel.setCreateUser(0L);
+					permRecordModel.setCreateUser(userService.getSessionUserId());
 				}
 				permRecordModel.setCustomerId(sourceModel.getCustomerId());
 				permRecordModel.setResourceId(sourceModel.getResourceId());
@@ -260,7 +264,7 @@ public class CusResourceRelServiceImpl implements ICusResourceRelService {
 				permRecordModel = new PermissionRecordModel();
 				permRecordModel.setObjectRelation(-1); //'授权关系；1 用户与资源；2 用户与资源组；3 用户组与资源 ；4 用户组与资源组；5 用户组添加用户；6 资源组添加资源；取消权限操作，对应负值
 				permRecordModel.setActionType(0); //撤销权限
-				permRecordModel.setCreateUser(0L);
+				permRecordModel.setCreateUser(userService.getSessionUserId());
 				permRecordModel.setCreateDate(new Date());
 			}
 			
@@ -285,7 +289,7 @@ public class CusResourceRelServiceImpl implements ICusResourceRelService {
 					permRecordModel = new PermissionRecordModel();
 					permRecordModel.setObjectRelation(-1); //'授权关系；1 用户与资源；2 用户与资源组；3 用户组与资源 ；4 用户组与资源组；5 用户组添加用户；6 资源组添加资源；取消权限操作，对应负值
 					permRecordModel.setActionType(0); //撤销权限
-					permRecordModel.setCreateUser(0L);
+					permRecordModel.setCreateUser(userService.getSessionUserId());
 					permRecordModel.setCreateDate(new Date());
 					permRecordModel.setResourceId(resourceId);
 				}
@@ -311,7 +315,7 @@ public class CusResourceRelServiceImpl implements ICusResourceRelService {
 				permRecordModel = new PermissionRecordModel();
 				permRecordModel.setObjectRelation(-2); //授权关系；1 用户与资源；2 用户与资源组；3 用户组与资源 ；4 用户组与资源组；5 用户组添加用户；6 资源组添加资源；取消权限操作，对应负值
 				permRecordModel.setActionType(0); //移除权限
-				permRecordModel.setCreateUser(0L);
+				permRecordModel.setCreateUser(userService.getSessionUserId());
 				permRecordModel.setCreateDate(new Date());
 			}
 			permRecordModel.setRgroupId(crgModel.getRgroupId());

@@ -21,6 +21,7 @@ import com.ldps.model.CusResourceRelModel;
 import com.ldps.model.PermissionRecordModel;
 import com.ldps.service.ICusGrpResourceRelService;
 import com.ldps.service.ICusResourceRelService;
+import com.ldps.service.IUserService;
 
 
 /*
@@ -52,6 +53,9 @@ public class RemoveResFromResGroupPermChangeListener implements ApplicationListe
 	private CusResourceRelModelMapper customerResourceRelDao;
 	@Resource
 	PermissionRecordModelMapper permissionRecordDao;
+	@Resource
+	private IUserService userService;
+	
 	
 	@Async
 	@Override
@@ -130,7 +134,7 @@ public class RemoveResFromResGroupPermChangeListener implements ApplicationListe
 						//上个权限操作记录为取消， 或者 授权也是由这个resourceGroup带来的，直接删除
 						permRecord.setActionType(0); //取消权限
 						permRecord.setCreateDate(new Date());
-						permRecord.setCreateUser(0L);
+						permRecord.setCreateUser(userService.getSessionUserId());
 						permRecord.setObjectRelation(-6);// 资源组移除资源
 						permRecord.setRgroupId(eData.getResGroupId());
 						permRecord.setCgroupId(null);
@@ -146,7 +150,7 @@ public class RemoveResFromResGroupPermChangeListener implements ApplicationListe
 
 						permRecord.setActionType(1); //恢复权限
 						permRecord.setCreateDate(new Date());
-						permRecord.setCreateUser(0L);
+						permRecord.setCreateUser(userService.getSessionUserId());
 						permRecord.setObjectRelation(-6);// 资源组移除资源造成的上个权限恢复
 						permRecord.setRgroupId(eData.getResGroupId());
 						permRecord.setStartDate(null);
@@ -164,7 +168,7 @@ public class RemoveResFromResGroupPermChangeListener implements ApplicationListe
 				//记录权限更新
 				permRecord.setActionType(0);
 				permRecord.setObjectRelation(-6);// 资源组移除资源
-				permRecord.setCreateUser(0L);
+				permRecord.setCreateUser(userService.getSessionUserId());
 				permRecord.setCreateDate(new Date());
 				permRecord.setRgroupId(eData.getResGroupId());
 				

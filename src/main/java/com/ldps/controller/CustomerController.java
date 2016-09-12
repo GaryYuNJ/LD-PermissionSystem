@@ -23,6 +23,7 @@ import com.ldps.model.CusResourceRelModel;
 import com.ldps.model.CustomerModel;
 import com.ldps.model.CustomerResGroupRelModel;
 import com.ldps.service.ICustomerService;
+import com.ldps.service.IUserService;
 
 @Controller
 @RequestMapping(value = "user")
@@ -35,6 +36,8 @@ public class CustomerController {
 	
 	@Resource
 	CustomerFacade customerFacade;
+	@Resource
+	IUserService userService;
 
 	@RequestMapping(value="userManage",method=RequestMethod.GET)
 	public String userManage( ModelMap model){
@@ -181,7 +184,7 @@ public class CustomerController {
 		}
 		
 		cusResourceRelModel.setFromShared("N");
-		cusResourceRelModel.setCreateUser(0L);
+		cusResourceRelModel.setCreateUser(userService.getSessionUserId());
 		
 		int flag = 0;
 		//联合授权
@@ -231,7 +234,7 @@ public class CustomerController {
 			cusResGrpRelModel.setEndDate(sf.parse(endDateStr));
 		}
 		
-		cusResGrpRelModel.setCreateUser(0L);
+		cusResGrpRelModel.setCreateUser(userService.getSessionUserId());
 		
 		int flag = 0;
 		//联合授权

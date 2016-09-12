@@ -18,6 +18,7 @@ import com.ldps.event.RemoveCusFromCusGrpPermChangeEvent;
 import com.ldps.model.CusGroupRelModel;
 import com.ldps.service.ICusGrpResourceRelService;
 import com.ldps.service.ICustomerGroupRelService;
+import com.ldps.service.IUserService;
 
 @Service("iCustomerGroupRelService")
 public class CustomerGroupRelServiceImpl implements ICustomerGroupRelService {
@@ -31,7 +32,9 @@ public class CustomerGroupRelServiceImpl implements ICustomerGroupRelService {
 	private ApplicationContext applicationContext;  
 	@Resource
 	private CusGroupResGroupRelModelMapper cusGroupResGroupRelDao;
-
+	@Resource
+	private IUserService userService;
+	
 	@Override
 	public int delUserGroupRelation(Long userId, Integer groupId) {
 		// TODO Auto-generated method stub
@@ -55,7 +58,7 @@ public class CustomerGroupRelServiceImpl implements ICustomerGroupRelService {
 		model.setCgroupId(groupId);
 		model.setCustomerId(userId);
 		model.setCreateDate(new Date());
-		model.setCreateUser(0); //session User
+		model.setCreateUser(userService.getSessionUserId()); //session User
 		int flag = customerGroupRelDao.insert(model);
 		
 		//用户组的权限也要授权给用户

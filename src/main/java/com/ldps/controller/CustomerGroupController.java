@@ -23,6 +23,7 @@ import com.ldps.model.CusGroupResGroupRelModel;
 import com.ldps.model.CusGrpResourceRelModel;
 import com.ldps.model.CusResourceRelModel;
 import com.ldps.model.CustomerModel;
+import com.ldps.service.IUserService;
 
 @Controller
 @RequestMapping(value = "userGroup")
@@ -32,7 +33,9 @@ public class CustomerGroupController {
 	
 	@Resource
 	CustomerGroupFacade customerGroupFacade;
-
+	@Resource
+	IUserService userService;
+	
 	@RequestMapping(value="showUserGroupList.json",method = { RequestMethod.GET,
 			RequestMethod.POST },produces = "application/json; charset=utf-8")
 	@ResponseBody
@@ -193,7 +196,7 @@ public class CustomerGroupController {
 			cusGrpResourceRelModel.setEnable("N");
 		}
 		
-		cusGrpResourceRelModel.setCreateUser(0);
+		cusGrpResourceRelModel.setCreateUser(userService.getSessionUserId());
 		
 		int flag = 0;
 		//联合授权
@@ -245,7 +248,7 @@ public class CustomerGroupController {
 			cusGrpResourceRelModel.setEndDate(sf.parse(endDateStr));
 		}
 		
-		cusGrpResourceRelModel.setCreateUser(0L);
+		cusGrpResourceRelModel.setCreateUser(userService.getSessionUserId());
 		
 		int flag = 0;
 		//联合授权

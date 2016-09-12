@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ldps.dao.CustomerGroupModelMapper;
 import com.ldps.model.CustomerGroupModel;
 import com.ldps.service.ICustomerGroupService;
+import com.ldps.service.IUserService;
 
 @Service("iCustomerGroupService")
 public class CustomerGroupServiceImpl implements ICustomerGroupService {
@@ -19,6 +20,8 @@ public class CustomerGroupServiceImpl implements ICustomerGroupService {
 
 	@Resource
 	private CustomerGroupModelMapper customerGroupDao;
+	@Resource
+	private IUserService userService;
 	
 	@Override
 	public List<CustomerGroupModel> queryAllWithPageIndex(Integer startRow,
@@ -57,7 +60,7 @@ public class CustomerGroupServiceImpl implements ICustomerGroupService {
 		model.setName(userGroupName);
 		model.setCreateDate(new Date());
 		model.setStatus("Y");
-		model.setCreateUser(0);
+		model.setCreateUser(userService.getSessionUserId());
 		
 		return customerGroupDao.insertSelective(model);
 	}

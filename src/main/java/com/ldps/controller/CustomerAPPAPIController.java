@@ -189,7 +189,7 @@ public class CustomerAPPAPIController {
 					endDate = df.parse(endDateStr); 
 				}
 				int result = 
-						customerFacade.jointAuthResPermissionByCusId(customerId, resourceId, startDate, endDate,0L);
+						customerFacade.jointAuthResPermissionByCusId(customerId, resourceId, startDate, endDate);
 				apiMessage.setStatus(result);
 			} catch (ParseException e) {
 				apiMessage.setStatus(-2);
@@ -275,7 +275,7 @@ public class CustomerAPPAPIController {
 					endDate = df.parse(endDateStr); 
 				}
 				int result = 
-						customerFacade.authResPermissionByCusId(customerId, resourceId, startDate, endDate,0L);
+						customerFacade.authResPermissionByCusId(customerId, resourceId, startDate, endDate);
 				apiMessage.setStatus(result);
 			} catch (ParseException e) {
 				apiMessage.setStatus(-2);

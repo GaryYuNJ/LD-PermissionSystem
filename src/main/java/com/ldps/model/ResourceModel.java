@@ -14,7 +14,7 @@ public class ResourceModel {
 
     private Date createDate;
 
-    private Integer createUser;
+    private Long createUser;
 
     private Integer buildingId; //设备类型资源的楼栋信息id
 
@@ -179,11 +179,11 @@ public class ResourceModel {
         this.createDate = createDate;
     }
 
-    public Integer getCreateUser() {
+    public Long getCreateUser() {
         return createUser;
     }
 
-    public void setCreateUser(Integer createUser) {
+    public void setCreateUser(Long createUser) {
         this.createUser = createUser;
     }
 

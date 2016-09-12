@@ -13,7 +13,7 @@ public class CustomerGroupData {
     
     private String createDateStr;
 
-    private Integer createUser;
+    private Long createUser;
 
     private Long num1;
 
@@ -78,11 +78,11 @@ public class CustomerGroupData {
         this.createDate = createDate;
     }
 
-    public Integer getCreateUser() {
+    public Long getCreateUser() {
         return createUser;
     }
 
-    public void setCreateUser(Integer createUser) {
+    public void setCreateUser(Long createUser) {
         this.createUser = createUser;
     }
 

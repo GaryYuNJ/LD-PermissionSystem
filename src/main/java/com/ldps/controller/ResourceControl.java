@@ -26,6 +26,7 @@ import com.ldps.data.BootstrapTableData;
 import com.ldps.model.ResourceModel;
 import com.ldps.service.IBuildingModelService;
 import com.ldps.service.IResourceService;
+import com.ldps.service.IUserService;
 
 @Controller
 @RequestMapping(value = "manage")
@@ -34,7 +35,9 @@ public class ResourceControl {
 	private IResourceService iResourceService;
 	@Resource(name = "iBuildingModelService")
 	private IBuildingModelService iBuildingModelService;
-
+	@Resource
+	private IUserService userService;
+	
 	@Value("#{configProperties['upload.dir']}")
 	private String uploadDir; 
 	
@@ -105,7 +108,7 @@ public class ResourceControl {
 		}
 		// 没选择节点， 默认为根节点
 		if (StringUtils.isEmpty(resourceModel.getCreateUser())) {
-			resourceModel.setCreateUser(1000);
+			resourceModel.setCreateUser(userService.getSessionUserId());
 		}
 		resourceModel.setCreateDate(new Date());
 
