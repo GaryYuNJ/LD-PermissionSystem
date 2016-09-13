@@ -65,6 +65,7 @@
 								</table>
 							</div>
 						</div>
+						<div class="clearfix"></div>
 					</div>
 				</div>
 			</div>
@@ -175,9 +176,8 @@
 								  </div>
 							</div>
 						</div>
-					      	<!-- Bootstrap 表单 -->
-							  
 					</div>
+					<div class="clearfix"></div>
 				</div>
 			</div>
 		</div>

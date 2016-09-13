@@ -62,6 +62,9 @@ public class NodeControl {
 		int i=iNodeService.deleteNode(nodeId);
 		if(i>0){
 			am.setStatus(0);
+		}else{
+			am.setStatus(1);
+			am.setMessage("该节点下包含资源信息，不能删除");
 		}
 		return JSON.toJSON(am).toString();
 	}

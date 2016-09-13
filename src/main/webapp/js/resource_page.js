@@ -3,7 +3,7 @@ function deleteKey(obj) {
 }
 // 添加新钥匙
 function addResourceKey(objForm) {
-	//console.log(objForm);
+	// console.log(objForm);
 	$(objForm)
 			.append(
 					'<div class="form-group resourceKeyForm">'
@@ -32,7 +32,7 @@ $("#updateResourceKeyButtonId").click(function() {
 $('#jstree_resource').on(
 		"rename_node.jstree",
 		function(e, node) {
-			//console.log(node);
+			// console.log(node);
 			// 新建节点
 			if (node.node.id.indexOf("j") == 0) {
 				var nodeModel = {
@@ -73,12 +73,21 @@ $('#jstree_resource').on("delete_node.jstree", function(e, node) {
 		node.instance.refresh();
 		return false;
 	}
-	$.post(rootUri + "/manage/deleteNode.json", {
-		"nodeId" : node.node.id
-	}, function(data) {
-		if (data.status == "1") {
-			node.instance.refresh();
-		}
+	$.ajax({
+		type : "POST",
+		url : rootUri + "/manage/deleteNode.json",
+		data : {
+			nodeId : node.node.id
+		},
+		dataType : "json",
+		success : function(data) {
+			if (data.status == "1") {
+				node.instance.refresh();
+			}
+		},
+		error: function(e) { 
+			alert("该节点已包含资源，不能删除"); 
+			} 
 	});
 });
 
@@ -633,7 +642,7 @@ $(function() {
 		// 点击tab调用对应function
 		if ($(this).attr("href") == "#resourceGroupResource") {
 			resourceTableInit();
-			//$("#resourceGroupTableId").bootstrapTable('refresh');
+			// $("#resourceGroupTableId").bootstrapTable('refresh');
 		}
 	})
 })
@@ -709,7 +718,7 @@ function resourceTableInit() {
 			.bootstrapTable(
 					{
 						method : 'get',
-						url :  rootUri + "/manage/resGroupSearchWithRes.json",
+						url : rootUri + "/manage/resGroupSearchWithRes.json",
 						dataType : "json",
 						queryParams : resourceQueryParams,
 						pageSize : 10,
@@ -788,7 +797,7 @@ function resourceQueryParams(params) {
 			search[field.name] = field.value;
 		}
 	});
-	search["id"]=$("#updateResourceId").val();
+	search["id"] = $("#updateResourceId").val();
 	params.search = JSON.stringify(search);
 	return params;
 }
@@ -796,52 +805,58 @@ function resourceQueryParams(params) {
 $('#doGroupsearch').click(function() {
 	$('#resourceGroupTableId').bootstrapTable('refresh');
 });
-function addResourceGroupRel(buttonObj, resourceGroupId){
-	   $(buttonObj).button('loading');
-	  // $("#resourceGroupId_hidden").val();
-	   $.ajax({
-		    url:rootUri + "/manage/addResourceGroupRel.json",
-		    data:{resourceGroupId :resourceGroupId, resourceId : $("#updateResourceId").val()},  
-		    type:'post',  
-		    cache:false,  
-		    dataType:'json',  
-		    success:function(data) {
-		    	$(buttonObj).button('reset');
-		    	if(data.status == 1){
-		    		$('#resourceGroupTableId').bootstrapTable('refresh');
-		    		//alert("保存成功");
-		    	}else{
-		    		alert("系统异常！");
-		    	}
-		     },  
-		     error : function() {  
-		    	 alert("系统异常！");
-		    	 $(buttonObj).button('reset');
-		     }
-		});
-	   
+function addResourceGroupRel(buttonObj, resourceGroupId) {
+	$(buttonObj).button('loading');
+	// $("#resourceGroupId_hidden").val();
+	$.ajax({
+		url : rootUri + "/manage/addResourceGroupRel.json",
+		data : {
+			resourceGroupId : resourceGroupId,
+			resourceId : $("#updateResourceId").val()
+		},
+		type : 'post',
+		cache : false,
+		dataType : 'json',
+		success : function(data) {
+			$(buttonObj).button('reset');
+			if (data.status == 1) {
+				$('#resourceGroupTableId').bootstrapTable('refresh');
+				// alert("保存成功");
+			} else {
+				alert("系统异常！");
+			}
+		},
+		error : function() {
+			alert("系统异常！");
+			$(buttonObj).button('reset');
+		}
+	});
+
 }
-function deleteResourceGroupRel(buttonObj, resourceGroupId){
-	   $(buttonObj).button('loading');
-	  // $("#resourceGroupId_hidden").val();
-	   $.ajax({
-		    url:rootUri + "/manage/deleteResourceGroupRel.json",
-		    data:{resourceGroupId : resourceGroupId, resourceId : $("#updateResourceId").val()},  
-		    type:'post',  
-		    cache:false,  
-		    dataType:'json',  
-		    success:function(data) {
-		    	$(buttonObj).button('reset');
-		    	if(data.status == 1){
-		    		$('#resourceGroupTableId').bootstrapTable('refresh');
-		    		//alert("保存成功");
-		    	}else{
-		    		alert("系统异常！");
-		    	}
-		     },  
-		     error : function() {  
-		    	 alert("系统异常！");
-		    	 $(buttonObj).button('reset');
-		     }
-		});
+function deleteResourceGroupRel(buttonObj, resourceGroupId) {
+	$(buttonObj).button('loading');
+	// $("#resourceGroupId_hidden").val();
+	$.ajax({
+		url : rootUri + "/manage/deleteResourceGroupRel.json",
+		data : {
+			resourceGroupId : resourceGroupId,
+			resourceId : $("#updateResourceId").val()
+		},
+		type : 'post',
+		cache : false,
+		dataType : 'json',
+		success : function(data) {
+			$(buttonObj).button('reset');
+			if (data.status == 1) {
+				$('#resourceGroupTableId').bootstrapTable('refresh');
+				// alert("保存成功");
+			} else {
+				alert("系统异常！");
+			}
+		},
+		error : function() {
+			alert("系统异常！");
+			$(buttonObj).button('reset');
+		}
+	});
 }
