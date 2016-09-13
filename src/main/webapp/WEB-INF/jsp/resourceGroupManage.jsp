@@ -221,4 +221,4 @@
 
 <%@ include file="/common/script.jsp"%>
 <%@ include file="/common/footer.html"%>
-<script src="<c:url value="/js/resourceManage_page.js" />"></script>
+<script src="<c:url value="/js/resourceGroup_page.js" />"></script>
