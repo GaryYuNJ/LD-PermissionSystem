@@ -177,7 +177,8 @@ public class CustomerController {
 			cusResourceRelModel.setEndDate(sf.parse(endDateStr));
 		}
 		
-		if("on".equals(cusResourceRelModel.getEnable())){
+		if(null ==  cusResourceRelModel.getEnable() 
+				|| "on".equals(cusResourceRelModel.getEnable())){
 			cusResourceRelModel.setEnable("Y");
 		}else{
 			cusResourceRelModel.setEnable("N");

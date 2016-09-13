@@ -190,7 +190,8 @@ public class CustomerGroupController {
 			cusGrpResourceRelModel.setEndDate(sf.parse(endDateStr));
 		}
 		
-		if("on".equals(cusGrpResourceRelModel.getEnable())){
+		if(null ==  cusGrpResourceRelModel.getEnable() 
+				|| "on".equals(cusGrpResourceRelModel.getEnable())){
 			cusGrpResourceRelModel.setEnable("Y");
 		}else{
 			cusGrpResourceRelModel.setEnable("N");
