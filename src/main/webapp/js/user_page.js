@@ -68,7 +68,8 @@
                    field: 'id',
                    align: 'center',
                    formatter:function(value,row,index){
-	                 var e = '<a href="javascript:void(0);" mce_href="#" onclick="showUser(\''+ row.id + '\',\''+ row.name + '\')">详情</a> ';  
+                	 var e = '<button class="btn btn-xs btn-warning" onclick="showUser(\''+ row.id + '\',\''+ row.name + '\')"><i class="icon-pencil"></i>详情</button>  ';
+	                 //var e = '<a href="javascript:void(0);" mce_href="#" onclick="showUser(\''+ row.id + '\',\''+ row.name + '\')">详情</a> ';  
 	                 //var d = '<a href="#" mce_href="#" onclick="delete(\''+ row.id +'\')">删除</a> ';  
 	                 //   return e+d;
 	                 return e; 

@@ -53,9 +53,9 @@
                    field: 'id',
                    align: 'center',
                    formatter:function(value,row,index){
-                 var e = '<a href="javascript:void(0);" mce_href="#" onclick="showUserGroup(\''+ row.id + '\',\''+ row.name + '\')">详情</a> ';  
-                 var d = '<a href="javascript:void(0);" mce_href="#" onclick="deleteUserGroupById(\''+ row.id +'\')">删除</a> ';  
-                    return e+d;  
+                	   var e = '<button class="btn btn-xs btn-warning" onclick="showUserGroup(\''+ row.id + '\',\''+ row.name + '\')"><i class="icon-pencil"></i> </button>  ';
+                	   var d = '<button class="btn btn-xs btn-danger" onclick="deleteUserGroupById(\''+ row.id +'\')"><i class="icon-remove"></i> </button>';
+                	   return e + d;
                  } 
                }
            ],
