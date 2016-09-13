@@ -3,7 +3,7 @@ function deleteKey(obj) {
 }
 // 添加新钥匙
 function addResourceKey(objForm) {
-	console.log(objForm);
+	//console.log(objForm);
 	$(objForm)
 			.append(
 					'<div class="form-group resourceKeyForm">'
@@ -32,7 +32,7 @@ $("#updateResourceKeyButtonId").click(function() {
 $('#jstree_resource').on(
 		"rename_node.jstree",
 		function(e, node) {
-			console.log(node);
+			//console.log(node);
 			// 新建节点
 			if (node.node.id.indexOf("j") == 0) {
 				var nodeModel = {
@@ -418,7 +418,8 @@ $('#jstree_resource').jstree({
 });
 // JSTree 事件
 $('#jstree_resource').on("changed.jstree", function(e, data) {
-
+	$("#queryNodeId").val(data.node.id);
+	refreshSearch();
 });
 // 分页
 var pageNumber = 1;

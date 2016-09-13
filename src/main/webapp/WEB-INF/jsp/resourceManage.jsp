@@ -92,6 +92,7 @@
 											</button>
 										</div>
 									</div>
+									<input type="hidden" name="nodeId" id="queryNodeId">
 								</form>
 								<table class="table table-striped table-bordered table-hover"
 									id="resourceTableId">
