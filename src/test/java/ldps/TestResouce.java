@@ -59,7 +59,7 @@ public class TestResouce {
 		rm.setTypeId(1);
 		//rm.setMac("xxxx");
 		rm.setNodeId(1);
-		rm.setCreateUser(1000);
+		//rm.setCreateUser(1000);
 		iResourceService.createResource(rm);
 	}
 	//测试资源组新增

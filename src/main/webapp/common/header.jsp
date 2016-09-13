@@ -28,6 +28,10 @@
   <![endif]-->
 <!-- Favicon -->
 <link rel="shortcut icon" href="<c:url value="/img/favicon/favicon.png" />">
+<c:set var="rootUri" value="${pageContext.request.contextPath}" />
+<script type="text/javascript">
+var rootUri="${rootUri}";
+</script>
 </head>
 
 <body>
