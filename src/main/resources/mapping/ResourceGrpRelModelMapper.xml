@@ -98,11 +98,22 @@
     <result column="RGROUP_ID" property="resourceGroupId" jdbcType="INTEGER" />
   </resultMap>
   
-    
-   <sql id="ResouceWith_GId_Column_List" >
+  <resultMap id="queryResGrpWithRIdResultMap" type="com.ldps.model.ResourceGroupModel" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate"  />
+    <result column="CREATE_USER" property="createUser" jdbcType="BIGINT" />
+    <result column="RESOURCE_ID" property="resourceId" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <sql id="ResouceWith_GId_Column_List" >
     R.ID,R.NAME, R.TYPE_ID, R.STATUS, R.CREATE_DATE, R.CREATE_USER,  R.BUILDING_ID, R.FLOOR, 
     R.SEQUENCE, R.SHARE_ENABLE, R.NODE_PATH, R.IS_VIRTUAL_RESOURCE, R.PERMISSION_ATTR_ID, R.DEVICE_TYPE, 
     R.NODE_ID,RGR.RGROUP_ID
+  </sql>
+  
+   <sql id="ResouceGroupWith_RId_Column_List" >
+    R.ID,R.NAME,  R.CREATE_DATE, R.CREATE_USER, RGR.RESOURCE_ID
   </sql>
   
    <select id="selectResouceListByConditionWithGId" resultMap="queryResouceWithGIdResultMap" parameterType="com.ldps.model.ResourceModel" >
@@ -137,4 +148,29 @@
      </if>
   </select>
   
+  <select id="selectResGroupListByConditionWithRId" resultMap="queryResGrpWithRIdResultMap" parameterType="com.ldps.model.ResourceGroupModel" >
+	SELECT 
+	 <include refid="ResouceGroupWith_RId_Column_List" />
+	FROM RESOURCE_GROUP R LEFT JOIN RESOURCE_GROUP_REL RGR ON R.ID=RGR.RGROUP_ID
+	<if test="resourceGroupModel!=null">
+		<if test="resourceGroupModel.id != null"> AND  RGR.RESOURCE_ID = #{resourceGroupModel.id}</if>
+    	<where>
+    		<if test="resourceGroupModel.name != null"><bind name="nameLike" value="'%' + resourceGroupModel.name + '%'" /> name like #{nameLike}</if>
+    		<if test="resourceGroupModel.ifBindGroup != null"> AND  RGR.RGROUP_ID IS NOT NULL</if>
+    	</where>
+     </if>
+     limit #{startRow,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectResGroupCountByConditionWithRId" resultMap="resultOfInteger"  parameterType="com.ldps.model.ResourceGroupModel" >
+	SELECT count(1) AS ID
+	FROM RESOURCE_GROUP R LEFT JOIN RESOURCE_GROUP_REL RGR ON R.ID=RGR.RGROUP_ID
+	<if test="resourceGroupModel!=null">
+		<if test="resourceGroupModel.resourceId != null"> AND  RGR.RESOURCE_ID = #{resourceGroupModel.resourceId}</if>
+    	<where>
+    		<if test="resourceGroupModel.name != null"><bind name="nameLike" value="'%' + resourceGroupModel.name + '%'" /> name like #{nameLike}</if>
+    		<if test="resourceGroupModel.ifBindGroup != null"> AND  RGR.RGROUP_ID IS NOT NULL</if>
+    	</where>
+     </if>
+  </select>
 </mapper>

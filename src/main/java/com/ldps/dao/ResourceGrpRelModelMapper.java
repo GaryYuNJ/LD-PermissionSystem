@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.ldps.model.ResourceGroupModel;
 import com.ldps.model.ResourceGrpRelModel;
 import com.ldps.model.ResourceModel;
 
@@ -25,6 +26,10 @@ public interface ResourceGrpRelModelMapper {
 	
 	Integer selectResouceCountConditionWithGId(@Param("resourceModel")ResourceModel resourceModel);
 
-    
+	List<ResourceGroupModel> selectResGroupListByConditionWithRId(@Param("resourceGroupModel")ResourceGroupModel resourceGroupModel,@Param("startRow") Integer startRow,
+			@Param("pageSize") Integer pageSize);
+
+	Integer selectResGroupCountByConditionWithRId(@Param("resourceGroupModel")ResourceGroupModel resourceGroupModel);
+	
     int selectCountConditionWithGId(@Param("resourceModel")ResourceModel resourceModel);
 }

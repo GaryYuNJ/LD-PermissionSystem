@@ -2,8 +2,11 @@ package com.ldps.service;
 
 import java.util.List;
 
+import org.springframework.util.StringUtils;
+
 import com.ldps.model.ResourceGroupModel;
 import com.ldps.model.ResourceGrpRelModel;
+import com.ldps.model.ResourceModel;
 
 public interface IResourceGroupService {
 	
@@ -29,4 +32,9 @@ public interface IResourceGroupService {
 	int deleteCusGrpResGrpPermission(Integer userGrpId, Integer resGroupId);
 
 	int deleteResGroupById(Integer resGroupId);
+	
+	List<ResourceGroupModel> queryResGroupWithRId(
+			ResourceGroupModel resourceGroupModel, Integer offset, Integer limit);
+	
+	int queryResGroupCountWithRId(ResourceGroupModel resourceGroupModel) ;
 }

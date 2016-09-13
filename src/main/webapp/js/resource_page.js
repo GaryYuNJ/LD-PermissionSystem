@@ -632,7 +632,7 @@ $(function() {
 		// 点击tab调用对应function
 		if ($(this).attr("href") == "#resourceGroupResource") {
 			resourceTableInit();
-			// $("#groupListTableId").bootstrapTable('refresh');
+			//$("#resourceGroupTableId").bootstrapTable('refresh');
 		}
 	})
 })
@@ -703,84 +703,144 @@ $('#jstree_updateResource').on(
 			}
 		});
 // 资源与资源组
-var getgroupURL = rootUri + "/manage/resourceGroupSearch.json";
-var pageNumber = 1;
-$('#resourceGroupTableId')
-		.bootstrapTable(
-				{
-					method : 'get',
-					url : getgroupURL,
-					dataType : "json",
-					queryParams : resrouceGroupQueryParams,
-					pageSize : 10,
-					pageList : [ 10, 25, 50 ], // 可供选择的每页的行数（*）
-					pageNumber : pageNumber,
-					pagination : true, // 分页
-					singleSelect : false,
-					idField : "id", // 标识哪个字段为id主键
-					locale : "zh-CN", // 表格汉化
-					sidePagination : "server", // 服务端处理分页
-					columns : [
-							{
-								title : '用户组ID',
-								field : 'id',
-								align : 'center',
-								valign : 'middle'
-							},
-							{
-								title : '用户组名称',
-								field : 'name',
-								align : 'center',
-								valign : 'middle'
-							},
-							{
-								title : '创建时间',
-								field : 'createDate',
-								align : 'center',
-								formatter : function(value, row, index) {
-									return new Date(value).format("yyyy-MM-dd");
-								}
-							},
-							{
-								title : '创建人',
-								field : 'createUser',
-								align : 'center'
-							},
-							{
-								title : '操作',
-								field : 'id',
-								align : 'center',
-								formatter : function(value, row, index) {
-									var e = '<a href="javascript:void(0);" mce_href="#" onclick="showResourceGroup(\''
-											+ row.id + '\')">详情</a> ';
-									var d = '<a href="javascript:void(0);" mce_href="#" onclick="deletegroupGroupById(\''
-											+ row.id + '\')">删除</a> ';
-									return e + d;
-								}
-							} ],
-					formatLoadingMessage : function() {
-						return "请稍等，正在加载中...";
-					}
-				});
+function resourceTableInit() {
+	$('#resourceGroupTableId')
+			.bootstrapTable(
+					{
+						method : 'get',
+						url :  rootUri + "/manage/resGroupSearchWithRes.json",
+						dataType : "json",
+						queryParams : resourceQueryParams,
+						pageSize : 10,
+						pageList : [ 10, 25, 50 ], // 可供选择的每页的行数（*）
+						pageNumber : 1,
+						pagination : true, // 分页
+						singleSelect : false,
+						striped : true,
+						idField : "id", // 标识哪个字段为id主键
+						sidePagination : "server", // 服务端处理分页
+						columns : [
+								{
+									title : '用户组ID',
+									field : 'id',
+									align : 'center',
+									valign : 'middle'
+								},
+								{
+									title : '用户组名称',
+									field : 'name',
+									align : 'center',
+									valign : 'middle'
+								},
+								{
+									title : '创建时间',
+									field : 'createDate',
+									align : 'center',
+									formatter : function(value, row, index) {
+										return new Date(value)
+												.format("yyyy-MM-dd");
+									}
+								},
+								{
+									title : '状态',
+									field : 'resourceId',
+									align : 'center',
+									valign : 'middle',
+									formatter : function(value, row, index) {
+										if (typeof (value) != "undefined") {
+											return '<span class="label label-success">已加入</span>';
+										}
+									}
+								},
+								{
+									title : '操作',
+									field : 'id',
+									align : 'center',
+									width : 90,
+									formatter : function(value, row, index) {
+										if (typeof (row.resourceId) != "undefined") {
+											return '<button type="button" class="btn btn-xs btn-warning"  onclick="deleteResourceGroupRel(this, \''
+													+ row.id
+													+ '\')" data-toggle="modal" data-loading-text="Loading...">移除</button>';
+										} else {
+											return '<button type="button" class="btn btn-xs btn-success"  onclick="addResourceGroupRel(this, \''
+													+ row.id
+													+ '\')" data-toggle="modal" data-loading-text="Loading...">加入</button>';
+										}
+									}
+								} ],
+						formatLoadingMessage : function() {
+							return "请稍等，正在加载中...";
+						},
+						formatNoMatches : function() { // 没有匹配的结果
+							return '无符合条件的记录';
+						}
+					});
+};
 
-function resrouceGroupQueryParams(params) { // 配置参数
-	var temp = { // 这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
-		pageNumber : params.pageNumber, // 页码
-		limit : params.limit, // 页面行数大小
-		offset : params.offset, // 分页偏移量
-		sort : params.sort, // 排序列名
-		sortOrder : params.order,// 排位命令（desc，asc）
-		search : function() {
-			var search = {};
-			$.each($("#groupSearchForm").serializeArray(), function(i, field) {
-				search[field.name] = field.value;
-			});
-			return JSON.stringify(search);
+function resourceQueryParams(params) {
+	var search = {};
+	$.each($("#groupSearchForm").serializeArray(), function(i, field) {
+		if (field.name == "ifBindGroup" && field.value == "on") {
+			search["ifBindGroup"] = "Y";
+		} else {
+			search[field.name] = field.value;
 		}
-	};
-	return temp;
+	});
+	search["id"]=$("#updateResourceId").val();
+	params.search = JSON.stringify(search);
+	return params;
 }
 
 $('#doGroupsearch').click(function() {
 	$('#resourceGroupTableId').bootstrapTable('refresh');
 });
+function addResourceGroupRel(buttonObj, resourceGroupId){
+	   $(buttonObj).button('loading');
+	  // $("#resourceGroupId_hidden").val();
+	   $.ajax({
+		    url:rootUri + "/manage/addResourceGroupRel.json",
+		    data:{resourceGroupId :resourceGroupId, resourceId : $("#updateResourceId").val()},  
+		    type:'post',  
+		    cache:false,  
+		    dataType:'json',  
+		    success:function(data) {
+		    	$(buttonObj).button('reset');
+		    	if(data.status == 1){
+		    		$('#resourceGroupTableId').bootstrapTable('refresh');
+		    		//alert("保存成功");
+		    	}else{
+		    		alert("系统异常！");
+		    	}
+		     },  
+		     error : function() {  
+		    	 alert("系统异常！");
+		    	 $(buttonObj).button('reset');
+		     }
+		});
+	   
+}
+function deleteResourceGroupRel(buttonObj, resourceGroupId){
+	   $(buttonObj).button('loading');
+	  // $("#resourceGroupId_hidden").val();
+	   $.ajax({
+		    url:rootUri + "/manage/deleteResourceGroupRel.json",
+		    data:{resourceGroupId : resourceGroupId, resourceId : $("#updateResourceId").val()},  
+		    type:'post',  
+		    cache:false,  
+		    dataType:'json',  
+		    success:function(data) {
+		    	$(buttonObj).button('reset');
+		    	if(data.status == 1){
+		    		$('#resourceGroupTableId').bootstrapTable('refresh');
+		    		//alert("保存成功");
+		    	}else{
+		    		alert("系统异常！");
+		    	}
+		     },  
+		     error : function() {  
+		    	 alert("系统异常！");
+		    	 $(buttonObj).button('reset');
+		     }
+		});
+}

@@ -216,6 +216,25 @@
 									</div>
 								</div>
 								<div class="tab-pane" id="resourceGroupResource">
+									<form class="form-horizontal" role="form" id="groupSearchForm">
+										<div class="form-group">
+											<label class="col-lg-2 control-label">已绑定</label>
+			                                  <div class="col-lg-2">
+			                                  <div id="selectBindUserFlag" class="make-switch" data-on-label="<i class='icon-ok icon-white'></i>" data-off-label="<i class='icon-remove'></i>">
+												 <input type="checkbox" checked id="ifBindGroupId" name="ifBindGroup"/>
+											  </div>
+			                                  </div>
+											<label class="col-lg-2 control-label" style="width: 120px">资源组名称</label>
+											<div class="col-lg-3">
+												<input type="text" name="name" class="form-control" placeholder="资源组名称">
+											</div>
+											<div class="col-lg-3">
+												<button type="button"  class="btn btn-primary" id="doGroupsearch">
+													<i class="icon-search"></i> 查询
+												</button>
+											</div>
+										</div>
+									</form>
 									<table class="table table-striped table-bordered table-hover"
 									id="resourceGroupTableId">
 									

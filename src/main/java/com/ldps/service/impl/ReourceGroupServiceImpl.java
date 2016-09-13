@@ -170,4 +170,15 @@ public class ReourceGroupServiceImpl implements IResourceGroupService {
 		return resourceGroupModelDao.deleteByPrimaryKey(resGroupId);
 	}
 
+	@Override
+	public List<ResourceGroupModel> queryResGroupWithRId(
+			ResourceGroupModel resourceGroupModel, Integer offset, Integer limit) {
+		return resourceGrpRelModelDao.selectResGroupListByConditionWithRId(resourceGroupModel,offset,limit);
+	}
+
+	@Override
+	public int queryResGroupCountWithRId(ResourceGroupModel resourceGroupModel) {
+		return resourceGrpRelModelDao.selectResGroupCountByConditionWithRId(resourceGroupModel);
+	}
+
 }
