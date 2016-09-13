@@ -175,7 +175,7 @@ public class ResourceGroupController {
 		return JSON.toJSONString(bData);
 	}
 	
-	//删除用户组与资源组权限关系
+	//删除资源组
 	@RequestMapping(value="deleteResGroupById.json",method = { RequestMethod.GET,
 			RequestMethod.POST },produces = "application/json; charset=utf-8")
 	@ResponseBody

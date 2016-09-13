@@ -359,7 +359,7 @@
 	                     <label class="col-lg-2 control-label">授权状态</label>
 	                     <div class="col-lg-4">
 	                      <div class="make-switch" id="permissionStatus_addPer" data-on="success" data-off="warning" data-off="info" data-on-label="启用" data-off-label="禁用">
-	            					<input type="checkbox" checked name="enable">
+	            					<input type="checkbox" disabled checked name="enable">
 	        				  </div>
 	                     </div>
 	                     <label class="col-lg-2 control-label">连带授权</label>
