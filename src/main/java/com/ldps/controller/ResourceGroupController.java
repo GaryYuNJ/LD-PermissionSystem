@@ -175,6 +175,20 @@ public class ResourceGroupController {
 		return JSON.toJSONString(bData);
 	}
 	
+	//删除用户组与资源组权限关系
+	@RequestMapping(value="deleteResGroupById.json",method = { RequestMethod.GET,
+			RequestMethod.POST },produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public String deleteResGroupById( @RequestParam("resGroupId") Integer resGroupId , ModelMap model){
+		
+		APIMessage apiMessage = new APIMessage();
+		
+		int flag = iResourceGroupService.deleteResGroupById(resGroupId);
+		apiMessage.setStatus(flag);
+		
+		return JSON.toJSONString(apiMessage);
+	}
+	
 	//资源组查询 with customerGroupId
 	@ResponseBody
 	@RequestMapping(value = "resGroupSearchWithCusGrpId.json")

@@ -327,14 +327,18 @@
 		});
 	  };
 	  
-	  //删除groupGroup 
-		 function deletegroupGroupById(customerGroupId){
-			if(null == customerGroupId || customerGroupId == ""){
+	  //删除resGroup 
+		 function deletegroupGroupById(resGroupId){
+			if(null == resGroupId || resGroupId == ""){
 				alert("用户组ID为空");
+				return;
+			}
+			if (!confirm('您确定要删除选中的资源组吗？')) {
+				return;
 			}
 			$.ajax( {  
-			    url:"<c:url value='/groupGroup/deletegroupGroupById.json' />",
-			    data:{   customerGroupId : customerGroupId },  
+			    url:"<c:url value='/manage/deleteResGroupById.json' />",
+			    data:{   resGroupId : resGroupId },  
 			    type:'get',  
 			    cache:false,  
 			    dataType:'json',  
@@ -483,11 +487,14 @@
 	                   title: '操作',
 	                   field: 'id',
 	                   align: 'center',
+	                   width: 90,
 	                   formatter:function(value,row,index){
 	                	   if(typeof(row.resourceGroupId) != "undefined"){
-	                		   return '<button type="button" class="btn btn-warning" onclick="deleteResourceGroupRel('+value+')"><i class="icon-remove"></i> 移除</button>';
+	                		   return '<button type="button" class="btn btn-xs btn-warning"  onclick="deleteResourceGroupRel(this, \''+ row.id +'\')" data-toggle="modal" data-loading-text="Loading...">移除</button>';
+	                		   //return '<button type="button" class="btn btn-warning" onclick="deleteResourceGroupRel('+value+')"><i class="icon-remove"></i> 移除</button>';
 	                	 }else{
-	                		 return '<button type="button" class="btn btn-primary" onclick="addResourceGroupRel('+value+')"><i class="icon-plus"></i> 加入</button>';;
+	                		 return '<button type="button" class="btn btn-xs btn-success"  onclick="addResourceGroupRel(this, \''+ row.id + '\')" data-toggle="modal" data-loading-text="Loading...">加入</button>';
+	                		 //return '<button type="button" class="btn btn-primary" onclick="addResourceGroupRel('+value+')"><i class="icon-plus"></i> 加入</button>';;
 	                	 }
 	                 } 
 	               }
@@ -547,7 +554,8 @@
 		return tempvalue;
 	}
 	
-   function addResourceGroupRel(resourceId){
+   function addResourceGroupRel(buttonObj, resourceId){
+	   $(buttonObj).button('loading');
 	  // $("#resourceGroupId_hidden").val();
 	   $.ajax({
 		    url:"<c:url value='/manage/addResourceGroupRel.json' />",
@@ -556,20 +564,23 @@
 		    cache:false,  
 		    dataType:'json',  
 		    success:function(data) {
+		    	$(buttonObj).button('reset');
 		    	if(data.status == 1){
 		    		$('#resourceTableId').bootstrapTable('refresh');
-		    		alert("保存成功");
+		    		//alert("保存成功");
 		    	}else{
-		    		alert("已存在！");
+		    		alert("系统异常！");
 		    	}
 		     },  
 		     error : function() {  
-		    	 alert("已存在！");
+		    	 alert("系统异常！");
+		    	 $(buttonObj).button('reset');
 		     }
 		});
 	   
    }
-   function deleteResourceGroupRel(resourceId){
+   function deleteResourceGroupRel(buttonObj, resourceId){
+	   $(buttonObj).button('loading');
 	  // $("#resourceGroupId_hidden").val();
 	   $.ajax({
 		    url:"<c:url value='/manage/deleteResourceGroupRel.json' />",
@@ -578,15 +589,17 @@
 		    cache:false,  
 		    dataType:'json',  
 		    success:function(data) {
+		    	$(buttonObj).button('reset');
 		    	if(data.status == 1){
 		    		$('#resourceTableId').bootstrapTable('refresh');
-		    		alert("保存成功");
+		    		//alert("保存成功");
 		    	}else{
-		    		alert("已存在！");
+		    		alert("系统异常！");
 		    	}
 		     },  
 		     error : function() {  
-		    	 alert("已存在！");
+		    	 alert("系统异常！");
+		    	 $(buttonObj).button('reset');
 		     }
 		});
    }

@@ -165,4 +165,9 @@ public class ReourceGroupServiceImpl implements IResourceGroupService {
 		return flag;
 	}
 
+	@Override
+	public int deleteResGroupById(Integer resGroupId) {
+		return resourceGroupModelDao.deleteByPrimaryKey(resGroupId);
+	}
+
 }

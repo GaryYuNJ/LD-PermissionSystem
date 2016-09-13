@@ -545,6 +545,10 @@
 		 function deleteUserGroupById(customerGroupId){
 			if(null == customerGroupId || customerGroupId == ""){
 				alert("用户组ID为空");
+				return;
+			}
+			if (!confirm('您确定要删除选中的记录吗？')) {
+				return;
 			}
 			$.ajax( {  
 			    url:"<c:url value='/userGroup/deleteUserGroupById.json' />",
@@ -701,11 +705,14 @@
 	                   title: '操作',
 	                   field: 'id',
 	                   align: 'center',
+	                   width: 90,
 	                   formatter:function(value,row,index){
 	                	   if(row.extendSpecificFlag != null){
-	                		   var e = '<a href="javascript:void(0)" mce_href="#" onclick="delUserGroupRelation(this, \''+ row.id +'\')">移除</a> ';  
+	                		   var e ='<button type="button" class="btn btn-xs btn-warning"  onclick="delUserGroupRelation(this, \''+ row.id +'\')" data-toggle="modal" data-loading-text="Loading...">移除</button>';
+	                		   //var e = '<a href="javascript:void(0)" mce_href="#" onclick="delUserGroupRelation(this, \''+ row.id +'\')">移除</a> ';  
 	                	   }else{
-	                		   var e = '<a href="javascript:void(0)" mce_href="#" onclick="addUserGroupRelation(this, \''+ row.id + '\')">加入</a> ';  
+	                		   var e ='<button type="button" class="btn btn-xs btn-success"  onclick="addUserGroupRelation(this, \''+ row.id + '\')" data-toggle="modal" data-loading-text="Loading...">加入</button>';
+	                		   //var e = '<a href="javascript:void(0)" mce_href="#" onclick="addUserGroupRelation(this, \''+ row.id + '\')">加入</a> ';  
 	                	   }
 	                	   return e;
 	                 } 
@@ -738,6 +745,7 @@
 		  
 		 //删除usergroup与user关系
 		 function delUserGroupRelation(obj, userId) {
+			 $(obj).button('loading');
 			 var groupId = $("#userGroupId_hidden").val();
 			 $.ajax( {  
 				    url:"<c:url value='/user/delUserGroupRelation.json' />",
@@ -746,9 +754,15 @@
 				    cache:false,  
 				    dataType:'json',  
 				    success:function(data) {
+				    	//$(obj).button('reset');//使用reset会恢复原始状态，导致后面的html文字修改失效
 				    	if(data.status == 1){
 					    	$(obj).attr("onclick", "addUserGroupRelation(this, "+userId+")");
 					    	$(obj).html("加入");
+					    	//更换属性
+				    		$(obj).removeClass('btn-warning');
+				    		$(obj).addClass('btn-success');
+				    		$(obj).removeClass('disabled');
+				    		$(obj).attr("disabled", false);
 				    	}else{
 				    		alert("操作失败！");
 				    	}
@@ -761,6 +775,7 @@
 		  
 			//添加usergroup与user关系
 			 function addUserGroupRelation(obj, userId) {
+				 $(obj).button('loading');
 				 var  groupId = $("#userGroupId_hidden").val();
 				 $.ajax( {  
 					    url:"<c:url value='/user/addUserGroupRelation.json' />",
@@ -769,9 +784,15 @@
 					    cache:false,  
 					    dataType:'json',  
 					    success:function(data) {
+					    	//$(obj).button('reset');//使用reset会恢复原始状态，导致后面的html文字修改失效
 					    	if(data.status == 1){
 						    	$(obj).attr("onclick", "delUserGroupRelation(this, "+userId+")");
 						    	$(obj).html("移除");
+						    	//更换属性
+					    		$(obj).removeClass('btn-success');
+					    		$(obj).addClass('btn-warning');
+					    		$(obj).removeClass('disabled');
+					    		$(obj).attr("disabled", false);
 					    	}else{
 					    		alert("操作失败！");
 					    	}
@@ -926,6 +947,7 @@
 	                   title: '操作',
 	                   field: 'id',
 	                   align: 'center',
+	                   width: 80,
 	                   formatter:function(value,row,index){
 	                	   if(row.permissionAttrId == "1"){
 	                		   return "-";
@@ -934,7 +956,7 @@
 		                			   && row.cGrpResRelModel.enable == "Y"
 		                			   && (null == row.cGrpResRelModel.startDate || new Date(row.cGrpResRelModel.startDate) < new Date() ) 
 		                			   &&  (null == row.cGrpResRelModel.endDate || new Date(row.cGrpResRelModel.endDate) > new Date() ) ){
-		                		   var e ='<button type="button" class="btn btn-xs btn-warning"  onclick="removePermission(\''+ row.id +'\')" data-toggle="modal" >禁用</button>';
+		                		   var e ='<button type="button" class="btn btn-xs btn-warning"  onclick="removePermission(\''+ row.id +'\',this)" data-toggle="modal"  data-loading-text="Loading...">禁用</button>';
 		                	   }else{
 		                		   var cGrpResRelModel = null;
 		                		   var startDate = null;
@@ -947,7 +969,7 @@
 		                				   endDate = new Date(row.cGrpResRelModel.endDate).format("yyyy-MM-dd HH:mm");
 		                			   }
 		                		   }
-		                		   var e ='<button type="button" class="btn btn-xs btn-success" data-toggle="modal" onclick="addPermmissionPreProcess(\''+ row.id +'\',\''+ row.name +'\',\''+ startDate +'\',\''+ endDate +'\')" data-target="#addPermissionModal">授权</button>';
+		                		   var e ='<button type="button" class="btn btn-xs btn-success" data-toggle="modal" onclick="addPermmissionPreProcess(\''+ row.id +'\',\''+ row.name +'\',\''+ startDate +'\',\''+ endDate +'\')" data-target="#addPermissionModal" >授权</button>';
 		                	   }
 		                    	return e;  
 	                	   }
@@ -1088,7 +1110,11 @@
    }
    
    //禁用资源
-   function removePermission(resourceId){
+   function removePermission(resourceId,buttonObj){
+	   if (!confirm('您确定取消授权吗？')) {
+			return;
+		}
+	   $(buttonObj).button('loading');
 	   var cusGrpId = $("#userGroupId_hidden").val();
 	   $.ajax({
 		    url:"<c:url value='/userGroup/disableCusGrpResPermission.json' />",
@@ -1097,6 +1123,7 @@
 		    cache:false,  
 		    dataType:'json',  
 		    success:function(data) {
+		    	$(buttonObj).button('reset');
 		    	if(data.status == 1){
 		    		$('#resourceTableId').bootstrapTable('refresh');  
 		    	}else{
@@ -1105,6 +1132,7 @@
 		     },  
 		     error : function() {  
 		          alert("系统异常！");  
+		          $(this).button('reset');
 		     }  
 		});
    }
@@ -1271,6 +1299,7 @@
 	                   title: '操作',
 	                   field: 'id',
 	                   align: 'center',
+	                   width: 80,
 	                   formatter:function(value,row,index){
 	                	   if(row.permissionAttrId == "1"){
 	                		   return "-";
@@ -1278,7 +1307,7 @@
 		                	   if(null != row.cusGrpResGrpRelModel 
 		                			   && (null == row.cusGrpResGrpRelModel.startDate || new Date(row.cusGrpResGrpRelModel.startDate) < new Date() ) 
 		                			   &&  (null == row.cusGrpResGrpRelModel.endDate || new Date(row.cusGrpResGrpRelModel.endDate) > new Date() ) ){
-		                		   var e ='<button type="button" class="btn btn-xs btn-warning"  onclick="removeResGroupPermission(\''+ row.id +'\')" data-toggle="modal" >禁用</button>';
+		                		   var e ='<button type="button" class="btn btn-xs btn-warning"  onclick="removeResGroupPermission(\''+ row.id +'\',this)" data-toggle="modal"  data-loading-text="Loading...">禁用</button>';
 		                	   }else{
 		                		   var cusGrpResGrpRelModel = null;
 		                		   var startDate = null;
@@ -1389,7 +1418,11 @@
 	 });  
 	
 	//禁用资源
-	   function removeResGroupPermission(resGroupId){
+	   function removeResGroupPermission(resGroupId,buttonObj){
+		   if (!confirm('您确定取消授权吗？')) {
+				return;
+			}
+		   $(buttonObj).button('loading');
 		   var userGrpId = $("#userGroupId_hidden").val();
 		   $.ajax({
 			    url:"<c:url value='/manage/disableResGroupPermission.json' />",
@@ -1398,6 +1431,7 @@
 			    cache:false,  
 			    dataType:'json',  
 			    success:function(data) {
+			    	$(buttonObj).button('reset');
 			    	if(data.status == 1){
 			    		$('#resourceGroupTableId').bootstrapTable('refresh');  
 			    	}else{

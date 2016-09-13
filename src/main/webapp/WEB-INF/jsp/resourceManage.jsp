@@ -581,6 +581,9 @@
 
 	//删除
 	function resourceDel(resourceId) {
+		if (!confirm('您确定要删除选中的资源吗？')) {
+			return;
+		}
 		var data = {
 			"resourceId" : resourceId
 		};
