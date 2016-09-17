@@ -634,6 +634,7 @@ $(document)
 										// triggered');
 									});
 				});
+resourceTableInit();
 $(function() {
 	$('#myTab a:first').tab('show');// 初始化显示哪个tab
 	$('#myTab a').click(function(e) {
@@ -641,8 +642,8 @@ $(function() {
 		$(this).tab('show');// 显示当前选中的链接及关联的content
 		// 点击tab调用对应function
 		if ($(this).attr("href") == "#resourceGroupResource") {
-			resourceTableInit();
-			// $("#resourceGroupTableId").bootstrapTable('refresh');
+			
+			$("#resourceGroupTableId").bootstrapTable('refresh');
 		}
 	})
 })
@@ -650,6 +651,7 @@ $(function() {
 // 显示用户详情内容
 var showResourceGroup = function(resourceId) {
 	$("#icon_group_list1").click();
+	$('#myTab a:first').click();
 	if ($("#icon_group_list2 i.icon-chevron-down").length > 0) {
 		// console.log("1");
 		$("#icon_group_list2").click();
