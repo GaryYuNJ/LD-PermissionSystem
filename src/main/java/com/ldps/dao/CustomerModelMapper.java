@@ -52,5 +52,6 @@ public interface CustomerModelMapper {
 	int deleteByCmMemid(@Param("cmMemid")String cmMemid);
 
 	CustomerModel simpleSelectByCmMemid(@Param("cmMemid")String cmMemid);
-
+	
+	CustomerModel selectLatestRecord();
 }

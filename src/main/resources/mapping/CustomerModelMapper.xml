@@ -184,6 +184,14 @@
     from CUSTOMER
     where ID = #{id,jdbcType=BIGINT}
   </select>
+    
+  <select id="selectLatestRecord" resultMap="FullResultMap" >
+    select 
+    <include refid="Full_Column_List" />
+    FROM CUSTOMER 
+    order by CM_MAINTDATE DESC 
+    limit 1 
+  </select>
   
   <insert id="insert" parameterType="com.ldps.model.CustomerModel" >
     insert into CUSTOMER (ID, CM_MEMID, CM_CUSTID, 
