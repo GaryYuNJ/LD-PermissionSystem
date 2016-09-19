@@ -43,6 +43,15 @@
 		<property name="minIdle" value="${minIdle}"></property>
 		<!-- 获取连接最大等待时间 -->
 		<property name="maxWait" value="${maxWait}"></property>
+		
+		<!-- 保证连接正常 -->
+		<property name="testWhileIdle" value="${testWhileIdle}"></property> <!-- 打开检查,用异步线程evict进行检查 -->  
+	    <property name="testOnBorrow" value="${testOnBorrow}"></property> <!-- 效率问题，生产环境不推荐打开 -->
+	    <property name="testOnReturn" value="${testOnReturn}"></property> <!-- 效率问题，生产环境不推荐打开 -->
+	    <property name="validationQuery" value="${validationQuery}"></property>  
+		<property name="timeBetweenEvictionRunsMillis" value="${timeBetweenEvictionRunsMillis}"></property>
+		<property name="numTestsPerEvictionRun" value="${numTestsPerEvictionRun}"></property>
+	   	<property name="minEvictableIdleTimeMillis" value="${minEvictableIdleTimeMillis}"></property>
 	</bean>
 	<bean id="dataSource" class="com.p6spy.engine.spy.P6DataSource">
 		<constructor-arg>
