@@ -60,7 +60,7 @@
 	
 	
 	<!-- job config -->
-	<bean name="syncCustomerJob" class="com.ldps.crm.job.SyncCustomerDataFromCRM" />
+	<bean name="syncCustomerJob" class="com.ldps.crm.job.SyncCustomerDataFromCRMJob" />
 
     <bean id="syncCustomerJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
        <property name="targetObject">

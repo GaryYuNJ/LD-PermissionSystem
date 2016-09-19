@@ -7,7 +7,9 @@ import javax.annotation.Resource;
 import com.ldps.crm.dao.CRMCustmemberModelMapper;
 import com.ldps.crm.model.CRMCustmemberModel;
 
-public class SyncCustomerDataFromCRM {
+
+
+public class SyncCustomerDataFromCRMJob {
 
 	@Resource
 	private CRMCustmemberModelMapper cRMCustmemberDao;
