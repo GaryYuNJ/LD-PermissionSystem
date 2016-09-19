@@ -189,6 +189,22 @@
 		  <artifactId>aspectjweaver</artifactId>  
 		  <version>1.8.0</version>  
 		</dependency>  
+		<dependency>  
+	        <groupId>org.apache.servicemix.bundles</groupId>  
+	        <artifactId>org.apache.servicemix.bundles.spring-context-support</artifactId>  
+	        <version>4.0.7.RELEASE_2</version>  
+	    </dependency>  
+	    <dependency>  
+	        <groupId>org.quartz-scheduler</groupId>  
+	        <artifactId>quartz</artifactId>  
+	        <version>1.8.6</version>  
+	    </dependency>  
+	    <!-- 添加oracle jdbc driver -->  
+	    <dependency>
+		    <groupId>com.oracle</groupId>
+		    <artifactId>ojdbc14</artifactId>
+		    <version>10.2.0.4.0</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
