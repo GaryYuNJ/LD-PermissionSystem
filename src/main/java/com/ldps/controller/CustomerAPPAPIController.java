@@ -92,7 +92,7 @@ public class CustomerAPPAPIController {
 	@RequestMapping(value="/queryPrivateResByBIdAndMobile",method = { RequestMethod.GET,
 			RequestMethod.POST },produces = "application/json; charset=utf-8")
 	@ResponseBody
-	public String queryPubResByBuildingId(@RequestParam("buildingId")Integer buildingId,
+	public String queryPrivateResByBIdAndMobile(@RequestParam("buildingId")Integer buildingId,
 			@RequestParam("mobile")String mobile, Model model){
 		
 		APIMessage apiMessage = new APIMessage();
@@ -100,6 +100,49 @@ public class CustomerAPPAPIController {
 		
 		try{
 			rDatas = customerFacade.queryPrivateResWithKeysByBIdAndMobile(buildingId, mobile);
+			
+			if(null== rDatas || rDatas.size() == 0){
+				apiMessage.setStatus(0);
+				apiMessage.setMessage("没有资源数据");
+			}else{
+				apiMessage.setStatus(1);
+				apiMessage.setMessage("");
+				apiMessage.setContent(rDatas);
+			}
+		}catch(Exception e){
+			apiMessage.setStatus(-1);
+			apiMessage.setMessage("系统异常");
+			e.printStackTrace();
+		}
+		return JSON.toJSONString(apiMessage);
+	}
+	
+	/*
+	获取building里用户所有有权限设备(含私有、公共资源)
+	 */
+	@RequestMapping(value="/queryAvaiableResByBIdAndMobile",method = { RequestMethod.GET,
+			RequestMethod.POST },produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public String queryAvaiableResByBIdAndMobile(@RequestParam("buildingId")Integer buildingId,
+			@RequestParam("mobile")String mobile, Model model){
+		
+		APIMessage apiMessage = new APIMessage();
+		List<ResourceData> rDatas = null;
+		
+		try{
+			//获取公有资源
+			rDatas = customerFacade.queryPubResWithKeysByBuildingId(buildingId);
+			
+			if(null != rDatas && rDatas.size() > 0){
+				//获取有权限的私有资源
+				List<ResourceData> privateDatas = customerFacade.queryPrivateResWithKeysByBIdAndMobile(buildingId, mobile);
+				
+				if(null != privateDatas && privateDatas.size() > 0){
+					rDatas.addAll(privateDatas);
+				}
+			}else{
+				rDatas = customerFacade.queryPrivateResWithKeysByBIdAndMobile(buildingId, mobile);
+			}
 			
 			if(null== rDatas || rDatas.size() == 0){
 				apiMessage.setStatus(0);
