@@ -2334,7 +2334,7 @@
     select 
     <include refid="Simple_Column_List" />
     from CUSTOMER
-    where CICM_MEMIDD = #{cmMemid,jdbcType=VARCHAR}
+    where CM_MEMID = #{cmMemid,jdbcType=VARCHAR}
   </select>
    
     <select id="simpleByPrimaryKey" resultMap="SimpleResultMap" parameterType="java.lang.Long" >

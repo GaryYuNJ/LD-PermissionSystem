@@ -179,7 +179,7 @@
     select 
     <include refid="Base_Column_List" />
     from CUSTMEMBER
-    where CMMAINTDATE &gt; #{maintdate,jdbcType=DATE}
+    where CMMAINTDATE &gt; #{maintdate,jdbcType=DATE} ORDER BY CMMAINTDATE
   </select>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >

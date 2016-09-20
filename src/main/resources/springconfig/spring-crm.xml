@@ -76,9 +76,9 @@
        <property name="jobDetail">
            <ref bean="syncCustomerJobDetail" />
        </property>
-       <!-- 每天的6点到24点每隔5分钟触发，具体说明见附录 -->
+       <!-- 每天的6点到24点每隔10分钟触发 -->
        <property name="cronExpression">
-           <value>0 0/5 06-22 * * ?</value>
+           <value>0 0/10 06-24 * * ?</value>
        </property>
     </bean>
 
