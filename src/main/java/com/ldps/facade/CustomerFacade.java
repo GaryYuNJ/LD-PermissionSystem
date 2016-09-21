@@ -96,4 +96,7 @@ public interface CustomerFacade {
 
 	int authResPermissionByCusId(Long customerId, Integer resourceId,
 			Date startDate, Date endDate);
+
+	int jointAuthResPermissionWithCreateUserId(Long customerId,
+			Integer resourceId, Date startDate, Date endDate, Long createUserId);
 }

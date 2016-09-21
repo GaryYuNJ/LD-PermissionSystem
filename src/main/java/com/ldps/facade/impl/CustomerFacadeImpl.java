@@ -233,7 +233,16 @@ public class CustomerFacadeImpl implements CustomerFacade {
 			String mac, Date startDate, Date endDate, Long createUserId) {
 		Long customerId = iCustomerSevice.getCustomerIdByMobile(mobile);
 		Integer resourceId = iResourceService.queryResourceIdByMAC(mac);
-		
+
+		return iCusResourceRelService.jointAuthorizeResPermission(customerId, resourceId, startDate, 
+				endDate, "N", createUserId,null);
+	}
+	
+	//连带资源授权接口(对一个资源授权，需要连带授权上层所有基础资源(要使用授权资源的前提资源)。
+	//by mobile、resourceKey
+	@Override
+	public int jointAuthResPermissionWithCreateUserId(Long customerId,
+			Integer resourceId, Date startDate, Date endDate, Long createUserId) {
 		return iCusResourceRelService.jointAuthorizeResPermission(customerId, resourceId, startDate, 
 				endDate, "N", createUserId,null);
 	}

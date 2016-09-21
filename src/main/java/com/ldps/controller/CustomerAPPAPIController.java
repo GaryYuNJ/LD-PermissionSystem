@@ -22,6 +22,8 @@ import com.ldps.data.APIMessage;
 import com.ldps.data.CusResourceRelData;
 import com.ldps.data.ResourceData;
 import com.ldps.facade.CustomerFacade;
+import com.ldps.service.ICustomerService;
+import com.ldps.service.IResourceService;
 
 @Controller
 @RequestMapping(value = "appApi")
@@ -30,7 +32,11 @@ public class CustomerAPPAPIController {
 			.getLogger(CustomerAPPAPIController.class);
 	@Resource
 	private CustomerFacade customerFacade;
-
+	@Resource
+	private ICustomerService iCustomerSevice;
+	@Resource
+	private IResourceService iResourceService;
+	
 	@RequestMapping(value="/permissionVerfy",method = { RequestMethod.GET,
 			RequestMethod.POST },produces = "application/json; charset=utf-8")
 	@ResponseBody
@@ -166,7 +172,7 @@ public class CustomerAPPAPIController {
 			RequestMethod.POST },  produces = {"application/json;charset=UTF-8"})
 	@ResponseBody
 	public String jointAuthResPermissionByMobile(@RequestParam("mobile")String mobile,
-			@RequestParam("mac")String mac, @RequestParam("startDate")String startDateStr,
+			@RequestParam("resourceKey")String mac, @RequestParam("startDate")String startDateStr,
 			@RequestParam("endDate")String endDateStr, Model model){
 		
 		APIMessage apiMessage = new APIMessage();
@@ -187,11 +193,24 @@ public class CustomerAPPAPIController {
 				if(!StringUtils.isEmpty(endDateStr)){
 					endDate = df.parse(endDateStr); 
 				}
-				int result = 
-						customerFacade.jointAuthResPermissionByMobile(mobile, mac, startDate, endDate,0L);
-				apiMessage.setStatus(result);
+				Long customerId = iCustomerSevice.getCustomerIdByMobile(mobile);
+				Integer resourceId = iResourceService.queryResourceIdByMAC(mac);
+				if(null == customerId){
+					apiMessage.setStatus(-4);
+					apiMessage.setMessage("用户不存在");
+				}else{
+					if(null == resourceId){
+						apiMessage.setStatus(-5);
+						apiMessage.setMessage("资源不存在");
+					}else{
+						int result = 
+								customerFacade.jointAuthResPermissionWithCreateUserId(customerId, resourceId, startDate, endDate,0L);
+						apiMessage.setStatus(result);
+					}
+				}
+				
 			} catch (ParseException e) {
-				apiMessage.setStatus(-2);
+				apiMessage.setStatus(-3);
 				apiMessage.setMessage("日期格式错误");
 				e.printStackTrace();
 			} catch (Exception e) {

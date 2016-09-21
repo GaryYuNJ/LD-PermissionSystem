@@ -1,5 +1,7 @@
 package com.ldps.interceptor;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Map;
@@ -12,8 +14,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.log4j.Logger;
+import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+
+import com.alibaba.fastjson.JSON;
+import com.ldps.data.APIMessage;
 
 public class APPInterceptor extends HandlerInterceptorAdapter {
 	
@@ -68,6 +74,22 @@ public class APPInterceptor extends HandlerInterceptorAdapter {
 		
 		if ( ! token.equals(DigestUtils.md5Hex(encodeStr.toString()))) {
 			response.setStatus(501);
+			response.setContentType("application/json;charset=utf-8");
+			response.setCharacterEncoding("UTF-8");  
+			PrintWriter out = null;  
+		    try {  
+		    	APIMessage apiMessage = new APIMessage();
+				apiMessage.setStatus(-10);
+				apiMessage.setMessage("token验证失败");
+		        out = response.getWriter();  
+		        out.append(JSON.toJSONString(apiMessage));  
+		    } catch (IOException e) {  
+		        e.printStackTrace();  
+		    } finally {  
+		        if (out != null) {  
+		            out.close();  
+		        }  
+		    }  
 			return false;
 		}
 		return true;
