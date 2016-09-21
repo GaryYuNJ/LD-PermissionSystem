@@ -207,10 +207,6 @@ public class SyncCustomerDataFromCRMJob {
 					if(-1 == iCustomerService.addCustomer(cModel)){
 						iCustomerService.updateCustomerByCmMemid(cModel);
 					}
-//					if(null != cModel.getCmName()){
-//						break;
-//					}
-					
 				}
 			}else{
 				logger.warn("SyncCustomerDataFromCRMJob CRMCustmemberModelMapper.selectByMaintdate() return null. ");
