@@ -35,7 +35,7 @@ public class APPInterceptor extends HandlerInterceptorAdapter {
 		String token = request.getParameter("token");
 		
 		// token is not needed when debug
-		if(token == null) return true;  // !! remember to comment this when deploy on server !!
+		//if(token == null) return true;  // !! remember to comment this when deploy on server !!
 		
 		SortedMap<String, String> finalpackage = new TreeMap<String, String>();
 		
