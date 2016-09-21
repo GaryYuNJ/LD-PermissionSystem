@@ -516,6 +516,7 @@ $('#resourceTableId')
 				});
 // 自定义查询
 $('#dosearch').click(function() {
+	$("#queryNodeId").val("");	
 	refreshSearch();
 });
 
