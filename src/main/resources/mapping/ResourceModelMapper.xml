@@ -3,7 +3,7 @@
 <mapper namespace="com.ldps.dao.ResourceModelMapper" >
   <cache 
   	eviction="LRU" 
-  	flushInterval="36000000" 
+  	flushInterval="3600000" 
   	size="1024" 
   	readOnly="true" >
   </cache>
@@ -189,6 +189,7 @@
     		<if test="resourceModel.buildingId != null"> AND  BUILDING_ID = #{resourceModel.buildingId}</if>
     		<if test="resourceModel.deviceType != null"> AND  DEVICE_TYPE = #{resourceModel.deviceType}</if>
     		<if test="resourceModel.nodeId != null"> AND  NODE_ID = #{resourceModel.nodeId}</if>
+    		<if test="resourceModel.permissionAttrId != null"> AND  PERMISSION_ATTR_ID = #{resourceModel.permissionAttrId}</if>
     	</where>
      </if>
     limit #{startRow,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
@@ -554,7 +555,7 @@
     select 
     <include refid="With_ResKeys_Column_List" /> 
     FROM RESOURCE R  LEFT JOIN RESOURCE_KEY RK ON R.ID=RK.RESOURCE_ID
-	WHERE R.NAME = #{name,jdbcType=INTEGER} 
+	WHERE R.NAME = #{name,jdbcType=VARCHAR} 
   </select>
   
     <select id="selectWithResKeysById" resultMap="queryWithResKeyResultMap" >

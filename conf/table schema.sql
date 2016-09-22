@@ -234,7 +234,7 @@ INSERT INTO BUILDING(NAME) VALUES('绿地之窗C-1栋' );
 --drop table NODE;
 CREATE TABLE NODE    (
   	ID  int(10) NOT NULL AUTO_INCREMENT COMMENT '资源节点ID', 
-	NAME varchar(20) NOT NULL unique COMMENT '资源节点名称', 
+	NAME varchar(40) NOT NULL COMMENT '资源节点名称', 
 	GRADE int(2) COMMENT '资源节点级别。根节点为0', 
 	PARENT_ID  int(10) NOT NULL  COMMENT '父资源节点ID', 
 	N_INT1 int(5) , 
