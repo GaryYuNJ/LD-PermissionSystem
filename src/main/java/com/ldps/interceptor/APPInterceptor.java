@@ -72,15 +72,19 @@ public class APPInterceptor extends HandlerInterceptorAdapter {
 		encodeStr.append(TOKEN_KEY);
 		logger.info("encodeStr: "+encodeStr);
 		
-		if ( ! token.equals(DigestUtils.md5Hex(encodeStr.toString()))) {
-			response.setStatus(501);
+		if ( token==null||! token.equals(DigestUtils.md5Hex(encodeStr.toString()))) {
+			response.setStatus(200);
 			response.setContentType("application/json;charset=utf-8");
 			response.setCharacterEncoding("UTF-8");  
 			PrintWriter out = null;  
 		    try {  
 		    	APIMessage apiMessage = new APIMessage();
 				apiMessage.setStatus(-10);
-				apiMessage.setMessage("token验证失败");
+				if(token==null){
+					apiMessage.setMessage("token不能为空");
+				}else{
+					apiMessage.setMessage("token验证失败");
+				}
 		        out = response.getWriter();  
 		        out.append(JSON.toJSONString(apiMessage));  
 		    } catch (IOException e) {  
