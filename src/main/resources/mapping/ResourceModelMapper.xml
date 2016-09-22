@@ -554,7 +554,7 @@
     select 
     <include refid="With_ResKeys_Column_List" /> 
     FROM RESOURCE R  LEFT JOIN RESOURCE_KEY RK ON R.ID=RK.RESOURCE_ID
-	WHERE R.NAME = #{name,jdbcType=INTEGER} 
+	WHERE R.NAME = #{name,jdbcType=VARCHAR} 
   </select>
   
     <select id="selectWithResKeysById" resultMap="queryWithResKeyResultMap" >
