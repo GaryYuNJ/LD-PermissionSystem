@@ -128,6 +128,7 @@
     		<if test="resourceModel.deviceType != null"> AND  DEVICE_TYPE = #{resourceModel.deviceType}</if>
     		<if test="resourceModel.ifBindGroup != null"> AND  RGR.RGROUP_ID IS NOT NULL</if>
     		<if test="resourceModel.nodeId != null"> AND  NODE_ID = #{resourceModel.nodeId}</if>
+    		<if test="resourceModel.permissionAttrId != null"> AND  PERMISSION_ATTR_ID = #{resourceModel.permissionAttrId}</if>
     	</where>
      </if>
      limit #{startRow,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
@@ -144,6 +145,7 @@
     		<if test="resourceModel.deviceType != null"> AND  DEVICE_TYPE = #{resourceModel.deviceType}</if>
     		<if test="resourceModel.ifBindGroup != null"> AND  RGR.RGROUP_ID IS NOT NULL</if>
     		<if test="resourceModel.nodeId != null"> AND  NODE_ID = #{resourceModel.nodeId}</if>
+    		<if test="resourceModel.permissionAttrId != null"> AND  PERMISSION_ATTR_ID = #{resourceModel.permissionAttrId}</if>
     	</where>
      </if>
   </select>

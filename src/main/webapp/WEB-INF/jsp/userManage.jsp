@@ -187,7 +187,7 @@
 														<input type="text" class="form-control" placeholder="资源名称" name="name">
 													</div>
 													<div class="col-lg-2">
-														<select class="form-control" name="deviceType">
+														<select class="form-control" name="permissionAttrId">
 														  <option value="">资源属性</option>
 														  <option value="1">公共资源</option>
 														  <option value="2">基础资源</option>
