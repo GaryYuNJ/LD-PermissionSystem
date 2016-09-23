@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ldps.dao.CusGroupResGroupRelModelMapper" >
+  <resultMap id="BaseResultMap" type="com.ldps.model.CusGroupResGroupRelModel" >
+    <result column="CGROUP_ID" property="cgroupId" jdbcType="INTEGER" />
+    <result column="RGROUP_ID" property="rgroupId" jdbcType="INTEGER" />
+    <result column="START_DATE" property="startDate" jdbcType="TIMESTAMP" />
+    <result column="END_DATE" property="endDate" jdbcType="TIMESTAMP" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="CREATE_USER" property="createUser" jdbcType="BIGINT" />
+  </resultMap>
+  
+  <resultMap id="ResGrpModel_WithCusRelModelMap" type="com.ldps.model.ResourceGroupModel" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <association property="cusGrpResGrpRelModel" javaType="com.ldps.model.CusGroupResGroupRelModel">
+    	<result column="CGROUP_ID" property="cgroupId" jdbcType="BIGINT" />
+	    <result column="RGROUP_ID" property="rgroupId" jdbcType="INTEGER" />
+	    <result column="START_DATE" property="startDate" jdbcType="TIMESTAMP" />
+	    <result column="END_DATE" property="endDate" jdbcType="TIMESTAMP" />
+	    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+	    <result column="CREATE_USER" property="createUser" jdbcType="BIGINT" />
+    </association>
+  </resultMap>
+  
+   <resultMap id="resultOfInteger" type="java.lang.Integer">  
+       <result column="ID" property="id" jdbcType="INTEGER" />  
+  </resultMap>  
+  
+  <select id="selectResGrpListWithSpecUserGrpId" resultMap="ResGrpModel_WithCusRelModelMap" >
+  	SELECT RG.ID, RG.NAME, CRR.CGROUP_ID, CRR.RGROUP_ID, CRR.START_DATE, CRR.END_DATE, CRR.CREATE_USER, CRR.CREATE_DATE 
+	FROM RESOURCE_GROUP RG 
+	LEFT JOIN CUSGROUP_RESGROUP_REL CRR ON CRR.RGROUP_ID=RG.ID 
+	AND CRR.CGROUP_ID  = #{resourceGroupModel.specificCusGrpId, jdbcType=BIGINT} 
+	 <if test="resourceGroupModel!=null">
+    	<where>
+    		<if test="resourceGroupModel.name != null"><bind name="nameLike" value="'%' + resourceGroupModel.name + '%'" /> NAME like #{nameLike}</if>
+    	</where>
+     </if>
+    limit #{startRow,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectByCusGroupId" resultMap="BaseResultMap" >
+  	SELECT 
+  	CGROUP_ID, RGROUP_ID, START_DATE, END_DATE, CREATE_USER, CREATE_DATE 
+	FROM CUSGROUP_RESGROUP_REL
+	WHERE CGROUP_ID  = #{cusGroupId, jdbcType=INTEGER} 
+  </select>
+  
+  <select id="selectByResGroupId" resultMap="BaseResultMap" >
+  	SELECT 
+  	CGROUP_ID, RGROUP_ID, START_DATE, END_DATE, CREATE_USER, CREATE_DATE 
+	FROM CUSGROUP_RESGROUP_REL
+	WHERE RGROUP_ID  = #{resGroupId, jdbcType=INTEGER} 
+  </select>
+  
+   <select id="selectCusGrpIdListByResGroupId" resultMap="resultOfInteger" >
+  	SELECT 
+  	CGROUP_ID ID
+	FROM CUSGROUP_RESGROUP_REL
+	WHERE RGROUP_ID  = #{resGroupId, jdbcType=INTEGER} 
+  </select>
+  
+  <delete id="deleteByCondition" parameterType="com.ldps.model.CusGroupResGroupRelModel" >
+    	delete  From CUSGROUP_RESGROUP_REL 
+    	where CGROUP_ID = #{cgroupId} AND  RGROUP_ID = #{rgroupId}
+  </delete>
+  
+  
+  <insert id="insert" parameterType="com.ldps.model.CusGroupResGroupRelModel" >
+    insert into CUSGROUP_RESGROUP_REL (CGROUP_ID, RGROUP_ID, START_DATE, 
+      END_DATE, CREATE_DATE, CREATE_USER
+      )
+    values (#{cgroupId,jdbcType=INTEGER}, #{rgroupId,jdbcType=INTEGER}, #{startDate,jdbcType=TIMESTAMP}, 
+      #{endDate,jdbcType=TIMESTAMP}, #{createDate,jdbcType=TIMESTAMP}, #{createUser,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ldps.model.CusGroupResGroupRelModel" >
+    insert into CUSGROUP_RESGROUP_REL
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cgroupId != null" >
+        CGROUP_ID,
+      </if>
+      <if test="rgroupId != null" >
+        RGROUP_ID,
+      </if>
+      <if test="startDate != null" >
+        START_DATE,
+      </if>
+      <if test="endDate != null" >
+        END_DATE,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cgroupId != null" >
+        #{cgroupId,jdbcType=INTEGER},
+      </if>
+      <if test="rgroupId != null" >
+        #{rgroupId,jdbcType=INTEGER},
+      </if>
+      <if test="startDate != null" >
+        #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null" >
+        #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+</mapper>

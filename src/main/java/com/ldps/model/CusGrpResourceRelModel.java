@@ -13,7 +13,27 @@ public class CusGrpResourceRelModel {
 
     private Date updateDate;
 
-    private Integer createUser;
+    private Long createUser;
+
+    private Date startDate;
+    
+    private Date endDate;
+
+    public Date getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
 
     public Integer getCgroupId() {
         return cgroupId;
@@ -55,11 +75,11 @@ public class CusGrpResourceRelModel {
         this.updateDate = updateDate;
     }
 
-    public Integer getCreateUser() {
+    public Long getCreateUser() {
         return createUser;
     }
 
-    public void setCreateUser(Integer createUser) {
+    public void setCreateUser(Long createUser) {
         this.createUser = createUser;
     }
 }

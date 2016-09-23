@@ -1,5 +1,11 @@
 package com.ldps.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
@@ -12,11 +18,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONException;
 import com.ldps.data.APIMessage;
-import com.ldps.facade.PermissionCheckFacade;
-import com.ldps.model.CustomerModel;
+import com.ldps.data.CusResourceRelData;
+import com.ldps.data.ResourceData;
+import com.ldps.facade.CustomerFacade;
 import com.ldps.service.ICustomerService;
+import com.ldps.service.IResourceService;
 
 @Controller
 @RequestMapping(value = "appApi")
@@ -24,20 +31,358 @@ public class CustomerAPPAPIController {
 	private static Logger logger = Logger
 			.getLogger(CustomerAPPAPIController.class);
 	@Resource
+	private CustomerFacade customerFacade;
+	@Resource
 	private ICustomerService iCustomerSevice;
 	@Resource
-	private PermissionCheckFacade permissionCheckFacade;
-
+	private IResourceService iResourceService;
+	
 	@RequestMapping(value="/permissionVerfy",method = { RequestMethod.GET,
-			RequestMethod.POST })
+			RequestMethod.POST },produces = "application/json; charset=utf-8")
 	@ResponseBody
-	public String permissionVerfy(@RequestParam("cId")String cId,
-			@RequestParam("resourceKey")String resourceKey,
+	public String permissionVerfy(@RequestParam("mobile")String mobile,
+			@RequestParam("resourceKey")String mac,
 			Model model){
 		APIMessage apiMessage = new APIMessage();
 		
-		String result = permissionCheckFacade.verification(cId, resourceKey);
+		//String result = customerFacade.verification(mobile, mac);
+		 ResourceData data = customerFacade.queryPermissionValidResByMobileAndMac(mobile, mac);
 		
+		if(null != data ){
+			apiMessage.setStatus(1);
+			apiMessage.setMessage("");
+			apiMessage.setContent(data);
+		}else{
+			apiMessage.setStatus(0);
+			apiMessage.setMessage("用户没有权限");
+		}
+		
+		return JSON.toJSONString(apiMessage);
+	}
+	
+	/*
+	获取building里的公共资源
+	 */
+	@RequestMapping(value="/queryPubResByBuildingId",method = { RequestMethod.GET,
+			RequestMethod.POST },produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public String queryPubResByBuildingId(@RequestParam("buildingId")Integer buildingId,
+			Model model){
+		
+		APIMessage apiMessage = new APIMessage();
+		List<ResourceData> rDatas = null;
+		
+		try{
+			rDatas = customerFacade.queryPubResWithKeysByBuildingId(buildingId);
+			
+			if(null== rDatas || rDatas.size() == 0){
+				apiMessage.setStatus(0);
+				apiMessage.setMessage("没有公共资源数据");
+			}else{
+				apiMessage.setStatus(1);
+				apiMessage.setMessage("");
+				apiMessage.setContent(rDatas);
+			}
+		}catch(Exception e){
+			
+			apiMessage.setStatus(-1);
+			apiMessage.setMessage("系统异常");
+		}
+		
+		return JSON.toJSONString(apiMessage);
+	}
+	
+	/*
+	获取building里用户有权限设备(不含公共资源)
+	 */
+	@RequestMapping(value="/queryPrivateResByBIdAndMobile",method = { RequestMethod.GET,
+			RequestMethod.POST },produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public String queryPrivateResByBIdAndMobile(@RequestParam("buildingId")Integer buildingId,
+			@RequestParam("mobile")String mobile, Model model){
+		
+		APIMessage apiMessage = new APIMessage();
+		List<ResourceData> rDatas = null;
+		
+		try{
+			rDatas = customerFacade.queryPrivateResWithKeysByBIdAndMobile(buildingId, mobile);
+			
+			if(null== rDatas || rDatas.size() == 0){
+				apiMessage.setStatus(0);
+				apiMessage.setMessage("没有资源数据");
+			}else{
+				apiMessage.setStatus(1);
+				apiMessage.setMessage("");
+				apiMessage.setContent(rDatas);
+			}
+		}catch(Exception e){
+			apiMessage.setStatus(-1);
+			apiMessage.setMessage("系统异常");
+			e.printStackTrace();
+		}
+		return JSON.toJSONString(apiMessage);
+	}
+	
+	/*
+	获取building里用户所有有权限设备(含私有、公共资源)
+	 */
+	@RequestMapping(value="/queryAvaiableResByBIdAndMobile",method = { RequestMethod.GET,
+			RequestMethod.POST },produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public String queryAvaiableResByBIdAndMobile(@RequestParam("buildingId")Integer buildingId,
+			@RequestParam("mobile")String mobile, Model model){
+		
+		APIMessage apiMessage = new APIMessage();
+		List<ResourceData> rDatas = null;
+		
+		try{
+			//获取公有资源
+			rDatas = customerFacade.queryPubResWithKeysByBuildingId(buildingId);
+			
+			if(null != rDatas && rDatas.size() > 0){
+				//获取有权限的私有资源
+				List<ResourceData> privateDatas = customerFacade.queryPrivateResWithKeysByBIdAndMobile(buildingId, mobile);
+				
+				if(null != privateDatas && privateDatas.size() > 0){
+					rDatas.addAll(privateDatas);
+				}
+			}else{
+				rDatas = customerFacade.queryPrivateResWithKeysByBIdAndMobile(buildingId, mobile);
+			}
+			
+			if(null== rDatas || rDatas.size() == 0){
+				apiMessage.setStatus(0);
+				apiMessage.setMessage("没有资源数据");
+			}else{
+				apiMessage.setStatus(1);
+				apiMessage.setMessage("");
+				apiMessage.setContent(rDatas);
+			}
+		}catch(Exception e){
+			apiMessage.setStatus(-1);
+			apiMessage.setMessage("系统异常");
+			e.printStackTrace();
+		}
+		return JSON.toJSONString(apiMessage);
+	}
+
+	//连带资源授权接口(对一个资源授权，需要连带授权上层所有基础资源(要使用授权资源的前提资源)。
+	//by mobile、resourceKey
+	@RequestMapping(value="/jointAuthResPermissionByMobile",method = { RequestMethod.GET,
+			RequestMethod.POST },  produces = {"application/json;charset=UTF-8"})
+	@ResponseBody
+	public String jointAuthResPermissionByMobile(@RequestParam("mobile")String mobile,
+			@RequestParam("resourceKey")String mac, @RequestParam("startDate")String startDateStr,
+			@RequestParam("endDate")String endDateStr, Model model){
+		
+		APIMessage apiMessage = new APIMessage();
+		
+		if(StringUtils.isEmpty(mobile)||StringUtils.isEmpty(mac)){
+			apiMessage.setStatus(-2);
+			apiMessage.setMessage("入参mobile、resourceKey为空");
+		}else{
+			
+			SimpleDateFormat df  = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			try {
+				//startDate\endDate为null，表示不限制权限时间
+				Date startDate = null;
+				Date endDate = null;
+				if(!StringUtils.isEmpty(startDateStr)){
+					startDate = df.parse(startDateStr);
+				}
+				if(!StringUtils.isEmpty(endDateStr)){
+					endDate = df.parse(endDateStr); 
+				}
+				Long customerId = iCustomerSevice.getCustomerIdByMobile(mobile);
+				Integer resourceId = iResourceService.queryResourceIdByMAC(mac);
+				if(null == customerId){
+					apiMessage.setStatus(-4);
+					apiMessage.setMessage("用户不存在");
+				}else{
+					if(null == resourceId){
+						apiMessage.setStatus(-5);
+						apiMessage.setMessage("资源不存在");
+					}else{
+						int result = 
+								customerFacade.jointAuthResPermissionWithCreateUserId(customerId, resourceId, startDate, endDate,0L);
+						apiMessage.setStatus(result);
+					}
+				}
+				
+			} catch (ParseException e) {
+				apiMessage.setStatus(-3);
+				apiMessage.setMessage("日期格式错误");
+				e.printStackTrace();
+			} catch (Exception e) {
+				apiMessage.setStatus(-1);
+				apiMessage.setMessage("系统异常");
+				e.printStackTrace();
+			}
+		}
+		return JSON.toJSONString(apiMessage);
+	}
+	
+
+	//连带资源授权接口(对一个资源授权，需要连带授权上层所有基础资源(要使用授权资源的前提资源)。
+	//by customerId、resourceId
+	@RequestMapping(value="/jointAuthResPermissionByCusId",method = { RequestMethod.GET,
+			RequestMethod.POST },  produces = {"application/json;charset=UTF-8"})
+	@ResponseBody
+	public String jointAuthResPermissionByCusId(@RequestParam("customerId")Long customerId,
+			@RequestParam("resourceId")Integer resourceId, @RequestParam("startDate")String startDateStr,
+			@RequestParam("endDate")String endDateStr, Model model){
+		
+		APIMessage apiMessage = new APIMessage();
+		
+		if(StringUtils.isEmpty(customerId)||StringUtils.isEmpty(resourceId)){
+			apiMessage.setStatus(-2);
+			apiMessage.setMessage("入参customerId、resourceId为空");
+		}else{
+			
+			SimpleDateFormat df  = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			try {
+				//startDate\endDate为null，表示不限制权限时间
+				Date startDate = null;
+				Date endDate = null;
+				if(!StringUtils.isEmpty(startDateStr)){
+					startDate = df.parse(startDateStr);
+				}
+				if(!StringUtils.isEmpty(endDateStr)){
+					endDate = df.parse(endDateStr); 
+				}
+				int result = 
+						customerFacade.jointAuthResPermissionByCusId(customerId, resourceId, startDate, endDate);
+				apiMessage.setStatus(result);
+			} catch (ParseException e) {
+				apiMessage.setStatus(-2);
+				apiMessage.setMessage("日期格式错误");
+				e.printStackTrace();
+			} catch (Exception e) {
+				apiMessage.setStatus(-1);
+				apiMessage.setMessage("系统异常");
+				e.printStackTrace();
+			}
+		}
+		return JSON.toJSONString(apiMessage);
+	}
+	
+	
+	//单个资源授权接口
+	//by mobile、resourceKey
+	@RequestMapping(value="/authResPermissionByMobile",method = { RequestMethod.GET,
+			RequestMethod.POST },  produces = {"application/json;charset=UTF-8"})
+	@ResponseBody
+	public String authResPermissionByMobile(@RequestParam("mobile")String mobile,
+			@RequestParam("resourceKey")String resourceKey, @RequestParam("startDate")String startDateStr,
+			@RequestParam("endDate")String endDateStr, Model model){
+		
+		APIMessage apiMessage = new APIMessage();
+		
+		if(StringUtils.isEmpty(mobile)||StringUtils.isEmpty(resourceKey)){
+			apiMessage.setStatus(-2);
+			apiMessage.setMessage("入参mobile、resourceKey为空");
+		}else{
+			
+			SimpleDateFormat df  = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			try {
+				//startDate\endDate为null，表示不限制权限时间
+				Date startDate = null;
+				Date endDate = null;
+				if(!StringUtils.isEmpty(startDateStr)){
+					startDate = df.parse(startDateStr);
+				}
+				if(!StringUtils.isEmpty(endDateStr)){
+					endDate = df.parse(endDateStr); 
+				}
+				int result = 
+						customerFacade.authResPermissionByMobile(mobile, resourceKey, startDate, endDate,0L);
+				apiMessage.setStatus(result);
+			} catch (ParseException e) {
+				apiMessage.setStatus(-2);
+				apiMessage.setMessage("日期格式错误");
+				e.printStackTrace();
+			} catch (Exception e) {
+				apiMessage.setStatus(-1);
+				apiMessage.setMessage("系统异常");
+				e.printStackTrace();
+			}
+		}
+		return JSON.toJSONString(apiMessage);
+	}
+	
+	//单个资源授权接口.by customerId、resourceId
+	@RequestMapping(value="/authResPermissionByCusId",method = { RequestMethod.GET,
+			RequestMethod.POST },  produces = {"application/json;charset=UTF-8"})
+	@ResponseBody
+	public String authResPermissionByCusId(@RequestParam("customerId")Long customerId,
+			@RequestParam("resourceId")Integer resourceId,  @RequestParam("startDate")String startDateStr,
+			@RequestParam("endDate")String endDateStr, Model model){
+		
+		APIMessage apiMessage = new APIMessage();
+		
+		if(StringUtils.isEmpty(customerId)||StringUtils.isEmpty(resourceId)){
+			apiMessage.setStatus(-2);
+			apiMessage.setMessage("入参customerId、resourceId为空");
+		}else{
+			
+			SimpleDateFormat df  = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			try {
+				//startDate\endDate为null，表示不限制权限时间
+				Date startDate = null;
+				Date endDate = null;
+				if(!StringUtils.isEmpty(startDateStr)){
+					startDate = df.parse(startDateStr);
+				}
+				if(!StringUtils.isEmpty(endDateStr)){
+					endDate = df.parse(endDateStr); 
+				}
+				int result = 
+						customerFacade.authResPermissionByCusId(customerId, resourceId, startDate, endDate);
+				apiMessage.setStatus(result);
+			} catch (ParseException e) {
+				apiMessage.setStatus(-2);
+				apiMessage.setMessage("日期格式错误");
+				e.printStackTrace();
+			} catch (Exception e) {
+				apiMessage.setStatus(-1);
+				apiMessage.setMessage("系统异常");
+				e.printStackTrace();
+			}
+		}
+		return JSON.toJSONString(apiMessage);
+	}
+
+	//查询用户可分享使用权限的资源
+	@RequestMapping(value="/querySharableResource",method = { RequestMethod.GET,
+			RequestMethod.POST },  produces = {"application/json;charset=UTF-8"})
+	@ResponseBody
+	public String querySharableResource(@RequestParam("cId")String cId,
+			Model model){
+		List<ResourceData> resourceDatas = customerFacade.querySharableResource(cId);
+		return JSON.toJSONString(resourceDatas);
+	}
+	
+	//查询用户已分享的资源数据
+	@RequestMapping(value="/queryResByShareCId",method = { RequestMethod.GET,
+			RequestMethod.POST })
+	@ResponseBody
+	public String queryResByShareCId(@RequestParam("sharedFromUserId")String sharedFromUserId,
+			Model model){
+		List<CusResourceRelData> cusResourceRelData = customerFacade.queryResourceRelByShareCustomerId(sharedFromUserId);
+		return JSON.toJSONString(cusResourceRelData);
+	}
+	
+	//用户分享资源给其他人的权限
+	@RequestMapping(value="/shareResource",method = { RequestMethod.GET,
+			RequestMethod.POST },produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public String shareResource(@RequestParam("fromCId")String fromCId,
+			@RequestParam("toCId")String toCId, @RequestParam("sourceKeyId")Integer sourceKeyId,
+			@RequestParam("startDate")String startDate,@RequestParam("endDate")String endDate,
+			Model model){
+
+		String result = customerFacade.shareResource(fromCId,toCId,sourceKeyId,startDate,endDate);
+		APIMessage apiMessage = new APIMessage();
 		if("0".equals(result)){
 			apiMessage.setStatus(1);
 			apiMessage.setMessage("");
@@ -46,6 +391,27 @@ public class CustomerAPPAPIController {
 			apiMessage.setMessage(result);
 		}
 		
+		return JSON.toJSONString(apiMessage);
+		
+	}
+	
+	//用户删除分享给其他人的权限
+	@RequestMapping(value="/removeSharedResource",method = { RequestMethod.GET,
+			RequestMethod.POST },produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public String removeSharedResource(@RequestParam("fromCId")String fromCId,
+			@RequestParam("toCId")String toCId,@RequestParam("sourceKeyId")Integer sourceKeyId,
+			Model model){
+		String result = customerFacade.removeSharedResource(fromCId,toCId,sourceKeyId);
+		
+		APIMessage apiMessage = new APIMessage();
+		if("0".equals(result)){
+			apiMessage.setStatus(1);
+			apiMessage.setMessage("");
+		}else{
+			apiMessage.setStatus(0);
+			apiMessage.setMessage(result);
+		}
 		return JSON.toJSONString(apiMessage);
 	}
 }

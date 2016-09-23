@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ldps.dao.ResourceKeyMapper" >
+  <resultMap id="BaseResultMap" type="com.ldps.model.ResourceKeyModel" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="MAC" property="mac" jdbcType="CHAR" />
+    <result column="PASSWORD" property="password" jdbcType="CHAR" />
+    <result column="MANUFACTURER_ID" property="manufacturerId" jdbcType="INTEGER" />
+    <result column="RESOURCE_ID" property="resourceId" jdbcType="INTEGER" />
+    <result column="R_INT1" property="rInt1" jdbcType="INTEGER" />
+    <result column="R_INT2" property="rInt2" jdbcType="INTEGER" />
+    <result column="NUM1" property="num1" jdbcType="DECIMAL" />
+    <result column="NUM2" property="num2" jdbcType="DECIMAL" />
+    <result column="VC1" property="vc1" jdbcType="VARCHAR" />
+    <result column="VC2" property="vc2" jdbcType="VARCHAR" />
+    <result column="CHR1" property="chr1" jdbcType="CHAR" />
+    <result column="CHR2" property="chr2" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, MAC, PASSWORD, MANUFACTURER_ID, RESOURCE_ID, R_INT1, R_INT2, NUM1, NUM2, VC1, 
+    VC2, CHR1, CHR2
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from RESOURCE_KEY
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByResourceId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from RESOURCE_KEY
+    where RESOURCE_ID = #{resourceId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from RESOURCE_KEY
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <delete id="deleteByReourceNotIn">
+    delete from RESOURCE_KEY
+    where RESOURCE_ID = #{resourceId,jdbcType=INTEGER}
+    <if test="ids!=null and ids.size()>0">
+	     AND ID NOT IN
+	   	<foreach item="item" index="index" collection="ids" open="(" separator="," close=")">  
+	  		#{item}  
+	 	</foreach>
+ 	</if>
+  </delete>
+
+  <insert id="insert" parameterType="com.ldps.model.ResourceKeyModel" >
+    insert into RESOURCE_KEY (ID, MAC, PASSWORD, 
+      MANUFACTURER_ID, RESOURCE_ID, R_INT1, 
+      R_INT2, NUM1, NUM2, 
+      VC1, VC2, CHR1, CHR2
+      )
+    values (#{id,jdbcType=INTEGER}, #{mac,jdbcType=CHAR}, #{password,jdbcType=CHAR}, 
+      #{manufacturerId,jdbcType=INTEGER}, #{resourceId,jdbcType=INTEGER}, #{rInt1,jdbcType=INTEGER}, 
+      #{rInt2,jdbcType=INTEGER}, #{num1,jdbcType=DECIMAL}, #{num2,jdbcType=DECIMAL}, 
+      #{vc1,jdbcType=VARCHAR}, #{vc2,jdbcType=VARCHAR}, #{chr1,jdbcType=CHAR}, #{chr2,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ldps.model.ResourceKeyModel" >
+    insert into RESOURCE_KEY
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="mac != null" >
+        MAC,
+      </if>
+      <if test="password != null" >
+        PASSWORD,
+      </if>
+      <if test="manufacturerId != null" >
+        MANUFACTURER_ID,
+      </if>
+      <if test="resourceId != null" >
+        RESOURCE_ID,
+      </if>
+      <if test="rInt1 != null" >
+        R_INT1,
+      </if>
+      <if test="rInt2 != null" >
+        R_INT2,
+      </if>
+      <if test="num1 != null" >
+        NUM1,
+      </if>
+      <if test="num2 != null" >
+        NUM2,
+      </if>
+      <if test="vc1 != null" >
+        VC1,
+      </if>
+      <if test="vc2 != null" >
+        VC2,
+      </if>
+      <if test="chr1 != null" >
+        CHR1,
+      </if>
+      <if test="chr2 != null" >
+        CHR2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="mac != null" >
+        #{mac,jdbcType=CHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=CHAR},
+      </if>
+      <if test="manufacturerId != null" >
+        #{manufacturerId,jdbcType=INTEGER},
+      </if>
+      <if test="resourceId != null" >
+        #{resourceId,jdbcType=INTEGER},
+      </if>
+      <if test="rInt1 != null" >
+        #{rInt1,jdbcType=INTEGER},
+      </if>
+      <if test="rInt2 != null" >
+        #{rInt2,jdbcType=INTEGER},
+      </if>
+      <if test="num1 != null" >
+        #{num1,jdbcType=DECIMAL},
+      </if>
+      <if test="num2 != null" >
+        #{num2,jdbcType=DECIMAL},
+      </if>
+      <if test="vc1 != null" >
+        #{vc1,jdbcType=VARCHAR},
+      </if>
+      <if test="vc2 != null" >
+        #{vc2,jdbcType=VARCHAR},
+      </if>
+      <if test="chr1 != null" >
+        #{chr1,jdbcType=CHAR},
+      </if>
+      <if test="chr2 != null" >
+        #{chr2,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ldps.model.ResourceKeyModel" >
+    update RESOURCE_KEY
+    <set >
+      <if test="mac != null" >
+        MAC = #{mac,jdbcType=CHAR},
+      </if>
+      <if test="password != null" >
+        PASSWORD = #{password,jdbcType=CHAR},
+      </if>
+      <if test="manufacturerId != null" >
+        MANUFACTURER_ID = #{manufacturerId,jdbcType=INTEGER},
+      </if>
+      <if test="resourceId != null" >
+        RESOURCE_ID = #{resourceId,jdbcType=INTEGER},
+      </if>
+      <if test="rInt1 != null" >
+        R_INT1 = #{rInt1,jdbcType=INTEGER},
+      </if>
+      <if test="rInt2 != null" >
+        R_INT2 = #{rInt2,jdbcType=INTEGER},
+      </if>
+      <if test="num1 != null" >
+        NUM1 = #{num1,jdbcType=DECIMAL},
+      </if>
+      <if test="num2 != null" >
+        NUM2 = #{num2,jdbcType=DECIMAL},
+      </if>
+      <if test="vc1 != null" >
+        VC1 = #{vc1,jdbcType=VARCHAR},
+      </if>
+      <if test="vc2 != null" >
+        VC2 = #{vc2,jdbcType=VARCHAR},
+      </if>
+      <if test="chr1 != null" >
+        CHR1 = #{chr1,jdbcType=CHAR},
+      </if>
+      <if test="chr2 != null" >
+        CHR2 = #{chr2,jdbcType=CHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ldps.model.ResourceKeyModel" >
+    update RESOURCE_KEY
+    set MAC = #{mac,jdbcType=CHAR},
+      PASSWORD = #{password,jdbcType=CHAR},
+      MANUFACTURER_ID = #{manufacturerId,jdbcType=INTEGER},
+      RESOURCE_ID = #{resourceId,jdbcType=INTEGER},
+      R_INT1 = #{rInt1,jdbcType=INTEGER},
+      R_INT2 = #{rInt2,jdbcType=INTEGER},
+      NUM1 = #{num1,jdbcType=DECIMAL},
+      NUM2 = #{num2,jdbcType=DECIMAL},
+      VC1 = #{vc1,jdbcType=VARCHAR},
+      VC2 = #{vc2,jdbcType=VARCHAR},
+      CHR1 = #{chr1,jdbcType=CHAR},
+      CHR2 = #{chr2,jdbcType=CHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

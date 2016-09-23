@@ -1,104 +1,150 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.ldps.dao.NodeModelMapper" >
-  <resultMap id="BaseResultMap" type="com.ldps.model.NodeModel" >
-    <id column="ID" property="id" jdbcType="INTEGER" />
-    <result column="NAME" property="name" jdbcType="VARCHAR" />
-    <result column="GRADE" property="grade" jdbcType="INTEGER" />
-    <result column="N_INT1" property="nInt1" jdbcType="INTEGER" />
-    <result column="VC1" property="vc1" jdbcType="VARCHAR" />
-    <result column="CHR1" property="chr1" jdbcType="CHAR" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    ID, NAME, GRADE, N_INT1, VC1, CHR1
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from NODE
-    where ID = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from NODE
-    where ID = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.ldps.model.NodeModel" >
-    insert into NODE (ID, NAME, GRADE, 
-      N_INT1, VC1, CHR1)
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{grade,jdbcType=INTEGER}, 
-      #{nInt1,jdbcType=INTEGER}, #{vc1,jdbcType=VARCHAR}, #{chr1,jdbcType=CHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="com.ldps.model.NodeModel" >
-    insert into NODE
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        ID,
+<mapper namespace="com.ldps.dao.NodeModelMapper">
+	<cache eviction="LRU" flushInterval="3600000" size="1024"
+		readOnly="true">
+	</cache>
+	
+	<resultMap id="BaseResultMap" type="com.ldps.model.NodeModel">
+		<id column="ID" property="id" jdbcType="INTEGER" />
+		<result column="NAME" property="name" jdbcType="VARCHAR" />
+		<result column="GRADE" property="grade" jdbcType="INTEGER" />
+		<result column="N_INT1" property="nInt1" jdbcType="INTEGER" />
+		<result column="VC1" property="vc1" jdbcType="VARCHAR" />
+		<result column="CHR1" property="chr1" jdbcType="CHAR" />
+		<result column="PARENT_ID" property="parentId" jdbcType="INTEGER" />
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		ID, NAME, GRADE, N_INT1, VC1, CHR1, PARENT_ID
+	</sql>
+	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from NODE
+		where ID = #{id,jdbcType=INTEGER}
+	</select>
+	
+	<select id="selectNodeByGrade" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from NODE
+		where GRADE = #{grade,jdbcType=INTEGER}
+	</select>
+	
+	<select id="selectChildNode" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select * from NODE  where PARENT_ID=#{parentId,jdbcType=INTEGER} and GRADE=#{grade,jdbcType=INTEGER}
+	</select>
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from NODE
+		where ID = #{id,jdbcType=INTEGER}
+	</delete>
+	
+	<insert id="insert" parameterType="com.ldps.model.NodeModel">
+		<selectKey resultType="java.lang.Integer" order="AFTER"
+			keyProperty="id">
+			SELECT LAST_INSERT_ID() AS id
+		</selectKey>
+		insert into NODE (ID, NAME, GRADE,
+		N_INT1, VC1, CHR1, PARENT_ID )
+		values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},
+		#{grade,jdbcType=INTEGER},
+		#{nInt1,jdbcType=INTEGER}, #{vc1,jdbcType=VARCHAR}, #{chr1,jdbcType=CHAR}, #{parentId,jdbcType=INTEGER} )
+	</insert>
+	
+	<insert id="insertSelective" parameterType="com.ldps.model.NodeModel">
+		<selectKey resultType="java.lang.Integer" order="AFTER"
+			keyProperty="id">
+			SELECT LAST_INSERT_ID() AS id
+		</selectKey>
+		insert into NODE
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="name != null">
+				NAME,
+			</if>
+			<if test="grade != null">
+				GRADE,
+			</if>
+			<if test="nInt1 != null">
+				N_INT1,
+			</if>
+			<if test="vc1 != null">
+				VC1,
+			</if>
+			<if test="chr1 != null">
+				CHR1,
+		      </if>
+		      <if test="parentId != null" >
+		        PARENT_ID,
+			</if>
+		</trim>
+		
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="grade != null">
+				#{grade,jdbcType=INTEGER},
+			</if>
+			<if test="nInt1 != null">
+				#{nInt1,jdbcType=INTEGER},
+			</if>
+			<if test="vc1 != null">
+				#{vc1,jdbcType=VARCHAR},
+			</if>
+			<if test="chr1 != null">
+				#{chr1,jdbcType=CHAR},
+			</if>
+	      <if test="parentId != null" >
+	        #{parentId,jdbcType=INTEGER},
+	      </if>
+		</trim>
+	</insert>
+	
+	<update id="updateByPrimaryKeySelective" parameterType="com.ldps.model.NodeModel">
+		update NODE
+		<set>
+			<if test="name != null">
+				NAME = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="grade != null">
+				GRADE = #{grade,jdbcType=INTEGER},
+			</if>
+			<if test="nInt1 != null">
+				N_INT1 = #{nInt1,jdbcType=INTEGER},
+			</if>
+			<if test="vc1 != null">
+				VC1 = #{vc1,jdbcType=VARCHAR},
+			</if>
+			<if test="chr1 != null">
+				CHR1 = #{chr1,jdbcType=CHAR},
+			</if>
+      <if test="parentId != null" >
+        PARENT_ID = #{parentId,jdbcType=INTEGER},
       </if>
-      <if test="name != null" >
-        NAME,
-      </if>
-      <if test="grade != null" >
-        GRADE,
-      </if>
-      <if test="nInt1 != null" >
-        N_INT1,
-      </if>
-      <if test="vc1 != null" >
-        VC1,
-      </if>
-      <if test="chr1 != null" >
-        CHR1,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="grade != null" >
-        #{grade,jdbcType=INTEGER},
-      </if>
-      <if test="nInt1 != null" >
-        #{nInt1,jdbcType=INTEGER},
-      </if>
-      <if test="vc1 != null" >
-        #{vc1,jdbcType=VARCHAR},
-      </if>
-      <if test="chr1 != null" >
-        #{chr1,jdbcType=CHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ldps.model.NodeModel" >
-    update NODE
-    <set >
-      <if test="name != null" >
-        NAME = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="grade != null" >
-        GRADE = #{grade,jdbcType=INTEGER},
-      </if>
-      <if test="nInt1 != null" >
-        N_INT1 = #{nInt1,jdbcType=INTEGER},
-      </if>
-      <if test="vc1 != null" >
-        VC1 = #{vc1,jdbcType=VARCHAR},
-      </if>
-      <if test="chr1 != null" >
-        CHR1 = #{chr1,jdbcType=CHAR},
-      </if>
-    </set>
-    where ID = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.ldps.model.NodeModel" >
-    update NODE
-    set NAME = #{name,jdbcType=VARCHAR},
-      GRADE = #{grade,jdbcType=INTEGER},
-      N_INT1 = #{nInt1,jdbcType=INTEGER},
-      VC1 = #{vc1,jdbcType=VARCHAR},
-      CHR1 = #{chr1,jdbcType=CHAR}
-    where ID = #{id,jdbcType=INTEGER}
-  </update>
+		</set>
+		where ID = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<update id="updateByPrimaryKey" parameterType="com.ldps.model.NodeModel">
+		update NODE
+		set NAME = #{name,jdbcType=VARCHAR},
+		GRADE = #{grade,jdbcType=INTEGER},
+		N_INT1 = #{nInt1,jdbcType=INTEGER},
+		VC1 = #{vc1,jdbcType=VARCHAR},
+      CHR1 = #{chr1,jdbcType=CHAR},
+      PARENT_ID = #{parentId,jdbcType=INTEGER}
+		where ID = #{id,jdbcType=INTEGER}
+	</update>
 </mapper>

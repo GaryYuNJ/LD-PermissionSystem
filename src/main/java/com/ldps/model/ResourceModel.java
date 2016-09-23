@@ -14,19 +14,25 @@ public class ResourceModel {
 
     private Date createDate;
 
-    private Integer createUser;
+    private Long createUser;
 
-    private String mac;
-
-    private Integer buildingId;
+    private Integer buildingId; //设备类型资源的楼栋信息id
 
     private Integer floor;
 
-    private String password;
-
     private Integer sequence;
 
-    private String shareEnable;
+    private String shareEnable; //资源是否可被用户分享权限
+
+    private String nodePath; //资源的节点路径
+
+    private String isVirtualResource; //Y：虚拟资源、N：真实设备资源
+
+    private Integer permissionAttrId; //资源权限属性：1：公共资源；2：基础资源(授权时用：针对下层节点的资源来说，如果要使用下层节点，必须使用的上层节点)；3：私有资源；
+
+    private Integer deviceType; //设备类型：1. 通行、2. 家居、3.其它
+
+    private Integer nodeId; //资源直接隶属的节点
 
     private Integer rInt1;
 
@@ -44,7 +50,86 @@ public class ResourceModel {
 
     private String chr2;
     
-    private List<ResourceGroupModel> resourceGroups;  
+    private Long specificUserId; //指定要查询关联情况的userId
+    
+    private CusResourceRelModel cusResRelModel; //指定要查询关联情况的relModel
+    
+    private Integer specificCusGroupId; //指定要查询关联情况的CustomeGroupId
+    
+    private CusGrpResourceRelModel cGrpResRelModel; //指定要查询关联情况的customer group Model
+    
+    private Integer resourceGroupId;
+    
+    private String ifBindGroup;// 是否需要查询绑定当前的
+    
+    public String getIfBindGroup() {
+		return ifBindGroup;
+	}
+
+	public void setIfBindGroup(String ifBindGroup) {
+		this.ifBindGroup = ifBindGroup;
+	}
+
+	public Integer getResourceGroupId() {
+		return resourceGroupId;
+	}
+
+	public void setResourceGroupId(Integer resourceGroupId) {
+		this.resourceGroupId = resourceGroupId;
+	}
+
+	private List<ResourceKeyModel> resourceKeys;
+    
+	public List<ResourceKeyModel> getResourceKeys() {
+		return resourceKeys;
+	}
+
+	public void setResourceKeys(List<ResourceKeyModel> resourceKeys) {
+		this.resourceKeys = resourceKeys;
+	}
+
+	public CusGrpResourceRelModel getCGrpResRelModel() {
+		return cGrpResRelModel;
+	}
+
+	public void setCGrpResRelModel(CusGrpResourceRelModel cGrpResRelModel) {
+		this.cGrpResRelModel = cGrpResRelModel;
+	}
+
+	public Integer getSpecificCusGroupId() {
+		return specificCusGroupId;
+	}
+
+	public void setSpecificCusGroupId(Integer specificCusGroupId) {
+		this.specificCusGroupId = specificCusGroupId;
+	}
+
+	public Long getSpecificUserId() {
+		return specificUserId;
+	}
+
+	public void setSpecificUserId(Long specificUserId) {
+		this.specificUserId = specificUserId;
+	}
+
+
+	public CusResourceRelModel getCusResRelModel() {
+		return cusResRelModel;
+	}
+
+	public void setCusResRelModel(CusResourceRelModel cusResRelModel) {
+		this.cusResRelModel = cusResRelModel;
+	}
+
+	public Integer getNodeId() {
+		return nodeId;
+	}
+
+	public void setNodeId(Integer nodeId) {
+		this.nodeId = nodeId;
+	}
+
+	private List<ResourceGroupModel> resourceGroups;  
     
     public List<ResourceGroupModel> getResourceGroups() {
 		return resourceGroups;
@@ -94,21 +179,14 @@ public class ResourceModel {
         this.createDate = createDate;
     }
 
-    public Integer getCreateUser() {
+    public Long getCreateUser() {
         return createUser;
     }
 
-    public void setCreateUser(Integer createUser) {
+    public void setCreateUser(Long createUser) {
         this.createUser = createUser;
     }
 
-    public String getMac() {
-        return mac;
-    }
-
-    public void setMac(String mac) {
-        this.mac = mac == null ? null : mac.trim();
-    }
 
     public Integer getBuildingId() {
         return buildingId;
@@ -126,13 +204,6 @@ public class ResourceModel {
         this.floor = floor;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password == null ? null : password.trim();
-    }
 
     public Integer getSequence() {
         return sequence;
@@ -149,6 +220,39 @@ public class ResourceModel {
     public void setShareEnable(String shareEnable) {
         this.shareEnable = shareEnable == null ? null : shareEnable.trim();
     }
+
+    public String getNodePath() {
+        return nodePath;
+    }
+
+    public void setNodePath(String nodePath) {
+        this.nodePath = nodePath == null ? null : nodePath.trim();
+    }
+
+    public String getIsVirtualResource() {
+        return isVirtualResource;
+    }
+
+    public void setIsVirtualResource(String isVirtualResource) {
+        this.isVirtualResource = isVirtualResource == null ? null : isVirtualResource.trim();
+    }
+
+    public Integer getPermissionAttrId() {
+        return permissionAttrId;
+    }
+
+    public void setPermissionAttrId(Integer permissionAttrId) {
+        this.permissionAttrId = permissionAttrId;
+    }
+
+    public Integer getDeviceType() {
+        return deviceType;
+    }
+
+    public void setDeviceType(Integer deviceType) {
+        this.deviceType = deviceType;
+    }
+
 
     public Integer getrInt1() {
         return rInt1;

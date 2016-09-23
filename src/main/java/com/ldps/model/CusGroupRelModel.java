@@ -5,11 +5,11 @@ import java.util.Date;
 public class CusGroupRelModel {
     private Integer cgroupId;
 
-    private String cid;
+    private Long customerId;
 
     private Date createDate;
 
-    private Integer createUser;
+    private Long createUser;
 
     public Integer getCgroupId() {
         return cgroupId;
@@ -19,12 +19,12 @@ public class CusGroupRelModel {
         this.cgroupId = cgroupId;
     }
 
-    public String getCid() {
-        return cid;
+    public Long getCustomerId() {
+        return customerId;
     }
 
-    public void setCid(String cid) {
-        this.cid = cid == null ? null : cid.trim();
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
     }
 
     public Date getCreateDate() {
@@ -35,11 +35,11 @@ public class CusGroupRelModel {
         this.createDate = createDate;
     }
 
-    public Integer getCreateUser() {
+    public Long getCreateUser() {
         return createUser;
     }
 
-    public void setCreateUser(Integer createUser) {
+    public void setCreateUser(Long createUser) {
         this.createUser = createUser;
     }
 }

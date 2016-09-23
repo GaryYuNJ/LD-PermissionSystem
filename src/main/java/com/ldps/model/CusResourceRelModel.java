@@ -3,7 +3,7 @@ package com.ldps.model;
 import java.util.Date;
 
 public class CusResourceRelModel {
-    private String cid;
+    private Long customerId;
 
     private Integer resourceId;
 
@@ -11,18 +11,46 @@ public class CusResourceRelModel {
 
     private String fromShared;
 
-    private String sharedUser;
-
     private Date createDate;
 
-    private Integer createUser;
+    private Long createUser;
+    
+    private ResourceModel resourceModel;
+    
+    private Date startDate;
+    
+    private Date endDate;
 
-    public String getCid() {
-        return cid;
+    public Date getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+
+	public ResourceModel getResourceModel() {
+		return resourceModel;
+	}
+
+	public void setResourceModel(ResourceModel resourceModel) {
+		this.resourceModel = resourceModel;
+	}
+
+    public Long getCustomerId() {
+        return customerId;
     }
 
-    public void setCid(String cid) {
-        this.cid = cid == null ? null : cid.trim();
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
     }
 
     public Integer getResourceId() {
@@ -49,14 +77,6 @@ public class CusResourceRelModel {
         this.fromShared = fromShared == null ? null : fromShared.trim();
     }
 
-    public String getSharedUser() {
-        return sharedUser;
-    }
-
-    public void setSharedUser(String sharedUser) {
-        this.sharedUser = sharedUser == null ? null : sharedUser.trim();
-    }
-
     public Date getCreateDate() {
         return createDate;
     }
@@ -65,11 +85,11 @@ public class CusResourceRelModel {
         this.createDate = createDate;
     }
 
-    public Integer getCreateUser() {
+    public Long getCreateUser() {
         return createUser;
     }
 
-    public void setCreateUser(Integer createUser) {
+    public void setCreateUser(Long createUser) {
         this.createUser = createUser;
     }
 }

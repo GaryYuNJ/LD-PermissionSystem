@@ -1,17 +1,52 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ldps.dao.CusGroupRelModelMapper" >
+  <cache 
+  	eviction="LRU" 
+  	flushInterval="3600000" 
+  	size="1024" 
+  	readOnly="true" >
+  </cache>
   <resultMap id="BaseResultMap" type="com.ldps.model.CusGroupRelModel" >
     <result column="CGROUP_ID" property="cgroupId" jdbcType="INTEGER" />
-    <result column="CID" property="cid" jdbcType="VARCHAR" />
-    <result column="CREATE_DATE" property="createDate" jdbcType="DATE" />
-    <result column="CREATE_USER" property="createUser" jdbcType="INTEGER" />
+    <result column="CUSTOMER_ID" property="customerId" jdbcType="BIGINT" />
+    <result column="CREATE_DATE" property="createDate"  />
+    <result column="CREATE_USER" property="createUser" jdbcType="BIGINT" />
   </resultMap>
+  
+  <resultMap id="SimpleResultMap" type="com.ldps.model.CustomerModel" >
+     <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="CM_MEMID" property="cmMemid" jdbcType="VARCHAR" />
+    <result column="CM_CUSTID" property="cmCustid" jdbcType="VARCHAR" />
+	<result column="CM_RELATION" property="cmRelation" jdbcType="CHAR" />
+	<result column="CM_NAME" property="cmName" jdbcType="VARCHAR" />
+	<result column="CM_SEX" property="cmSex" jdbcType="CHAR" />
+    <result column="CM_MOBILE1" property="cmMobile1" jdbcType="VARCHAR" />
+    <result column="CM_EMAIL" property="cmEmail" jdbcType="VARCHAR" />
+    <result column="EXTEND_SPECIF_GROUPID" property="extendSpecificFlag" jdbcType="INTEGER" />
+  </resultMap>
+  
+   <resultMap id="ResultOfLong" type="java.lang.Long">  
+       <result column="CUSTOMER_ID" property="customerId" jdbcType="BIGINT" />  
+   </resultMap>  
+   
+      <resultMap id="ResultOfInteger" type="java.lang.Integer">  
+       <result column="totalCount" property="totalCount" jdbcType="INTEGER" />  
+   </resultMap>  
+  
+  <sql id="Base_Column_List" >
+  	CGROUP_ID,CUSTOMER_ID,CREATE_DATE,CREATE_USER
+  </sql>
+  
+  <sql id="Simple_Customer_Column_List" >
+  	C.ID, C.CM_MEMID, C.CM_CUSTID, C.CM_RELATION, C.CM_NAME, C.CM_SEX, C.CM_MOBILE1, C.CM_EMAIL
+  </sql>
+  
   <insert id="insert" parameterType="com.ldps.model.CusGroupRelModel" >
-    insert into CGROUP_REL (CGROUP_ID, CID, CREATE_DATE, 
+    insert into CGROUP_REL (CGROUP_ID, CUSTOMER_ID, CREATE_DATE, 
       CREATE_USER)
-    values (#{cgroupId,jdbcType=INTEGER}, #{cid,jdbcType=VARCHAR}, #{createDate,jdbcType=DATE}, 
-      #{createUser,jdbcType=INTEGER})
+    values (#{cgroupId,jdbcType=INTEGER}, #{customerId,jdbcType=BIGINT}, #{createDate}, 
+      #{createUser,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="com.ldps.model.CusGroupRelModel" >
     insert into CGROUP_REL
@@ -19,8 +54,8 @@
       <if test="cgroupId != null" >
         CGROUP_ID,
       </if>
-      <if test="cid != null" >
-        CID,
+      <if test="customerId != null" >
+        CUSTOMER_ID,
       </if>
       <if test="createDate != null" >
         CREATE_DATE,
@@ -33,15 +68,125 @@
       <if test="cgroupId != null" >
         #{cgroupId,jdbcType=INTEGER},
       </if>
-      <if test="cid != null" >
-        #{cid,jdbcType=VARCHAR},
+      <if test="customerId != null" >
+        #{customerId,jdbcType=BIGINT},
       </if>
       <if test="createDate != null" >
-        #{createDate,jdbcType=DATE},
+        #{createDate},
       </if>
       <if test="createUser != null" >
-        #{createUser,jdbcType=INTEGER},
+        #{createUser,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>
+  
+  	<delete id="delUserGroupRelation" >
+		delete from CGROUP_REL 
+		where CGROUP_ID = #{groupId,jdbcType=INTEGER} and CUSTOMER_ID =  #{customerId, jdbcType=BIGINT}
+	</delete>
+	
+   <select id="selectByGroupId" resultMap="BaseResultMap"  >
+    select 
+    <include refid="Base_Column_List" />
+    from CGROUP_REL
+    where CGROUP_ID=#{userGroupId,jdbcType=INTEGER}
+  </select>
+  
+  
+  <select id="selectCusIdListByGroupId" resultMap="ResultOfLong"  >
+    select 
+    CUSTOMER_ID 
+    from CGROUP_REL
+    where CGROUP_ID=#{userGroupId,jdbcType=INTEGER}
+  </select>
+  
+   <select id="selectCusIdListByGroupIdList" resultMap="ResultOfLong"  >
+    select 
+    DISTINCT CUSTOMER_ID 
+    from CGROUP_REL
+    where CGROUP_ID in  
+   	<foreach item="item" index="index" collection="userGroupIdList" open="(" separator="," close=")">
+   		#{item,jdbcType=INTEGER}
+   	</foreach>
+  </select>
+  
+  
+   
+    <!-- By BindGrpId, Mobile And Name 分页查询 -->
+  <select id="selectCusModelWithBindGrpId" resultMap="SimpleResultMap"  >
+    select 
+    <include refid="Simple_Customer_Column_List" /> , CR.CGROUP_ID EXTEND_SPECIF_GROUPID 
+    FROM CUSTOMER C,CGROUP_REL CR 
+	WHERE C.ID=CR.CUSTOMER_ID
+	AND CR.CGROUP_ID= #{userGroupId, jdbcType=INTEGER} 
+    <if test="mobile != null and mobile != ''" >
+        AND C.CM_MOBILE1 =#{mobile,jdbcType=VARCHAR} 
+    </if>
+    <if test="userName != null and userName != '' " >
+        AND 
+    </if>
+    <if test="userName != null and userName != ''" >
+         C.CM_NAME =#{userName,jdbcType=VARCHAR} 
+    </if>
+    limit #{startRow,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
+  </select>
+     
+    <!-- By BindGrpId, Mobile And Name 分页查询 -->
+  <select id="selectCusModelCountWithBindGrpId" resultMap="ResultOfInteger"  >
+    select 
+    COUNT(C.ID) totalCount 
+    FROM CUSTOMER C,CGROUP_REL CR 
+	WHERE C.ID=CR.CUSTOMER_ID
+	AND CR.CGROUP_ID= #{userGroupId, jdbcType=INTEGER} 
+    <if test="mobile != null and mobile != ''" >
+        AND CM_MOBILE1 =#{mobile,jdbcType=VARCHAR} 
+    </if>
+    <if test="userName != null and userName != '' " >
+        AND 
+    </if>
+    <if test="userName != null and userName != ''" >
+         CM_NAME =#{userName,jdbcType=VARCHAR} 
+    </if>
+  </select>
+  
+  
+    <!-- By Mobile And Name 分页查询 , 加上与指定groupId的绑定关系-->
+  <select id="selectWithGrpIdFlagByNameAndMobile" resultMap="SimpleResultMap"  >
+    select 
+    <include refid="Simple_Customer_Column_List" /> , CR.CGROUP_ID EXTEND_SPECIF_GROUPID 
+    FROM CUSTOMER C LEFT JOIN CGROUP_REL CR ON C.ID=CR.CUSTOMER_ID AND CR.CGROUP_ID= #{userGroupId, jdbcType=INTEGER} 
+    <if test="(mobile != null and mobile != '') or (userName != null and userName != '') " >
+        WHERE 
+    </if>
+    <if test="mobile != null and mobile != ''" >
+        C.CM_MOBILE1 =#{mobile,jdbcType=VARCHAR} 
+    </if>
+    <if test="mobile != null and mobile != '' and userName != null and userName != '' " >
+        AND 
+    </if>
+    <if test="userName != null and userName != ''" >
+         C.CM_NAME =#{userName,jdbcType=VARCHAR} 
+    </if>
+    limit #{startRow,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
+  </select>
+  
+    <!-- By  Mobile And Name 查询总数 -->
+  <select id="selectCusModelCountByMobileAndUserName" resultMap="ResultOfInteger"  >
+    select 
+    COUNT(C.ID) totalCount 
+    FROM CUSTOMER C
+	<if test="(mobile != null and mobile != '') or (userName != null and userName != '') " >
+        WHERE 
+    </if>
+    <if test="mobile != null and mobile != ''" >
+        CM_MOBILE1 =#{mobile,jdbcType=VARCHAR} 
+    </if>
+    <if test="mobile != null and mobile != '' and userName != null and userName != '' " >
+        AND 
+    </if>
+    <if test="userName != null and userName != ''" >
+         CM_NAME =#{userName,jdbcType=VARCHAR} 
+    </if>
+  </select>
+  
 </mapper>

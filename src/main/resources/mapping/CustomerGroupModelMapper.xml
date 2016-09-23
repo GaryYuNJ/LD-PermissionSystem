@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ldps.dao.CustomerGroupModelMapper" >
+  <cache 
+  	eviction="LRU" 
+  	flushInterval="3600000" 
+  	size="1024"  
+  	readOnly="true" >
+  </cache>
   <resultMap id="BaseResultMap" type="com.ldps.model.CustomerGroupModel" >
     <id column="ID" property="id" jdbcType="INTEGER" />
     <result column="NAME" property="name" jdbcType="VARCHAR" />
     <result column="STATUS" property="status" jdbcType="CHAR" />
-    <result column="CREATE_DATE" property="createDate" jdbcType="DATE" />
-    <result column="CREATE_USER" property="createUser" jdbcType="INTEGER" />
+    <result column="CREATE_DATE" property="createDate"  />
+    <result column="CREATE_USER" property="createUser" jdbcType="BIGINT" />
     <result column="NUM1" property="num1" jdbcType="DECIMAL" />
     <result column="NUM2" property="num2" jdbcType="DECIMAL" />
     <result column="VC1" property="vc1" jdbcType="VARCHAR" />
@@ -14,8 +20,31 @@
     <result column="CHR1" property="chr1" jdbcType="CHAR" />
     <result column="CHR2" property="chr2" jdbcType="CHAR" />
   </resultMap>
+    
+  <resultMap id="BaseResultMapWithExtendPara" type="com.ldps.model.CustomerGroupModel" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="CHAR" />
+    <result column="CREATE_DATE" property="createDate"  />
+    <result column="CREATE_USER" property="createUser" jdbcType="BIGINT" />
+    <result column="NUM1" property="num1" jdbcType="DECIMAL" />
+    <result column="NUM2" property="num2" jdbcType="DECIMAL" />
+    <result column="VC1" property="vc1" jdbcType="VARCHAR" />
+    <result column="VC2" property="vc2" jdbcType="VARCHAR" />
+    <result column="CHR1" property="chr1" jdbcType="CHAR" />
+    <result column="CHR2" property="chr2" jdbcType="CHAR" />
+    <result column="EXTEND_LONG1" property="extendLong1" jdbcType="BIGINT" />
+  </resultMap>
+  
+   <resultMap id="ResultOfInteger" type="java.lang.Integer">  
+       <result column="totalCount" property="totalCount" jdbcType="INTEGER" />  
+   </resultMap>  
+   
   <sql id="Base_Column_List" >
     ID, NAME, STATUS, CREATE_DATE, CREATE_USER, NUM1, NUM2, VC1, VC2, CHR1, CHR2
+  </sql>
+   <sql id="Base_Column_List_withlabel" >
+    CG.ID, CG.NAME, CG.STATUS, CG.CREATE_DATE, CG.CREATE_USER, CG.NUM1, CG.NUM2, CG.VC1, CG.VC2, CG.CHR1, CG.CHR2
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -23,17 +52,57 @@
     from CGROUP
     where ID = #{id,jdbcType=INTEGER}
   </select>
+  
+  <select id="selectByName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from CGROUP
+    where NAME = #{name,jdbcType=VARCHAR}
+  </select>  
+  
+  <select id="selectTotalCount" resultMap="ResultOfInteger" >
+    select 
+     COUNT(ID) totalCount  
+    from CGROUP
+  </select>
+  
+  <select id="selectAllWithPageIndex" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from CGROUP 
+    limit #{startRow,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectJoinCustomerIdWithPageIndex" resultMap="BaseResultMapWithExtendPara" >
+    select 
+    <include refid="Base_Column_List_withlabel" /> ,CRG.CUSTOMER_ID AS EXTEND_LONG1
+    FROM CGROUP CG 
+    left join CGROUP_REL CRG on CG.ID=CRG.CGROUP_ID and CRG.CUSTOMER_ID = #{customerId,jdbcType=BIGINT} 
+    order by CRG.CUSTOMER_ID desc 
+    limit #{startRow,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
+  </select>
+  
+    <select id="selectByNameJoinCusIdWithPageIndex" resultMap="BaseResultMapWithExtendPara" >
+    select 
+    <include refid="Base_Column_List_withlabel" /> ,CRG.CUSTOMER_ID AS EXTEND_LONG1
+    FROM CGROUP CG 
+    left join CGROUP_REL CRG on CG.ID=CRG.CGROUP_ID and CRG.CUSTOMER_ID = #{customerId,jdbcType=BIGINT}
+    where NAME = #{name,jdbcType=VARCHAR} 
+    order by CRG.CUSTOMER_ID desc 
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from CGROUP
     where ID = #{id,jdbcType=INTEGER}
   </delete>
+  
   <insert id="insert" parameterType="com.ldps.model.CustomerGroupModel" >
     insert into CGROUP (ID, NAME, STATUS, 
       CREATE_DATE, CREATE_USER, NUM1, 
       NUM2, VC1, VC2, CHR1, 
       CHR2)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, 
-      #{createDate,jdbcType=DATE}, #{createUser,jdbcType=INTEGER}, #{num1,jdbcType=DECIMAL}, 
+      #{createDate}, #{createUser,jdbcType=BIGINT}, #{num1,jdbcType=DECIMAL}, 
       #{num2,jdbcType=DECIMAL}, #{vc1,jdbcType=VARCHAR}, #{vc2,jdbcType=VARCHAR}, #{chr1,jdbcType=CHAR}, 
       #{chr2,jdbcType=CHAR})
   </insert>
@@ -79,16 +148,16 @@
         #{id,jdbcType=INTEGER},
       </if>
       <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
+        #{name,jdbcType=VARCHAR}, 
       </if>
       <if test="status != null" >
         #{status,jdbcType=CHAR},
       </if>
       <if test="createDate != null" >
-        #{createDate,jdbcType=DATE},
+        #{createDate},
       </if>
       <if test="createUser != null" >
-        #{createUser,jdbcType=INTEGER},
+        #{createUser,jdbcType=BIGINT},
       </if>
       <if test="num1 != null" >
         #{num1,jdbcType=DECIMAL},
@@ -120,10 +189,10 @@
         STATUS = #{status,jdbcType=CHAR},
       </if>
       <if test="createDate != null" >
-        CREATE_DATE = #{createDate,jdbcType=DATE},
+        CREATE_DATE = #{createDate},
       </if>
       <if test="createUser != null" >
-        CREATE_USER = #{createUser,jdbcType=INTEGER},
+        CREATE_USER = #{createUser,jdbcType=BIGINT},
       </if>
       <if test="num1 != null" >
         NUM1 = #{num1,jdbcType=DECIMAL},
@@ -150,8 +219,8 @@
     update CGROUP
     set NAME = #{name,jdbcType=VARCHAR},
       STATUS = #{status,jdbcType=CHAR},
-      CREATE_DATE = #{createDate,jdbcType=DATE},
-      CREATE_USER = #{createUser,jdbcType=INTEGER},
+      CREATE_DATE = #{createDate},
+      CREATE_USER = #{createUser,jdbcType=BIGINT},
       NUM1 = #{num1,jdbcType=DECIMAL},
       NUM2 = #{num2,jdbcType=DECIMAL},
       VC1 = #{vc1,jdbcType=VARCHAR},

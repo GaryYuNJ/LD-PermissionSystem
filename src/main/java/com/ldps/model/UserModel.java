@@ -13,7 +13,7 @@ public class UserModel {
 
     private Date createDate;
 
-    private Integer createUser;
+    private Long createUser;
 
     public Long getId() {
         return id;
@@ -55,11 +55,11 @@ public class UserModel {
         this.createDate = createDate;
     }
 
-    public Integer getCreateUser() {
+    public Long getCreateUser() {
         return createUser;
     }
 
-    public void setCreateUser(Integer createUser) {
+    public void setCreateUser(Long createUser) {
         this.createUser = createUser;
     }
 }

@@ -1,5 +1,7 @@
 package com.ldps.dao;
 
+import java.util.List;
+
 import com.ldps.model.BuildingModel;
 
 public interface BuildingModelMapper {
@@ -14,4 +16,6 @@ public interface BuildingModelMapper {
     int updateByPrimaryKeySelective(BuildingModel record);
 
     int updateByPrimaryKey(BuildingModel record);
+    
+    List<BuildingModel> selectAll();
 }

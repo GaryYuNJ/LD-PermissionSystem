@@ -1,18 +1,50 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ldps.dao.ResourceGrpRelModelMapper" >
+  <cache 
+  	eviction="LRU" 
+  	flushInterval="3600000" 
+  	size="1024" 
+  	readOnly="true" >
+  </cache>
+  
   <resultMap id="BaseResultMap" type="com.ldps.model.ResourceGrpRelModel" >
     <result column="RGROUP_ID" property="rgroupId" jdbcType="INTEGER" />
     <result column="RESOURCE_ID" property="resourceId" jdbcType="INTEGER" />
-    <result column="CREATE_DATE" property="createDate" jdbcType="DATE" />
-    <result column="CREATE_USER" property="createUser" jdbcType="INTEGER" />
+    <result column="CREATE_DATE" property="createDate"  />
+    <result column="CREATE_USER" property="createUser" jdbcType="BIGINT" />
   </resultMap>
+  
+  <resultMap id="resultOfInteger" type="java.lang.Integer">  
+       <result column="ID" property="id" jdbcType="INTEGER" />  
+  </resultMap>  
+  
+  <select id="selectResIdsByGroupId" resultMap="resultOfInteger">
+  	select RESOURCE_ID ID from RESOURCE_GROUP_REL
+    where RGROUP_ID = #{rgroupId,jdbcType=INTEGER} 
+  </select>
+  
+   <select id="selectResIdsByResGroupIdList" resultMap="resultOfInteger" >
+   	select distinct RESOURCE_ID ID 
+   	from RESOURCE_GROUP_REL
+   	where RGROUP_ID  in  
+   	<foreach item="item" index="index" collection="rgroupIds" open="(" separator="," close=")">
+   		#{item,jdbcType=INTEGER}
+   	</foreach>
+   </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="com.ldps.model.ResourceGrpRelModel" >
+    delete from RESOURCE_GROUP_REL
+    where RGROUP_ID = #{rgroupId,jdbcType=INTEGER} and RESOURCE_ID = #{resourceId,jdbcType=INTEGER}
+  </delete>
+  
   <insert id="insert" parameterType="com.ldps.model.ResourceGrpRelModel" >
     insert into RESOURCE_GROUP_REL (RGROUP_ID, RESOURCE_ID, CREATE_DATE, 
       CREATE_USER)
-    values (#{rgroupId,jdbcType=INTEGER}, #{resourceId,jdbcType=INTEGER}, #{createDate,jdbcType=DATE}, 
-      #{createUser,jdbcType=INTEGER})
+    values (#{rgroupId,jdbcType=INTEGER}, #{resourceId,jdbcType=INTEGER}, #{createDate}, 
+      #{createUser,jdbcType=BIGINT})
   </insert>
+  
   <insert id="insertSelective" parameterType="com.ldps.model.ResourceGrpRelModel" >
     insert into RESOURCE_GROUP_REL
     <trim prefix="(" suffix=")" suffixOverrides="," >
@@ -37,11 +69,110 @@
         #{resourceId,jdbcType=INTEGER},
       </if>
       <if test="createDate != null" >
-        #{createDate,jdbcType=DATE},
+        #{createDate},
       </if>
       <if test="createUser != null" >
-        #{createUser,jdbcType=INTEGER},
+        #{createUser,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>
+  
+    
+    
+  <resultMap id="queryResouceWithGIdResultMap" type="com.ldps.model.ResourceModel" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="TYPE_ID" property="typeId" jdbcType="INTEGER" />
+    <result column="STATUS" property="status" jdbcType="CHAR" />
+    <result column="CREATE_DATE" property="createDate"  />
+    <result column="CREATE_USER" property="createUser" jdbcType="BIGINT" />
+    <result column="BUILDING_ID" property="buildingId" jdbcType="INTEGER" />
+    <result column="FLOOR" property="floor" jdbcType="INTEGER" />
+    <result column="SEQUENCE" property="sequence" jdbcType="INTEGER" />
+    <result column="SHARE_ENABLE" property="shareEnable" jdbcType="CHAR" />
+    <result column="NODE_PATH" property="nodePath" jdbcType="VARCHAR" />
+    <result column="IS_VIRTUAL_RESOURCE" property="isVirtualResource" jdbcType="CHAR" />
+    <result column="PERMISSION_ATTR_ID" property="permissionAttrId" jdbcType="INTEGER" />
+    <result column="DEVICE_TYPE" property="deviceType" jdbcType="INTEGER" />
+    <result column="NODE_ID" property="nodeId" jdbcType="INTEGER" />
+    <result column="RGROUP_ID" property="resourceGroupId" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <resultMap id="queryResGrpWithRIdResultMap" type="com.ldps.model.ResourceGroupModel" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate"  />
+    <result column="CREATE_USER" property="createUser" jdbcType="BIGINT" />
+    <result column="RESOURCE_ID" property="resourceId" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <sql id="ResouceWith_GId_Column_List" >
+    R.ID,R.NAME, R.TYPE_ID, R.STATUS, R.CREATE_DATE, R.CREATE_USER,  R.BUILDING_ID, R.FLOOR, 
+    R.SEQUENCE, R.SHARE_ENABLE, R.NODE_PATH, R.IS_VIRTUAL_RESOURCE, R.PERMISSION_ATTR_ID, R.DEVICE_TYPE, 
+    R.NODE_ID,RGR.RGROUP_ID
+  </sql>
+  
+   <sql id="ResouceGroupWith_RId_Column_List" >
+    R.ID,R.NAME,  R.CREATE_DATE, R.CREATE_USER, RGR.RESOURCE_ID
+  </sql>
+  
+   <select id="selectResouceListByConditionWithGId" resultMap="queryResouceWithGIdResultMap" parameterType="com.ldps.model.ResourceModel" >
+	SELECT 
+	 <include refid="ResouceWith_GId_Column_List" />
+	FROM RESOURCE R LEFT JOIN RESOURCE_GROUP_REL RGR ON R.ID=RGR.RESOURCE_ID
+	<if test="resourceModel!=null">
+		<if test="resourceModel.resourceGroupId != null"> AND  RGR.RGROUP_ID = #{resourceModel.resourceGroupId}</if>
+    	<where>
+    		<if test="resourceModel.name != null"><bind name="nameLike" value="'%' + resourceModel.name + '%'" /> name like #{nameLike}</if>
+    		<if test="resourceModel.buildingId != null"> AND  BUILDING_ID = #{resourceModel.buildingId}</if>
+    		<if test="resourceModel.deviceType != null"> AND  DEVICE_TYPE = #{resourceModel.deviceType}</if>
+    		<if test="resourceModel.ifBindGroup != null"> AND  RGR.RGROUP_ID IS NOT NULL</if>
+    		<if test="resourceModel.nodeId != null"> AND  NODE_ID = #{resourceModel.nodeId}</if>
+    		<if test="resourceModel.permissionAttrId != null"> AND  PERMISSION_ATTR_ID = #{resourceModel.permissionAttrId}</if>
+    	</where>
+     </if>
+     limit #{startRow,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectResouceCountConditionWithGId" resultMap="resultOfInteger" parameterType="com.ldps.model.ResourceModel" >
+	SELECT count(1) AS ID
+	FROM RESOURCE R LEFT JOIN RESOURCE_GROUP_REL RGR ON R.ID=RGR.RESOURCE_ID
+	<if test="resourceModel!=null">
+		<if test="resourceModel.resourceGroupId != null"> AND  RGR.RGROUP_ID = #{resourceModel.resourceGroupId}</if>
+    	<where>
+    		<if test="resourceModel.name != null"><bind name="nameLike" value="'%' + resourceModel.name + '%'" /> name like #{nameLike}</if>
+    		<if test="resourceModel.buildingId != null"> AND  BUILDING_ID = #{resourceModel.buildingId}</if>
+    		<if test="resourceModel.deviceType != null"> AND  DEVICE_TYPE = #{resourceModel.deviceType}</if>
+    		<if test="resourceModel.ifBindGroup != null"> AND  RGR.RGROUP_ID IS NOT NULL</if>
+    		<if test="resourceModel.nodeId != null"> AND  NODE_ID = #{resourceModel.nodeId}</if>
+    		<if test="resourceModel.permissionAttrId != null"> AND  PERMISSION_ATTR_ID = #{resourceModel.permissionAttrId}</if>
+    	</where>
+     </if>
+  </select>
+  
+  <select id="selectResGroupListByConditionWithRId" resultMap="queryResGrpWithRIdResultMap" parameterType="com.ldps.model.ResourceGroupModel" >
+	SELECT 
+	 <include refid="ResouceGroupWith_RId_Column_List" />
+	FROM RESOURCE_GROUP R LEFT JOIN RESOURCE_GROUP_REL RGR ON R.ID=RGR.RGROUP_ID
+	<if test="resourceGroupModel!=null">
+		<if test="resourceGroupModel.id != null"> AND  RGR.RESOURCE_ID = #{resourceGroupModel.id}</if>
+    	<where>
+    		<if test="resourceGroupModel.name != null"><bind name="nameLike" value="'%' + resourceGroupModel.name + '%'" /> name like #{nameLike}</if>
+    		<if test="resourceGroupModel.ifBindGroup != null"> AND  RGR.RGROUP_ID IS NOT NULL</if>
+    	</where>
+     </if>
+     limit #{startRow,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectResGroupCountByConditionWithRId" resultMap="resultOfInteger"  parameterType="com.ldps.model.ResourceGroupModel" >
+	SELECT count(1) AS ID
+	FROM RESOURCE_GROUP R LEFT JOIN RESOURCE_GROUP_REL RGR ON R.ID=RGR.RGROUP_ID
+	<if test="resourceGroupModel!=null">
+		<if test="resourceGroupModel.resourceId != null"> AND  RGR.RESOURCE_ID = #{resourceGroupModel.resourceId}</if>
+    	<where>
+    		<if test="resourceGroupModel.name != null"><bind name="nameLike" value="'%' + resourceGroupModel.name + '%'" /> name like #{nameLike}</if>
+    		<if test="resourceGroupModel.ifBindGroup != null"> AND  RGR.RGROUP_ID IS NOT NULL</if>
+    	</where>
+     </if>
+  </select>
 </mapper>

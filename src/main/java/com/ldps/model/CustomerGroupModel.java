@@ -11,7 +11,7 @@ public class CustomerGroupModel {
 
     private Date createDate;
 
-    private Integer createUser;
+    private Long createUser;
 
     private Long num1;
 
@@ -24,8 +24,19 @@ public class CustomerGroupModel {
     private String chr1;
 
     private String chr2;
+    
+    private Long extendLong1;
 
-    public Integer getId() {
+    
+    public Long getExtendLong1() {
+		return extendLong1;
+	}
+
+	public void setExtendLong1(Long extendLong1) {
+		this.extendLong1 = extendLong1;
+	}
+
+	public Integer getId() {
         return id;
     }
 
@@ -57,11 +68,11 @@ public class CustomerGroupModel {
         this.createDate = createDate;
     }
 
-    public Integer getCreateUser() {
+    public Long getCreateUser() {
         return createUser;
     }
 
-    public void setCreateUser(Integer createUser) {
+    public void setCreateUser(Long createUser) {
         this.createUser = createUser;
     }
 

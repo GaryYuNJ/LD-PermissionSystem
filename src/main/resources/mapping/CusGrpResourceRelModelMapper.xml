@@ -1,25 +1,69 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ldps.dao.CusGrpResourceRelModelMapper" >
+  <cache 
+  	eviction="LRU" 
+  	flushInterval="3600000" 
+  	size="1024" 
+  	readOnly="true" >
+  </cache>
   <resultMap id="BaseResultMap" type="com.ldps.model.CusGrpResourceRelModel" >
     <result column="CGROUP_ID" property="cgroupId" jdbcType="INTEGER" />
     <result column="RESOURCE_ID" property="resourceId" jdbcType="INTEGER" />
     <result column="ENABLE" property="enable" jdbcType="CHAR" />
-    <result column="CREATE_DATE" property="createDate" jdbcType="DATE" />
-    <result column="UPDATE_DATE" property="updateDate" jdbcType="DATE" />
-    <result column="CREATE_USER" property="createUser" jdbcType="INTEGER" />
+    <result column="CREATE_DATE" property="createDate"  />
+    <result column="UPDATE_DATE" property="updateDate"  />
+    <result column="CREATE_USER" property="createUser" jdbcType="BIGINT" />
+    <result column="START_DATE" property="startDate"  />
+    <result column="END_DATE" property="endDate"  />
+  </resultMap>
+  
+    <resultMap id="Resource_With_CusGrp_RelModelMap" type="com.ldps.model.ResourceModel" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="TYPE_ID" property="typeId" jdbcType="INTEGER" />
+    <result column="STATUS" property="status" jdbcType="CHAR" />
+    <result column="CREATE_DATE" property="createDate"  />
+    <result column="CREATE_USER" property="createUser" jdbcType="BIGINT" />
+    <result column="BUILDING_ID" property="buildingId" jdbcType="INTEGER" />
+    <result column="FLOOR" property="floor" jdbcType="INTEGER" />
+    <result column="SEQUENCE" property="sequence" jdbcType="INTEGER" />
+    <result column="NODE_PATH" property="nodePath" jdbcType="VARCHAR" />
+    <result column="IS_VIRTUAL_RESOURCE" property="isVirtualResource" jdbcType="CHAR" />
+    <result column="PERMISSION_ATTR_ID" property="permissionAttrId" jdbcType="INTEGER" />
+    <result column="DEVICE_TYPE" property="deviceType" jdbcType="INTEGER" />
+    <result column="NODE_ID" property="nodeId" jdbcType="INTEGER" />
+    
+    <association property="cGrpResRelModel" javaType="com.ldps.model.CusGrpResourceRelModel">
+	    <id column="CR_CGROUP_ID" property="cgroupId" jdbcType="BIGINT" />
+	    <result column="CR_RESOURCE_ID" property="resourceId" jdbcType="INTEGER" />
+	    <result column="CR_ENABLE" property="enable" jdbcType="CHAR" />
+	    <result column="CR_CREATE_DATE" property="createDate"  />
+	    <result column="CR_UPDATE_DATE" property="updateDate"  />
+	    <result column="CR_CREATE_USER" property="createUser" jdbcType="BIGINT" />
+	    <result column="CR_START_DATE" property="startDate"  />
+	    <result column="CR_END_DATE" property="endDate"  />
+    </association>
   </resultMap>
   
   <sql id="Base_Column_List" >
-    CGROUP_ID, RESOURCE_ID, ENABLE, CREATE_DATE, UPDATE_DATE, CREATE_USER
+    CGROUP_ID, RESOURCE_ID, ENABLE, CREATE_DATE, UPDATE_DATE, CREATE_USER, START_DATE, END_DATE
+  </sql>
+  
+  <sql id="Resource_With_CusGrp_RelModel_List" >
+    R.ID, R.NAME, R.TYPE_ID, R.STATUS, R.CREATE_DATE, R.CREATE_USER, R.BUILDING_ID, R.FLOOR, 
+    R.SEQUENCE, R.SHARE_ENABLE,R.NODE_PATH,R.IS_VIRTUAL_RESOURCE, R.PERMISSION_ATTR_ID, R.DEVICE_TYPE, R.NODE_ID,
+    CR.CGROUP_ID CR_CGROUP_ID, CR.RESOURCE_ID CR_RESOURCE_ID, CR.ENABLE CR_ENABLE,  CR.CREATE_DATE CR_CREATE_DATE, 
+    CR.UPDATE_DATE CR_UPDATE_DATE, CR.CREATE_USER CR_CREATE_USER, CR.START_DATE CR_START_DATE, CR.END_DATE CR_END_DATE
   </sql>
   
   <insert id="insert" parameterType="com.ldps.model.CusGrpResourceRelModel" >
     insert into CGROUP_RESOURCE_REL (CGROUP_ID, RESOURCE_ID, ENABLE, 
-      CREATE_DATE, UPDATE_DATE, CREATE_USER
+      CREATE_DATE, UPDATE_DATE, CREATE_USER,START_DATE, END_DATE
       )
     values (#{cgroupId,jdbcType=INTEGER}, #{resourceId,jdbcType=INTEGER}, #{enable,jdbcType=CHAR}, 
-      #{createDate,jdbcType=DATE}, #{updateDate,jdbcType=DATE}, #{createUser,jdbcType=INTEGER}
+      #{createDate}, #{updateDate}, #{createUser,jdbcType=BIGINT}, 
+      #{startDate}, #{endDate}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.ldps.model.CusGrpResourceRelModel" >
@@ -43,6 +87,12 @@
       <if test="createUser != null" >
         CREATE_USER,
       </if>
+      <if test="startDate != null" >
+        START_DATE,
+      </if>
+      <if test="endDate != null" >
+        END_DATE,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="cgroupId != null" >
@@ -55,13 +105,19 @@
         #{enable,jdbcType=CHAR},
       </if>
       <if test="createDate != null" >
-        #{createDate,jdbcType=DATE},
+        #{createDate},
       </if>
       <if test="updateDate != null" >
-        #{updateDate,jdbcType=DATE},
+        #{updateDate},
       </if>
       <if test="createUser != null" >
-        #{createUser,jdbcType=INTEGER},
+        #{createUser,jdbcType=BIGINT},
+      </if>
+      <if test="startDate != null" >
+        #{startDate,jdbcType=INTEGER},
+      </if>
+      <if test="endDate != null" >
+        #{endDate,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -83,4 +139,54 @@
    		#{item,jdbcType=INTEGER}
    	</foreach>
   </select>
+  
+  <select id="selectByCusGroupId" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from CGROUP_RESOURCE_REL
+    where ENABLE='Y' 
+    AND CGROUP_ID=#{groupId,jdbcType=INTEGER}
+  </select>
+  
+    <select id="selectResouceListWithSpecCusGroupId" resultMap="Resource_With_CusGrp_RelModelMap" >
+    select 
+    <include refid="Resource_With_CusGrp_RelModel_List" /> 
+    from RESOURCE R LEFT JOIN CGROUP_RESOURCE_REL CR 
+    ON R.ID = CR.RESOURCE_ID AND CR.CGROUP_ID = #{resourceModel.specificCusGroupId, jdbcType=BIGINT} 
+    <if test="resourceModel!=null">
+    	<where>
+    		<if test="resourceModel.name != null"><bind name="nameLike" value="'%' + resourceModel.name + '%'" /> name like #{nameLike}</if>
+    		<if test="resourceModel.buildingId != null"> AND  BUILDING_ID = #{resourceModel.buildingId}</if>
+    		<if test="resourceModel.deviceType != null"> AND  DEVICE_TYPE = #{resourceModel.deviceType}</if>
+    		<if test="resourceModel.nodeId != null"> AND  NODE_ID = #{resourceModel.nodeId}</if>
+    		<if test="resourceModel.permissionAttrId != null"> AND  PERMISSION_ATTR_ID = #{resourceModel.permissionAttrId}</if>
+    	</where>
+     </if>
+    limit #{startRow,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteResourcePermission" parameterType="com.ldps.model.CusGrpResourceRelModel" >
+    delete from  CGROUP_RESOURCE_REL
+    where CGROUP_ID = #{cgroupId,jdbcType=INTEGER}
+    AND RESOURCE_ID = #{resourceId,jdbcType=INTEGER}
+  </delete>
+  
+   <update id="updateByConditionSelective" parameterType="com.ldps.model.CusGrpResourceRelModel" >
+    update CGROUP_RESOURCE_REL
+    <set>
+      <if test="enable != null" >
+        ENABLE = #{enable,jdbcType=CHAR},
+      </if>
+      
+        START_DATE = #{startDate,jdbcType=BIGINT},
+        END_DATE = #{endDate,jdbcType=BIGINT},
+        UPDATE_DATE = now(),
+      <if test="createUser != null" >
+        CREATE_USER = #{createUser,jdbcType=BIGINT},
+      </if>
+    </set>
+    where CGROUP_ID = #{cgroupId,jdbcType=INTEGER}
+    AND RESOURCE_ID = #{resourceId,jdbcType=INTEGER}
+  </update>
+  
 </mapper>

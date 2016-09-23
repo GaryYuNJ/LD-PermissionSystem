@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ldps.dao.PermissionRecordModelMapper" >
+  <resultMap id="BaseResultMap" type="com.ldps.model.PermissionRecordModel" >
+    <result column="OBJECT_RELATION" property="objectRelation" jdbcType="INTEGER" />
+    <result column="CUSTOMER_Id" property="customerId" jdbcType="BIGINT" />
+    <result column="RESOURCE_ID" property="resourceId" jdbcType="INTEGER" />
+    <result column="CGROUP_ID" property="cgroupId" jdbcType="INTEGER" />
+    <result column="RGROUP_ID" property="rgroupId" jdbcType="INTEGER" />
+    <result column="ACTION_TYPE" property="actionType" jdbcType="INTEGER" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="CREATE_USER" property="createUser" jdbcType="BIGINT" />
+    <result column="START_DATE" property="startDate" jdbcType="TIMESTAMP" />
+    <result column="END_DATE" property="endDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+		OBJECT_RELATION, CUSTOMER_Id, RESOURCE_ID, CGROUP_ID, RGROUP_ID, ACTION_TYPE, 
+		CREATE_DATE,CREATE_USER,START_DATE,END_DATE
+	</sql>
+  
+  <select id="selectByCondition" resultMap="BaseResultMap"  parameterType="com.ldps.model.PermissionRecordModel">
+  	SELECT 
+	<include refid="Base_Column_List" />
+	from PERMISSION_RECORD
+	<if test="permRecordModel != null">
+    	<where>
+    		<if test="permRecordModel.customerId != null"> CUSTOMER_Id = #{permRecordModel.customerId}</if>
+    		<if test="permRecordModel.resourceId != null"> AND  RESOURCE_ID = #{permRecordModel.resourceId}</if>
+    		<if test="permRecordModel.cgroupId != null"> AND  CGROUP_ID = #{permRecordModel.cgroupId}</if>
+    		<if test="permRecordModel.rgroupId != null"> AND  RGROUP_ID = #{permRecordModel.rgroupId}</if>
+    		<if test="permRecordModel.objectRelation != null"> AND  OBJECT_RELATION = #{permRecordModel.objectRelation}</if>
+    		<if test="permRecordModel.actionType != null"> AND  ACTION_TYPE = #{permRecordModel.actionType}</if>
+    	</where>
+     </if>
+    ORDER BY CREATE_DATE DESC
+  </select>
+  
+  
+  <insert id="insert" parameterType="com.ldps.model.PermissionRecordModel" >
+    insert into PERMISSION_RECORD (OBJECT_RELATION, CUSTOMER_Id, RESOURCE_ID, 
+      CGROUP_ID, RGROUP_ID, ACTION_TYPE, 
+      CREATE_DATE, CREATE_USER, START_DATE, 
+      END_DATE)
+    values (#{objectRelation,jdbcType=INTEGER}, #{customerId,jdbcType=BIGINT}, #{resourceId,jdbcType=INTEGER}, 
+      #{cgroupId,jdbcType=INTEGER}, #{rgroupId,jdbcType=INTEGER}, #{actionType,jdbcType=INTEGER}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{createUser,jdbcType=BIGINT}, #{startDate,jdbcType=TIMESTAMP}, 
+      #{endDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ldps.model.PermissionRecordModel" >
+    insert into PERMISSION_RECORD
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="objectRelation != null" >
+        OBJECT_RELATION,
+      </if>
+      <if test="customerId != null" >
+        CUSTOMER_Id,
+      </if>
+      <if test="resourceId != null" >
+        RESOURCE_ID,
+      </if>
+      <if test="cgroupId != null" >
+        CGROUP_ID,
+      </if>
+      <if test="rgroupId != null" >
+        RGROUP_ID,
+      </if>
+      <if test="actionType != null" >
+        ACTION_TYPE,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER,
+      </if>
+      <if test="startDate != null" >
+        START_DATE,
+      </if>
+      <if test="endDate != null" >
+        END_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="objectRelation != null" >
+        #{objectRelation,jdbcType=INTEGER},
+      </if>
+      <if test="customerId != null" >
+        #{customerId,jdbcType=BIGINT},
+      </if>
+      <if test="resourceId != null" >
+        #{resourceId,jdbcType=INTEGER},
+      </if>
+      <if test="cgroupId != null" >
+        #{cgroupId,jdbcType=INTEGER},
+      </if>
+      <if test="rgroupId != null" >
+        #{rgroupId,jdbcType=INTEGER},
+      </if>
+      <if test="actionType != null" >
+        #{actionType,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=BIGINT},
+      </if>
+      <if test="startDate != null" >
+        #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null" >
+        #{endDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+</mapper>
