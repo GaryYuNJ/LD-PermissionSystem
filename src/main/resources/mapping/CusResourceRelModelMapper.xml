@@ -3,7 +3,7 @@
 <mapper namespace="com.ldps.dao.CusResourceRelModelMapper" >
   <cache 
   	eviction="LRU" 
-  	flushInterval="3600000" 
+  	flushInterval="6000" 
   	size="1024" 
   	readOnly="true" >
   </cache>
