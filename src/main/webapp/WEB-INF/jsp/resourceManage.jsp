@@ -183,16 +183,17 @@
 											<div class="form-group">
 												<label class="col-lg-2 control-label">可用状态</label>
 												<div class="col-lg-4">
-													<div class="make-switch" data-on="primary" data-off="info">
+													<div id="updateResourceStatus" class="make-switch" data-on="success" data-off="warning" 
+														data-on-label="启用" data-off-label="禁用" >
 														<input type="checkbox" checked name="status"
-															id="updateResourceStatus">
+															>
 													</div>
 												</div>
 												<label class="col-lg-2 control-label">可分享</label>
 												<div class="col-lg-4">
-													<div class="make-switch" data-on="primary" data-off="info">
+													<div id="updateResourceShareEnable" class="make-switch" data-on="success" data-off="warning" >
 														<input type="checkbox" checked name="shareEnable"
-															id="updateResourceShareEnable">
+															>
 													</div>
 												</div>
 											</div>

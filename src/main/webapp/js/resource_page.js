@@ -132,8 +132,8 @@ function initResourceForm() {
 	$("#updateResourceDeviceType").val("");
 	$("#updateResourcePermissionAttrId").val("1");
 	$("#updateResourceManufacturerId").val("");
-	$("#updateResourceShareEnable").val("");
-	$("#updateResourceStatus").val("");
+	//$("#updateResourceShareEnable").val("");
+	//$("#updateResourceStatus").val("");
 	$("#updateResourceSequenceId").val("");
 	$("#updateResourceId").val("");
 	$("#updateResourceNodeId").val("");
@@ -173,8 +173,16 @@ function resourceEditPre(row) {
 								data.permissionAttrId);
 						$("#updateResourceManufacturerId").val(
 								data.manufacturerId);
-						$("#updateResourceShareEnable").val(data.shareEnable);
-						$("#updateResourceStatus").val(data.status);
+						
+						//$("#updateResourceStatus").val(data.status);
+						if('N' == data.status){
+							$('#updateResourceStatus').bootstrapSwitch('setState', false);
+						}
+						//$("#updateResourceShareEnable").val(data.shareEnable);
+						if('N' == data.shareEnable){
+							$('#updateResourceShareEnable').bootstrapSwitch('setState', false);
+						}
+						
 						$("#updateResourceSequenceId").val(data.sequence);
 						$("#updateResourceId").val(data.id);
 						$("#ResourceKeyFormId").html("");
