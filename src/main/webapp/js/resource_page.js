@@ -177,10 +177,14 @@ function resourceEditPre(row) {
 						//$("#updateResourceStatus").val(data.status);
 						if('N' == data.status){
 							$('#updateResourceStatus').bootstrapSwitch('setState', false);
+						}else{
+							$('#updateResourceStatus').bootstrapSwitch('setState', true);
 						}
 						//$("#updateResourceShareEnable").val(data.shareEnable);
 						if('N' == data.shareEnable){
 							$('#updateResourceShareEnable').bootstrapSwitch('setState', false);
+						}else{
+							$('#updateResourceShareEnable').bootstrapSwitch('setState', true);
 						}
 						
 						$("#updateResourceSequenceId").val(data.sequence);
