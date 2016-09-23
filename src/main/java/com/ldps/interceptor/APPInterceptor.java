@@ -33,17 +33,6 @@ public class APPInterceptor extends HandlerInterceptorAdapter {
 		logger.info("request: "+request);
 		
 		String token = request.getParameter("token");
-		if(StringUtils.isEmpty(token)){
-			response.setStatus(501);
-			response.setContentType("application/json;charset=utf-8");
-			response.setCharacterEncoding("UTF-8");  
-			APIMessage apiMessage = new APIMessage();
-			apiMessage.setStatus(-10);
-			apiMessage.setMessage("缺少入参token");
-			PrintWriter out = response.getWriter();  
-	        out.append(JSON.toJSONString(apiMessage));  
-	        return false;
-		}
 		// token is not needed when debug
 		//if(token == null) return true;  // !! remember to comment this when deploy on server !!
 		
