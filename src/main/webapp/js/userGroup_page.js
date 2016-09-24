@@ -170,6 +170,7 @@
 	  
 	//更新 userGroup
 	 $('#updateUserGroup_Button').click(function() {
+		 
 		 var userGroupId = $("#userGroupId_InForm").val();
 		 var userGroupName = $("#userGroupName_InForm").val();
 		 if(null ==  userGroupName || '' == userGroupName){
@@ -185,13 +186,13 @@
 		    success:function(data) {
 		    	if(data.status == 1){
 		    		$('#userGroupTableId').bootstrapTable('refresh');
-		    		alsert("保存成功");
+		    		alert("保存成功");
 		    	}else{
 		    		alert("已存在同名用户组！");
 		    	}
 		     },  
-		     error : function() {  
-		    	 alert("已存在同名用户组！");
+		     error : function() {
+		    	 alert("系统异常！");
 		     }
 		});
 	 });
