@@ -86,7 +86,7 @@ public class CusResourceRelServiceImpl implements ICusResourceRelService {
 	//向用户针对一个资源授权
 	@Override
 	@Transactional(propagation=Propagation.SUPPORTS)
-	public int authorizeResPermission(CusResourceRelModel sourceModel, PermissionRecordModel permRecordModel) {
+	public synchronized int authorizeResPermission(CusResourceRelModel sourceModel, PermissionRecordModel permRecordModel) {
 		
 		int updateFlag = 0;
 		//如果已有权限，要看起止时间，取入参和已有时间中的最大范围时间保留或更新；
@@ -144,7 +144,7 @@ public class CusResourceRelServiceImpl implements ICusResourceRelService {
 	
 	//联合授权-向用户授权指定的资源以及所有上层节点的所有基础资源
 	@Override
-	public int jointAuthorizeResPermission(Long customerId, Integer resourceId,
+	public synchronized int jointAuthorizeResPermission(Long customerId, Integer resourceId,
 			Date startDate, Date endDate, String fromShared, Long createUser, PermissionRecordModel perRecordModel) {
 		int flag = 0;
 		//通过resourceId查找到直接对应的nodeId
@@ -189,7 +189,7 @@ public class CusResourceRelServiceImpl implements ICusResourceRelService {
 	
 	//连带授权资源组
 	@Override
-	public int jointAuthorizeResGrpPermission(Long customerId,
+	public synchronized int jointAuthorizeResGrpPermission(Long customerId,
 			Integer rgroupId, Date startDate, Date endDate, Long createUser, PermissionRecordModel permRecordModel) {
 		int flag = 0;
 
