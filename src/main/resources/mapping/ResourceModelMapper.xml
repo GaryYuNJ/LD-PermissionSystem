@@ -543,6 +543,7 @@
     <include refid="With_ResKeys_Column_List" />
     from RESOURCE R LEFT JOIN RESOURCE_KEY RK ON  R.ID=RK.RESOURCE_ID 
     where R.STATUS = 'Y' and R.PERMISSION_ATTR_ID = 1 and R.BUILDING_ID = #{buildingId,jdbcType=INTEGER}
+    order by R.SEQUENCE desc
   </select>
   
   <select id="selectValidPubResByBuildingId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >

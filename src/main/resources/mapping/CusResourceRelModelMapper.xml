@@ -382,6 +382,7 @@
 	AND CR.CUSTOMER_ID = #{customerId,jdbcType=BIGINT}
 	AND R.BUILDING_ID = #{buildingId,jdbcType=INTEGER} 
 	AND PERMISSION_ATTR_ID != 1
+	order by R.SEQUENCE desc 
   </select>
   
   <select id="selectValidResByCIdAndMac" resultMap="Resource_WithResKeyResultMap" >
