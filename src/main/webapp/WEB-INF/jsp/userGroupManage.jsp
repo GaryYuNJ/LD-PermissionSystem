@@ -127,15 +127,14 @@
 				                                    <input type="text" class="form-control"  disabled="true"  placeholder="创建人" id="userGroupCreateUser_InForm">
 				                                  </div>
 			                                </div>
-							      		
-									    	<div class="control-group">
-									          <label class="control-label"></label>
-									          <!-- Button -->
-									          <div class="controls">
-									            <button class="btn btn-success" id="updateUserGroup_Button">保存</button>
-									          </div>
-									     	</div>
 										</form>
+										<div class="control-group">
+								          <label class="control-label"></label>
+								          <!-- Button -->
+								          <div class="controls">
+								            <button class="btn btn-success" id="updateUserGroup_Button">保存</button>
+								          </div>
+								     	</div>
 					      		  </div>
 					      		  <!-- usergroup table -->
 							      <div class="tab-pane" id="userAndUserGroup">

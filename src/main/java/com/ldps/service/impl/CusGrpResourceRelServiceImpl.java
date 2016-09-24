@@ -149,7 +149,7 @@ public class CusGrpResourceRelServiceImpl implements ICusGrpResourceRelService {
 
 	//连带授权用户组与资源关系
 	@Override
-	public int jointAuthCusGrpResPermission(CusGrpResourceRelModel cusGrpResourceRelModel, PermissionRecordModel permRecordModel) {
+	public synchronized int jointAuthCusGrpResPermission(CusGrpResourceRelModel cusGrpResourceRelModel, PermissionRecordModel permRecordModel) {
 		//先更新用户组与资源关系
 		int flag = 0;
 		CusGrpResourceRelModel modelTmp = customerGrpResourceRelDao.selectByGrpIdAndResId(cusGrpResourceRelModel);
@@ -199,7 +199,7 @@ public class CusGrpResourceRelServiceImpl implements ICusGrpResourceRelService {
 
 	//授权用户组与资源组关系
 	@Override
-	public int jointAuthCusGrpResGrpPermission(
+	public synchronized int jointAuthCusGrpResGrpPermission(
 			CusGroupResGroupRelModel cusGrpResGrpRelModel) {
 		//添加customer group & resource group relation
 		int flag = cusGroupResGroupRelModelDao.insertSelective(cusGrpResGrpRelModel);

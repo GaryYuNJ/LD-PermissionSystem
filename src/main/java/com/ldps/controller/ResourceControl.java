@@ -79,6 +79,21 @@ public class ResourceControl {
 				ResourceModel.class);
 		APIMessage am = new APIMessage();
 		am.setStatus(1);
+		
+		if(null !=  resourceModel.getStatus() 
+				|| "on".equals(resourceModel.getStatus())){
+			resourceModel.setStatus("Y");
+		}else{
+			resourceModel.setStatus("N");
+		}
+		
+		if(null !=  resourceModel.getShareEnable() 
+				|| "on".equals(resourceModel.getShareEnable())){
+			resourceModel.setShareEnable("Y");
+		}else{
+			resourceModel.setShareEnable("N");
+		}
+		
 		if (iResourceService.updateResource(resourceModel) > 0) {
 			am.setStatus(0);
 		}
