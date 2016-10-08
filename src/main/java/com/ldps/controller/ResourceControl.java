@@ -143,6 +143,7 @@ public class ResourceControl {
 
 		if (iResourceService.createResource(resourceModel) == 1) {
 			am.setStatus(0);
+			am.setMessage(resourceModel.getId().toString());
 		}
 		return JSON.toJSONString(am);
 	}

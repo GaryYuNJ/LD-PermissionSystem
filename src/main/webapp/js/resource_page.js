@@ -259,6 +259,7 @@ function addResource() {
 				function(data, state) {
 					console.log(state);
 					if (0 == data.status) {
+						$("#updateResourceId").val(state.message);
 						alert("保存成功！");
 					} else {
 						alert("后台异常！");
