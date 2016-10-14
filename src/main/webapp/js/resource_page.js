@@ -1,6 +1,21 @@
 function deleteKey(obj) {
 	$(obj).parent().parent().remove();
 }
+function validateKey() {
+	$("#ResourceKeyFormId").data('bootstrapValidator').addField("password", {
+		validators : {
+			notEmpty : {
+				message : '密码不能为空'
+			}
+		}
+	}).addField("mac", {
+		validators : {
+			notEmpty : {
+				message : 'mac地址不能为空'
+			}
+		}
+	});
+}
 // 添加新钥匙
 function addResourceKey(objForm) {
 	// console.log(objForm);
@@ -23,6 +38,7 @@ function addResourceKey(objForm) {
 							+ '<div class="col-lg-1">'
 							+ '<button type="button" class="btn btn-danger" onclick="deleteKey(this)"><i class="icon-remove"></i>删除</button>'
 							+ '</div>' + ' </div>');
+	validateKey();
 }
 
 $("#updateResourceKeyButtonId").click(function() {
@@ -85,9 +101,9 @@ $('#jstree_resource').on("delete_node.jstree", function(e, node) {
 				node.instance.refresh();
 			}
 		},
-		error: function(e) { 
-			alert("该节点已包含资源，不能删除"); 
-			} 
+		error : function(e) {
+			alert("该节点已包含资源，不能删除");
+		}
 	});
 });
 
@@ -132,8 +148,8 @@ function initResourceForm() {
 	$("#updateResourceDeviceType").val("");
 	$("#updateResourcePermissionAttrId").val("1");
 	$("#updateResourceManufacturerId").val("");
-	//$("#updateResourceShareEnable").val("");
-	//$("#updateResourceStatus").val("");
+	// $("#updateResourceShareEnable").val("");
+	// $("#updateResourceStatus").val("");
 	$("#updateResourceSequenceId").val("");
 	$("#updateResourceId").val("");
 	$("#updateResourceNodeId").val("");
@@ -154,6 +170,7 @@ function initResourceForm() {
 							+ '<input type="text" class="form-control keyName"'
 							+ 'placeholder="密码" name="password">' + '</div>'
 							+ '</div>');
+	validateKey();
 }
 // 编辑资源
 function resourceEditPre(row) {
@@ -173,20 +190,24 @@ function resourceEditPre(row) {
 								data.permissionAttrId);
 						$("#updateResourceManufacturerId").val(
 								data.manufacturerId);
-						
-						//$("#updateResourceStatus").val(data.status);
-						if('N' == data.status){
-							$('#updateResourceStatus').bootstrapSwitch('setState', false);
-						}else{
-							$('#updateResourceStatus').bootstrapSwitch('setState', true);
+
+						// $("#updateResourceStatus").val(data.status);
+						if ('N' == data.status) {
+							$('#updateResourceStatus').bootstrapSwitch(
+									'setState', false);
+						} else {
+							$('#updateResourceStatus').bootstrapSwitch(
+									'setState', true);
 						}
-						//$("#updateResourceShareEnable").val(data.shareEnable);
-						if('N' == data.shareEnable){
-							$('#updateResourceShareEnable').bootstrapSwitch('setState', false);
-						}else{
-							$('#updateResourceShareEnable').bootstrapSwitch('setState', true);
+						// $("#updateResourceShareEnable").val(data.shareEnable);
+						if ('N' == data.shareEnable) {
+							$('#updateResourceShareEnable').bootstrapSwitch(
+									'setState', false);
+						} else {
+							$('#updateResourceShareEnable').bootstrapSwitch(
+									'setState', true);
 						}
-						
+
 						$("#updateResourceSequenceId").val(data.sequence);
 						$("#updateResourceId").val(data.id);
 						$("#ResourceKeyFormId").html("");
@@ -203,10 +224,13 @@ function resourceEditPre(row) {
 													+ '<label class="col-lg-3 control-label">钥匙信息</label>'
 													+ '<div class="col-lg-3">'
 													+ '<select class="form-control keyName" name="manufacturerId">';
-											if (value.manufacturerId == 1)
-												tempHtml += '<option value="1">特斯连</option>';
-											else
+											if (value.manufacturerId == 1) {
+												tempHtml += '<option value="1" selected="true">特斯连</option>';
 												tempHtml += '<option value="2">立方</option>';
+											} else {
+												tempHtml += '<option value="1">特斯连</option>';
+												tempHtml += '<option value="2"  selected="true">立方</option>';
+											}
 
 											tempHtml += '</select>'
 													+ '</div>'
@@ -229,7 +253,9 @@ function resourceEditPre(row) {
 											$("#ResourceKeyFormId").append(
 													tempHtml);
 										});
+						validateKey();
 					});
+	
 }
 // 添加资源
 function addResource() {
@@ -259,7 +285,7 @@ function addResource() {
 				function(data, state) {
 					console.log(state);
 					if (0 == data.status) {
-						$("#updateResourceId").val(state.message);
+						resourceEditPre(data.message);
 						alert("保存成功！");
 					} else {
 						alert("后台异常！");
@@ -529,7 +555,7 @@ $('#resourceTableId')
 				});
 // 自定义查询
 $('#dosearch').click(function() {
-	$("#queryNodeId").val("");	
+	$("#queryNodeId").val("");
 	refreshSearch();
 });
 
@@ -575,6 +601,7 @@ $('#resourceFormId').bootstrapValidator({
 		}
 	}
 });
+
 // 文件选择器
 $(document)
 		.on(
@@ -656,7 +683,7 @@ $(function() {
 		$(this).tab('show');// 显示当前选中的链接及关联的content
 		// 点击tab调用对应function
 		if ($(this).attr("href") == "#resourceGroupResource") {
-			
+
 			$("#resourceGroupTableId").bootstrapTable('refresh');
 		}
 	})
@@ -876,3 +903,12 @@ function deleteResourceGroupRel(buttonObj, resourceGroupId) {
 		}
 	});
 }
+
+$('#ResourceKeyFormId').bootstrapValidator({
+	message : '输入值错误',
+	feedbackIcons : {
+		valid : 'glyphicon glyphicon-ok',
+		invalid : 'glyphicon glyphicon-remove',
+		validating : 'glyphicon glyphicon-refresh'
+	}
+});
