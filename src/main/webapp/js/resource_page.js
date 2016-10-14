@@ -2,16 +2,19 @@ function deleteKey(obj) {
 	$(obj).parent().parent().remove();
 }
 function validateKey() {
-	$("#ResourceKeyFormId").data('bootstrapValidator').addField("password", {
+	var passwordtemp=$("#ResourceKeyFormId").find('[name="password"]');
+	var mactemp=$("#ResourceKeyFormId").find('[name="mac"]');
+	$('#resourceFormId').bootstrapValidator("addField",passwordtemp,{
 		validators : {
 			notEmpty : {
 				message : '密码不能为空'
 			}
 		}
-	}).addField("mac", {
+	});
+	$('#resourceFormId').bootstrapValidator("addField",mactemp,{
 		validators : {
 			notEmpty : {
-				message : 'mac地址不能为空'
+				message : '密码不能为空'
 			}
 		}
 	});
@@ -38,7 +41,6 @@ function addResourceKey(objForm) {
 							+ '<div class="col-lg-1">'
 							+ '<button type="button" class="btn btn-danger" onclick="deleteKey(this)"><i class="icon-remove"></i>删除</button>'
 							+ '</div>' + ' </div>');
-	validateKey();
 }
 
 $("#updateResourceKeyButtonId").click(function() {
@@ -169,8 +171,9 @@ function initResourceForm() {
 							+ '<div class="col-lg-3">'
 							+ '<input type="text" class="form-control keyName"'
 							+ 'placeholder="密码" name="password">' + '</div>'
-							+ '</div>');
-	validateKey();
+							+ '<div class="col-lg-1">'
+							+ '<button type="button" class="btn btn-danger" onclick="deleteKey(this)"><i class="icon-remove"></i>删除</button>'
+							+ '</div>' + ' </div>');
 }
 // 编辑资源
 function resourceEditPre(row) {
@@ -244,8 +247,7 @@ function resourceEditPre(row) {
 													+ value.password + '">'
 													+ ' </div>'
 													+ '<div class="col-lg-1">';
-											if (n > 0)
-												tempHtml += '<button type="button" class="btn btn-danger" onclick="deleteKey(this)"><i class="icon-remove"></i>删除</button>';
+											tempHtml += '<button type="button" class="btn btn-danger" onclick="deleteKey(this)"><i class="icon-remove"></i>删除</button>';
 											tempHtml += '</div>'
 													+ '<input type="hidden" class="keyName" value="'
 													+ value.id
@@ -253,12 +255,12 @@ function resourceEditPre(row) {
 											$("#ResourceKeyFormId").append(
 													tempHtml);
 										});
-						validateKey();
 					});
 	
 }
 // 添加资源
 function addResource() {
+	validateKey();
 	$("#updateResourceButtonId").attr('disabled', "true");
 	$('#resourceFormId').bootstrapValidator('validate');
 	$("#ResourceKeyFormId").bootstrapValidator('validate');
@@ -296,6 +298,7 @@ function addResource() {
 }
 // 更新资源数据
 function updateResource() {
+	validateKey();
 	$("#updateResourceButtonId").attr('disabled', "true");
 	$('#resourceFormId').bootstrapValidator('validate');
 	$("#ResourceKeyFormId").bootstrapValidator('validate');
