@@ -4,8 +4,10 @@ public class BuildingModel {
     private Integer id;
 
     private String name;
+    
+    private String floor;
 
-    public Integer getId() {
+	public Integer getId() {
         return id;
     }
 
@@ -17,6 +19,14 @@ public class BuildingModel {
         return name;
     }
 
+    public String getFloor() {
+  		return floor;
+  	}
+
+  	public void setFloor(String floor) {
+  		this.floor = floor;
+  	}
+  	
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
     }

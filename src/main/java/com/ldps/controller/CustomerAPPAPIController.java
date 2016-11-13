@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSON;
 import com.ldps.data.APIMessage;
 import com.ldps.data.CusResourceRelData;
+import com.ldps.data.ResourceArea;
 import com.ldps.data.ResourceData;
 import com.ldps.facade.CustomerFacade;
 import com.ldps.service.ICustomerService;
@@ -414,4 +415,47 @@ public class CustomerAPPAPIController {
 		}
 		return JSON.toJSONString(apiMessage);
 	}
+	
+	//通过手机号码获取楼栋和层级
+	@RequestMapping(value="/querySharableResBuilding",method = { RequestMethod.GET,
+			RequestMethod.POST },produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public String querySharableResBuilding(@RequestParam("mobile")String mobile){
+		APIMessage apiMessage = new APIMessage();
+		apiMessage.setStatus(-1);
+		if(StringUtils.isEmpty(mobile)){
+			apiMessage.setStatus(0);
+			apiMessage.setMessage("手机号码不能为空");
+		}
+		List<ResourceArea> resourceDatas = customerFacade.querySharableResourceArea(mobile);
+		if(null==resourceDatas||resourceDatas.size()==0){
+			apiMessage.setStatus(0);
+			apiMessage.setMessage("没有可授权数据");
+		}else{
+			apiMessage.setStatus(1);
+			apiMessage.setContent(resourceDatas);
+		}
+		return JSON.toJSONString(apiMessage);
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

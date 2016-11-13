@@ -79,6 +79,16 @@
     </association>
   </resultMap>
   
+  <resultMap id="ResourceFloorResultMap" type="com.ldps.data.ResourceFloor" >
+    <result column="FLOOR" property="floorId" />
+	<result column="FLOORNAME" property="floorName" />
+  </resultMap>
+  
+  <resultMap id="ResourceAreaResultMap" type="com.ldps.data.ResourceArea" >
+    <result column="NAME" property="buildingName" jdbcType="VARCHAR" />
+    <result column="BUILDING_ID" property="buildingId" jdbcType="INTEGER" />
+    <collection property="floors" resultMap="ResourceFloorResultMap"/>
+  </resultMap>
   
   <sql id="Column_WithResourceModel_List" >
     CR.CUSTOMER_ID CR_CUSTOMER_ID, CR.RESOURCE_ID CR_RESOURCE_ID, CR.ENABLE CR_ENABLE, CR.FROM_SHARED CR_FROM_SHARED, CR.CREATE_DATE CR_CREATE_DATE, 
@@ -355,6 +365,14 @@
 	AND CR.CUSTOMER_ID = #{customerId,jdbcType=BIGINT}
   </select>
   
+  <select id="selectSharableResBuildingById" resultMap="ResourceAreaResultMap" parameterType="java.lang.Long" >
+    select 
+    DISTINCT BU.NAME,R.BUILDING_ID,R.FLOOR,concat(R.FLOOR,'层') AS FLOORNAME
+    FROM RESOURCE R, CUSTOMER_RESOURCE_REL CR,BUILDING BU
+	WHERE CR.RESOURCE_ID=R.ID AND R.BUILDING_ID=BU.ID AND R.SHARE_ENABLE='Y' 
+	<![CDATA[ AND (CR.START_DATE IS NULL OR CR.START_DATE < now()) AND (CR.END_DATE IS NULL OR CR.END_DATE > now()) ]]> 
+	AND CR.CUSTOMER_ID = #{customerId,jdbcType=BIGINT} AND PERMISSION_ATTR_ID!=1
+  </select>
 
   <select id="selectPrivateResByBIdAndCusId" resultMap="Resource_BaseResultMap" >
     select 

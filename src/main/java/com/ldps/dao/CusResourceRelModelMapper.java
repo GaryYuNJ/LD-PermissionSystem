@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.ldps.data.ResourceArea;
 import com.ldps.model.CusResourceRelModel;
 import com.ldps.model.ResourceModel;
 
@@ -43,4 +44,6 @@ public interface CusResourceRelModelMapper {
 	int deleteByCusIdListAndResId(@Param("customerIds") List<Long> customerIds, @Param("resourceId") Integer resourceId);
 
 	void deleteByCusIdAndResIdList(@Param("customerId")Long customerId, @Param("resourceIds")List<Integer> resourceIds);
+	
+	List<ResourceArea> selectSharableResBuildingById(Long customerId);
 }

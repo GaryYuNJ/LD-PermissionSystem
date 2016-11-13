@@ -11,6 +11,7 @@ import com.ldps.dao.CusGroupRelModelMapper;
 import com.ldps.dao.CusResourceRelModelMapper;
 import com.ldps.dao.CustomerModelMapper;
 import com.ldps.dao.ResourceModelMapper;
+import com.ldps.data.ResourceArea;
 import com.ldps.model.CustomerModel;
 import com.ldps.model.ResourceModel;
 import com.ldps.service.ICustomerService;
@@ -89,6 +90,15 @@ public class CustomerServiceImpl implements ICustomerService {
 	public List<ResourceModel> querySharableResource(Long customerId) {
 		return cusResourceRelDao.selectSharableResourceById(customerId);
 	}
+	
+	//获取用户可分享权限的资源所属区域
+		/*
+			不包含公共资源
+		*/
+		@Override
+		public List<ResourceArea> querySharableResourceArea(Long customerId) {
+			return cusResourceRelDao.selectSharableResBuildingById(customerId);
+		}
 
 	@Override
 	public Long getCustomerIdByMobile(String mobile) {

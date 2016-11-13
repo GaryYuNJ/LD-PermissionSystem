@@ -2,6 +2,7 @@ package com.ldps.service;
 
 import java.util.List;
 
+import com.ldps.data.ResourceArea;
 import com.ldps.model.CustomerModel;
 import com.ldps.model.ResourceModel;
 
@@ -70,4 +71,6 @@ public interface ICustomerService {
 			String mobile, String userName);
 
 	CustomerModel getUserByCmMemid(String cmMemid);
+	
+	List<ResourceArea> querySharableResourceArea(Long customerId);
 }

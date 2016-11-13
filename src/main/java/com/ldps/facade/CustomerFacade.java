@@ -3,6 +3,7 @@ package com.ldps.facade;
 
 import com.ldps.data.CusResourceRelData;
 import com.ldps.data.CustomerData;
+import com.ldps.data.ResourceArea;
 import com.ldps.data.ResourceData;
 import com.ldps.model.CusResourceRelModel;
 import com.ldps.model.CustomerResGroupRelModel;
@@ -99,4 +100,5 @@ public interface CustomerFacade {
 
 	int jointAuthResPermissionWithCreateUserId(Long customerId,
 			Integer resourceId, Date startDate, Date endDate, Long createUserId);
+	public List<ResourceArea> querySharableResourceArea(String mobile);
 }

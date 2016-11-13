@@ -12,6 +12,7 @@ import com.ldps.converter.CustomerModelConverter;
 import com.ldps.converter.ResourceModelConverter;
 import com.ldps.data.CusResourceRelData;
 import com.ldps.data.CustomerData;
+import com.ldps.data.ResourceArea;
 import com.ldps.data.ResourceData;
 import com.ldps.facade.CustomerFacade;
 import com.ldps.model.CusGrpResourceRelModel;
@@ -295,6 +296,19 @@ public class CustomerFacadeImpl implements CustomerFacade {
 		
 		List<ResourceModel> resourceModel = iCustomerSevice.querySharableResource(customerId);
 		return resourceModelConverter.processList(resourceModel);
+	}
+	
+	//获取用户可分享权限的资源区域
+		/*
+			不包含公共资源
+		*/
+	@Override
+	public List<ResourceArea> querySharableResourceArea(String mobile) {
+		
+		Long customerId = iCustomerSevice.getCustomerIdByMobile(mobile);
+		
+		List<ResourceArea> resourceModel = iCustomerSevice.querySharableResourceArea(customerId);
+		return resourceModel;
 	}
 	/*
 		查看用户分享出去的资源
