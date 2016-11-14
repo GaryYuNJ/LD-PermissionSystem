@@ -574,6 +574,98 @@ public class CustomerFacadeImpl implements CustomerFacade {
 		return iCusResourceRelService.deleteCusResGrpPermission(crgModel,null);
 	}
 	
+	//分享权限
+	@Override
+	public boolean permissionShare(String fromMobile, String toMobile,
+			String toName, String startDateStr, String endDateStr, String buildingIdStr,
+			String floorStr) {
+		String message = "0";
+		Date startDate = null;
+		Date endDate = null;
+		Integer buildingId=null;
+		Integer floor=null;
+		try{
+			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			if(!StringUtils.isEmpty(startDate)){
+				startDate = df.parse(startDateStr);
+			}
+			if(!StringUtils.isEmpty(endDateStr)){
+				endDate = df.parse(endDateStr);
+			}
+			if(!StringUtils.isEmpty(buildingIdStr)){
+				buildingId =new Integer(buildingIdStr);
+			}
+			if(!StringUtils.isEmpty(floorStr)){
+				floor = new Integer(floorStr);
+			}
+		}catch(Exception e){
+			message = "E008"; //格式有问题
+		}
+		
+		if("0".equals(message)){
+			try{
+				if(StringUtils.isEmpty(fromMobile) || StringUtils.isEmpty(toMobile)){
+					message = "E001"; //入参有空值
+				}else{
+					CustomerModel fromCustomerModel = iCustomerSevice.getCustomerModelByMobile(fromMobile);
+					if(null == fromCustomerModel){
+						message = "E002"; //分享用户不存在
+					}else{
+						CustomerModel toCustomerModel = iCustomerSevice.getCustomerModelByMobile(toMobile);
+						if(null == toCustomerModel){
+							//临时插入用户表数据，同时JOB更新
+							
+							
+							
+							
+							
+						}
+						
+						//查询当前人的资源分享列表  同时排出已经拥有权限的
+						List<CusResourceRelModel> cusresourceList= querySharableResource(fromCustomerModel.getId(),buildingId,floor,toCustomerModel.getId());
+						
+						//循环cusresourceList 修改授权Date
+						for (int i=0; i<cusresourceList.size();i++){
+							cusresourceList.get(i).setCustomerId(toCustomerModel.getId());
+							cusresourceList.get(i).setCreateDate(new Date());
+							cusresourceList.get(i).setCreateUser(fromCustomerModel.getId());
+							cusresourceList.get(i).setFromShared("Y");
+							if(null!=startDate){
+								if(null==cusresourceList.get(i).getStartDate()||cusresourceList.get(i).getStartDate().getTime()>startDate.getTime()){
+									cusresourceList.get(i).setStartDate(startDate);
+								}
+							}
+							
+							if(null!=endDate){
+								if(null==cusresourceList.get(i).getEndDate()||cusresourceList.get(i).getEndDate().getTime()<endDate.getTime()){
+									cusresourceList.get(i).setStartDate(endDate);
+								}
+							}
+							
+							//对当前用户进行批量授权  循环 
+							jointAuthCusResPermission(cusresourceList.get(i));
+							
+						}
+						
+					}
+				}
+			}catch(Exception e){
+				logger.error("shareResource exception. ", e);
+				message = "-1"; //创建记录异常
+			}
+		}
+		
+		return false;
+	}
+	
+	//获取用户在指定地方可授权的设备, 根据楼栋和层级
+	/*
+		不包含公共资源
+	*/
+	private List<CusResourceRelModel> querySharableResource(Long customerId,Integer buildingId,Integer floor,Long toCustomerId) {
+		return iCusResourceRelService.querySharableResource(customerId,buildingId,floor,toCustomerId);
+	}
+	
 	public ICustomerService getiCustomerSevice() {
 		return iCustomerSevice;
 	}
@@ -616,6 +708,5 @@ public class CustomerFacadeImpl implements CustomerFacade {
 			ResourceModelConverter resourceModelConverter) {
 		this.resourceModelConverter = resourceModelConverter;
 	}
-
 
 }

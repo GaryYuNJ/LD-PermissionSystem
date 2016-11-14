@@ -73,4 +73,5 @@ public interface ICustomerService {
 	CustomerModel getUserByCmMemid(String cmMemid);
 	
 	List<ResourceArea> querySharableResourceArea(Long customerId);
+	
 }

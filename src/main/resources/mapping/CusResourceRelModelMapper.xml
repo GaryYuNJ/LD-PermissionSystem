@@ -365,6 +365,23 @@
 	AND CR.CUSTOMER_ID = #{customerId,jdbcType=BIGINT}
   </select>
   
+  <select id="selectSharableResourceByIdAndArea" resultMap="BaseResultMap">
+    select 
+    CR.* 
+    FROM RESOURCE R, CUSTOMER_RESOURCE_REL CR 
+	WHERE CR.RESOURCE_ID=R.ID AND R.SHARE_ENABLE='Y' 
+	<![CDATA[ AND (CR.START_DATE IS NULL OR CR.START_DATE < now()) AND (CR.END_DATE IS NULL OR CR.END_DATE > now()) ]]> 
+	AND CR.CUSTOMER_ID = #{customerId,jdbcType=BIGINT} 
+	<if test="buildingId!=null">
+		 AND  BUILDING_ID = #{buildingId,jdbcType=INTEGER}
+	</if>
+	<if test="floor!=null">
+		 AND  FLOOR = #{floor,jdbcType=INTEGER}
+	</if>
+	AND NOT EXISTS (select 1 from CUSTOMER_RESOURCE_REL where CUSTOMER_ID=#{toCustomerId,jdbcType=BIGINT} and R.ID=RESOURCE_ID 
+	<![CDATA[ AND (START_DATE IS NULL OR START_DATE < now()) AND (END_DATE IS NULL OR END_DATE > now()) ]]>)
+  </select>
+  
   <select id="selectSharableResBuildingById" resultMap="ResourceAreaResultMap" parameterType="java.lang.Long" >
     select 
     DISTINCT BU.NAME,R.BUILDING_ID,R.FLOOR,concat(R.FLOOR,'层') AS FLOORNAME

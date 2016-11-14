@@ -46,4 +46,5 @@ public interface CusResourceRelModelMapper {
 	void deleteByCusIdAndResIdList(@Param("customerId")Long customerId, @Param("resourceIds")List<Integer> resourceIds);
 	
 	List<ResourceArea> selectSharableResBuildingById(Long customerId);
+	List<CusResourceRelModel>  selectSharableResourceByIdAndArea(@Param("customerId")Long customerId,@Param("buildingId")Integer buildingId,@Param("floor")Integer floor,@Param("toCustomerId")Long toCustomerId);
 }

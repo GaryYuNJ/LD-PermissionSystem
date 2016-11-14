@@ -100,5 +100,9 @@ public interface CustomerFacade {
 
 	int jointAuthResPermissionWithCreateUserId(Long customerId,
 			Integer resourceId, Date startDate, Date endDate, Long createUserId);
+	//查询可分享的区域
 	public List<ResourceArea> querySharableResourceArea(String mobile);
+	//分享权限
+	public boolean permissionShare(String fromMobile,String toMobile,String toName,String startDate,String endDate,String buildingId,String floor);
+	
 }

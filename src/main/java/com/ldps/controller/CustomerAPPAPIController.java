@@ -437,7 +437,37 @@ public class CustomerAPPAPIController {
 		}
 		return JSON.toJSONString(apiMessage);
 	}
+	
+	//分享权限
+	@RequestMapping(value="/permissionShare",method = { RequestMethod.GET,
+			RequestMethod.POST },produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public String permissionShare(@RequestParam("fromMobile")String fromMobile,
+			@RequestParam("toMobile")String toMobile,
+			@RequestParam("toName")String toName,
+			@RequestParam("startDate")String startDate,
+			@RequestParam("endDate")String endDate,
+			@RequestParam("buildingId")String buildingId,
+			@RequestParam("floor")String floor){
+		APIMessage apiMessage = new APIMessage();
+		apiMessage.setStatus(-1);
+		if(StringUtils.isEmpty(fromMobile)||StringUtils.isEmpty(toMobile)){
+			apiMessage.setStatus(0);
+			apiMessage.setMessage("被授权人和分享人不能为空");
+		}
+		
+		//调用Service
+		
+		
+		
+		
+		
+		return JSON.toJSONString(apiMessage);
+	}
 }
+
+
+
 
 
 

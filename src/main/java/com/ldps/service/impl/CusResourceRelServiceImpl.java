@@ -353,5 +353,12 @@ public class CusResourceRelServiceImpl implements ICusResourceRelService {
 		}
 		return flag;
 	}
-
+	//获取用户可分享权限的资源列表 
+	/*
+		不包含公共资源，不包含用户组授权，只针对用户与资源的可用关系
+	*/
+	@Override
+	public List<CusResourceRelModel> querySharableResource(Long customerId,Integer buildingId,Integer floor,Long toCustomerId) {
+		return customerResourceRelDao.selectSharableResourceByIdAndArea(customerId,buildingId,floor,toCustomerId);
+	}
 }
