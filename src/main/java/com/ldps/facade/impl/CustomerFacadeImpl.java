@@ -614,16 +614,14 @@ public class CustomerFacadeImpl implements CustomerFacade {
 						CustomerModel toCustomerModel = iCustomerSevice.getCustomerModelByMobile(toMobile);
 						if(null == toCustomerModel){
 							//临时插入用户表数据，同时JOB更新
-							
-							
-							
-							
-							
+							toCustomerModel=new CustomerModel(); 
+							toCustomerModel.setCmMobile1(toMobile);
+							iCustomerSevice.addTempCustomer(toCustomerModel);
+							toCustomerModel= iCustomerSevice.getCustomerModelByMobile(toMobile);
 						}
 						
 						//查询当前人的资源分享列表  同时排出已经拥有权限的
 						List<CusResourceRelModel> cusresourceList= querySharableResource(fromCustomerModel.getId(),buildingId,floor,toCustomerModel.getId());
-						
 						//循环cusresourceList 修改授权Date
 						for (int i=0; i<cusresourceList.size();i++){
 							cusresourceList.get(i).setCustomerId(toCustomerModel.getId());
@@ -635,18 +633,15 @@ public class CustomerFacadeImpl implements CustomerFacade {
 									cusresourceList.get(i).setStartDate(startDate);
 								}
 							}
-							
 							if(null!=endDate){
 								if(null==cusresourceList.get(i).getEndDate()||cusresourceList.get(i).getEndDate().getTime()<endDate.getTime()){
 									cusresourceList.get(i).setStartDate(endDate);
 								}
 							}
-							
 							//对当前用户进行批量授权  循环 
 							jointAuthCusResPermission(cusresourceList.get(i));
 							
 						}
-						
 					}
 				}
 			}catch(Exception e){

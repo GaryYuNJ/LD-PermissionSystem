@@ -57,6 +57,12 @@ public class CustomerServiceImpl implements ICustomerService {
 		return customerDao.insertSelective(custoemrModel);
 	}
 
+	//分享权限时如果未注册或者未同步， 临时插入后面更新
+	@Override
+	public int addTempCustomer(CustomerModel custoemrModel) {
+		return customerDao.insertSelective(custoemrModel);
+	}
+
 	@Override
 	public int deleteCustomerByCmMemid(String cmMemid) {
 		return customerDao.deleteByCmMemid(cmMemid);

@@ -74,4 +74,6 @@ public interface ICustomerService {
 	
 	List<ResourceArea> querySharableResourceArea(Long customerId);
 	
+	public int addTempCustomer(CustomerModel custoemrModel);
+	
 }
