@@ -452,16 +452,23 @@ public class CustomerAPPAPIController {
 		APIMessage apiMessage = new APIMessage();
 		apiMessage.setStatus(-1);
 		if(StringUtils.isEmpty(fromMobile)||StringUtils.isEmpty(toMobile)){
-			apiMessage.setStatus(0);
 			apiMessage.setMessage("被授权人和分享人不能为空");
 		}
 		
+		int i=customerFacade.permissionShare(fromMobile, toMobile, toName, startDate, endDate, buildingId, floor);
+		if(i==-1){
+			apiMessage.setMessage("数据格式错误");
+		}else if(i==-3){
+			apiMessage.setMessage("分享用户不存在");
+		}else if(i==1){
+			apiMessage.setMessage("分享用户无权限");
+		}else if(i==-4){
+			apiMessage.setMessage("系统异常，请联系管理员");
+		}else{
+			apiMessage.setStatus(1);
+			apiMessage.setMessage("授权成功");
+		}
 		//调用Service
-		
-		
-		
-		
-		
 		return JSON.toJSONString(apiMessage);
 	}
 }
