@@ -205,7 +205,7 @@ public class SyncCustomerDataFromCRMJob {
 					
 					//添加、更新用户信息。以cmmemid为主键
 					if(-1 == iCustomerService.addCustomer(cModel)){
-						iCustomerService.updateCustomerByCmMemid(cModel);
+						iCustomerService.updateCustomerById(cModel);
 					}
 				}
 			}else{

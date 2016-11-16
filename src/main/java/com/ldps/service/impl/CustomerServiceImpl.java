@@ -52,8 +52,11 @@ public class CustomerServiceImpl implements ICustomerService {
  
 	@Override
 	public int addCustomer(CustomerModel custoemrModel) {
-		if(getUserByCmMemid(custoemrModel.getCmMemid()) != null)
+		CustomerModel custoemrModelTemp= getUserByCmMemidOrMobile(custoemrModel.getCmMemid(),custoemrModel.getCmMobile1());
+		if(custoemrModelTemp!= null){
+			custoemrModel.setId(custoemrModelTemp.getId());
 			return -1;//customerDao.updateByCmMemidSelective(custoemrModel);
+		}
 		return customerDao.insertSelective(custoemrModel);
 	}
 
@@ -72,10 +75,20 @@ public class CustomerServiceImpl implements ICustomerService {
 	public int updateCustomerByCmMemid(CustomerModel custoemrModel) {
 		return customerDao.updateByCmMemidSelective(custoemrModel);
 	}
+	
+	@Override
+	public int updateCustomerById(CustomerModel custoemrModel) {
+		return customerDao.updateByPrimaryKeySelective(custoemrModel);
+	}
 
 	@Override
 	public CustomerModel getUserByCmMemid(String cmMemid) {
 		return customerDao.simpleSelectByCmMemid(cmMemid);
+	}
+	
+	@Override
+	public CustomerModel getUserByCmMemidOrMobile(String cmMemid,String mobile) {
+		return customerDao.simpleSelectByCmMemidOrMobile(cmMemid,mobile);
 	}
 //	
 //	@Override

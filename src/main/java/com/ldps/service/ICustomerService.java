@@ -75,5 +75,9 @@ public interface ICustomerService {
 	List<ResourceArea> querySharableResourceArea(Long customerId);
 	
 	public int addTempCustomer(CustomerModel custoemrModel);
+	//针对分享权限时临时添加用户
+	public CustomerModel getUserByCmMemidOrMobile(String cmMemid,String mobile) ;
+	
+	public int updateCustomerById(CustomerModel custoemrModel);
 	
 }

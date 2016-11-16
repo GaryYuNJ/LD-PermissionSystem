@@ -54,4 +54,6 @@ public interface CustomerModelMapper {
 	CustomerModel simpleSelectByCmMemid(@Param("cmMemid")String cmMemid);
 	
 	CustomerModel selectLatestRecord();
+	
+	CustomerModel simpleSelectByCmMemidOrMobile(@Param("cmMemid")String cmMemid,@Param("mobile")String mobile);
 }
