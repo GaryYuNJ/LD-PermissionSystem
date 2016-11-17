@@ -187,6 +187,17 @@ public class CustomerFacadeImpl implements CustomerFacade {
 	}
 	
 	/*
+	获取系统中所有的公有资源
+	 */
+	@Override
+	public List<ResourceData> queryPubResWithKeys() {
+		
+		List<ResourceModel> rModels = iResourceService.queryPubResWithKeys();
+		
+		return resourceModelConverter.processList(rModels);	
+		}
+
+	/*
 	获取building里用户有权限设备
 	 */
 	@Override

@@ -87,6 +87,15 @@ public class ResourceServiceImpl implements IResourceService {
 	public List<ResourceModel> queryPubResWithKeysByBuildingId(Integer buildingId) {
 		return resourceDao.selectPubResWithKeysByBuildingId(buildingId);
 	}
+	/*
+	获取building里的公共资源，resourceKeys同时返回
+	 */
+	@Override
+	public List<ResourceModel> queryPubResWithKeys() {
+		return resourceDao.selectPubResWithKeys();
+	}
+	
+	
 	
 	/*
 	获取building里用户有权限设备
@@ -240,7 +249,7 @@ public class ResourceServiceImpl implements IResourceService {
 			Integer buildingId, Long customerId) {
 		return cusResourceRelDao.selectPriResWIthKeysByBIdAndCusId(buildingId, customerId);
 	}
-
+	
 	@Override
 	public APIMessage importResFromExcel(String filePath, Integer nodeId) throws IOException {
 		

@@ -539,6 +539,14 @@
   </update>
 
 
+  <select id="selectPubResWithKeys" resultMap="queryWithResKeyResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="With_ResKeys_Column_List" />
+    from RESOURCE R LEFT JOIN RESOURCE_KEY RK ON  R.ID=RK.RESOURCE_ID 
+    where R.STATUS = 'Y' and R.PERMISSION_ATTR_ID = 1 
+    order by R.SEQUENCE desc
+  </select>
+  
   <select id="selectPubResWithKeysByBuildingId" resultMap="queryWithResKeyResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="With_ResKeys_Column_List" />

@@ -29,7 +29,8 @@ public interface ResourceModelMapper {
 	List<ResourceModel> selectValidPubResByBuildingId(Integer buildingId);
 	
 	List<ResourceModel> selectPubResWithKeysByBuildingId(Integer buildingId);
-
+	
+	List<ResourceModel> selectPubResWithKeys();
 
 	List<ResourceModel> selectBasicResByNodeIdList(@Param("nodeIds")List<Integer> nodeIds);
 	

@@ -80,6 +80,10 @@ public interface CustomerFacade {
 	获取building里的公共资源 ，resourceKeys同时返回
 	 */
 	List<ResourceData> queryPubResWithKeysByBuildingId(Integer buildingId);
+	/*
+	获取系统中所有的公共资源
+	 */
+	public List<ResourceData> queryPubResWithKeys();
 
 	public List<ResourceData> queryPrivateResWithKeysByBIdAndMobile(
 			Integer buildingId, String mobile);

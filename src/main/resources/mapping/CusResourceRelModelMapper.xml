@@ -409,7 +409,7 @@
 	WHERE CR.RESOURCE_ID=R.ID AND R.STATUS='Y' AND CR.ENABLE='Y'
 	<![CDATA[ AND (CR.START_DATE IS NULL OR CR.START_DATE < now()) AND (CR.END_DATE IS NULL OR CR.END_DATE > now()) ]]> 
 	AND CR.CUSTOMER_ID = #{customerId,jdbcType=BIGINT}
-	AND R.BUILDING_ID = #{buildingId,jdbcType=INTEGER} 
+	<if test="buildingId!=null"> AND R.BUILDING_ID = #{buildingId,jdbcType=INTEGER} </if>	
 	AND PERMISSION_ATTR_ID != 1
 	order by R.SEQUENCE desc 
   </select>

@@ -137,9 +137,14 @@ public class CustomerAPPAPIController {
 		List<ResourceData> rDatas = null;
 		
 		try{
-			//获取公有资源
-			rDatas = customerFacade.queryPubResWithKeysByBuildingId(buildingId);
-			
+			//楼栋不传的话查询所有的共有线索
+			if(StringUtils.isEmpty(buildingId)){
+				buildingId=null;
+				rDatas = customerFacade.queryPubResWithKeys();
+			}else{
+				//获取公有资源
+				rDatas = customerFacade.queryPubResWithKeysByBuildingId(buildingId);
+			}
 			if(null != rDatas && rDatas.size() > 0){
 				//获取有权限的私有资源
 				List<ResourceData> privateDatas = customerFacade.queryPrivateResWithKeysByBIdAndMobile(buildingId, mobile);

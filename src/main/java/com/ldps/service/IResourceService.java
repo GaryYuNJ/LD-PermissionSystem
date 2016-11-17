@@ -61,7 +61,8 @@ public interface IResourceService {
 			ResourceModel resourceModel, Integer offset, Integer limit);
 
 	List<ResourceModel> queryPubResWithKeysByBuildingId(Integer buildingId);
-
+	List<ResourceModel> queryPubResWithKeys();
+	
 	List<ResourceModel> queryPriResWithKeysByBIdAndCusId(Integer buildingId,
 			Long customerId);
 	
