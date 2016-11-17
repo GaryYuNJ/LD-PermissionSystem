@@ -23,6 +23,8 @@ import com.ldps.data.CusResourceRelData;
 import com.ldps.data.ResourceArea;
 import com.ldps.data.ResourceData;
 import com.ldps.facade.CustomerFacade;
+import com.ldps.model.BuildingModel;
+import com.ldps.service.IBuildingModelService;
 import com.ldps.service.ICustomerService;
 import com.ldps.service.IResourceService;
 
@@ -37,6 +39,8 @@ public class CustomerAPPAPIController {
 	private ICustomerService iCustomerSevice;
 	@Resource
 	private IResourceService iResourceService;
+	@Resource(name = "iBuildingModelService")
+	private IBuildingModelService iBuildingModelService;
 	
 	@RequestMapping(value="/permissionVerfy",method = { RequestMethod.GET,
 			RequestMethod.POST },produces = "application/json; charset=utf-8")
@@ -134,35 +138,49 @@ public class CustomerAPPAPIController {
 			@RequestParam("mobile")String mobile, Model model){
 		
 		APIMessage apiMessage = new APIMessage();
-		List<ResourceData> rDatas = null;
-		
 		try{
+			List<BuildingModel> buildingModels =new ArrayList<BuildingModel>();
 			//楼栋不传的话查询所有的共有线索
 			if(StringUtils.isEmpty(buildingId)){
 				buildingId=null;
-				rDatas = customerFacade.queryPubResWithKeys();
+				buildingModels=iBuildingModelService.queryAll();
+				//rDatas = customerFacade.queryPubResWithKeys();
 			}else{
-				//获取公有资源
-				rDatas = customerFacade.queryPubResWithKeysByBuildingId(buildingId);
-			}
-			if(null != rDatas && rDatas.size() > 0){
-				//获取有权限的私有资源
-				List<ResourceData> privateDatas = customerFacade.queryPrivateResWithKeysByBIdAndMobile(buildingId, mobile);
-				
-				if(null != privateDatas && privateDatas.size() > 0){
-					rDatas.addAll(privateDatas);
+				BuildingModel tempBuilding=iBuildingModelService.queryBuilding(new Integer(buildingId));
+				if(null!=tempBuilding){
+					buildingModels.add(tempBuilding);
 				}
-			}else{
-				rDatas = customerFacade.queryPrivateResWithKeysByBIdAndMobile(buildingId, mobile);
 			}
+
+			apiMessage.setStatus(0);
+			apiMessage.setMessage("没有资源数据");
 			
-			if(null== rDatas || rDatas.size() == 0){
-				apiMessage.setStatus(0);
-				apiMessage.setMessage("没有资源数据");
-			}else{
-				apiMessage.setStatus(1);
-				apiMessage.setMessage("");
-				apiMessage.setContent(rDatas);
+			for(int i=0;i<buildingModels.size();i++){
+				List<ResourceData> rDatas = null;
+				rDatas = customerFacade.queryPubResWithKeysByBuildingId(buildingModels.get(i).getId());
+				if(null != rDatas && rDatas.size() > 0){
+					//获取有权限的私有资源
+					List<ResourceData> privateDatas = customerFacade.queryPrivateResWithKeysByBIdAndMobile(buildingModels.get(i).getId(), mobile);
+					
+					if(null != privateDatas && privateDatas.size() > 0){
+						rDatas.addAll(privateDatas);
+					}
+				}else{
+					rDatas = customerFacade.queryPrivateResWithKeysByBIdAndMobile(buildingModels.get(i).getId(), mobile);
+				}
+				
+				if(null!= rDatas&&rDatas.size() > 0){
+					apiMessage.setStatus(1);
+					apiMessage.setMessage("");
+					//apiMessage.setContent(rDatas);
+					buildingModels.get(i).setResourceDatas(rDatas);
+				}else{
+					buildingModels.remove(i);
+					--i;
+				}
+			}
+			if(apiMessage.getStatus()==1){
+				apiMessage.setContent(buildingModels);
 			}
 		}catch(Exception e){
 			apiMessage.setStatus(-1);

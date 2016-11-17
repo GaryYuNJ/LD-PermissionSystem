@@ -7,4 +7,6 @@ import com.ldps.model.BuildingModel;
 public interface IBuildingModelService {
 
 	List<BuildingModel> queryAll();
+	
+	BuildingModel queryBuilding(Integer id);
 }

@@ -1,11 +1,25 @@
 package com.ldps.model;
 
+import java.util.List;
+
+import com.ldps.data.ResourceData;
+
 public class BuildingModel {
     private Integer id;
 
     private String name;
     
     private String floor;
+    
+    private List<ResourceData> resourceDatas;
+
+	public List<ResourceData> getResourceDatas() {
+		return resourceDatas;
+	}
+
+	public void setResourceDatas(List<ResourceData> resourceDatas) {
+		this.resourceDatas = resourceDatas;
+	}
 
 	public Integer getId() {
         return id;

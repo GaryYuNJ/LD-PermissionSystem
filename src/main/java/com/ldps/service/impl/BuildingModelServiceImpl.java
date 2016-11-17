@@ -29,4 +29,9 @@ public class BuildingModelServiceImpl implements IBuildingModelService {
 		this.buildingModelMapper = buildingModelMapper;
 	}
 
+	@Override
+	public BuildingModel queryBuilding(Integer id) {
+		return buildingModelMapper.selectByPrimaryKey(id);
+	}
+
 }

@@ -54,7 +54,7 @@ public class TestAPIToken {
 			}
 		}
 		encodeStr.append(TOKEN_KEY);
-		String ss="buildingId=2&endDate=2016-11-17 23:59:59&floor=1&fromMobile=15951976919&startDate=2016-11-17 00:00:01&toMobile=18705172915&toName=哦用&123qweASDzxc";
+		String ss="buildingId=1&mobile=13813486976&123qweASDzxc";
 		System.out.println(encodeStr);
 		System.out.println(ss);
 		System.out.println(DigestUtils.md5Hex(ss));
