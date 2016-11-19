@@ -2,7 +2,7 @@
 <!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" 
   "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd"> 
 <generatorConfiguration> 
-	<classPathEntry location="E:\MyProject\eclipse_workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp1\wtpwebapps\LD-PermissionSystem\WEB-INF\lib/mysql-connector-java-5.1.30.jar"/>
+	<classPathEntry location="E:\mysql-connector-java-5.1.30.jar"/>
 	<context id="MysqlTables" targetRuntime="MyBatis3"> 
 		<commentGenerator>   
 		    <property name="suppressAllComments" value="true" />      
@@ -15,16 +15,16 @@
 			<property name="forceBigDecimals" value="false"/> 
 		</javaTypeResolver> 
 		
-		<javaModelGenerator targetPackage="com.ldps.model1" targetProject="LD-PermissionSystem\src\main\java"> 
+		<javaModelGenerator targetPackage="com.ldps.model" targetProject="src\main\java"> 
 			<property name="enableSubPackages" value="true"/> 
 			<property name="trimStrings" value="true"/> 
 		</javaModelGenerator> 
 		
-		<sqlMapGenerator targetPackage="mapping1" targetProject="LD-PermissionSystem\src\main\resources"> 
+		<sqlMapGenerator targetPackage="mapping" targetProject="src\main\resources"> 
 			<property name="enableSubPackages" value="true"/> 
 		</sqlMapGenerator> 
 		
-		<javaClientGenerator type="XMLMAPPER" targetPackage="com.ldps.dao1" targetProject="LD-PermissionSystem\src\main\java"> 
+		<javaClientGenerator type="XMLMAPPER" targetPackage="com.ldps.dao" targetProject="src\main\java"> 
 			<property name="enableSubPackages" value="true"/> 
 		</javaClientGenerator> 
 		<!--<table tableName="CUSTOMER" domainObjectName="CustomerModel" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
@@ -51,7 +51,9 @@
 		 <table tableName="CUSGROUP_RESGROUP_REL" domainObjectName="CusGroupResGroupRelModel" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
 		 
 		 -->
-		 <table tableName="PERMISSION_RECORD" domainObjectName="PermissionRecordModel" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+		 <table tableName="ROLE" domainObjectName="Role" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+		 <table tableName="ROLE_BUILDING" domainObjectName="RoleBuilding" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+		 <table tableName="MESSAGE_RECORD" domainObjectName="MessageRecord" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
 		 
 	</context> 
 </generatorConfiguration> 

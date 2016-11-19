@@ -28,5 +28,8 @@
 					<li class="has_sub">
 						<a href="<c:url value="/userGroup/userGroupManage" />"><i class="icon-list-alt"></i> 用户组管理 </a>
 					</li>
+					<li class="has_sub">
+						<a href="<c:url value="/manage/roleManagePage" />"><i class="icon-list-alt"></i> 角色管理 </a>
+					</li>
 			</div>
 			<!-- Sidebar ends -->

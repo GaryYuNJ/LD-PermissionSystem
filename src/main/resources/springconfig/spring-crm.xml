@@ -81,14 +81,14 @@
            <value>0 0/10 06-23 * * ?</value>
        </property>
     </bean>
-
+ <!-- 添加触发器 --><!-- 
     <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
-       <!-- 添加触发器 -->
+      
        <property name="triggers">
            <list>
               <ref local="syncCustomerCronTrigger" />
            </list>
        </property>
-    </bean>
+    </bean> -->
 	
 </beans>  

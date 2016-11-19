@@ -15,16 +15,16 @@
 			<property name="forceBigDecimals" value="false"/> 
 		</javaTypeResolver> 
 		
-		<javaModelGenerator targetPackage="com.ldps.crm.model" targetProject="LD-PermissionSystem\src\main\java"> 
+		<javaModelGenerator targetPackage="com.ldps.crm.model" targetProject="src\main\java"> 
 			<property name="enableSubPackages" value="true"/> 
 			<property name="trimStrings" value="true"/> 
 		</javaModelGenerator> 
 		
-		<sqlMapGenerator targetPackage="crmDBMapping" targetProject="LD-PermissionSystem\src\main\resources"> 
+		<sqlMapGenerator targetPackage="crmDBMapping" targetProject="src\main\resources"> 
 			<property name="enableSubPackages" value="true"/> 
 		</sqlMapGenerator> 
 		
-		<javaClientGenerator type="XMLMAPPER" targetPackage="com.ldps.crm.dao" targetProject="LD-PermissionSystem\src\main\java"> 
+		<javaClientGenerator type="XMLMAPPER" targetPackage="com.ldps.crm.dao" targetProject="src\main\java"> 
 			<property name="enableSubPackages" value="true"/> 
 		</javaClientGenerator> 
 		
