@@ -54,7 +54,7 @@ public class TestAPIToken {
 			}
 		}
 		encodeStr.append(TOKEN_KEY);
-		String ss="buildingId=1&mobile=13813486976&123qweASDzxc";
+		String ss="vdisendcontent&timestamp=1477897008";
 		System.out.println(encodeStr);
 		System.out.println(ss);
 		System.out.println(DigestUtils.md5Hex(ss));

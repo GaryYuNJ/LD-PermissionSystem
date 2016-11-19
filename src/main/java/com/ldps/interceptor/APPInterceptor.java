@@ -70,6 +70,8 @@ public class APPInterceptor extends HandlerInterceptorAdapter {
 		}
 		encodeStr.append(TOKEN_KEY);
 		logger.info("encodeStr: "+encodeStr);
+		System.out.println(DigestUtils.md5Hex(encodeStr.toString()));
+		System.out.println(encodeStr);
 		
 		if ( token==null||! token.equals(DigestUtils.md5Hex(encodeStr.toString()))) {
 			response.setStatus(200);
