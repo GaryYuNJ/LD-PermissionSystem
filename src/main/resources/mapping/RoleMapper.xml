@@ -5,12 +5,17 @@
     <id column="ID" property="id" jdbcType="BIGINT" />
     <result column="NAME" property="name" jdbcType="VARCHAR" />
     <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
-    <result column="STATE" property="state" jdbcType="INTEGER" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
     <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
     <result column="CREATE_USER" property="createUser" jdbcType="BIGINT" />
   </resultMap>
+  
+  <resultMap id="resultOfInteger" type="java.lang.Integer">  
+       <result column="totalCount" property="totalCount" jdbcType="INTEGER" />  
+  </resultMap> 
+  
   <sql id="Base_Column_List" >
-    ID, NAME, DESCRIPTION, STATE, CREATE_DATE, CREATE_USER
+    ID, NAME, DESCRIPTION, STATUS, CREATE_DATE, CREATE_USER
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -18,16 +23,30 @@
     from ROLE
     where ID = #{id,jdbcType=BIGINT}
   </select>
+  <select id="selectRoleWithCondition" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ROLE
+	<if test="roleName != null"><bind name="nameLike" value="'%' + roleName + '%'" />where NAME like #{nameLike}</if>
+    limit #{startRow,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
+  </select>
+  <select id="selectCountWithCondition" resultMap="resultOfInteger">
+    select 
+    count(1) AS totalCount
+    from ROLE
+    <if test="roleName != null"><bind name="nameLike" value="'%' + roleName + '%'" />where NAME like #{nameLike}</if>
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from ROLE
     where ID = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.ldps.model.Role" >
     insert into ROLE (ID, NAME, DESCRIPTION, 
-      STATE, CREATE_DATE, CREATE_USER
+      STATUS, CREATE_DATE, CREATE_USER
       )
     values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
-      #{state,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}, #{createUser,jdbcType=BIGINT}
+      #{status,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{createUser,jdbcType=BIGINT}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.ldps.model.Role" >
@@ -42,8 +61,8 @@
       <if test="description != null" >
         DESCRIPTION,
       </if>
-      <if test="state != null" >
-        STATE,
+      <if test="status != null" >
+        STATUS,
       </if>
       <if test="createDate != null" >
         CREATE_DATE,
@@ -62,8 +81,8 @@
       <if test="description != null" >
         #{description,jdbcType=VARCHAR},
       </if>
-      <if test="state != null" >
-        #{state,jdbcType=INTEGER},
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
       </if>
       <if test="createDate != null" >
         #{createDate,jdbcType=TIMESTAMP},
@@ -82,8 +101,8 @@
       <if test="description != null" >
         DESCRIPTION = #{description,jdbcType=VARCHAR},
       </if>
-      <if test="state != null" >
-        STATE = #{state,jdbcType=INTEGER},
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
       </if>
       <if test="createDate != null" >
         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
@@ -98,7 +117,7 @@
     update ROLE
     set NAME = #{name,jdbcType=VARCHAR},
       DESCRIPTION = #{description,jdbcType=VARCHAR},
-      STATE = #{state,jdbcType=INTEGER},
+      STATUS = #{status,jdbcType=VARCHAR},
       CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
       CREATE_USER = #{createUser,jdbcType=BIGINT}
     where ID = #{id,jdbcType=BIGINT}

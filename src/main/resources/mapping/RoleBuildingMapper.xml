@@ -5,12 +5,12 @@
     <id column="ID" property="id" jdbcType="BIGINT" />
     <result column="ROLE_ID" property="roleId" jdbcType="BIGINT" />
     <result column="BUILDING_ID" property="buildingId" jdbcType="INTEGER" />
-    <result column="STATE" property="state" jdbcType="INTEGER" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
     <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
     <result column="CREATE_USER" property="createUser" jdbcType="BIGINT" />
   </resultMap>
   <sql id="Base_Column_List" >
-    ID, ROLE_ID, BUILDING_ID, STATE, CREATE_DATE, CREATE_USER
+    ID, ROLE_ID, BUILDING_ID, STATUS, CREATE_DATE, CREATE_USER
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -24,10 +24,10 @@
   </delete>
   <insert id="insert" parameterType="com.ldps.model.RoleBuilding" >
     insert into ROLE_BUILDING (ID, ROLE_ID, BUILDING_ID, 
-      STATE, CREATE_DATE, CREATE_USER
+      STATUS, CREATE_DATE, CREATE_USER
       )
     values (#{id,jdbcType=BIGINT}, #{roleId,jdbcType=BIGINT}, #{buildingId,jdbcType=INTEGER}, 
-      #{state,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}, #{createUser,jdbcType=BIGINT}
+      #{status,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{createUser,jdbcType=BIGINT}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.ldps.model.RoleBuilding" >
@@ -42,8 +42,8 @@
       <if test="buildingId != null" >
         BUILDING_ID,
       </if>
-      <if test="state != null" >
-        STATE,
+      <if test="status != null" >
+        STATUS,
       </if>
       <if test="createDate != null" >
         CREATE_DATE,
@@ -62,8 +62,8 @@
       <if test="buildingId != null" >
         #{buildingId,jdbcType=INTEGER},
       </if>
-      <if test="state != null" >
-        #{state,jdbcType=INTEGER},
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
       </if>
       <if test="createDate != null" >
         #{createDate,jdbcType=TIMESTAMP},
@@ -82,8 +82,8 @@
       <if test="buildingId != null" >
         BUILDING_ID = #{buildingId,jdbcType=INTEGER},
       </if>
-      <if test="state != null" >
-        STATE = #{state,jdbcType=INTEGER},
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
       </if>
       <if test="createDate != null" >
         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
@@ -98,7 +98,7 @@
     update ROLE_BUILDING
     set ROLE_ID = #{roleId,jdbcType=BIGINT},
       BUILDING_ID = #{buildingId,jdbcType=INTEGER},
-      STATE = #{state,jdbcType=INTEGER},
+      STATUS = #{status,jdbcType=VARCHAR},
       CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
       CREATE_USER = #{createUser,jdbcType=BIGINT}
     where ID = #{id,jdbcType=BIGINT}

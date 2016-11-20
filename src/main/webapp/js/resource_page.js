@@ -518,6 +518,12 @@ $('#resourceTableId')
 									return findBuildName(value);
 								}
 							},
+			               {
+			            	   title: '节点',
+			                   field: 'nodePath',
+			                   align: 'center',
+			                   valign: 'middle'
+			               },
 							{
 								title : '状态',
 								field : 'status',

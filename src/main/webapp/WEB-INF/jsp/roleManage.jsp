@@ -44,8 +44,14 @@
 											<input type="text" id="userNameSearch" class="form-control" placeholder="角色名称">
 										</div>
 										<div class="col-lg-3">
-											<button type="button" onclick = "$('#userListTableId').bootstrapTable('refresh');" class="btn btn-primary">
+											<button type="button" onclick = "$('#roleListTableId').bootstrapTable('refresh');" class="btn btn-primary">
 												<i class="icon-search"></i> 查询
+											</button>
+										</div>
+										<div class="col-lg-2">
+											<button type="button" class="btn btn-primary"
+												data-toggle="modal" data-target="#createNewGroupModal">
+												<i class="icon-plus"></i> 新增角色
 											</button>
 										</div>
 									</div>
@@ -53,7 +59,7 @@
 							</div>
 							<div class="col-lg-12">
 								<table class="table table-striped table-bordered table-hover"
-									id="userListTableId">
+									id="roleListTableId">
 									
 								</table>
 							</div>

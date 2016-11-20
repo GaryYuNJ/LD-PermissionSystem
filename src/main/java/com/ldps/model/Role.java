@@ -9,7 +9,7 @@ public class Role {
 
     private String description;
 
-    private Integer state;
+    private String status;
 
     private Date createDate;
 
@@ -39,15 +39,15 @@ public class Role {
         this.description = description == null ? null : description.trim();
     }
 
-    public Integer getState() {
-        return state;
-    }
+    public String getStatus() {
+		return status;
+	}
 
-    public void setState(Integer state) {
-        this.state = state;
-    }
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
-    public Date getCreateDate() {
+	public Date getCreateDate() {
         return createDate;
     }
 
