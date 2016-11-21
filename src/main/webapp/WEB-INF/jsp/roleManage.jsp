@@ -73,7 +73,7 @@
 </div>
 </div>
 	<div class="modal fade" id="roleModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-			<div class="modal-dialog" role="document"  style="width:800px"> 
+			<div class="modal-dialog" role="document"  style="width:600px"> 
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -85,12 +85,6 @@
                               <label class="col-lg-2 control-label">角色名称</label>
                               <div class="col-lg-4">
                                 <input type="text" class="form-control" placeholder="名称" name="name" id="roleNameId">
-                              </div>
-                              <label class="col-lg-2 control-label">可用状态</label>
-                              <div class="col-lg-4">
-                               <div class="make-switch" data-on="primary" data-off="info">
-                     					<input type="checkbox" checked>
-                 				  </div>
                               </div>
                              </div>
                                <div class="form-group">
@@ -105,7 +99,7 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-						<button type="button" class="btn btn-primary">保存</button>
+						<button type="button" class="btn btn-primary" id="saveButtonId" onclick = "saveRole();" >保存</button>
 					</div>
 				</div>
 			</div>

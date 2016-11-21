@@ -20,17 +20,17 @@ $('#roleListTableId')
 					sidePagination : "server", // 服务端处理分页
 					columns : [
 							{
-								title : '用户组ID',
+								title : '角色ID',
 								field : 'id',
 								align : 'center',
 								valign : 'middle'
 							},
 							{
-								title : '用户组名称',
+								title : '角色名称',
 								field : 'name',
 								align : 'center',
 								valign : 'middle'
-							},
+							}/*,
 							{
 								title : '状态',
 								field : 'status',
@@ -43,7 +43,7 @@ $('#roleListTableId')
 										return '<span class="label label-danger">不可用</span>';
 									}
 								}
-							},
+							}*/,
 							{
 								title : '创建时间',
 								field : 'createDate',
@@ -100,11 +100,64 @@ $.get(rootUri + "/manage/allBuildings.json", function(data, status) {
 });
 
 function saveRole(){
-	
-	var search = {};
+	/*var search = {};
 	search["name"] = $("#roleNameId").val();
 	search["roleId"] = $("#roleId").val();
 	search["roleBuildings"] = $('#buildingId').val();
-	console.log( JSON.stringify(search));
+	console.log( JSON.stringify(search));*/
 	// 参数转为json字符串，并赋给search变量 ,JSON.stringify <ie7不支持，有第三方解决插件
+	$("#saveButtonId").button('loading');
+	$.ajax({
+		url : rootUri + "/manage/saveRole.json",
+		data : {
+			name : $("#roleNameId").val(),
+			roleId : $("#roleId").val(),
+			roleBuildings : ""
+		},
+		type : 'post',
+		cache : false,
+		dataType : 'json',
+		success : function(data) {
+			$("#saveButtonId").button('reset');
+			if (data.status == 1) {
+				$('#roleListTableId').bootstrapTable('refresh');
+				alert("保存成功");
+			} else {
+				alert("系统异常！");
+			}
+		},
+		error : function() {
+			alert("系统异常！");
+			$("#saveButtonId").button('reset');
+		}
+	});
 }
+function showRole(roleId,roleName){
+	$("#roleNameId").val(roleName);
+	$("#roleId").val(roleId);
+	$('#roleModal').modal('show');
+}
+
+function deleteRoleById(roleId){
+	$.ajax({
+		url : rootUri + "/manage/deleteRole.json",
+		data : {
+			roleId : $("#roleId").val()
+		},
+		type : 'post',
+		cache : false,
+		dataType : 'json',
+		success : function(data) {
+			if (data.status == 1) {
+				$('#roleListTableId').bootstrapTable('refresh');
+				alert("删除成功");
+			} else {
+				alert("系统异常！");
+			}
+		},
+		error : function() {
+			alert("系统异常！");
+		}
+	});
+}
+
