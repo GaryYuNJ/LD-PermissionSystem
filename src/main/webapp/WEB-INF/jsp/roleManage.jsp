@@ -3,7 +3,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="/common/header.jsp"%>
 <%@ include file="/common/nav.jsp"%>
-
 <!-- Main bar -->
 <div class="mainbar">
 	<!-- Page heading -->
@@ -50,7 +49,7 @@
 										</div>
 										<div class="col-lg-2">
 											<button type="button" class="btn btn-primary"
-												data-toggle="modal" data-target="#createNewGroupModal">
+												data-toggle="modal" data-target="#roleModal">
 												<i class="icon-plus"></i> 新增角色
 											</button>
 										</div>
@@ -71,6 +70,47 @@
 		</div>
 	</div>
 
+</div>
+</div>
+	<div class="modal fade" id="roleModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document"  style="width:800px"> 
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="myModalLabel">角色详情</h4>
+					</div>
+					<div class="modal-body">
+						<form class="form-horizontal" role="form" id="roleDetailId">
+                            <div class="form-group">
+                              <label class="col-lg-2 control-label">角色名称</label>
+                              <div class="col-lg-4">
+                                <input type="text" class="form-control" placeholder="名称" name="name" id="roleNameId">
+                              </div>
+                              <label class="col-lg-2 control-label">可用状态</label>
+                              <div class="col-lg-4">
+                               <div class="make-switch" data-on="primary" data-off="info">
+                     					<input type="checkbox" checked>
+                 				  </div>
+                              </div>
+                             </div>
+                               <div class="form-group">
+		                           <label class="col-lg-4 control-label">客资类型</label>
+		                            <div class="col-lg-8">
+		                                <select id="buildingId" name="building" class="selectpicker show-tick form-control" multiple data-live-search="false">
+		                                </select>
+                            </div>
+                          </div>
+                          <input type="hidden" id="roleId">
+                        </form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+						<button type="button" class="btn btn-primary">保存</button>
+					</div>
+				</div>
+			</div>
+		</div>
+<!-- Latest compiled and minified JavaScript -->
 <%@ include file="/common/script.jsp"%>
 <%@ include file="/common/footer.html"%>
 <script src="<c:url value="/js/role_page.js" />"></script>
