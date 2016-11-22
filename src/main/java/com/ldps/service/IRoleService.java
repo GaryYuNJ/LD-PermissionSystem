@@ -6,6 +6,6 @@ import com.ldps.model.Role;
 public interface IRoleService {
 	List<Role> queryRoleWithPageIndex(String roleName, Integer pageNo, Integer pageSize);
 	int queryCountByCondition(String roleName);
-	int saveOrUpdate(Role role);
+	Long saveOrUpdate(Role role);
 	int deleteById(Long id);
 }

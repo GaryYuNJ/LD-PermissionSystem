@@ -49,7 +49,7 @@
 										</div>
 										<div class="col-lg-2">
 											<button type="button" class="btn btn-primary"
-												data-toggle="modal" data-target="#roleModal">
+												data-toggle="modal" data-target="#roleModal" onclick="newRolePre()">
 												<i class="icon-plus"></i> 新增角色
 											</button>
 										</div>

@@ -3,8 +3,6 @@ package com.ldps.model;
 import java.util.Date;
 
 public class RoleBuilding {
-    private Long id;
-
     private Long roleId;
 
     private Integer buildingId;
@@ -14,14 +12,6 @@ public class RoleBuilding {
     private Date createDate;
 
     private Long createUser;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Long getRoleId() {
         return roleId;
@@ -40,14 +30,14 @@ public class RoleBuilding {
     }
 
     public String getStatus() {
-		return status;
-	}
+        return status;
+    }
 
-	public void setStatus(String status) {
-		this.status = status;
-	}
+    public void setStatus(String status) {
+        this.status = status == null ? null : status.trim();
+    }
 
-	public Date getCreateDate() {
+    public Date getCreateDate() {
         return createDate;
     }
 

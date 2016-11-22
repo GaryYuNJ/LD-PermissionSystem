@@ -1,7 +1,6 @@
 package com.ldps.service.impl;
 
 import java.util.List;
-
 import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import com.ldps.dao.RoleMapper;
@@ -25,15 +24,17 @@ public class RoleServiceImpl implements IRoleService {
 	}
 
 	@Override
-	public int saveOrUpdate(Role role) {
+	public Long saveOrUpdate(Role role) {
 		if(role!=null){
 			if(role.getId()!=null){
-				return roleDao.updateByPrimaryKeySelective(role);
+				if(roleDao.updateByPrimaryKeySelective(role)==1)
+					return role.getId();
 			}else{
-				return roleDao.insert(role);
+				roleDao.insert(role);
+				return role.getId();
 			}
 		}
-		return 0;
+		return 0L;
 	}
 
 	@Override

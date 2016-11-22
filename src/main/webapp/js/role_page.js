@@ -99,6 +99,12 @@ $.get(rootUri + "/manage/allBuildings.json", function(data, status) {
 	$('#buildingId').selectpicker('refresh');
 });
 
+function newRolePre(){
+	$("#roleNameId").val("");
+	$("#roleId").val("");
+	$('#buildingId').selectpicker('deselectAll');
+}
+
 function saveRole(){
 	/*var search = {};
 	search["name"] = $("#roleNameId").val();
@@ -112,7 +118,7 @@ function saveRole(){
 		data : {
 			name : $("#roleNameId").val(),
 			roleId : $("#roleId").val(),
-			roleBuildings : ""
+			roleBuildings : JSON.stringify($('#buildingId').val())
 		},
 		type : 'post',
 		cache : false,
@@ -135,6 +141,23 @@ function saveRole(){
 function showRole(roleId,roleName){
 	$("#roleNameId").val(roleName);
 	$("#roleId").val(roleId);
+	$.ajax({
+		url : rootUri + "/manage/getBuildingsByRoleId.json",
+		data : {
+			roleId : roleId
+		},
+		type : 'post',
+		cache : false,
+		dataType : 'json',
+		success : function(data) {
+				console.log(data);
+				$('#buildingId').selectpicker('val', data);
+				//alert("删除成功");
+		},
+		error : function() {
+			alert("系统异常！");
+		}
+	});
 	$('#roleModal').modal('show');
 }
 

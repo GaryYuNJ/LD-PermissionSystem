@@ -1,6 +1,7 @@
 package com.ldps.controller;
 
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -14,9 +15,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.ldps.data.APIMessage;
 import com.ldps.data.BootstrapTableData;
 import com.ldps.model.Role;
+import com.ldps.model.RoleBuilding;
+import com.ldps.service.IRoleBuildingService;
 import com.ldps.service.IRoleService;
 import com.ldps.service.IUserService;
 
@@ -26,6 +30,9 @@ public class RoleControl {
 	
 	@Resource
 	private IUserService userService;
+	
+	@Resource
+	private IRoleBuildingService roleBuildingService;
 	
 	@Resource(name = "iRoleService")
 	private IRoleService roleService;
@@ -79,9 +86,26 @@ public class RoleControl {
 		if(null!=roleId&&roleId>0){
 			role.setId(roleId);
 		}
-		//if()
-		apiMessage.setStatus(roleService.saveOrUpdate(role));
 		
+		Long roleTempId=roleService.saveOrUpdate(role);
+		if(null!=roleTempId){
+			roleBuildingService.deleteByRoleId(roleTempId);
+			if(!StringUtils.isEmpty(roleBuildings)){
+				JSONArray ja=JSON.parseArray(roleBuildings);
+				Iterator<Object> it = ja.iterator();
+				while (it.hasNext()) {
+					//System.out.println(it.next());
+					RoleBuilding roleBuilding=new RoleBuilding();
+					roleBuilding.setBuildingId(Integer.parseInt(String.valueOf(it.next())));
+					roleBuilding.setRoleId(roleTempId);
+					roleBuilding.setStatus("Y");
+					roleBuilding.setCreateDate(new Date());
+					roleBuilding.setCreateUser(userService.getSessionUserId());
+					roleBuildingService.save(roleBuilding);
+				}
+			}
+		}
+		apiMessage.setStatus(1);
 		return JSON.toJSONString(apiMessage);
 	}
 	
@@ -90,8 +114,17 @@ public class RoleControl {
 	public String deleteRole(@RequestParam("roleId") Long roleId) {
 		APIMessage apiMessage=new APIMessage();
 		apiMessage.setStatus(-1);
-		if(null!=roleId)
-		apiMessage.setStatus(roleService.deleteById(roleId));
+		if(null!=roleId){
+			roleBuildingService.deleteByRoleId(roleId);
+			apiMessage.setStatus(roleService.deleteById(roleId));
+		}
 		return JSON.toJSONString(apiMessage);
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "getBuildingsByRoleId.json")
+	public String getBuildingsByRoleId(@RequestParam("roleId") Long roleId) {
+		return JSON.toJSONString(roleBuildingService.queryBuildingIdRoleId(roleId));
+	}
+	
 }

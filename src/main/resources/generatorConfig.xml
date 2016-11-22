@@ -2,7 +2,7 @@
 <!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" 
   "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd"> 
 <generatorConfiguration> 
-	<classPathEntry location="E:\mysql-connector-java-5.1.30.jar"/>
+	<classPathEntry location="F:\mysql-connector-java-5.1.30.jar"/>
 	<context id="MysqlTables" targetRuntime="MyBatis3"> 
 		<commentGenerator>   
 		    <property name="suppressAllComments" value="true" />      
@@ -51,9 +51,9 @@
 		 <table tableName="CUSGROUP_RESGROUP_REL" domainObjectName="CusGroupResGroupRelModel" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
 		 
 		 -->
-		 <table tableName="ROLE" domainObjectName="Role" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
-		 <table tableName="ROLE_BUILDING" domainObjectName="RoleBuilding" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+		 <!-- <table tableName="ROLE" domainObjectName="Role" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
 		 <table tableName="MESSAGE_RECORD" domainObjectName="MessageRecord" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
-		 
+		  -->
+		  <table tableName="ROLE_BUILDING" domainObjectName="RoleBuilding" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
 	</context> 
 </generatorConfiguration> 
