@@ -1,5 +1,6 @@
 package com.ldps.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -46,5 +47,5 @@ public interface CusResourceRelModelMapper {
 	void deleteByCusIdAndResIdList(@Param("customerId")Long customerId, @Param("resourceIds")List<Integer> resourceIds);
 	
 	List<ResourceArea> selectSharableResBuildingById(Long customerId);
-	List<CusResourceRelModel>  selectSharableResourceByIdAndArea(@Param("customerId")Long customerId,@Param("buildingId")Integer buildingId,@Param("floor")Integer floor,@Param("toCustomerId")Long toCustomerId);
+	List<CusResourceRelModel>  selectSharableResourceByIdAndArea(@Param("customerId")Long customerId,@Param("buildingId")Integer buildingId,@Param("floor")Integer floor,@Param("toCustomerId")Long toCustomerId,@Param("startDate")Date startDate,@Param("endDate")Date endDate);
 }

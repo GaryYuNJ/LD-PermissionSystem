@@ -54,8 +54,8 @@ public class TestAPIToken {
 			}
 		}
 		encodeStr.append(TOKEN_KEY);
-		String ss="vdisendcontent&timestamp=1477897008";
-		System.out.println(encodeStr);
+		String ss="lvdisendcontent1477897008";
+		//System.out.println(encodeStr);
 		System.out.println(ss);
 		System.out.println(DigestUtils.md5Hex(ss));
 	}

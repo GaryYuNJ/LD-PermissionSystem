@@ -217,7 +217,6 @@ public class ResourceServiceImpl implements IResourceService {
 			if(StringUtils.isEmpty(model.getName()))
 				model.setName(null);
 		} 
-		
 		if(null == model || null == model.getSpecificUserId()){
 			return resourceDao.selectResouceListByCondition(model, pageNo, pageSize);
 		}else{

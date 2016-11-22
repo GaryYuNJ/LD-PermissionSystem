@@ -629,11 +629,11 @@ public class CustomerFacadeImpl implements CustomerFacade {
 							toCustomerModel.setCmMobile1(toMobile);
 							iCustomerSevice.addTempCustomer(toCustomerModel);
 							toCustomerModel= iCustomerSevice.getCustomerModelByMobile(toMobile);
-							message=1;//新增用户
+							message=2;//新增用户
 						}
 						
 						//查询当前人的资源分享列表  同时排出已经拥有权限的
-						List<CusResourceRelModel> cusresourceList= querySharableResource(fromCustomerModel.getId(),buildingId,floor,toCustomerModel.getId());
+						List<CusResourceRelModel> cusresourceList= querySharableResource(fromCustomerModel.getId(),buildingId,floor,toCustomerModel.getId(), startDate, endDate);
 						if(null==cusresourceList||cusresourceList.isEmpty()){
 							message=1;//无可授权数据
 						}
@@ -644,15 +644,16 @@ public class CustomerFacadeImpl implements CustomerFacade {
 							cusresourceList.get(i).setCreateUser(fromCustomerModel.getId());
 							cusresourceList.get(i).setFromShared("Y");
 							if(null!=startDate){
-								if(null==cusresourceList.get(i).getStartDate()||cusresourceList.get(i).getStartDate().getTime()>startDate.getTime()){
+								//if(null==cusresourceList.get(i).getStartDate()||cusresourceList.get(i).getStartDate().getTime()>startDate.getTime()){
 									cusresourceList.get(i).setStartDate(startDate);
-								}
+								//}
 							}
 							if(null!=endDate){
-								if(null==cusresourceList.get(i).getEndDate()||cusresourceList.get(i).getEndDate().getTime()<endDate.getTime()){
+								//if(null==cusresourceList.get(i).getEndDate()||cusresourceList.get(i).getEndDate().getTime()<endDate.getTime()){
 									cusresourceList.get(i).setEndDate(endDate);
-								}
+								//}
 							}
+							//authCusResPermission(cusresourceList.get(i));
 							//对当前用户进行批量授权  循环 
 							jointAuthCusResPermission(cusresourceList.get(i));
 							
@@ -672,8 +673,8 @@ public class CustomerFacadeImpl implements CustomerFacade {
 	/*
 		不包含公共资源
 	*/
-	private List<CusResourceRelModel> querySharableResource(Long customerId,Integer buildingId,Integer floor,Long toCustomerId) {
-		return iCusResourceRelService.querySharableResource(customerId,buildingId,floor,toCustomerId);
+	private List<CusResourceRelModel> querySharableResource(Long customerId,Integer buildingId,Integer floor,Long toCustomerId,Date startDate,Date endDate) {
+		return iCusResourceRelService.querySharableResource(customerId,buildingId,floor,toCustomerId, startDate, endDate);
 	}
 	
 	public ICustomerService getiCustomerSevice() {
