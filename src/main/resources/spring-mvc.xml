@@ -66,11 +66,11 @@
 		<property name="maxInMemorySize" value="40960" />
 	</bean>
 	
-	<mvc:interceptors>
+	<mvc:interceptors><!-- 
 		<mvc:interceptor>
 			<mvc:mapping path="/appApi/*" />
 			<bean class="com.ldps.interceptor.APPInterceptor" />
-		</mvc:interceptor>
+		</mvc:interceptor> -->
 		
 		<mvc:interceptor>
 			<mvc:mapping path="/manage/**" />

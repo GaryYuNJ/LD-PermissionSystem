@@ -127,4 +127,27 @@ public class RoleControl {
 		return JSON.toJSONString(roleBuildingService.queryBuildingIdRoleId(roleId));
 	}
 	
+	@ResponseBody
+	@RequestMapping(value = "roleSearchWithUser.json")
+	public String roleSearchWithUser(@RequestParam("search")String roleName,@RequestParam("userId")Long userId,
+			@RequestParam("limit") Integer limit,
+			@RequestParam("offset") Integer offset) {
+		if(StringUtils.isEmpty(roleName))
+			roleName=null;
+		BootstrapTableData bData = new BootstrapTableData();
+
+		List<Role> roleList = roleService.queryRoleWithPageIndexWithUser(roleName,userId, offset, limit);
+		if (null != roleList && roleList.size() > 0) {
+			bData.setRows(roleList);
+			bData.setPage(offset / limit + 1);
+			bData.setTotal(roleService
+					.queryCountByConditionWithUser(roleName,userId));
+		} else {
+			bData.setPage(0);
+			bData.setRows(new Object());
+			bData.setTotal(0);
+		}
+		return JSON.toJSONString(bData);
+	}
+	
 }

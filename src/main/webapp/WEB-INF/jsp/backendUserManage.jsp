@@ -49,7 +49,7 @@
 										</div>
 										<div class="col-lg-2">
 											<button type="button" class="btn btn-primary"
-												data-toggle="modal" data-target="#userModal" onclick="newRolePre()">
+												data-toggle="modal" data-target="#userModal" onclick="newUserPre()">
 												<i class="icon-plus"></i> 新增管理员
 											</button>
 										</div>
@@ -90,12 +90,63 @@
 								<div class="col-lg-4">
 									<div id="userStatusId" class="make-switch" data-on="success" data-off="warning" 
 										data-on-label="启用" data-off-label="禁用" >
-										<input type="checkbox" checked name="status">
+										<input type="checkbox" checked name="status" id="statusId">
 									</div>
 								</div>
                           </div>
                           <input type="hidden" id="backUserId">
                         </form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+						<button type="button" class="btn btn-primary" id="saveButtonId" onclick = "saveUser();" >保存</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="modal fade" id="userUpdateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document"  style="width:800px"> 
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="myModalLabel">管理员详情</h4>
+					</div>
+					<div class="modal-body">
+						<form class="form-horizontal" role="form" id="roleDetailId">
+                            <div class="form-group">
+                              <label class="col-lg-2 control-label">登陆账号</label>
+                              <div class="col-lg-4">
+                                <input type="text" class="form-control" placeholder="登陆账号" name="name" id="nameId">
+                              </div>
+                              <label class="col-lg-2 control-label">可用状态</label>
+								<div class="col-lg-4">
+									<div id="userStatusId" class="make-switch" data-on="success" data-off="warning" 
+										data-on-label="启用" data-off-label="禁用" >
+										<input type="checkbox" checked name="status" id="statusId">
+									</div>
+								</div>
+                          </div>
+                          <input type="hidden" id="backUserId">
+                        </form>
+                        	<hr>
+	                        <form class="form-horizontal" role="form">
+										<div class="form-group">
+											<label class="col-lg-2 control-label" style="width: 120px">角色名称</label>
+											<div class="col-lg-3">
+												<input type="text" id="roleNameSearch" class="form-control" placeholder="角色名称">
+											</div>
+											<div class="col-lg-3">
+												<button type="button" onclick = "$('#roleListTableId').bootstrapTable('refresh');" class="btn btn-primary">
+													<i class="icon-search"></i> 查询
+												</button>
+											</div>
+										</div>
+							</form>
+						<table class="table table-striped table-bordered table-hover"
+									id="roleListTableId">
+									
+								</table>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>

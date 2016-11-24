@@ -24,6 +24,16 @@ public class RoleServiceImpl implements IRoleService {
 	}
 
 	@Override
+	public List<Role> queryRoleWithPageIndexWithUser(String roleName,Long userId, Integer pageNo, Integer pageSize) {
+		return roleDao.selectRoleWithConditionUser(roleName,userId, pageNo, pageSize);
+	}
+
+	@Override
+	public int queryCountByConditionWithUser(String roleName,Long userId) {
+		return roleDao.selectCountWithConditionUser(roleName,userId);
+	}
+
+	@Override
 	public Long saveOrUpdate(Role role) {
 		if(role!=null){
 			if(role.getId()!=null){

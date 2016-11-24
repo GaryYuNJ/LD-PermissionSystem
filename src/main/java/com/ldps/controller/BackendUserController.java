@@ -137,7 +137,6 @@ public class BackendUserController {
 		APIMessage apiMessage = new APIMessage();
 		iUserService.delBURoleByUserId(bUserId);
 		iUserService.delBuser(bUserId);
-		
 		apiMessage.setStatus(1);
 		return JSON.toJSONString(apiMessage);
 	}

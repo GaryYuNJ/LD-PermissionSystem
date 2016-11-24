@@ -57,7 +57,7 @@ $('#userListTableId')
 								field : 'id',
 								align : 'center',
 								formatter : function(value, row, index) {
-									var e = '<button class="btn btn-xs btn-warning" onclick="showUser(\''
+									var e = '<button class="btn btn-xs btn-warning" data-toggle="modal" data-target="#userUpdateModal" onclick="showUser(\''
 											+ row.id
 											+ '\')"><i class="icon-pencil"></i> </button>  ';
 									if(row.id!="1000"){
@@ -88,19 +88,25 @@ function userQueryParams(params) { // 配置参数
 }
 
 function newUserPre(){
-	/*$("#roleNameId").val("");
-	$("#roleId").val("");
-	$('#buildingId').selectpicker('deselectAll');*/
+	$("#nameId").val("");
+	$("#userStatusId").bootstrapSwitch('setState', true);
 }
 
 function saveUser(){
 	$("#saveButtonId").button('loading');
+	if(null==$("#nameId").val()||$("#nameId").val()==""){
+		alert("用户名不能为空！");
+		return;
+	}
+	var status="Y";
+	if(!$("#statusId").prop('checked')){
+		status="N";
+	}
 	$.ajax({
-		url : rootUri + "/manage/saveRole.json",
+		url : rootUri + "/manage/saveBackEndUser.json",
 		data : {
-			name : $("#roleNameId").val(),
-			roleId : $("#roleId").val(),
-			roleBuildings : JSON.stringify($('#buildingId').val())
+			name : $("#nameId").val(),
+			status :status
 		},
 		type : 'post',
 		cache : false,
@@ -108,9 +114,11 @@ function saveUser(){
 		success : function(data) {
 			$("#saveButtonId").button('reset');
 			if (data.status == 1) {
-				$('#roleListTableId').bootstrapTable('refresh');
+				$('#userListTableId').bootstrapTable('refresh');
 				alert("保存成功");
-			} else {
+			} else if(data.status==2){
+				alert("该用户已存在");
+			}else{
 				alert("系统异常！");
 			}
 		},
@@ -143,18 +151,18 @@ function showUser(userId){
 	$('#roleModal').modal('show');
 }
 
-function deleteRoleById(roleId){
+function deleteUserById(userId){
 	$.ajax({
-		url : rootUri + "/manage/deleteRole.json",
+		url : rootUri + "/manage/delBackUser.json",
 		data : {
-			roleId : $("#roleId").val()
+			bUserId : userId
 		},
 		type : 'post',
 		cache : false,
 		dataType : 'json',
 		success : function(data) {
 			if (data.status == 1) {
-				$('#roleListTableId').bootstrapTable('refresh');
+				$('#userListTableId').bootstrapTable('refresh');
 				alert("删除成功");
 			} else {
 				alert("系统异常！");
@@ -166,3 +174,88 @@ function deleteRoleById(roleId){
 	});
 }
 
+var rolePageNumber = 1;
+$('#roleListTableId')
+		.bootstrapTable(
+				{
+					method : 'get',
+					url : rootUri + "/manage/roleSearchWithUser.json",
+					dataType : "json",
+					queryParams : roleQueryParams,
+					pageSize : 10,
+					pageList : [ 10, 25, 50 ], // 可供选择的每页的行数（*）
+					pageNumber : rolePageNumber,
+					pagination : true, // 分页
+					singleSelect : false,
+					idField : "id", // 标识哪个字段为id主键
+					// showColumns: true, //显示隐藏列
+					// showRefresh: true, //显示刷新按钮
+					locale : "zh-CN", // 表格汉化
+					// search: true, //显示搜索框
+					sidePagination : "server", // 服务端处理分页
+					columns : [
+							{
+								title : '角色ID',
+								field : 'id',
+								align : 'center',
+								valign : 'middle'
+							},
+							{
+								title : '角色名称',
+								field : 'name',
+								align : 'center',
+								valign : 'middle'
+							}/*,
+							{
+								title : '状态',
+								field : 'status',
+								align : 'center',
+								valign : 'middle',
+								formatter : function(value, row, index) {
+									if (value == "Y") {
+										return '<span class="label label-success">可用</span>';
+									} else {
+										return '<span class="label label-danger">不可用</span>';
+									}
+								}
+							}*/,
+							{
+								title : '创建时间',
+								field : 'createDate',
+								align : 'center',
+								formatter : function(value, row, index) {
+									return new Date(value).format("yyyy-MM-dd");
+								}
+							},
+							{
+								title : '操作',
+								field : 'id',
+								align : 'center',
+								formatter : function(value, row, index) {
+									var e = '<button class="btn btn-xs btn-warning" onclick="showRole(\''
+											+ row.id
+											+ '\',\''
+											+ row.name
+											+ '\')"><i class="icon-pencil"></i> </button>  ';
+									var d = '<button class="btn btn-xs btn-danger" onclick="deleteRoleById(\''
+											+ row.id
+											+ '\')"><i class="icon-remove"></i> </button>';
+									return e + d;
+								}
+							} ],
+					formatLoadingMessage : function() {
+						return "请稍等，正在加载中...";
+					}
+				});
+
+function roleQueryParams(params) { // 配置参数
+	var temp = { // 这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+		pageNumber : params.pageNumber, // 页码
+		limit : params.limit, // 页面行数大小
+		offset : params.offset, // 分页偏移量
+		sort : params.sort, // 排序列名
+		sortOrder : params.order,// 排位命令（desc，asc）
+		search : $("#roleNameSearch").val()
+	};
+	return temp;
+}

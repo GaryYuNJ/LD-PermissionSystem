@@ -9,25 +9,25 @@
     <result column="CREATE_USER" property="createUser" jdbcType="BIGINT" />
   </resultMap>
   <insert id="insert" parameterType="com.ldps.model.BuserRole" >
-    insert into buser_role (ROLE_ID, USER_ID, STATUS, 
+    insert into BUSER_ROLE (ROLE_ID, USER_ID, STATUS, 
       CREATE_DATE, CREATE_USER)
     values (#{roleId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{status,jdbcType=CHAR}, 
       #{createDate,jdbcType=TIMESTAMP}, #{createUser,jdbcType=BIGINT})
   </insert>
   
   <delete id="delete">
-    delete from buser_role
+    delete from BUSER_ROLE
     where ROLE_ID = #{roleId,jdbcType=BIGINT} AND USER_ID = #{userId,jdbcType=BIGINT}  
   </delete>
   
   
   <delete id="deleteByUser">
-    delete from buser_role
+    delete from BUSER_ROLE
     where USER_ID = #{userId,jdbcType=BIGINT}  
   </delete>
   
   <insert id="insertSelective" parameterType="com.ldps.model.BuserRole" >
-    insert into buser_role
+    insert into BUSER_ROLE
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="roleId != null" >
         ROLE_ID,
