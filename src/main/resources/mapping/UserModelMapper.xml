@@ -17,6 +17,10 @@
     <result column="CREATE_DATE" property="createDate"  />
     <result column="CREATE_USER" property="createUser" jdbcType="BIGINT" />
   </resultMap>
+   <resultMap id="resultOfInteger" type="java.lang.Integer">  
+       <result column="totalCount" property="totalCount" jdbcType="INTEGER" />  
+  </resultMap> 
+  
   <sql id="Base_Column_List" >
     ID, NAME, PASSWORD, STATUS, CREATE_DATE, CREATE_USER
   </sql>
@@ -25,7 +29,29 @@
     select 
     <include refid="Base_Column_List" />
     from BACKEND_USER
-    where NAME = #{userName,jdbcType=VARCHAR} and PASSWORD = #{password,jdbcType=VARCHAR} and STATUS=0
+    where NAME = #{userName,jdbcType=VARCHAR} and PASSWORD = #{password,jdbcType=VARCHAR} and STATUS='Y'
+  </select>
+  
+   <select id="selectByUname" resultMap="resultOfInteger" >
+    select 
+    count(1) AS totalCount
+    from BACKEND_USER
+    where NAME = #{name,jdbcType=VARCHAR}
+  </select>
+  
+  
+  <select id="selectUserWithCondition" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from BACKEND_USER
+	<if test="name != null"><bind name="nameLike" value="'%' + name + '%'" />where NAME like #{nameLike}</if>
+    limit #{startRow,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
+  </select>
+  <select id="selectCountWithCondition" resultMap="resultOfInteger">
+    select 
+    count(1) AS totalCount
+    from BACKEND_USER
+    <if test="name != null"><bind name="nameLike" value="'%' + name + '%'" />where NAME like #{nameLike}</if>
   </select>
   
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >

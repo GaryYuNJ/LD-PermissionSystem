@@ -545,6 +545,31 @@ public class CustomerAPPAPIController {
 		}
 		return JSON.toJSONString(apiMessage);
 	}
+	/*
+	获取building里用户所有有权限设备(含私有、公共资源)
+	 */
+	@RequestMapping(value="/checkMobile",method = { RequestMethod.GET,
+			RequestMethod.POST },produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public String checkMobile(@RequestParam("mobile")String mobile, Model model){
+		
+		APIMessage apiMessage = new APIMessage();
+		try{
+			if(iCustomerSevice.queryTotalCountByMobileAndName(mobile, null)>0){
+				apiMessage.setStatus(1);
+				apiMessage.setMessage("已注册");
+			}else{
+				apiMessage.setStatus(0);
+				apiMessage.setMessage("未注册");
+			}
+		}catch(Exception e){
+			apiMessage.setStatus(-1);
+			apiMessage.setMessage("系统异常");
+			e.printStackTrace();
+		}
+		return JSON.toJSONString(apiMessage);
+	}
+	
 }
 
 

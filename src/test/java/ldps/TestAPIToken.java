@@ -32,15 +32,14 @@ public class TestAPIToken {
 		//if(token == null) return true;  // !! remember to comment this when deploy on server !!
 		
 		SortedMap<String, String> finalpackage = new TreeMap<String, String>();
-		
 		StringBuffer encodeStr =  new StringBuffer();
-		finalpackage.put("endDate","2016-11-17 23:59:59");
-		finalpackage.put("fromMobile","15951976919");
+		finalpackage.put("mobile","18001587683");
+		/*finalpackage.put("fromMobile","15951976919");
 		finalpackage.put("startDate","2016-11-17 00:00:01");
 		finalpackage.put("buildingId","2");
 		finalpackage.put("floor","1");
 		finalpackage.put("toName", "哦用");
-		finalpackage.put("toMobile","18705172915");
+		finalpackage.put("toMobile","18705172915");*/
 		//获取要加密的string
 		Set es = finalpackage.entrySet();
 		Iterator it = es.iterator();
@@ -57,7 +56,7 @@ public class TestAPIToken {
 		String ss="lvdisendcontent1477897008";
 		//System.out.println(encodeStr);
 		System.out.println(ss);
-		System.out.println(DigestUtils.md5Hex(ss));
+		System.out.println(DigestUtils.md5Hex(encodeStr.toString()));
 	}
 
 }

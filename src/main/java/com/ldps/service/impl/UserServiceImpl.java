@@ -1,12 +1,16 @@
 package com.ldps.service.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ldps.dao.BuserRoleMapper;
 import com.ldps.dao.UserModelMapper;
+import com.ldps.model.BuserRole;
 import com.ldps.model.UserModel;
 import com.ldps.service.IUserService;
 
@@ -15,6 +19,11 @@ public class UserServiceImpl implements IUserService {
 
 	@Resource
 	private UserModelMapper userMapper;
+	
+
+	@Resource
+	private BuserRoleMapper buserRoleDao;
+	
 	@Autowired  
 	private HttpSession session;  
 
@@ -50,5 +59,49 @@ public class UserServiceImpl implements IUserService {
 	public int changePassword(UserModel currentUserModel, String newPassword) {
 		currentUserModel.setPassword(newPassword);
 		return userMapper.updateByPrimaryKeySelective(currentUserModel);
+	}
+
+	@Override
+	public List<UserModel> queryUserWithPageIndex(String name, Integer pageNo,
+			Integer pageSize) {
+		return userMapper.selectUserWithCondition(name, pageNo, pageSize);
+	}
+
+	@Override
+	public int queryCountByCondition(String name) {
+		return userMapper.selectCountWithCondition(name);
+	}
+
+	@Override
+	public int saveOrUpdate(UserModel userModel) {
+		if(userModel.getId()==null){
+			return userMapper.insert(userModel);
+		}else{
+			return userMapper.updateByPrimaryKey(userModel);
+		}
+	}
+	@Override
+	public int getUserByName(String name) {
+		return  userMapper.selectByUname(name);
+	}
+	
+	@Override
+	public int delBuser(Long id) {
+		return  userMapper.deleteByPrimaryKey(id);
+	}
+
+	@Override
+	public int saveOrupdateBURole(BuserRole buserRole) {
+		return buserRoleDao.insert(buserRole);
+	}
+
+	@Override
+	public int delBURole(Long userId, Long roleId) {
+		return buserRoleDao.delete(roleId, userId);
+	}
+	
+	@Override
+	public int delBURoleByUserId(Long userId) {
+		return buserRoleDao.deleteByUser(userId);
 	}
 }

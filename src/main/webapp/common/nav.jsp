@@ -31,5 +31,8 @@
 					<li class="has_sub">
 						<a href="<c:url value="/manage/roleManagePage" />"><i class="icon-list-alt"></i> 角色管理 </a>
 					</li>
+					<li class="has_sub">
+						<a href="<c:url value="/manage/backendUserManage" />"><i class="icon-list-alt"></i> 管理员管理 </a>
+					</li>
 			</div>
 			<!-- Sidebar ends -->

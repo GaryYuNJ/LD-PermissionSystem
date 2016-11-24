@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ldps.dao.BuserRoleMapper" >
+  <resultMap id="BaseResultMap" type="com.ldps.model.BuserRole" >
+    <result column="ROLE_ID" property="roleId" jdbcType="BIGINT" />
+    <result column="USER_ID" property="userId" jdbcType="BIGINT" />
+    <result column="STATUS" property="status" jdbcType="CHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="CREATE_USER" property="createUser" jdbcType="BIGINT" />
+  </resultMap>
+  <insert id="insert" parameterType="com.ldps.model.BuserRole" >
+    insert into buser_role (ROLE_ID, USER_ID, STATUS, 
+      CREATE_DATE, CREATE_USER)
+    values (#{roleId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{status,jdbcType=CHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{createUser,jdbcType=BIGINT})
+  </insert>
+  
+  <delete id="delete">
+    delete from buser_role
+    where ROLE_ID = #{roleId,jdbcType=BIGINT} AND USER_ID = #{userId,jdbcType=BIGINT}  
+  </delete>
+  
+  
+  <delete id="deleteByUser">
+    delete from buser_role
+    where USER_ID = #{userId,jdbcType=BIGINT}  
+  </delete>
+  
+  <insert id="insertSelective" parameterType="com.ldps.model.BuserRole" >
+    insert into buser_role
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="roleId != null" >
+        ROLE_ID,
+      </if>
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="roleId != null" >
+        #{roleId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+</mapper>
