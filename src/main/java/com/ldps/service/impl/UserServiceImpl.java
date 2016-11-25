@@ -101,6 +101,11 @@ public class UserServiceImpl implements IUserService {
 	}
 	
 	@Override
+	public int delBUByRole(Long roleId) {
+		return buserRoleDao.deleteByRole(roleId);
+	}
+	
+	@Override
 	public int delBURoleByUserId(Long userId) {
 		return buserRoleDao.deleteByUser(userId);
 	}

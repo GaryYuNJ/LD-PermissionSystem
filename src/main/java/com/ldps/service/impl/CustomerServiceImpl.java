@@ -19,7 +19,6 @@ import com.ldps.service.ICustomerService;
 
 @Service("iCustomerSevice")
 public class CustomerServiceImpl implements ICustomerService {
-
 	@Resource
 	private CustomerModelMapper customerDao;
 	

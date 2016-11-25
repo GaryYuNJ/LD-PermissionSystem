@@ -162,6 +162,9 @@ function showRole(roleId,roleName){
 }
 
 function deleteRoleById(roleId){
+	if(!confirm("是否确认删除")){
+		return ;
+	}
 	$.ajax({
 		url : rootUri + "/manage/deleteRole.json",
 		data : {

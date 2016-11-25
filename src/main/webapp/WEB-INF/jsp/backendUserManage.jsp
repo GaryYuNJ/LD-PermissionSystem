@@ -117,13 +117,13 @@
                             <div class="form-group">
                               <label class="col-lg-2 control-label">登陆账号</label>
                               <div class="col-lg-4">
-                                <input type="text" class="form-control" placeholder="登陆账号" name="name" id="nameId">
+                                <input type="text" class="form-control" placeholder="登陆账号" name="name" id="UpdateNameId" readonly="true">
                               </div>
                               <label class="col-lg-2 control-label">可用状态</label>
 								<div class="col-lg-4">
-									<div id="userStatusId" class="make-switch" data-on="success" data-off="warning" 
+									<div id="updateUserStatusId" class="make-switch" data-on="success" data-off="warning" 
 										data-on-label="启用" data-off-label="禁用" >
-										<input type="checkbox" checked name="status" id="statusId">
+										<input type="checkbox" checked name="status" id="updateStatusId">
 									</div>
 								</div>
                           </div>
@@ -135,6 +135,7 @@
 											<label class="col-lg-2 control-label" style="width: 120px">角色名称</label>
 											<div class="col-lg-3">
 												<input type="text" id="roleNameSearch" class="form-control" placeholder="角色名称">
+												<input type="hidden" id="roleSearchUserId">
 											</div>
 											<div class="col-lg-3">
 												<button type="button" onclick = "$('#roleListTableId').bootstrapTable('refresh');" class="btn btn-primary">
@@ -143,14 +144,14 @@
 											</div>
 										</div>
 							</form>
-						<table class="table table-striped table-bordered table-hover"
-									id="roleListTableId">
+								<table class="table table-striped table-bordered table-hover"
+											id="roleListTableId">
 									
 								</table>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-						<button type="button" class="btn btn-primary" id="saveButtonId" onclick = "saveUser();" >保存</button>
+						<button type="button" class="btn btn-primary" id="updateButtonId" onclick = "updateUser();" >保存</button>
 					</div>
 				</div>
 			</div>

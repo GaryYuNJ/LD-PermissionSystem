@@ -10,4 +10,5 @@ public interface BuserRoleMapper {
     
     int delete(@Param(value="roleId") Long roleId,@Param(value="userId") Long userId);
     int deleteByUser(@Param(value="userId") Long userId);
+    int deleteByRole(@Param(value="roleId") Long roleId);
 }

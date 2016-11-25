@@ -1,5 +1,6 @@
 package com.ldps.controller;
 
+import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -18,21 +19,29 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.ldps.data.APIMessage;
 import com.ldps.data.CusResourceRelData;
 import com.ldps.data.ResourceArea;
 import com.ldps.data.ResourceData;
 import com.ldps.facade.CustomerFacade;
 import com.ldps.model.BuildingModel;
+import com.ldps.model.MessageRecord;
 import com.ldps.service.IBuildingModelService;
 import com.ldps.service.ICustomerService;
+import com.ldps.service.IMessageService;
 import com.ldps.service.IResourceService;
+import com.ldps.tools.MessageTool;
 
 @Controller
 @RequestMapping(value = "appApi")
 public class CustomerAPPAPIController {
 	private static Logger logger = Logger
 			.getLogger(CustomerAPPAPIController.class);
+
+	@Resource
+	private IMessageService iMessageService;
+	
 	@Resource
 	private CustomerFacade customerFacade;
 	@Resource
@@ -407,7 +416,7 @@ public class CustomerAPPAPIController {
 			@RequestParam("toCId")String toCId,@RequestParam("sourceKeyId")Integer sourceKeyId,
 			Model model){
 		String result = customerFacade.removeSharedResource(fromCId,toCId,sourceKeyId);
-		
+
 		APIMessage apiMessage = new APIMessage();
 		if("0".equals(result)){
 			apiMessage.setStatus(1);
@@ -466,23 +475,35 @@ public class CustomerAPPAPIController {
 			apiMessage.setMessage("分享用户不存在");
 		}else if(i==-4){
 			apiMessage.setMessage("系统异常，请联系管理员");
+		}else if(i==3){
+			apiMessage.setMessage("被授权人手机号码不正确");
 		}else{
 			apiMessage.setStatus(1);
 			apiMessage.setMessage("授权成功");
 			//发送短信
-			if(i==2){//新用户
-			
-			}else{//老用户
-				
+			/*尾号xxxx访客您好，尾号XXXX邀请您访问南京绿地之窗C-5栋14层，可通过下载荟生活APP并注册会员，一键通行智能门禁，更多智慧办公体验，请点击链接·····
+			尾号xxxx用户您好，您已获得南京绿地之窗C-5栋14层智能门禁权限，点击“open”开启智慧办公之旅！荟生活APP，从工作到生活，您的一站式服务管家！下载链接。。。
+			*/
+			String buildString="";
+			if(!StringUtils.isEmpty(buildingId)){
+				int buildingIdInteger =new Integer(buildingId);
+				BuildingModel buildingModel=iBuildingModelService.queryBuilding(buildingIdInteger);
+				buildString+=buildingModel.getName();
+				if(!StringUtils.isEmpty(floor)){
+					buildString+=buildingModel.getName()+floor+"层";
+				}
 			}
-			
+			String message="";
+			if(i==2){//新用户
+				message="尾号"+toMobile.substring(7, 11)+"访客您好，尾号"+fromMobile.substring(7, 11)+"邀请您访问南京"+buildString+"，可通过下载荟生活APP并注册会员，一键通行智能门禁，更多智慧办公体验，请点击链接http://dwz.cn/3OJRnK";
+			}else{//老用户
+				message="尾号"+toMobile.substring(7, 11)+"用户您好，您已获得南京"+buildString+"智能门禁权限，点击“open”开启智慧办公之旅！荟生活APP，从工作到生活，您的一站式服务管家！下载链接http://dwz.cn/3OJRnK";
+			}
+			iMessageService.sendMessage(message, toMobile);
 		}
 		//调用Service
 		return JSON.toJSONString(apiMessage);
 	}
-	
-	
-	
 	
 	/*
 	获取building里用户所有有权限设备(含私有、公共资源)

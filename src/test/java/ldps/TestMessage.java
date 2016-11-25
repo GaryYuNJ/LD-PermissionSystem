@@ -8,14 +8,21 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Date;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.ldps.tools.MessageTool;
 
 public class TestMessage {
 
 	public static void main(String[] s){
 		
-		MessageTool.sendMessage(URLEncoder.encode("内容"), "13814179930");
+		String tem="尾号9930用户您好，您已获得南京绿地之窗C-5栋智能门禁权限，点击“open”开启智慧办公之旅！荟生活APP，从工作到生活，您的一站式服务管家！下载链接http://dwz.cn/3OJRnK";
 		
+		System.out.println(MessageTool.sendMessage(tem, "13814179930"));
+		
+		/*String ss="{\"status\": 0, \"msg\": \"\", \"data\": {}}";
+		JSONObject s2= JSON.parseObject(ss);
+		System.out.println(s2.get("status"));*/
 		/*String httpUrl = "lvdi.dev.aimoge.com/v1/mobile/send/sms";
 		String httpArg = "mobile=13205516161&content=%E3%80%90%E5%87%AF%E4%BF%A1%E9%80%9A%E3%80%91%E6%82%A8%E7%9A%84%E9%AA%8C%E8%AF%81%E7%A0%81%EF%BC%9A888888";
 		String jsonResult = request(httpUrl, httpArg);

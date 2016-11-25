@@ -115,6 +115,25 @@ public class BackendUserController {
 		}
 		return JSON.toJSONString(apiMessage);
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "updateEndUser.json")
+	public String updateEndUser(@RequestParam("id") Long id,
+			@RequestParam("status") String status) {
+		APIMessage apiMessage = new APIMessage();
+		apiMessage.setStatus(-1);
+		if (null!=id) {
+				UserModel userModel =iUserService.getUserById(id);
+				if(null!=userModel){
+					userModel.setStatus(status);
+					if (iUserService.saveOrUpdate(userModel) > 0)
+						apiMessage.setStatus(1);
+				}else{
+					apiMessage.setStatus(2);
+				}
+		}
+		return JSON.toJSONString(apiMessage);
+	}
 
 	@ResponseBody
 	@RequestMapping(value = "checkLoginIdExists.json")
@@ -146,14 +165,14 @@ public class BackendUserController {
 	@RequestMapping(value = "addUserRole.json")
 	public String addUserRole(@RequestParam("bUserId") Long bUserId,@RequestParam("roleId") Long roleId) {
 		APIMessage apiMessage = new APIMessage();
+		apiMessage.setStatus(-1);
 		BuserRole userRole=new BuserRole();
 		userRole.setCreateDate(new Date());
 		userRole.setCreateUser(iUserService.getSessionUserId());
 		userRole.setStatus("Y");
 		userRole.setRoleId(roleId);
 		userRole.setUserId(bUserId);
-		iUserService.saveOrupdateBURole(userRole);
-		apiMessage.setStatus(-1);
+		apiMessage.setStatus(iUserService.saveOrupdateBURole(userRole));
 		return JSON.toJSONString(apiMessage);
 	}
 	
@@ -162,8 +181,8 @@ public class BackendUserController {
 	@RequestMapping(value = "delUserRole.json")
 	public String delUserRole(@RequestParam("bUserId") Long bUserId,@RequestParam("roleId") Long roleId) {
 		APIMessage apiMessage = new APIMessage();
-		apiMessage.setStatus(1);
-		iUserService.delBURole(bUserId, roleId);
+		apiMessage.setStatus(-1);
+		apiMessage.setStatus(iUserService.delBURole(bUserId, roleId));
 		return JSON.toJSONString(apiMessage);
 	}
 }

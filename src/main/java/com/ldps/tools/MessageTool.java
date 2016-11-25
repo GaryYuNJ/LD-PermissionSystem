@@ -6,7 +6,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.Date;
+
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.log4j.Logger;
 
@@ -33,10 +35,10 @@ public class MessageTool {
 	        StringBuffer params = new StringBuffer();
 		    String timestamp=String.valueOf(new Date().getTime());
 	        params.append("timestamp").append("=").append(new Date().getTime());
-		    params.append("&content").append("=").append(content);
+		    params.append("&content").append("=").append(URLEncoder.encode(content,"UTF-8").toString());
 		    params.append("&receiver").append("=").append(receiver);
 		    params.append("&token").append("=").append(DigestUtils.md5Hex(TOKEN_KEY+timestamp));
-		    System.out.println(params.toString());
+		    //System.out.println(params.toString());
 	        DataOutputStream out = new DataOutputStream(connection
 	                .getOutputStream());
 	        out.writeBytes(params.toString());

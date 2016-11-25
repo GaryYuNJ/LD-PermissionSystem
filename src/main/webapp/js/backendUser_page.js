@@ -59,7 +59,7 @@ $('#userListTableId')
 								formatter : function(value, row, index) {
 									var e = '<button class="btn btn-xs btn-warning" data-toggle="modal" data-target="#userUpdateModal" onclick="showUser(\''
 											+ row.id
-											+ '\')"><i class="icon-pencil"></i> </button>  ';
+											+ '\',\''+row.name+'\',\''+row.status+'\')"><i class="icon-pencil"></i> </button>  ';
 									if(row.id!="1000"){
 										var d = '<button class="btn btn-xs btn-danger" onclick="deleteUserById(\''
 												+ row.id
@@ -90,10 +90,10 @@ function userQueryParams(params) { // 配置参数
 function newUserPre(){
 	$("#nameId").val("");
 	$("#userStatusId").bootstrapSwitch('setState', true);
+	$("#saveButtonId").button('reset');
 }
 
 function saveUser(){
-	$("#saveButtonId").button('loading');
 	if(null==$("#nameId").val()||$("#nameId").val()==""){
 		alert("用户名不能为空！");
 		return;
@@ -102,6 +102,7 @@ function saveUser(){
 	if(!$("#statusId").prop('checked')){
 		status="N";
 	}
+	$("#saveButtonId").button('loading');
 	$.ajax({
 		url : rootUri + "/manage/saveBackEndUser.json",
 		data : {
@@ -128,30 +129,58 @@ function saveUser(){
 		}
 	});
 }
-function showUser(userId){
-	$("#roleNameId").val(roleName);
-	$("#roleId").val(roleId);
+function showUser(userId,name,status){
+	$("#UpdateNameId").val(name);
+	$("#roleSearchUserId").val(userId);
+	if(userId=="Y"){
+		$("#userStatusId").bootstrapSwitch('setState', true);
+	}else{
+		$("#userStatusId").bootstrapSwitch('setState', false);
+	}
+	$('#roleListTableId').bootstrapTable('refresh');
+}
+
+function updateUser(){
+	$("#updateButtonId").button('loading');
+	if(null==$("#UpdateNameId").val()||$("#UpdateNameId").val()==""){
+		alert("用户名不能为空！");
+		return;
+	}
+	var status="Y";
+	if(!$("#updateStatusId").prop('checked')){
+		status="N";
+	}
 	$.ajax({
-		url : rootUri + "/manage/getBuildingsByRoleId.json",
+		url : rootUri + "/manage/updateEndUser.json",
 		data : {
-			roleId : roleId
+			name : $("#UpdateNameId").val(),
+			status :status
 		},
 		type : 'post',
 		cache : false,
 		dataType : 'json',
 		success : function(data) {
-				console.log(data);
-				$('#buildingId').selectpicker('val', data);
-				//alert("删除成功");
+			$("#updateButtonId").button('reset');
+			if (data.status == 1) {
+				$('#userListTableId').bootstrapTable('refresh');
+				alert("保存成功");
+			} else if(data.status==2){
+				alert("该用户不存在");
+			}else{
+				alert("系统异常！");
+			}
 		},
 		error : function() {
 			alert("系统异常！");
+			$("#updateButtonId").button('reset');
 		}
 	});
-	$('#roleModal').modal('show');
 }
 
 function deleteUserById(userId){
+	if(!confirm("是否确认删除")){
+		return ;
+	}
 	$.ajax({
 		url : rootUri + "/manage/delBackUser.json",
 		data : {
@@ -205,7 +234,7 @@ $('#roleListTableId')
 								field : 'name',
 								align : 'center',
 								valign : 'middle'
-							}/*,
+							},
 							{
 								title : '状态',
 								field : 'status',
@@ -213,12 +242,12 @@ $('#roleListTableId')
 								valign : 'middle',
 								formatter : function(value, row, index) {
 									if (value == "Y") {
-										return '<span class="label label-success">可用</span>';
+										return '<span class="label label-success">已授权</span>';
 									} else {
-										return '<span class="label label-danger">不可用</span>';
+										return '<span class="label label-danger">未授权</span>';
 									}
 								}
-							}*/,
+							}/*,
 							{
 								title : '创建时间',
 								field : 'createDate',
@@ -226,21 +255,19 @@ $('#roleListTableId')
 								formatter : function(value, row, index) {
 									return new Date(value).format("yyyy-MM-dd");
 								}
-							},
+							}*/,
 							{
 								title : '操作',
 								field : 'id',
 								align : 'center',
 								formatter : function(value, row, index) {
-									var e = '<button class="btn btn-xs btn-warning" onclick="showRole(\''
-											+ row.id
-											+ '\',\''
-											+ row.name
-											+ '\')"><i class="icon-pencil"></i> </button>  ';
-									var d = '<button class="btn btn-xs btn-danger" onclick="deleteRoleById(\''
-											+ row.id
-											+ '\')"><i class="icon-remove"></i> </button>';
-									return e + d;
+									var e ="";
+									if(row.status=="Y"){					
+										e = '<button type="button" class="btn btn-xs btn-warning" onclick="removePermission(\''+row.id+'\',this)">禁用</button>';
+									}else{
+										e = '<button type="button" class="btn btn-xs btn-success" onclick="addPermission(\''+row.id+'\',this)">授权</button>';
+									}
+									return e;
 								}
 							} ],
 					formatLoadingMessage : function() {
@@ -255,7 +282,75 @@ function roleQueryParams(params) { // 配置参数
 		offset : params.offset, // 分页偏移量
 		sort : params.sort, // 排序列名
 		sortOrder : params.order,// 排位命令（desc，asc）
-		search : $("#roleNameSearch").val()
+		search : $("#roleNameSearch").val(),
+		userId : $("#roleSearchUserId").val()
 	};
 	return temp;
+}
+function addPermission(rowId,obj){
+	if(null==$("#roleSearchUserId").val()||null==rowId){
+		alert("用户不能为空！")
+		return;
+	}
+	$(obj).button('loading');
+	
+	$.ajax({
+		url : rootUri + "/manage/addUserRole.json",
+		data : {
+			bUserId : $("#roleSearchUserId").val(),
+			roleId :rowId
+		},
+		type : 'post',
+		cache : false,
+		dataType : 'json',
+		success : function(data) {
+			$(obj).button('reset');
+			if (data.status == 1) {
+				$('#roleListTableId').bootstrapTable('refresh');
+				alert("保存成功");
+			}else{
+				alert("系统异常！");
+			}
+		},
+		error : function() {
+			alert("系统异常！");
+			$(obj).button('reset');
+		}
+	});
+	
+	
+}
+
+function removePermission(rowId,obj){
+	if(null==$("#roleSearchUserId").val()||null==rowId){
+		alert("用户不能为空！")
+		return;
+	}
+	$(obj).button('loading');
+	
+	$.ajax({
+		url : rootUri + "/manage/delUserRole.json",
+		data : {
+			bUserId : $("#roleSearchUserId").val(),
+			roleId :rowId
+		},
+		type : 'post',
+		cache : false,
+		dataType : 'json',
+		success : function(data) {
+			$(obj).button('reset');
+			if (data.status == 1) {
+				$('#roleListTableId').bootstrapTable('refresh');
+				alert("保存成功");
+			}else{
+				alert("系统异常！");
+			}
+		},
+		error : function() {
+			alert("系统异常！");
+			$(obj).button('reset');
+		}
+	});
+	
+	
 }

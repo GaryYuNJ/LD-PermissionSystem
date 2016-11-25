@@ -115,6 +115,9 @@ public class RoleControl {
 		APIMessage apiMessage=new APIMessage();
 		apiMessage.setStatus(-1);
 		if(null!=roleId){
+			//删除角色和用户相关
+			userService.delBUByRole(roleId);
+			//删除角色和楼栋相关
 			roleBuildingService.deleteByRoleId(roleId);
 			apiMessage.setStatus(roleService.deleteById(roleId));
 		}
@@ -132,17 +135,24 @@ public class RoleControl {
 	public String roleSearchWithUser(@RequestParam("search")String roleName,@RequestParam("userId")Long userId,
 			@RequestParam("limit") Integer limit,
 			@RequestParam("offset") Integer offset) {
-		if(StringUtils.isEmpty(roleName))
-			roleName=null;
 		BootstrapTableData bData = new BootstrapTableData();
 
+		if(StringUtils.isEmpty(roleName))
+			roleName=null;
+		if(null==userId){
+			bData.setPage(0);
+			bData.setRows(new Object());
+			bData.setTotal(0);
+			return JSON.toJSONString(bData);
+		}
+		
 		List<Role> roleList = roleService.queryRoleWithPageIndexWithUser(roleName,userId, offset, limit);
 		if (null != roleList && roleList.size() > 0) {
 			bData.setRows(roleList);
 			bData.setPage(offset / limit + 1);
 			bData.setTotal(roleService
 					.queryCountByConditionWithUser(roleName,userId));
-		} else {
+		}else{
 			bData.setPage(0);
 			bData.setRows(new Object());
 			bData.setTotal(0);

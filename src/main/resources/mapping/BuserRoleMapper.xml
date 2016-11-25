@@ -20,6 +20,10 @@
     where ROLE_ID = #{roleId,jdbcType=BIGINT} AND USER_ID = #{userId,jdbcType=BIGINT}  
   </delete>
   
+  <delete id="deleteByRole">
+    delete from BUSER_ROLE
+    where ROLE_ID = #{roleId,jdbcType=BIGINT}
+  </delete>
   
   <delete id="deleteByUser">
     delete from BUSER_ROLE

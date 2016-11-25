@@ -1,5 +1,12 @@
 package com.ldps.facade.impl;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
@@ -17,10 +24,10 @@ import com.ldps.data.ResourceData;
 import com.ldps.facade.CustomerFacade;
 import com.ldps.model.CusGrpResourceRelModel;
 import com.ldps.model.CusResourceRelModel;
+import com.ldps.model.CustomerGroupModel;
 import com.ldps.model.CustomerModel;
 import com.ldps.model.CustomerResGroupRelModel;
 import com.ldps.model.ResourceGroupModel;
-import com.ldps.model.CustomerGroupModel;
 import com.ldps.model.ResourceModel;
 import com.ldps.service.ICusGrpResourceRelService;
 import com.ldps.service.ICusResourceRelService;
@@ -29,11 +36,6 @@ import com.ldps.service.ICustomerGroupService;
 import com.ldps.service.ICustomerService;
 import com.ldps.service.IResourceService;
 import com.ldps.service.IUserService;
-
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 
 @Service("customerFacade")
@@ -624,12 +626,20 @@ public class CustomerFacadeImpl implements CustomerFacade {
 					}else{
 						CustomerModel toCustomerModel = iCustomerSevice.getCustomerModelByMobile(toMobile);
 						if(null == toCustomerModel){
-							//临时插入用户表数据，同时JOB更新
-							toCustomerModel=new CustomerModel(); 
-							toCustomerModel.setCmMobile1(toMobile);
-							iCustomerSevice.addTempCustomer(toCustomerModel);
-							toCustomerModel= iCustomerSevice.getCustomerModelByMobile(toMobile);
-							message=2;//新增用户
+							String regExp = "^((13[0-9])|(15[^4])|(18[0-9])|(17[0-8])|(147))\\d{8}$";  
+					        Pattern p = Pattern.compile(regExp);  
+					        Matcher m = p.matcher(toMobile);  
+					        if(m.matches()){
+					        	//临时插入用户表数据，同时JOB更新
+								toCustomerModel=new CustomerModel(); 
+								toCustomerModel.setCmMobile1(toMobile);
+								iCustomerSevice.addTempCustomer(toCustomerModel);
+								toCustomerModel= iCustomerSevice.getCustomerModelByMobile(toMobile);
+								message=2;//新增用户
+					        }else{
+					        	message=3;
+					        	return message;
+					        }
 						}
 						
 						//查询当前人的资源分享列表  同时排出已经拥有权限的
