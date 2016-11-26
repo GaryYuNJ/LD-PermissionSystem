@@ -25,7 +25,7 @@ import com.ldps.service.IRoleService;
 import com.ldps.service.IUserService;
 
 @Controller
-@RequestMapping(value = "manage")
+@RequestMapping(value = "admin")
 public class RoleControl {
 	
 	@Resource

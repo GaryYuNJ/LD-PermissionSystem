@@ -1,4 +1,4 @@
-var getUserURL = rootUri + "/manage/roleSearch.json";
+var getUserURL = rootUri + "/admin/roleSearch.json";
 var pageNumber = 1;
 $('#roleListTableId')
 		.bootstrapTable(
@@ -114,7 +114,7 @@ function saveRole(){
 	// 参数转为json字符串，并赋给search变量 ,JSON.stringify <ie7不支持，有第三方解决插件
 	$("#saveButtonId").button('loading');
 	$.ajax({
-		url : rootUri + "/manage/saveRole.json",
+		url : rootUri + "/admin/saveRole.json",
 		data : {
 			name : $("#roleNameId").val(),
 			roleId : $("#roleId").val(),
@@ -142,7 +142,7 @@ function showRole(roleId,roleName){
 	$("#roleNameId").val(roleName);
 	$("#roleId").val(roleId);
 	$.ajax({
-		url : rootUri + "/manage/getBuildingsByRoleId.json",
+		url : rootUri + "/admin/getBuildingsByRoleId.json",
 		data : {
 			roleId : roleId
 		},
@@ -166,7 +166,7 @@ function deleteRoleById(roleId){
 		return ;
 	}
 	$.ajax({
-		url : rootUri + "/manage/deleteRole.json",
+		url : rootUri + "/admin/deleteRole.json",
 		data : {
 			roleId : $("#roleId").val()
 		},

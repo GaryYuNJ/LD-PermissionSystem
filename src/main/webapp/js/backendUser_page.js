@@ -1,4 +1,4 @@
-var getUserURL = rootUri + "/manage/backendUserSearch.json";
+var getUserURL = rootUri + "/admin/backendUserSearch.json";
 var pageNumber = 1;
 $('#userListTableId')
 		.bootstrapTable(
@@ -104,7 +104,7 @@ function saveUser(){
 	}
 	$("#saveButtonId").button('loading');
 	$.ajax({
-		url : rootUri + "/manage/saveBackEndUser.json",
+		url : rootUri + "/admin/saveBackEndUser.json",
 		data : {
 			name : $("#nameId").val(),
 			status :status
@@ -142,18 +142,14 @@ function showUser(userId,name,status){
 
 function updateUser(){
 	$("#updateButtonId").button('loading');
-	if(null==$("#UpdateNameId").val()||$("#UpdateNameId").val()==""){
-		alert("用户名不能为空！");
-		return;
-	}
 	var status="Y";
 	if(!$("#updateStatusId").prop('checked')){
 		status="N";
 	}
 	$.ajax({
-		url : rootUri + "/manage/updateEndUser.json",
+		url : rootUri + "/admin/updateEndUser.json",
 		data : {
-			name : $("#UpdateNameId").val(),
+			id : $("#roleSearchUserId").val(),
 			status :status
 		},
 		type : 'post',
@@ -182,7 +178,7 @@ function deleteUserById(userId){
 		return ;
 	}
 	$.ajax({
-		url : rootUri + "/manage/delBackUser.json",
+		url : rootUri + "/admin/delBackUser.json",
 		data : {
 			bUserId : userId
 		},
@@ -208,7 +204,7 @@ $('#roleListTableId')
 		.bootstrapTable(
 				{
 					method : 'get',
-					url : rootUri + "/manage/roleSearchWithUser.json",
+					url : rootUri + "/admin/roleSearchWithUser.json",
 					dataType : "json",
 					queryParams : roleQueryParams,
 					pageSize : 10,
@@ -295,7 +291,7 @@ function addPermission(rowId,obj){
 	$(obj).button('loading');
 	
 	$.ajax({
-		url : rootUri + "/manage/addUserRole.json",
+		url : rootUri + "/admin/addUserRole.json",
 		data : {
 			bUserId : $("#roleSearchUserId").val(),
 			roleId :rowId
@@ -329,7 +325,7 @@ function removePermission(rowId,obj){
 	$(obj).button('loading');
 	
 	$.ajax({
-		url : rootUri + "/manage/delUserRole.json",
+		url : rootUri + "/admin/delUserRole.json",
 		data : {
 			bUserId : $("#roleSearchUserId").val(),
 			roleId :rowId

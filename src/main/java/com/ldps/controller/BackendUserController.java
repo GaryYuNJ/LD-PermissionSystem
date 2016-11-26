@@ -22,14 +22,13 @@ import com.ldps.model.UserModel;
 import com.ldps.service.IUserService;
 
 @Controller
-@RequestMapping(value = "manage")
 public class BackendUserController {
 
 	@Resource(name = "userService")
 	private IUserService iUserService;
 
 	@ResponseBody
-	@RequestMapping(value = "changePassword.json", method = RequestMethod.GET)
+	@RequestMapping(value = "manage/changePassword.json", method = RequestMethod.GET)
 	public String showNode(HttpServletRequest request, String curPassword,
 			String newPassword, String newPasswordConfirm) {
 
@@ -63,7 +62,7 @@ public class BackendUserController {
 		return JSON.toJSONString(apiMessage);
 	}
 
-	@RequestMapping(value = "backendUserManage", method = RequestMethod.GET)
+	@RequestMapping(value = "admin/backendUserManage", method = RequestMethod.GET)
 	public String backendUserManage(ModelMap model) {
 		// 页面菜单样式需要
 		model.put("pageIndex", 5);
@@ -71,7 +70,7 @@ public class BackendUserController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "backendUserSearch.json")
+	@RequestMapping(value = "admin/backendUserSearch.json")
 	public String roleSearch(@RequestParam("search") String name,
 			@RequestParam("limit") Integer limit,
 			@RequestParam("offset") Integer offset) {
@@ -94,7 +93,7 @@ public class BackendUserController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "saveBackEndUser.json")
+	@RequestMapping(value = "admin/saveBackEndUser.json")
 	public String saveRole(@RequestParam("name") String name,
 			@RequestParam("status") String status) {
 		APIMessage apiMessage = new APIMessage();
@@ -107,7 +106,7 @@ public class BackendUserController {
 				userModel.setCreateDate(new Date());
 				userModel.setName(name);
 				userModel.setPassword("888888");// 默认密码
-				userModel.setStatus("Y");
+				userModel.setStatus(status);
 				userModel.setCreateUser(iUserService.getSessionUserId());
 				if (iUserService.saveOrUpdate(userModel) > 0)
 					apiMessage.setStatus(1);
@@ -117,7 +116,7 @@ public class BackendUserController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "updateEndUser.json")
+	@RequestMapping(value = "admin/updateEndUser.json")
 	public String updateEndUser(@RequestParam("id") Long id,
 			@RequestParam("status") String status) {
 		APIMessage apiMessage = new APIMessage();
@@ -136,7 +135,7 @@ public class BackendUserController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "checkLoginIdExists.json")
+	@RequestMapping(value = "admin/checkLoginIdExists.json")
 	public String checkLoginIdExists(@RequestParam("name") String name) {
 		APIMessage apiMessage = new APIMessage();
 		apiMessage.setStatus(-1);
@@ -151,7 +150,7 @@ public class BackendUserController {
 	
 	//刪除后台用户
 	@ResponseBody
-	@RequestMapping(value = "delBackUser.json")
+	@RequestMapping(value = "admin/delBackUser.json")
 	public String delBackUser(@RequestParam("bUserId") Long bUserId) {
 		APIMessage apiMessage = new APIMessage();
 		iUserService.delBURoleByUserId(bUserId);
@@ -162,7 +161,7 @@ public class BackendUserController {
 	
 	//新增后台用户和角色匹配
 	@ResponseBody
-	@RequestMapping(value = "addUserRole.json")
+	@RequestMapping(value = "admin/addUserRole.json")
 	public String addUserRole(@RequestParam("bUserId") Long bUserId,@RequestParam("roleId") Long roleId) {
 		APIMessage apiMessage = new APIMessage();
 		apiMessage.setStatus(-1);
@@ -178,7 +177,7 @@ public class BackendUserController {
 	
 	//删除后台用户和角色匹配
 	@ResponseBody
-	@RequestMapping(value = "delUserRole.json")
+	@RequestMapping(value = "admin/delUserRole.json")
 	public String delUserRole(@RequestParam("bUserId") Long bUserId,@RequestParam("roleId") Long roleId) {
 		APIMessage apiMessage = new APIMessage();
 		apiMessage.setStatus(-1);
