@@ -34,11 +34,12 @@ public class TestAPIToken {
 		SortedMap<String, String> finalpackage = new TreeMap<String, String>();
 		StringBuffer encodeStr =  new StringBuffer();
 		//finalpackage.put("mobile","18001587683");
-		finalpackage.put("fromMobile","15951976919");
-		finalpackage.put("startDate","2016-11-17 00:00:01");
-		finalpackage.put("buildingId","2");
+		finalpackage.put("fromMobile","18001587683");
+		finalpackage.put("startDate","2016-11-28 00:00:01");
+		finalpackage.put("endDate","2016-11-28 23:59:59");
+		finalpackage.put("buildingId","1");
 		finalpackage.put("floor","1");
-		finalpackage.put("toName", "哦用");
+		finalpackage.put("toName", "测试");
 		finalpackage.put("toMobile","18705172915");
 		//获取要加密的string
 		Set es = finalpackage.entrySet();

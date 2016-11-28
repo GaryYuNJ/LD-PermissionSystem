@@ -488,9 +488,9 @@ public class CustomerAPPAPIController {
 			if(!StringUtils.isEmpty(buildingId)){
 				int buildingIdInteger =new Integer(buildingId);
 				BuildingModel buildingModel=iBuildingModelService.queryBuilding(buildingIdInteger);
-				buildString+=buildingModel.getName();
+				buildString=buildingModel.getName();
 				if(!StringUtils.isEmpty(floor)){
-					buildString+=buildingModel.getName()+floor+"层";
+					buildString=buildingModel.getName()+floor+"层";
 				}
 			}
 			String message="";
