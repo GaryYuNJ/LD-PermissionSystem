@@ -13,7 +13,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.log4j.Logger;
 
 public class MessageTool {
-	private static String httpUrl = "http://lvdi.dev.aimoge.com/v1/mobile/send/sms";
+	private static String httpUrl = "http://api.xianguo.greenlandjs.com/v1/mobile/send/sms";
 	private static String TOKEN_KEY = "lvdisendcontent";
 	private static Logger logger = Logger
 			.getLogger(MessageTool.class);
@@ -55,7 +55,7 @@ public class MessageTool {
 	        }
 	        reader.close();
 	        result = sbf.toString();
-	        System.out.println(result);
+	        //System.out.println(result);
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }

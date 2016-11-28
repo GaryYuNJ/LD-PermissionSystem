@@ -89,6 +89,6 @@
               <ref local="syncCustomerCronTrigger" />
            </list>
        </property>
-    </bean> -->
-	
+    </bean>
+	 -->
 </beans>  
