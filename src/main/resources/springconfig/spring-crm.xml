@@ -81,7 +81,7 @@
            <value>0 0/10 06-23 * * ?</value>
        </property>
     </bean>
- <!-- 添加触发器 -->
+ <!-- 添加触发器 --><!-- 
     <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
       
        <property name="triggers">
@@ -90,5 +90,5 @@
            </list>
        </property>
     </bean>
-	
+	 -->
 </beans>  

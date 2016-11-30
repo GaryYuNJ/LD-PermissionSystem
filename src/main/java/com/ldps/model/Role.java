@@ -6,8 +6,10 @@ public class Role {
     private Long id;
 
     private String name;
+    
+    private Integer roleType;
 
-    private String description;
+	private String description;
 
     private String status;
 
@@ -41,6 +43,14 @@ public class Role {
         this.name = name == null ? null : name.trim();
     }
 
+    public Integer getRoleType() {
+		return roleType;
+	}
+
+	public void setRoleType(Integer roleType) {
+		this.roleType = roleType;
+	}
+    
     public String getDescription() {
         return description;
     }

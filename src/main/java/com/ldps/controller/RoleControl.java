@@ -70,13 +70,14 @@ public class RoleControl {
 	@ResponseBody
 	@RequestMapping(value = "saveRole.json")
 	public String saveRole(@RequestParam("name")String name,
-			@RequestParam("roleId") Long roleId,
+			@RequestParam("roleId") Long roleId,@RequestParam("roleType") Integer roleType,
 			@RequestParam("roleBuildings") String roleBuildings) {
 		APIMessage apiMessage=new APIMessage();
 		apiMessage.setStatus(-1);
 		Role role=new Role();
 		if(!StringUtils.isEmpty(name)){
 			role.setName(name);
+			role.setRoleType(roleType);
 			role.setCreateUser(userService.getSessionUserId());
 			role.setCreateDate(new Date());
 			role.setStatus("Y");

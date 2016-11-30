@@ -30,20 +30,21 @@ $('#roleListTableId')
 								field : 'name',
 								align : 'center',
 								valign : 'middle'
-							}/*,
+							},
 							{
-								title : '状态',
-								field : 'status',
+								title : '角色类型',
+								field : 'roleType',
 								align : 'center',
 								valign : 'middle',
 								formatter : function(value, row, index) {
-									if (value == "Y") {
-										return '<span class="label label-success">可用</span>';
-									} else {
-										return '<span class="label label-danger">不可用</span>';
-									}
+									if (value == "1")
+										return "admin";
+									if (value == "2")
+										return "物业";
+									if (value == "3")
+										return "授权人员";
 								}
-							}*/,
+							},
 							{
 								title : '创建时间',
 								field : 'createDate',
@@ -57,15 +58,20 @@ $('#roleListTableId')
 								field : 'id',
 								align : 'center',
 								formatter : function(value, row, index) {
-									var e = '<button class="btn btn-xs btn-warning" onclick="showRole(\''
-											+ row.id
-											+ '\',\''
-											+ row.name
-											+ '\')"><i class="icon-pencil"></i> </button>  ';
-									var d = '<button class="btn btn-xs btn-danger" onclick="deleteRoleById(\''
-											+ row.id
-											+ '\')"><i class="icon-remove"></i> </button>';
-									return e + d;
+									if(row.id!=1){
+										var e = '<button class="btn btn-xs btn-warning" onclick="showRole(\''
+												+ row.id
+												+ '\',\''
+												+ row.name
+												+ '\',\''
+												+ row.roleType
+												+ '\')"><i class="icon-pencil"></i> </button>  ';
+										var d = '<button class="btn btn-xs btn-danger" onclick="deleteRoleById(\''
+												+ row.id
+												+ '\')"><i class="icon-remove"></i> </button>';
+										return e + d;
+									}
+									
 								}
 							} ],
 					formatLoadingMessage : function() {
@@ -102,23 +108,19 @@ $.get(rootUri + "/manage/allBuildings.json", function(data, status) {
 function newRolePre(){
 	$("#roleNameId").val("");
 	$("#roleId").val("");
+	$("#roleTypeRadio1").attr("checked","checked");
 	$('#buildingId').selectpicker('deselectAll');
 }
 
 function saveRole(){
-	/*var search = {};
-	search["name"] = $("#roleNameId").val();
-	search["roleId"] = $("#roleId").val();
-	search["roleBuildings"] = $('#buildingId').val();
-	console.log( JSON.stringify(search));*/
-	// 参数转为json字符串，并赋给search变量 ,JSON.stringify <ie7不支持，有第三方解决插件
 	$("#saveButtonId").button('loading');
 	$.ajax({
 		url : rootUri + "/admin/saveRole.json",
 		data : {
 			name : $("#roleNameId").val(),
 			roleId : $("#roleId").val(),
-			roleBuildings : JSON.stringify($('#buildingId').val())
+			roleBuildings : JSON.stringify($('#buildingId').val()),
+			roleType:$('input[name="roleType"]:checked').val()
 		},
 		type : 'post',
 		cache : false,
@@ -138,9 +140,15 @@ function saveRole(){
 		}
 	});
 }
-function showRole(roleId,roleName){
+function showRole(roleId,roleName,roleType){
+	console.log(roleType);
 	$("#roleNameId").val(roleName);
 	$("#roleId").val(roleId);
+	if(roleType==3){
+		$("#roleTypeRadio2").attr("checked","checked");
+	}else{
+		$("#roleTypeRadio1").attr("checked","checked");
+	}
 	$.ajax({
 		url : rootUri + "/admin/getBuildingsByRoleId.json",
 		data : {
@@ -150,9 +158,9 @@ function showRole(roleId,roleName){
 		cache : false,
 		dataType : 'json',
 		success : function(data) {
-				console.log(data);
+				//console.log(data);
 				$('#buildingId').selectpicker('val', data);
-				//alert("删除成功");
+				
 		},
 		error : function() {
 			alert("系统异常！");

@@ -4,15 +4,18 @@
   <resultMap id="BaseResultMap" type="com.ldps.model.Role" >
     <id column="ID" property="id" jdbcType="BIGINT" />
     <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="ROLE_TYPE" property="roleType" jdbcType="INTEGER" />
     <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
     <result column="STATUS" property="status" jdbcType="VARCHAR" />
     <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
     <result column="CREATE_USER" property="createUser" jdbcType="BIGINT" />
+    
   </resultMap>
   
   <resultMap id="BaseUserResultMap" type="com.ldps.model.Role" >
     <id column="ID" property="id" jdbcType="BIGINT" />
     <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="ROLE_TYPE" property="roleType" jdbcType="INTEGER" />
     <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
     <result column="STATUS" property="status" jdbcType="VARCHAR" />
     <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
@@ -25,11 +28,11 @@
   </resultMap> 
   
   <sql id="Base_Column_List" >
-    ID, NAME, DESCRIPTION, STATUS, CREATE_DATE, CREATE_USER
+    ID, NAME,ROLE_TYPE, DESCRIPTION, STATUS, CREATE_DATE, CREATE_USER
   </sql>
   
   <sql id="Base_Column_User_List" >
-    A.ID, A.NAME, A.DESCRIPTION, B.STATUS, B.CREATE_DATE, B.CREATE_USER,B.USER_ID
+    A.ID, A.NAME,ROLE_TYPE, A.DESCRIPTION, B.STATUS, B.CREATE_DATE, B.CREATE_USER,B.USER_ID
   </sql>
   
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
@@ -75,10 +78,10 @@
 			keyProperty="id">
 			SELECT LAST_INSERT_ID() AS id
 	</selectKey>
-    insert into ROLE (ID, NAME, DESCRIPTION, 
+    insert into ROLE (ID, NAME,ROLE_TYPE, DESCRIPTION, 
       STATUS, CREATE_DATE, CREATE_USER
       )
-    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{roleType,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, 
       #{status,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{createUser,jdbcType=BIGINT}
       )
   </insert>
@@ -90,6 +93,9 @@
       </if>
       <if test="name != null" >
         NAME,
+      </if>
+      <if test="roleType != null" >
+        ROLE_TYPE,
       </if>
       <if test="description != null" >
         DESCRIPTION,
@@ -111,6 +117,9 @@
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
       </if>
+      <if test="roleType != null" >
+        #{roleType,jdbcType=INTEGER},
+      </if>
       <if test="description != null" >
         #{description,jdbcType=VARCHAR},
       </if>
@@ -131,6 +140,9 @@
       <if test="name != null" >
         NAME = #{name,jdbcType=VARCHAR},
       </if>
+      <if test="roleType != null" >
+        ROLE_TYPE = #{roleType,jdbcType=INTEGER},
+      </if>
       <if test="description != null" >
         DESCRIPTION = #{description,jdbcType=VARCHAR},
       </if>
@@ -149,6 +161,7 @@
   <update id="updateByPrimaryKey" parameterType="com.ldps.model.Role" >
     update ROLE
     set NAME = #{name,jdbcType=VARCHAR},
+      ROLE_TYPE = #{roleType,jdbcType=INTEGER},
       DESCRIPTION = #{description,jdbcType=VARCHAR},
       STATUS = #{status,jdbcType=VARCHAR},
       CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
