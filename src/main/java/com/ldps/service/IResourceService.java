@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import com.ldps.data.APIMessage;
+import com.ldps.model.BuildingModel;
 import com.ldps.model.ResourceKeyModel;
 import com.ldps.model.ResourceModel;
 

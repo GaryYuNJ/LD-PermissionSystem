@@ -3,6 +3,7 @@ package com.ldps.service;
 import java.util.List;
 
 import com.ldps.model.BuserRole;
+import com.ldps.model.Role;
 import com.ldps.model.UserModel;
 
 public interface IUserService {

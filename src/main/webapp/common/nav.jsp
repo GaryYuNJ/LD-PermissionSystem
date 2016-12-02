@@ -16,25 +16,27 @@
 						<a href="<c:url value="/manage/resourceManagePage" />"><i class="icon-home"></i> 首页</a>
 					</li>
 					-->
+					<c:if test="${sessionScope.user.roleType<=2}">
 					<li class="has_sub">
 						<a href="<c:url value="/manage/resourceManagePage" />"><i class="icon-list-alt"></i> 资源管理 </a>
 					</li>
 					<li class="has_sub">
 						<a href="<c:url value="/manage/resourceGroupManagePage" />"><i class="icon-list-alt"></i> 资源组管理 </a>
 					</li>
+					</c:if>
 					<li class="has_sub">
 						<a href="<c:url value="/user/userManage" />"><i class="icon-list-alt"></i> 用户管理 </a>
 					</li>
 					<li class="has_sub">
 						<a href="<c:url value="/userGroup/userGroupManage" />"><i class="icon-list-alt"></i> 用户组管理 </a>
 					</li>
-					<c:if test="${sessionScope.user.id==1000}">
-					<li class="has_sub">
-						<a href="<c:url value="/admin/roleManagePage" />"><i class="icon-list-alt"></i> 角色管理 </a>
-					</li>
-					<li class="has_sub">
-						<a href="<c:url value="/admin/backendUserManage" />"><i class="icon-list-alt"></i> 管理员管理 </a>
-					</li>
+					<c:if test="${sessionScope.user.roleType==1}">
+						<li class="has_sub">
+							<a href="<c:url value="/admin/roleManagePage" />"><i class="icon-list-alt"></i> 角色管理 </a>
+						</li>
+						<li class="has_sub">
+							<a href="<c:url value="/admin/backendUserManage" />"><i class="icon-list-alt"></i> 管理员管理 </a>
+						</li>
 					</c:if>
 			</div>
 			<!-- Sidebar ends -->

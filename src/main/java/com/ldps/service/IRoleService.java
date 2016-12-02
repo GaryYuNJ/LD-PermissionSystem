@@ -1,6 +1,7 @@
 package com.ldps.service;
 
 import java.util.List;
+
 import com.ldps.model.Role;
 
 public interface IRoleService {
@@ -11,4 +12,5 @@ public interface IRoleService {
 	int queryCountByCondition(String roleName);
 	Long saveOrUpdate(Role role);
 	int deleteById(Long id);
+	List<Role> getRoleListByUserId(Long userId);
 }

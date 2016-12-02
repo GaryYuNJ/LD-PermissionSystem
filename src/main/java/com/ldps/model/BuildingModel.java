@@ -44,4 +44,11 @@ public class BuildingModel {
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
     }
+    
+    public boolean equals(Object obj)
+    {
+            if(!(obj instanceof Integer))
+                    return false;
+            return this.id.equals(obj);
+    }
 }

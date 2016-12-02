@@ -73,6 +73,11 @@
 		</mvc:interceptor>
 		
 		<mvc:interceptor>
+			<mvc:mapping path="/admin/**" />
+			<bean class="com.ldps.interceptor.AdminLoginInterceptor" />
+		</mvc:interceptor>
+		
+		<mvc:interceptor>
 			<mvc:mapping path="/manage/**" />
 			<mvc:mapping path="/user/**" />
 			<mvc:mapping path="/userGroup/**" />
@@ -82,10 +87,6 @@
 			<bean class="com.ldps.interceptor.LoginInterceptor" />
 		</mvc:interceptor>
 		
-		<mvc:interceptor>
-			<mvc:mapping path="/admin/**" />
-			<bean class="com.ldps.interceptor.AdminLoginInterceptor" />
-		</mvc:interceptor>
 	</mvc:interceptors>
 
 	<mvc:view-controller path="/" view-name="redirect:/manage/resourceManagePage"/>

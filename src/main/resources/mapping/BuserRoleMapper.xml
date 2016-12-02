@@ -8,6 +8,24 @@
     <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
     <result column="CREATE_USER" property="createUser" jdbcType="BIGINT" />
   </resultMap>
+  
+  <resultMap id="BaseResultRoleMap" type="com.ldps.model.Role" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="ROLE_TYPE" property="roleType" jdbcType="INTEGER" />
+    <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="CREATE_USER" property="createUser" jdbcType="BIGINT" />
+  </resultMap>
+  
+  <select id="selectRolesByUserId" resultMap="BaseResultRoleMap" parameterType="java.lang.Long" >
+    select 
+    A.*
+    from ROLE A INNER JOIN BUSER_ROLE B ON A.ID=B.ROLE_ID
+    where B.USER_ID = #{userId,jdbcType=BIGINT}
+  </select>
+  
   <insert id="insert" parameterType="com.ldps.model.BuserRole" >
     insert into BUSER_ROLE (ROLE_ID, USER_ID, STATUS, 
       CREATE_DATE, CREATE_USER)

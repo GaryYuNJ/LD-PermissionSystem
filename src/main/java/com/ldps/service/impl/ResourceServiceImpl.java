@@ -24,6 +24,7 @@ import com.ldps.dao.ResourceGrpRelModelMapper;
 import com.ldps.dao.ResourceKeyMapper;
 import com.ldps.dao.ResourceModelMapper;
 import com.ldps.data.APIMessage;
+import com.ldps.model.BuildingModel;
 import com.ldps.model.ResourceKeyModel;
 import com.ldps.model.ResourceModel;
 import com.ldps.service.IResourceService;
@@ -138,7 +139,6 @@ public class ResourceServiceImpl implements IResourceService {
 
 	@Override
 	public Integer queryResourceIdByMAC(String mac) {
-		// TODO Auto-generated method stub
 		ResourceModel model = resourceDao.selectIdByMac(mac);
 		
 		if(null == model){
@@ -201,14 +201,6 @@ public class ResourceServiceImpl implements IResourceService {
 				model.setName(null);
 		} 
 		return resourceDao.selectResouceListByCondition(model, pageNo, pageSize);
-		//这个我们讨论下
-		/*
-		if(null == model || null == model.getSpecificUserId()){
-			return resourceDao.selectResouceListByCondition(model, pageNo, pageSize);
-		}else{
-			return cusResourceRelDao.selectResouceListWithSpecUserId(model, pageNo, pageSize);
-		}*/
-		
 	}
 
 	@Override

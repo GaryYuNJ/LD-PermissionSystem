@@ -3,6 +3,7 @@ package com.ldps.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+
 import com.ldps.model.Role;
 
 public interface RoleMapper {
@@ -26,5 +27,6 @@ public interface RoleMapper {
 			@Param("pageSize") Integer pageSize);
 	
 	int selectCountWithConditionUser(@Param("roleName")String roleName,@Param("userId")Long userId);
+	
 }
 

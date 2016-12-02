@@ -1,6 +1,7 @@
 package com.ldps.model;
 
 import java.util.Date;
+import java.util.List;
 
 public class UserModel {
     private Long id;
@@ -14,6 +15,12 @@ public class UserModel {
     private Date createDate;
 
     private Long createUser;
+    
+    //权限判断
+    private Integer roleType;
+
+    //权限判断    
+    private List<BuildingModel> buildings;
 
     public Long getId() {
         return id;
@@ -62,4 +69,20 @@ public class UserModel {
     public void setCreateUser(Long createUser) {
         this.createUser = createUser;
     }
+
+	public Integer getRoleType() {
+		return roleType;
+	}
+
+	public void setRoleType(Integer roleType) {
+		this.roleType = roleType;
+	}
+
+	public List<BuildingModel> getBuildings() {
+		return buildings;
+	}
+
+	public void setBuildings(List<BuildingModel> buildings) {
+		this.buildings = buildings;
+	}
 }
