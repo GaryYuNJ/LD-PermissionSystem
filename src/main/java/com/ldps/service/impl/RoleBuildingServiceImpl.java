@@ -30,7 +30,7 @@ public class RoleBuildingServiceImpl implements IRoleBuildingService{
 
 	@Override
 	public List<Integer> queryBuildingIdRoleId(Long roleId) {
-		return roleBuildingDao.selectBuildingsByRoleId(roleId);
+		return roleBuildingDao.selectBuildingIdByRoleId(roleId);
 	}
 
 	@Override
@@ -43,5 +43,8 @@ public class RoleBuildingServiceImpl implements IRoleBuildingService{
 		return roleBuildingDao.selectBuildingsByRoles(roleIds);
 	}
 
-	
+	@Override
+	public List<BuildingModel> queryBuildingByRoleId(Long roleId) {
+		return roleBuildingDao.selectBuildingsByRoleId(roleId);
+	}
 }

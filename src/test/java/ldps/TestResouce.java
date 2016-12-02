@@ -73,14 +73,14 @@ public class TestResouce {
 		ResourceModel rm=new ResourceModel();
 		rm.setName("闸机");
 		rm.setBuildingId(0);
-		logger.info(iResourceService.queryCountByCondition(rm));
+		//logger.info(iResourceService.queryCountByCondition(rm));
 	}
 	//条件查询
 	@Test
 	public void testQueryCondition(){
 		ResourceModel rm=new ResourceModel();
 		rm.setName("闸机");
-		logger.info(JSON.toJSON(iResourceService.queryBasicResByCondition(rm, 1, 10)));
+		//logger.info(JSON.toJSON(iResourceService.queryBasicResByCondition(rm, 1, 10)));
 	}
 	
 	@Test

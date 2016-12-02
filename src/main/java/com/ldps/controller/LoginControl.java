@@ -42,25 +42,15 @@ public class LoginControl {
 		if(null!=userModel){
 			List<Role> roleList =roleService.getRoleListByUserId(userModel.getId());
 			if(null!=roleList&&!roleList.isEmpty()){
-				//List<Integer>  roleType=new ArrayList<Integer>();
-				//List<BuildingModel> buildings =new ArrayList<BuildingModel>();
-				int i=1000;
-				List<Long> roleIds=new ArrayList<Long>();
-				for(Role role:roleList){
-					roleIds.add(role.getId());
-					if(i>role.getRoleType()){
-						i=role.getRoleType();
-					}
-				}
-				userModel.setRoleType(i);
-				if(userModel.getRoleType()!=1){
-					userModel.setBuildings(roleBuildingService.queryBuildingByRoles(roleIds));
+				userModel.setUserRole(roleList.get(0));
+				if(userModel.getUserRole().getRoleType()!=1){
+					userModel.setBuildings(roleBuildingService.queryBuildingByRoleId(userModel.getUserRole().getId()));
 				}
 			}
 		}
 		request.getSession().setAttribute("user", userModel);
 		//暂时跳转到资源页面
-		if(null!=userModel&&userModel.getRoleType()>2){
+		if(null!=userModel&&userModel.getUserRole().getRoleType()>2){
 			return "redirect:user/userManage";
 		}
 		return "redirect:manage/resourceManagePage";

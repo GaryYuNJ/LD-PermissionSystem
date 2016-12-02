@@ -94,7 +94,6 @@ public class ReourceGroupServiceImpl implements IResourceGroupService {
 
 	@Override
 	public int deleteResourceGroupRel(ResourceGrpRelModel model) {
-		// TODO Auto-generated method stub
 		int flag = resourceGrpRelModelDao.deleteByPrimaryKey(model);
 		
 		//资源移除关联的权限更新
@@ -111,7 +110,6 @@ public class ReourceGroupServiceImpl implements IResourceGroupService {
 	@Override
 	public List<ResourceGroupModel> queryBasicResGroupWithCusId(
 			ResourceGroupModel resourceGroupModel, Integer offset, Integer limit) {
-		// TODO Auto-generated method stub
 		return cusResGroupRelModelMapper.selectResGrpListWithSpecUserId(resourceGroupModel, offset, limit);
 	}
 
@@ -123,7 +121,6 @@ public class ReourceGroupServiceImpl implements IResourceGroupService {
 
 	@Override
 	public int deleteCusGrpResGrpPermission(Integer userGrpId, Integer resGroupId) {
-		// TODO Auto-generated method stub
 		CusGroupResGroupRelModel model = new CusGroupResGroupRelModel();
 		model.setCgroupId(userGrpId);
 		model.setRgroupId(resGroupId);

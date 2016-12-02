@@ -51,7 +51,6 @@ public class ResourceFacadeImpl implements ResourceFacade {
 
 	@Override
 	public int deleteResource(Integer primaryId) {
-		// TODO Auto-generated method stub
 		return iResourceService.deleteResource(primaryId);
 	}
 	

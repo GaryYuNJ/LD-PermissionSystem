@@ -34,9 +34,9 @@ public interface ResourceModelMapper {
 
 	List<ResourceModel> selectBasicResByNodeIdList(@Param("nodeIds")List<Integer> nodeIds);
 	
-	List<ResourceModel> selectResouceListByCondition(@Param("resourceModel")ResourceModel resourceModel,@Param("startRow") Integer startRow,
+	List<ResourceModel> selectResouceListByCondition(@Param("roleId")Long roleId,@Param("resourceModel")ResourceModel resourceModel,@Param("startRow") Integer startRow,
 			@Param("pageSize") Integer pageSize);
-	int selectCountByCondition(@Param("resourceModel")ResourceModel resourceModel);
+	int selectCountByCondition(@Param("roleId")Long roleId,@Param("resourceModel")ResourceModel resourceModel);
 	
 
 	ResourceModel selectWithResKeysByName(@Param("name") String name);

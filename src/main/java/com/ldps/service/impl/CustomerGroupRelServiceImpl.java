@@ -37,7 +37,6 @@ public class CustomerGroupRelServiceImpl implements ICustomerGroupRelService {
 	
 	@Override
 	public int delUserGroupRelation(Long userId, Integer groupId) {
-		// TODO Auto-generated method stub
 		int flag = customerGroupRelDao.delUserGroupRelation(userId, groupId);
 		
 		//用户组删除用户带来的权限更新
@@ -53,7 +52,6 @@ public class CustomerGroupRelServiceImpl implements ICustomerGroupRelService {
 
 	@Override
 	public int addUserGroupRelation(Long userId, Integer groupId) {
-		// TODO Auto-generated method stub
 		CusGroupRelModel model = new CusGroupRelModel();
 		model.setCgroupId(groupId);
 		model.setCustomerId(userId);

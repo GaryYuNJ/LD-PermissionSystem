@@ -58,7 +58,8 @@ public class ResourceControl {
 	@ResponseBody
 	@RequestMapping(value = "allBuildings.json")
 	public String getBuildings() {
-		if (userService.getSessionUserModel().getRoleType() != 1) {
+		//权限过滤
+		if (userService.getSessionUserModel().getUserRole().getRoleType() != 1) {
 			return JSON.toJSONString(userService.getSessionUserModel().getBuildings());
 		}
 		return JSON.toJSONString(iBuildingModelService.queryAll());
@@ -162,15 +163,18 @@ public class ResourceControl {
 				ResourceModel.class);
 		BootstrapTableData bData = new BootstrapTableData();
 
-		// TODO 待OA部分确认了之后此处需要更新为SQL 实现。
+		Long roleId=userService.getSessionUserModel().getUserRole().getId();
+		if(roleId==1){
+			roleId=null;
+		}
 		
-		List<ResourceModel> resourceList = iResourceService.queryBasicResByCondition(resourceModel, offset, limit);
+		List<ResourceModel> resourceList = iResourceService.queryBasicResByCondition(roleId,resourceModel, offset, limit);
 		
 		if (null != resourceList && resourceList.size() > 0) {
 			bData.setRows(resourceList);
 			bData.setPage(offset / limit + 1);
 			bData.setTotal(iResourceService
-					.queryCountByCondition(resourceModel));
+					.queryCountByCondition(roleId,resourceModel));
 		} else {
 			bData.setPage(0);
 			bData.setRows(new Object());
@@ -214,14 +218,17 @@ public class ResourceControl {
 		ResourceModel resourceModel = JSON.parseObject(search,
 				ResourceModel.class);
 		BootstrapTableData bData = new BootstrapTableData();
-
+		Long roleId=userService.getSessionUserModel().getUserRole().getId();
+		if(roleId==1){
+			roleId=null;
+		}
 		List<ResourceModel> resourceList = iResourceService
-				.queryResByConditionWithCusId(resourceModel, offset, limit);
+				.queryResByConditionWithCusId(roleId,resourceModel, offset, limit);
 		if (null != resourceList && resourceList.size() > 0) {
 			bData.setRows(resourceList);
 			bData.setPage(offset / limit + 1);
 			bData.setTotal(iResourceService
-					.queryCountByCondition(resourceModel));
+					.queryCountByCondition(roleId,resourceModel));
 		} else {
 			bData.setRows(new Object());
 			bData.setTotal(0);
@@ -239,14 +246,17 @@ public class ResourceControl {
 		ResourceModel resourceModel = JSON.parseObject(search,
 				ResourceModel.class);
 		BootstrapTableData bData = new BootstrapTableData();
-
+		Long roleId=userService.getSessionUserModel().getUserRole().getId();
+		if(roleId==1){
+			roleId=null;
+		}
 		List<ResourceModel> resourceList = iResourceService
-				.queryResByConditionWithCusGroupId(resourceModel, offset, limit);
+				.queryResByConditionWithCusGroupId(roleId,resourceModel, offset, limit);
 		if (null != resourceList && resourceList.size() > 0) {
 			bData.setRows(resourceList);
 			bData.setPage(offset / limit + 1);
 			bData.setTotal(iResourceService
-					.queryCountByCondition(resourceModel));
+					.queryCountByCondition(roleId,resourceModel));
 		} else {
 			bData.setRows(new Object());
 			bData.setTotal(0);

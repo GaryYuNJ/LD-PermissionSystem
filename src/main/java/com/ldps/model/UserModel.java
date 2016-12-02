@@ -17,7 +17,7 @@ public class UserModel {
     private Long createUser;
     
     //权限判断
-    private Integer roleType;
+    private Role userRole;
 
     //权限判断    
     private List<BuildingModel> buildings;
@@ -70,12 +70,12 @@ public class UserModel {
         this.createUser = createUser;
     }
 
-	public Integer getRoleType() {
-		return roleType;
+	public Role getUserRole() {
+		return userRole;
 	}
 
-	public void setRoleType(Integer roleType) {
-		this.roleType = roleType;
+	public void setUserRole(Role userRole) {
+		this.userRole = userRole;
 	}
 
 	public List<BuildingModel> getBuildings() {

@@ -12,6 +12,5 @@ public class RemoveCusFromCusGrpPermChangeEvent extends ApplicationEvent{
 	
 	public RemoveCusFromCusGrpPermChangeEvent(CusAndCusGrpRelChangeEventData source) {
 		super(source);
-		// TODO Auto-generated constructor stub
 	}
 }

@@ -70,7 +70,6 @@ public class RemoveCusFromCusGrpPermChangeListener implements ApplicationListene
 	@Async
 	@Override
 	public void onApplicationEvent(RemoveCusFromCusGrpPermChangeEvent event) {
-		// TODO Auto-generated method stub
 		CusAndCusGrpRelChangeEventData eData = (CusAndCusGrpRelChangeEventData)event.getSource();
 		
 		//用户对资源的关系

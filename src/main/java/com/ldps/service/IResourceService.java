@@ -52,13 +52,13 @@ public interface IResourceService {
 	 
 	int deleteResource(Integer primaryId);
 	
-	List<ResourceModel> queryBasicResByCondition(ResourceModel model, Integer pageNo, Integer pageSize);
-	int queryCountByCondition(ResourceModel model);
+	List<ResourceModel> queryBasicResByCondition(Long roleId,ResourceModel model, Integer pageNo, Integer pageSize);
+	int queryCountByCondition(Long roleId,ResourceModel model);
 
-	List<ResourceModel> queryResByConditionWithCusId(
+	List<ResourceModel> queryResByConditionWithCusId(Long roleId,
 			ResourceModel resourceModel, Integer offset, Integer limit);
 
-	List<ResourceModel> queryResByConditionWithCusGroupId(
+	List<ResourceModel> queryResByConditionWithCusGroupId(Long roleId,
 			ResourceModel resourceModel, Integer offset, Integer limit);
 
 	List<ResourceModel> queryPubResWithKeysByBuildingId(Integer buildingId);

@@ -195,44 +195,44 @@ public class ResourceServiceImpl implements IResourceService {
 	}
 
 	@Override
-	public List<ResourceModel> queryBasicResByCondition(ResourceModel model, Integer pageNo, Integer pageSize) {
+	public List<ResourceModel> queryBasicResByCondition(Long roleId,ResourceModel model, Integer pageNo, Integer pageSize) {
 		if(model!=null){
 			if(StringUtils.isEmpty(model.getName()))
 				model.setName(null);
 		} 
-		return resourceDao.selectResouceListByCondition(model, pageNo, pageSize);
+		return resourceDao.selectResouceListByCondition(roleId,model, pageNo, pageSize);
 	}
 
 	@Override
-	public List<ResourceModel> queryResByConditionWithCusId(ResourceModel model, Integer pageNo, Integer pageSize) {
+	public List<ResourceModel> queryResByConditionWithCusId(Long roleId,ResourceModel model, Integer pageNo, Integer pageSize) {
 		if(model!=null){
 			if(StringUtils.isEmpty(model.getName()))
 				model.setName(null);
 		} 
 		if(null == model || null == model.getSpecificUserId()){
-			return resourceDao.selectResouceListByCondition(model, pageNo, pageSize);
+			return resourceDao.selectResouceListByCondition(roleId,model, pageNo, pageSize);
 		}else{
 			return cusResourceRelDao.selectResouceListWithSpecUserId(model, pageNo, pageSize);
 		}
 	}
 	
 	@Override
-	public List<ResourceModel> queryResByConditionWithCusGroupId(ResourceModel model, Integer pageNo, Integer pageSize) {
+	public List<ResourceModel> queryResByConditionWithCusGroupId(Long roleId,ResourceModel model, Integer pageNo, Integer pageSize) {
 		if(model!=null){
 			if(StringUtils.isEmpty(model.getName()))
 				model.setName(null);
 		} 
 		
 		if(null == model || null == model.getSpecificCusGroupId()){
-			return resourceDao.selectResouceListByCondition(model, pageNo, pageSize);
+			return resourceDao.selectResouceListByCondition(roleId,model, pageNo, pageSize);
 		}else{
 			return cusGrpResRelDao.selectResouceListWithSpecCusGroupId(model, pageNo, pageSize);
 		}
 	}
 
 	@Override
-	public int queryCountByCondition(ResourceModel model) {
-		return resourceDao.selectCountByCondition(model);
+	public int queryCountByCondition(Long roleId,ResourceModel model) {
+		return resourceDao.selectCountByCondition(roleId,model);
 	}
 
 	@Override

@@ -12,6 +12,5 @@ public class AddCusToCusGroupPermChangeEvent extends ApplicationEvent{
 	
 	public AddCusToCusGroupPermChangeEvent(CusAndCusGrpRelChangeEventData source) {
 		super(source);
-		// TODO Auto-generated constructor stub
 	}
 }

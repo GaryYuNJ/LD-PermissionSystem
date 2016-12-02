@@ -67,13 +67,11 @@ public class CustomerFacadeImpl implements CustomerFacade {
 
 	@Override
 	public int delUserGroupRelation(Long userId, Integer groupId) {
-		// TODO Auto-generated method stub
 		return iCustomerGroupRelService.delUserGroupRelation(userId, groupId);
 	}
 
 	@Override
 	public int addUserGroupRelation(Long userId, Integer groupId) {
-		// TODO Auto-generated method stub
 		return iCustomerGroupRelService.addUserGroupRelation(userId, groupId);
 	}
 
@@ -81,7 +79,6 @@ public class CustomerFacadeImpl implements CustomerFacade {
 
 	@Override
 	public CustomerData getUserDataByPrimaryId(Long CustomerId) {
-		// TODO Auto-generated method stub
 		CustomerModel cModel = iCustomerSevice.UserDataByPrimaryId(CustomerId);
 		return customerModelConverter.process(cModel,null);
 	}
@@ -89,7 +86,6 @@ public class CustomerFacadeImpl implements CustomerFacade {
 
 	@Override
 	public Integer queryCustomerTotalCount() {
-		// TODO Auto-generated method stub
 		return iCustomerSevice.queryCustomerTotalCount();
 	}
 	/*
@@ -435,7 +431,6 @@ public class CustomerFacadeImpl implements CustomerFacade {
 	public String removeSharedResource(String fromMobile, String toMobile,
 			Integer sourceKeyId) {
 		
-		// TODO Auto-generated method stub
 		String message = "0";
 		//check params
 		//fromCId exist?
@@ -545,7 +540,6 @@ public class CustomerFacadeImpl implements CustomerFacade {
 	//禁用资源
 	@Override
 	public int disableResourcePermission(Long customerId, Integer resourceId) {
-		// TODO Auto-generated method stub
 		CusResourceRelModel crModel = new CusResourceRelModel();
 		crModel.setCustomerId(customerId);
 		crModel.setResourceId(resourceId);
@@ -556,14 +550,12 @@ public class CustomerFacadeImpl implements CustomerFacade {
 	//更新\添加用户资源权限
 	@Override
 	public int authCusResPermission(CusResourceRelModel cusResourceRelModel) {
-		// TODO Auto-generated method stub
 		return iCusResourceRelService.authorizeResPermission(cusResourceRelModel,null);
 	}
 	
 	//连带授权 资源
 	@Override
 	public int jointAuthCusResPermission(CusResourceRelModel cusResourceRelModel) {
-		// TODO Auto-generated method stub
 		return iCusResourceRelService.jointAuthorizeResPermission(cusResourceRelModel.getCustomerId(), cusResourceRelModel.getResourceId(),
 				cusResourceRelModel.getStartDate(), cusResourceRelModel.getEndDate(), 
 				cusResourceRelModel.getFromShared(), cusResourceRelModel.getCustomerId(),null);
@@ -580,7 +572,6 @@ public class CustomerFacadeImpl implements CustomerFacade {
 
 	@Override
 	public int deleteResGrpPermission(Long userId, Integer resGroupId) {
-		// TODO Auto-generated method stub
 		CustomerResGroupRelModel crgModel = new CustomerResGroupRelModel();
 		crgModel.setCustomerId(userId);
 		crgModel.setRgroupId(resGroupId);

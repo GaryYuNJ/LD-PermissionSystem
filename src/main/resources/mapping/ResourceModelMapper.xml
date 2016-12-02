@@ -184,15 +184,18 @@
     select 
     <include refid="Base_Column_List" />
     from RESOURCE 
-    <if test="resourceModel!=null">
-    	<where>
-    		<if test="resourceModel.name != null"><bind name="nameLike" value="'%' + resourceModel.name + '%'" /> name like #{nameLike}</if>
-    		<if test="resourceModel.buildingId != null"> AND  BUILDING_ID = #{resourceModel.buildingId}</if>
-    		<if test="resourceModel.deviceType != null"> AND  DEVICE_TYPE = #{resourceModel.deviceType}</if>
-    		<if test="resourceModel.nodeId != null"> AND  NODE_ID = #{resourceModel.nodeId}</if>
-    		<if test="resourceModel.permissionAttrId != null"> AND  PERMISSION_ATTR_ID = #{resourceModel.permissionAttrId}</if>
-    	</where>
-     </if>
+   	<where>
+   	    <if test="resourceModel!=null">
+	   		<if test="resourceModel.name != null"><bind name="nameLike" value="'%' + resourceModel.name + '%'" /> name like #{nameLike}</if>
+	   		<if test="resourceModel.buildingId != null"> AND  BUILDING_ID = #{resourceModel.buildingId}</if>
+	   		<if test="resourceModel.deviceType != null"> AND  DEVICE_TYPE = #{resourceModel.deviceType}</if>
+	   		<if test="resourceModel.nodeId != null"> AND  NODE_ID = #{resourceModel.nodeId}</if>
+	   		<if test="resourceModel.permissionAttrId != null"> AND  PERMISSION_ATTR_ID = #{resourceModel.permissionAttrId}</if>
+   		</if>
+   		<if test="roleId!=null">
+      		AND EXISTS (select 1 from ROLE_BUILDING  where ROLE_ID=#{roleId} and BUILDING_ID=RESOURCE.BUILDING_ID)
+     	</if>
+   	</where>
     limit #{startRow,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
   </select>
   
@@ -208,15 +211,18 @@
   <select id="selectCountByCondition" resultMap="resultOfInteger" parameterType="com.ldps.model.ResourceModel" >
 	SELECT count(1) AS totalCount
 	FROM RESOURCE 
-	<if test="resourceModel!=null">
-    	<where>
-    		<if test="resourceModel.name != null"><bind name="nameLike" value="'%' + resourceModel.name + '%'" /> name like #{nameLike}</if>
-    		<if test="resourceModel.buildingId != null"> AND  BUILDING_ID = #{resourceModel.buildingId}</if>
-    		<if test="resourceModel.deviceType != null"> AND  DEVICE_TYPE = #{resourceModel.deviceType}</if>
-    		<if test="resourceModel.nodeId != null"> AND  NODE_ID = #{resourceModel.nodeId}</if>
-    		<if test="resourceModel.permissionAttrId != null"> AND  PERMISSION_ATTR_ID = #{resourceModel.permissionAttrId}</if>
-    	</where>
-     </if>
+   	<where>
+   	    <if test="resourceModel!=null">
+	   		<if test="resourceModel.name != null"><bind name="nameLike" value="'%' + resourceModel.name + '%'" /> name like #{nameLike}</if>
+	   		<if test="resourceModel.buildingId != null"> AND  BUILDING_ID = #{resourceModel.buildingId}</if>
+	   		<if test="resourceModel.deviceType != null"> AND  DEVICE_TYPE = #{resourceModel.deviceType}</if>
+	   		<if test="resourceModel.nodeId != null"> AND  NODE_ID = #{resourceModel.nodeId}</if>
+	   		<if test="resourceModel.permissionAttrId != null"> AND  PERMISSION_ATTR_ID = #{resourceModel.permissionAttrId}</if>
+   		</if>
+   		<if test="roleId!=null">
+      		AND EXISTS (select 1 from ROLE_BUILDING  where ROLE_ID=#{roleId} and BUILDING_ID=RESOURCE.BUILDING_ID)
+     	</if>
+   	</where>
   </select>
   <!-- 
    <select id="selectCountConditionWithGId" resultMap="resultOfInteger" parameterType="com.ldps.model.ResourceModel" >

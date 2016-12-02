@@ -12,7 +12,6 @@ public class RemoveResFromResGroupPermChangeEvent extends ApplicationEvent {
 	
 	public RemoveResFromResGroupPermChangeEvent(ResAndResGroupRelChangeEventData source) {
 		super(source);
-		// TODO Auto-generated constructor stub
 	}
 	
 }

@@ -63,7 +63,7 @@
     where ROLE_ID = #{roleId,jdbcType=BIGINT}
   </delete>
 
-  <select id="selectBuildingsByRoleId"  resultType="java.lang.Integer">
+  <select id="selectBuildingIdByRoleId"  resultType="java.lang.Integer">
         select BUILDING_ID from ROLE_BUILDING WHERE
         ROLE_ID = #{roleId,jdbcType=BIGINT}
   </select>
@@ -75,5 +75,10 @@
             separator="," close=")">
             #{item}  
          </foreach>
+  </select>
+  
+  <select id="selectBuildingsByRoleId"  resultMap="BuildingResultMap">
+        select A.* from BUILDING A INNER JOIN ROLE_BUILDING B ON A.ID=B.BUILDING_ID WHERE
+        B.ROLE_ID = #{roleId,jdbcType=BIGINT}
   </select>
 </mapper>

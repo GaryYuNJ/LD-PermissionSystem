@@ -122,7 +122,6 @@ public class CustomerServiceImpl implements ICustomerService {
 
 	@Override
 	public Long getCustomerIdByMobile(String mobile) {
-		// TODO Auto-generated method stub
 		CustomerModel model = customerDao.selectIdByMobile(mobile);
 		if(null == model){
 			return null;
@@ -133,33 +132,28 @@ public class CustomerServiceImpl implements ICustomerService {
 	
 	@Override
 	public CustomerModel getCustomerModelByMobile(String mobile) {
-		// TODO Auto-generated method stub
 		return customerDao.simpleSelectByMobile(mobile);
 	}
 
 	@Override
 	public Integer queryCustomerTotalCount() {
-		// TODO Auto-generated method stub
 		return customerDao.selectTotalCount();
 	}
 
 	@Override
 	public CustomerModel UserDataByPrimaryId(Long customerId) {
-		// TODO Auto-generated method stub
 		return customerDao.selectByPrimaryKey(customerId);
 	}
 
 	@Override
 	public List<CustomerModel> queryByMobileAndNameWithPageIndex(String mobile,
 			String userName, Integer startRow, Integer pageSize) {
-		// TODO Auto-generated method stub
 		return customerDao.simpleByMobileAndNameWithPageIndex(mobile,
 				userName, startRow, pageSize);
 	}
 
 	@Override
 	public Integer queryTotalCountByMobileAndName(String mobile, String userName) {
-		// TODO Auto-generated method stub
 		return customerDao.selectTotalCountByMobileAndName(mobile, userName);
 	} 
 

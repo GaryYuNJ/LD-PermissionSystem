@@ -12,8 +12,10 @@ public interface RoleBuildingMapper {
     
     int deleteByRoleId(Long roleId);
     
-    List<Integer> selectBuildingsByRoleId(Long roleId);
+    List<Integer> selectBuildingIdByRoleId(Long roleId);
     
     List<BuildingModel> selectBuildingsByRoles(List<Long> roleIds);
+    
+    List<BuildingModel> selectBuildingsByRoleId(Long roleId);
     
 }

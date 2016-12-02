@@ -32,13 +32,11 @@ public class CustomerGroupServiceImpl implements ICustomerGroupService {
 
 	@Override
 	public Integer queryCustomerTotalCount() {
-		// TODO Auto-generated method stub
 		return customerGroupDao.selectTotalCount();
 	}
 
 	@Override
 	public CustomerGroupModel getCustomerGroupModelByName(String name) {
-		// TODO Auto-generated method stub
 		return customerGroupDao.selectByName(name);
 	}
 
@@ -67,13 +65,11 @@ public class CustomerGroupServiceImpl implements ICustomerGroupService {
 
 	@Override
 	public int deleteUserGroupById(Integer customerGroupId) {
-		// TODO Auto-generated method stub
 		return customerGroupDao.deleteByPrimaryKey(customerGroupId);
 	}
 
 	@Override
 	public CustomerGroupModel showUserGroupDetail(Integer customerGroupId) {
-		// TODO Auto-generated method stub
 		return customerGroupDao.selectByPrimaryKey(customerGroupId);
 	}
 

@@ -24,7 +24,6 @@ public class AuthCusPermissionListener implements ApplicationListener<AuthCusAnd
 	@Async
 	@Override
 	public void onApplicationEvent(AuthCusAndResPermissionEvent event) {
-		// TODO Auto-generated method stub
 		AuthCusAndResPermissionEventData eData = (AuthCusAndResPermissionEventData)event.getSource();
 
 		for(CusResourceRelModel rModel : eData.getCusResourceRelModel()){

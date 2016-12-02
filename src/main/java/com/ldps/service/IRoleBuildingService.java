@@ -10,4 +10,5 @@ public interface IRoleBuildingService {
 	List<Integer> queryBuildingIdRoleId(Long roleId);
 	int save(RoleBuilding roleBuilding);
 	List<BuildingModel> queryBuildingByRoles(List<Long> roleIds);
+	List<BuildingModel> queryBuildingByRoleId(Long roleId);
 }

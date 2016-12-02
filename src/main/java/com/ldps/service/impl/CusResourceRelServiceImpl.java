@@ -49,14 +49,12 @@ public class CusResourceRelServiceImpl implements ICusResourceRelService {
 		CusResourceRelModel cusRRModel = new CusResourceRelModel();
 		cusRRModel.setCustomerId(customerId);
 		cusRRModel.setResourceId(resourceId);
-		// TODO Auto-generated method stub
 		return customerResourceRelDao.selectByCusIdAndResourceId(cusRRModel);
 	}
 
 	@Override
 	public List<CusResourceRelModel> queryByShareCustomerId(
 			Long customerId) {
-		// TODO Auto-generated method stub
 		return  customerResourceRelDao.selectByShareCustomerId(customerId);
 	}
 
@@ -308,7 +306,6 @@ public class CusResourceRelServiceImpl implements ICusResourceRelService {
 
 	@Override
 	public int deleteCusResGrpPermission(CustomerResGroupRelModel crgModel, PermissionRecordModel permRecordModel) {
-		// TODO Auto-generated method stub
 		int flag = cusResGroupRelModelDao.deleteByCondition(crgModel);
 		
 		if(flag == 1){
