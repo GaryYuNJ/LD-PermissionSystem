@@ -87,6 +87,25 @@ function userQueryParams(params) { // 配置参数
 	return temp;
 }
 
+
+//角色信息
+var roles;
+$.get(rootUri + "/admin/allRole.json", function(data, status) {
+	if (status = 4) {
+		$.each(data, function(n, value) {
+			$("#updateUserRoleId").append(
+					"<option value='" + value.id + "'>" + value.name
+							+ "</option>");
+			$("#userRoleId").append(
+					"<option value='" + value.id + "'>" + value.name
+							+ "</option>");
+			roles = data;
+		});
+	}
+	$('#userRoleId').selectpicker('refresh');
+	$('#updateUserRoleId').selectpicker('refresh');
+});
+
 function newUserPre(){
 	$("#nameId").val("");
 	$("#userStatusId").bootstrapSwitch('setState', true);
@@ -107,7 +126,8 @@ function saveUser(){
 		url : rootUri + "/admin/saveBackEndUser.json",
 		data : {
 			name : $("#nameId").val(),
-			status :status
+			status :status,
+			roleId :$('#userRoleId').val()
 		},
 		type : 'post',
 		cache : false,
@@ -129,7 +149,7 @@ function saveUser(){
 		}
 	});
 }
-function showUser(userId,name,status){
+function showUser(userId,name,status,roleId){
 	$("#UpdateNameId").val(name);
 	$("#roleSearchUserId").val(userId);
 	if(userId=="Y"){
@@ -137,7 +157,8 @@ function showUser(userId,name,status){
 	}else{
 		$("#userStatusId").bootstrapSwitch('setState', false);
 	}
-	$('#roleListTableId').bootstrapTable('refresh');
+	$('#buildingId').selectpicker('val', roleId);
+	//$('#roleListTableId').bootstrapTable('refresh');
 }
 
 function updateUser(){
@@ -198,7 +219,7 @@ function deleteUserById(userId){
 		}
 	});
 }
-
+/*
 var rolePageNumber = 1;
 $('#roleListTableId')
 		.bootstrapTable(
@@ -243,7 +264,7 @@ $('#roleListTableId')
 										return '<span class="label label-danger">未授权</span>';
 									}
 								}
-							}/*,
+							},
 							{
 								title : '创建时间',
 								field : 'createDate',
@@ -251,7 +272,7 @@ $('#roleListTableId')
 								formatter : function(value, row, index) {
 									return new Date(value).format("yyyy-MM-dd");
 								}
-							}*/,
+							},
 							{
 								title : '操作',
 								field : 'id',
@@ -347,6 +368,4 @@ function removePermission(rowId,obj){
 			$(obj).button('reset');
 		}
 	});
-	
-	
-}
+}*/

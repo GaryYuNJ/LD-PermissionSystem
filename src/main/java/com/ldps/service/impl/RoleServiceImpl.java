@@ -1,12 +1,8 @@
 package com.ldps.service.impl;
 
 import java.util.List;
-
 import javax.annotation.Resource;
-
 import org.springframework.stereotype.Service;
-
-import com.ldps.dao.BuserRoleMapper;
 import com.ldps.dao.RoleMapper;
 import com.ldps.model.Role;
 import com.ldps.service.IRoleService;
@@ -16,9 +12,6 @@ public class RoleServiceImpl implements IRoleService {
 
 	@Resource
 	private RoleMapper roleDao;
-	
-	@Resource
-	private BuserRoleMapper buserRoleDao;
 	
 	@Override
 	public List<Role> queryRoleWithPageIndex(String roleName, Integer pageNo, Integer pageSize) {
@@ -60,7 +53,7 @@ public class RoleServiceImpl implements IRoleService {
 	}
 
 	@Override
-	public List<Role> getRoleListByUserId(Long userId) {
-		return buserRoleDao.selectRolesByUserId(userId);
+	public List<Role> getAllRole() {
+		return roleDao.selectAllRoles();
 	}
 }

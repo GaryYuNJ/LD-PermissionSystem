@@ -17,8 +17,4 @@ public interface IUserService {
 	int saveOrUpdate(UserModel currentUserModel);
 	int getUserByName(String name);
 	int delBuser(Long id) ;
-	int saveOrupdateBURole(BuserRole buserRole);
-	int delBURole(Long userId,Long roleId);
-	int delBURoleByUserId(Long userId);
-	int delBUByRole(Long roleId);
 }

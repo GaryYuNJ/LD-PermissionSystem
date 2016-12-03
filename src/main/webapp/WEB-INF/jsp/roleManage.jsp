@@ -108,7 +108,7 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label class="col-lg-4 control-label">客资类型</label>
+						<label class="col-lg-4 control-label">楼栋信息</label>
 						<div class="col-lg-8">
 							<select id="buildingId" name="building"
 								class="selectpicker show-tick form-control" multiple

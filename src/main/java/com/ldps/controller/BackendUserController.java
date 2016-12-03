@@ -95,7 +95,7 @@ public class BackendUserController {
 	@ResponseBody
 	@RequestMapping(value = "admin/saveBackEndUser.json")
 	public String saveRole(@RequestParam("name") String name,
-			@RequestParam("status") String status) {
+			@RequestParam("status") String status,@RequestParam("roleId") Long roleId) {
 		APIMessage apiMessage = new APIMessage();
 		apiMessage.setStatus(-1);
 		if (!StringUtils.isEmpty(name)) {
@@ -108,8 +108,9 @@ public class BackendUserController {
 				userModel.setPassword("888888");// 默认密码
 				userModel.setStatus(status);
 				userModel.setCreateUser(iUserService.getSessionUserId());
-				if (iUserService.saveOrUpdate(userModel) > 0)
+				if (iUserService.saveOrUpdate(userModel) > 0){
 					apiMessage.setStatus(1);
+				}
 			}
 		}
 		return JSON.toJSONString(apiMessage);
@@ -118,15 +119,16 @@ public class BackendUserController {
 	@ResponseBody
 	@RequestMapping(value = "admin/updateEndUser.json")
 	public String updateEndUser(@RequestParam("id") Long id,
-			@RequestParam("status") String status) {
+			@RequestParam("status") String status,@RequestParam("roleId") Long roleId) {
 		APIMessage apiMessage = new APIMessage();
 		apiMessage.setStatus(-1);
 		if (null!=id) {
 				UserModel userModel =iUserService.getUserById(id);
 				if(null!=userModel){
 					userModel.setStatus(status);
-					if (iUserService.saveOrUpdate(userModel) > 0)
+					if (iUserService.saveOrUpdate(userModel) > 0) {
 						apiMessage.setStatus(1);
+					}
 				}else{
 					apiMessage.setStatus(2);
 				}
@@ -153,35 +155,8 @@ public class BackendUserController {
 	@RequestMapping(value = "admin/delBackUser.json")
 	public String delBackUser(@RequestParam("bUserId") Long bUserId) {
 		APIMessage apiMessage = new APIMessage();
-		iUserService.delBURoleByUserId(bUserId);
 		iUserService.delBuser(bUserId);
 		apiMessage.setStatus(1);
-		return JSON.toJSONString(apiMessage);
-	}
-	
-	//新增后台用户和角色匹配
-	@ResponseBody
-	@RequestMapping(value = "admin/addUserRole.json")
-	public String addUserRole(@RequestParam("bUserId") Long bUserId,@RequestParam("roleId") Long roleId) {
-		APIMessage apiMessage = new APIMessage();
-		apiMessage.setStatus(-1);
-		BuserRole userRole=new BuserRole();
-		userRole.setCreateDate(new Date());
-		userRole.setCreateUser(iUserService.getSessionUserId());
-		userRole.setStatus("Y");
-		userRole.setRoleId(roleId);
-		userRole.setUserId(bUserId);
-		apiMessage.setStatus(iUserService.saveOrupdateBURole(userRole));
-		return JSON.toJSONString(apiMessage);
-	}
-	
-	//删除后台用户和角色匹配
-	@ResponseBody
-	@RequestMapping(value = "admin/delUserRole.json")
-	public String delUserRole(@RequestParam("bUserId") Long bUserId,@RequestParam("roleId") Long roleId) {
-		APIMessage apiMessage = new APIMessage();
-		apiMessage.setStatus(-1);
-		apiMessage.setStatus(iUserService.delBURole(bUserId, roleId));
 		return JSON.toJSONString(apiMessage);
 	}
 }

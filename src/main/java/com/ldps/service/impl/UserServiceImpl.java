@@ -6,7 +6,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.ldps.dao.BuserRoleMapper;
 import com.ldps.dao.UserModelMapper;
 import com.ldps.model.BuserRole;
 import com.ldps.model.UserModel;
@@ -17,9 +16,6 @@ public class UserServiceImpl implements IUserService {
 
 	@Resource
 	private UserModelMapper userMapper;
-	
-	@Resource
-	private BuserRoleMapper buserRoleDao;
 	
 	@Autowired  
 	private HttpSession session;  
@@ -85,24 +81,4 @@ public class UserServiceImpl implements IUserService {
 		return  userMapper.deleteByPrimaryKey(id);
 	}
 
-	@Override
-	public int saveOrupdateBURole(BuserRole buserRole) {
-		return buserRoleDao.insert(buserRole);
-	}
-
-	@Override
-	public int delBURole(Long userId, Long roleId) {
-		return buserRoleDao.delete(roleId, userId);
-	}
-	
-	@Override
-	public int delBUByRole(Long roleId) {
-		return buserRoleDao.deleteByRole(roleId);
-	}
-	
-	@Override
-	public int delBURoleByUserId(Long userId) {
-		return buserRoleDao.deleteByUser(userId);
-	}
-	
 }

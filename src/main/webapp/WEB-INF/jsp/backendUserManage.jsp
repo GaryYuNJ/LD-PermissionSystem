@@ -94,7 +94,14 @@
 									</div>
 								</div>
                           </div>
-                          <input type="hidden" id="backUserId">
+                          <div class="form-group">
+							<label class="col-lg-4 control-label">角色</label>
+							<div class="col-lg-8">
+								<select id="userRoleId" name="userRole"
+									class="selectpicker show-tick form-control" data-live-search="false">
+								</select>
+							</div>
+						 </div>
                         </form>
 					</div>
 					<div class="modal-footer">
@@ -128,26 +135,14 @@
 								</div>
                           </div>
                           <input type="hidden" id="backUserId">
-                        </form>
-                        	<hr>
-	                        <form class="form-horizontal" role="form">
-										<div class="form-group">
-											<label class="col-lg-2 control-label" style="width: 120px">角色名称</label>
-											<div class="col-lg-3">
-												<input type="text" id="roleNameSearch" class="form-control" placeholder="角色名称">
-												<input type="hidden" id="roleSearchUserId">
-											</div>
-											<div class="col-lg-3">
-												<button type="button" onclick = "$('#roleListTableId').bootstrapTable('refresh');" class="btn btn-primary">
-													<i class="icon-search"></i> 查询
-												</button>
-											</div>
-										</div>
-							</form>
-								<table class="table table-striped table-bordered table-hover"
-											id="roleListTableId">
-									
-								</table>
+                       <div class="form-group">
+							<label class="col-lg-4 control-label">角色</label>
+							<div class="col-lg-8">
+								<select id="updateUserRoleId" name="updateUserRole"
+									class="selectpicker show-tick form-control" data-live-search="false">
+								</select>
+							</div>
+						</div>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>

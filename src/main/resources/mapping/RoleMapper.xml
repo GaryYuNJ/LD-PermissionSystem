@@ -35,6 +35,12 @@
     A.ID, A.NAME,ROLE_TYPE, A.DESCRIPTION, B.STATUS, B.CREATE_DATE, B.CREATE_USER,B.USER_ID
   </sql>
   
+  <select id="selectAllRoles" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ROLE
+  </select>
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />

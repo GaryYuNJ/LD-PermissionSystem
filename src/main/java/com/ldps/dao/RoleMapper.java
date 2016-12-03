@@ -28,5 +28,6 @@ public interface RoleMapper {
 	
 	int selectCountWithConditionUser(@Param("roleName")String roleName,@Param("userId")Long userId);
 	
+	List<Role> selectAllRoles();
 }
 

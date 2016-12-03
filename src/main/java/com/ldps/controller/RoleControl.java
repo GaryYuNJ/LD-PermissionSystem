@@ -116,7 +116,7 @@ public class RoleControl {
 		APIMessage apiMessage=new APIMessage();
 		apiMessage.setStatus(-1);
 		if(null!=roleId){
-			//删除角色和用户相关
+			// TODO 删除角色和用户关系
 			userService.delBUByRole(roleId);
 			//删除角色和楼栋相关
 			roleBuildingService.deleteByRoleId(roleId);
@@ -160,5 +160,9 @@ public class RoleControl {
 		}
 		return JSON.toJSONString(bData);
 	}
-	
+	@ResponseBody
+	@RequestMapping(value = "allRole.json")
+	public String allRole() {
+		return JSON.toJSONString(roleService.getAllRole());
+	}
 }
