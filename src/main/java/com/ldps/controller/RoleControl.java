@@ -116,7 +116,7 @@ public class RoleControl {
 		APIMessage apiMessage=new APIMessage();
 		apiMessage.setStatus(-1);
 		if(null!=roleId){
-			// TODO 删除角色和用户关系
+			// 删除角色和用户关系
 			userService.delBUByRole(roleId);
 			//删除角色和楼栋相关
 			roleBuildingService.deleteByRoleId(roleId);

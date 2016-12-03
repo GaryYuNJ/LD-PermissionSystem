@@ -2,10 +2,8 @@ package com.ldps.controller;
 
 import java.util.Date;
 import java.util.List;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
@@ -13,11 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.alibaba.fastjson.JSON;
 import com.ldps.data.APIMessage;
 import com.ldps.data.BootstrapTableData;
-import com.ldps.model.BuserRole;
 import com.ldps.model.UserModel;
 import com.ldps.service.IUserService;
 
@@ -71,7 +67,7 @@ public class BackendUserController {
 
 	@ResponseBody
 	@RequestMapping(value = "admin/backendUserSearch.json")
-	public String roleSearch(@RequestParam("search") String name,
+	public String backendUserSearch(@RequestParam("search") String name,
 			@RequestParam("limit") Integer limit,
 			@RequestParam("offset") Integer offset) {
 		if (StringUtils.isEmpty(name))
@@ -94,7 +90,7 @@ public class BackendUserController {
 
 	@ResponseBody
 	@RequestMapping(value = "admin/saveBackEndUser.json")
-	public String saveRole(@RequestParam("name") String name,
+	public String saveBackEndUser(@RequestParam("name") String name,
 			@RequestParam("status") String status,@RequestParam("roleId") Long roleId) {
 		APIMessage apiMessage = new APIMessage();
 		apiMessage.setStatus(-1);
@@ -107,6 +103,7 @@ public class BackendUserController {
 				userModel.setName(name);
 				userModel.setPassword("888888");// 默认密码
 				userModel.setStatus(status);
+				userModel.setRoleId(roleId);
 				userModel.setCreateUser(iUserService.getSessionUserId());
 				if (iUserService.saveOrUpdate(userModel) > 0){
 					apiMessage.setStatus(1);
@@ -126,6 +123,7 @@ public class BackendUserController {
 				UserModel userModel =iUserService.getUserById(id);
 				if(null!=userModel){
 					userModel.setStatus(status);
+					userModel.setRoleId(roleId);
 					if (iUserService.saveOrUpdate(userModel) > 0) {
 						apiMessage.setStatus(1);
 					}
@@ -155,8 +153,7 @@ public class BackendUserController {
 	@RequestMapping(value = "admin/delBackUser.json")
 	public String delBackUser(@RequestParam("bUserId") Long bUserId) {
 		APIMessage apiMessage = new APIMessage();
-		iUserService.delBuser(bUserId);
-		apiMessage.setStatus(1);
+		apiMessage.setStatus(iUserService.delBuser(bUserId));
 		return JSON.toJSONString(apiMessage);
 	}
 }

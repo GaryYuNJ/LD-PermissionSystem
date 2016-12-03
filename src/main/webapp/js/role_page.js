@@ -176,7 +176,7 @@ function deleteRoleById(roleId){
 	$.ajax({
 		url : rootUri + "/admin/deleteRole.json",
 		data : {
-			roleId : $("#roleId").val()
+			roleId : roleId
 		},
 		type : 'post',
 		cache : false,

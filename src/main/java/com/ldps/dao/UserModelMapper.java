@@ -21,4 +21,5 @@ public interface UserModelMapper {
     List<UserModel> selectUserWithCondition(@Param("name")String name,@Param("startRow") Integer startRow,
 			@Param("pageSize") Integer pageSize);
 	int selectCountWithCondition(@Param("name")String name);
+	int UpdateRoleEmptyByRoleId(Long roleId);
 }

@@ -56,4 +56,9 @@ public class RoleServiceImpl implements IRoleService {
 	public List<Role> getAllRole() {
 		return roleDao.selectAllRoles();
 	}
+
+	@Override
+	public Role queryRoleById(Long id) {
+		return roleDao.selectByPrimaryKey(id);
+	}
 }

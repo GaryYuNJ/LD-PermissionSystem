@@ -11,6 +11,8 @@ public class UserModel {
     private String password;
 
     private String status;
+    
+    private Long roleId;
 
     private Date createDate;
 
@@ -84,5 +86,13 @@ public class UserModel {
 
 	public void setBuildings(List<BuildingModel> buildings) {
 		this.buildings = buildings;
+	}
+
+	public Long getRoleId() {
+		return roleId;
+	}
+
+	public void setRoleId(Long roleId) {
+		this.roleId = roleId;
 	}
 }

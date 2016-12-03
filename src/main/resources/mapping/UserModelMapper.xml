@@ -13,16 +13,33 @@
     <id column="ID" property="id" jdbcType="BIGINT" />
     <result column="NAME" property="name" jdbcType="VARCHAR" />
     <result column="PASSWORD" property="password" jdbcType="VARCHAR" />
+    <result column="ROLE_ID" property="roleId" jdbcType="BIGINT" />
     <result column="STATUS" property="status" jdbcType="CHAR" />
     <result column="CREATE_DATE" property="createDate"  />
     <result column="CREATE_USER" property="createUser" jdbcType="BIGINT" />
   </resultMap>
+  
+  <resultMap id="BaseResultWithRoleMap" type="com.ldps.model.UserModel" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="PASSWORD" property="password" jdbcType="VARCHAR" />
+    <result column="ROLE_ID" property="roleId" jdbcType="BIGINT" />
+    <result column="STATUS" property="status" jdbcType="CHAR" />
+    <result column="CREATE_DATE" property="createDate"  />
+    <result column="CREATE_USER" property="createUser" jdbcType="BIGINT" />
+    <association property="userRole"  javaType="com.ldps.model.Role">
+    	<id property="id" column="T_ID"/>
+        <result property="name" column="T_NAME"/>
+        <result property="roleType" column="T_ROLETYPE"/>
+	</association>
+  </resultMap>
+  
    <resultMap id="resultOfInteger" type="java.lang.Integer">  
        <result column="totalCount" property="totalCount" jdbcType="INTEGER" />  
   </resultMap> 
   
   <sql id="Base_Column_List" >
-    ID, NAME, PASSWORD, STATUS, CREATE_DATE, CREATE_USER
+    ID, NAME, PASSWORD, STATUS,ROLE_ID, CREATE_DATE, CREATE_USER
   </sql>
   
    <select id="selectByUnamePword" resultMap="BaseResultMap" >
@@ -39,14 +56,14 @@
     where NAME = #{name,jdbcType=VARCHAR}
   </select>
   
-  
-  <select id="selectUserWithCondition" resultMap="BaseResultMap">
+  <select id="selectUserWithCondition" resultMap="BaseResultWithRoleMap">
     select 
-    <include refid="Base_Column_List" />
-    from BACKEND_USER
+   	A.*,B.ID R_ID,B.NAME T_NAME,B.ROLE_TYPE T_ROLETYPE 
+    from BACKEND_USER A LEFT JOIN ROLE B ON A.ROLE_ID=B.ID
 	<if test="name != null"><bind name="nameLike" value="'%' + name + '%'" />where NAME like #{nameLike}</if>
     limit #{startRow,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
   </select>
+  
   <select id="selectCountWithCondition" resultMap="resultOfInteger">
     select 
     count(1) AS totalCount
@@ -66,10 +83,10 @@
   </delete>
   <insert id="insert" parameterType="com.ldps.model.UserModel" >
     insert into BACKEND_USER (ID, NAME, PASSWORD, 
-      STATUS, CREATE_DATE, CREATE_USER
+      STATUS,ROLE_ID, CREATE_DATE, CREATE_USER
       )
     values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{status,jdbcType=CHAR}, #{createDate}, #{createUser,jdbcType=BIGINT}
+      #{status,jdbcType=CHAR},#{roleId,jdbcType=BIGINT}, #{createDate}, #{createUser,jdbcType=BIGINT}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.ldps.model.UserModel" >
@@ -86,6 +103,9 @@
       </if>
       <if test="status != null" >
         STATUS,
+      </if>
+       <if test="roleId != null" >
+        ROLE_ID,
       </if>
       <if test="createDate != null" >
         CREATE_DATE,
@@ -107,6 +127,9 @@
       <if test="status != null" >
         #{status,jdbcType=CHAR},
       </if>
+      <if test="roleId != null" >
+        #{roleId,jdbcType=BIGINT},
+      </if>
       <if test="createDate != null" >
         #{createDate},
       </if>
@@ -127,6 +150,9 @@
       <if test="status != null" >
         STATUS = #{status,jdbcType=CHAR},
       </if>
+       <if test="roleId != null" >
+        ROLE_ID = #{roleId,jdbcType=BIGINT},
+      </if>
       <if test="createDate != null" >
         CREATE_DATE = #{createDate},
       </if>
@@ -141,8 +167,14 @@
     set NAME = #{name,jdbcType=VARCHAR},
       PASSWORD = #{password,jdbcType=VARCHAR},
       STATUS = #{status,jdbcType=CHAR},
+      ROLE_ID = #{roleId,jdbcType=BIGINT},
       CREATE_DATE = #{createDate},
       CREATE_USER = #{createUser,jdbcType=BIGINT}
     where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="UpdateRoleEmptyByRoleId" parameterType="java.lang.Long" >
+    update BACKEND_USER
+    set ROLE_ID = NULL
+    where ROLE_ID = #{roleId,jdbcType=BIGINT}
   </update>
 </mapper>

@@ -39,21 +39,22 @@ public class LoginControl {
 		String password=request.getParameter("password");
 		UserModel userModel=iUserService.getUserByUP(userName, password);
 		//登陆时写入用户权限
-		if(null!=userModel){
-			List<Role> roleList =roleService.getRoleListByUserId(userModel.getId());
-			if(null!=roleList&&!roleList.isEmpty()){
-				userModel.setUserRole(roleList.get(0));
+		if(null!=userModel&&userModel.getRoleId()!=null){
+			Role role =roleService.queryRoleById(userModel.getRoleId());
+			if(null!=role){
+				userModel.setUserRole(role);
 				if(userModel.getUserRole().getRoleType()!=1){
 					userModel.setBuildings(roleBuildingService.queryBuildingByRoleId(userModel.getUserRole().getId()));
 				}
 			}
+			request.getSession().setAttribute("user", userModel);
+			//暂时跳转到资源页面
+			if(userModel.getUserRole().getRoleType()>2){
+				return "redirect:user/userManage";
+			}
+			return "redirect:manage/resourceManagePage";
 		}
-		request.getSession().setAttribute("user", userModel);
-		//暂时跳转到资源页面
-		if(null!=userModel&&userModel.getUserRole().getRoleType()>2){
-			return "redirect:user/userManage";
-		}
-		return "redirect:manage/resourceManagePage";
+		return "redirect:login";
 	}
 
 	@RequestMapping(value = "logOut", method = RequestMethod.GET)

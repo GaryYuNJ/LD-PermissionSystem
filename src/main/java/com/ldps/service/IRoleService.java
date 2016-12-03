@@ -12,4 +12,5 @@ public interface IRoleService {
 	Long saveOrUpdate(Role role);
 	int deleteById(Long id);
 	List<Role> getAllRole();
+	Role queryRoleById(Long id);
 }

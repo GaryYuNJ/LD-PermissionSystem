@@ -32,6 +32,12 @@ $('#userListTableId')
 								valign : 'middle'
 							},
 							{
+								title : '角色名',
+								field : 'userRole.name',
+								align : 'center',
+								valign : 'middle'
+							},
+							{
 								title : '状态',
 								field : 'status',
 								align : 'center',
@@ -59,7 +65,7 @@ $('#userListTableId')
 								formatter : function(value, row, index) {
 									var e = '<button class="btn btn-xs btn-warning" data-toggle="modal" data-target="#userUpdateModal" onclick="showUser(\''
 											+ row.id
-											+ '\',\''+row.name+'\',\''+row.status+'\')"><i class="icon-pencil"></i> </button>  ';
+											+ '\',\''+row.name+'\',\''+row.status+'\',\''+row.roleId+'\')"><i class="icon-pencil"></i> </button>  ';
 									if(row.id!="1000"){
 										var d = '<button class="btn btn-xs btn-danger" onclick="deleteUserById(\''
 												+ row.id
@@ -151,13 +157,13 @@ function saveUser(){
 }
 function showUser(userId,name,status,roleId){
 	$("#UpdateNameId").val(name);
-	$("#roleSearchUserId").val(userId);
+	$("#backUserId").val(userId);
 	if(userId=="Y"){
 		$("#userStatusId").bootstrapSwitch('setState', true);
 	}else{
 		$("#userStatusId").bootstrapSwitch('setState', false);
 	}
-	$('#buildingId').selectpicker('val', roleId);
+	$('#updateUserRoleId').selectpicker('val', roleId);
 	//$('#roleListTableId').bootstrapTable('refresh');
 }
 
@@ -170,8 +176,9 @@ function updateUser(){
 	$.ajax({
 		url : rootUri + "/admin/updateEndUser.json",
 		data : {
-			id : $("#roleSearchUserId").val(),
-			status :status
+			id : $("#backUserId").val(),
+			status :status,
+			roleId:$("#updateUserRoleId").val()
 		},
 		type : 'post',
 		cache : false,

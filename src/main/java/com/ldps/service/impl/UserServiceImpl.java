@@ -1,13 +1,11 @@
 package com.ldps.service.impl;
 
 import java.util.List;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ldps.dao.UserModelMapper;
-import com.ldps.model.BuserRole;
 import com.ldps.model.UserModel;
 import com.ldps.service.IUserService;
 
@@ -79,6 +77,11 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public int delBuser(Long id) {
 		return  userMapper.deleteByPrimaryKey(id);
+	}
+
+	@Override
+	public int delBUByRole(Long roleId) {
+		return userMapper.UpdateRoleEmptyByRoleId(roleId);
 	}
 
 }

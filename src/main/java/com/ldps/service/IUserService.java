@@ -1,9 +1,6 @@
 package com.ldps.service;
 
 import java.util.List;
-
-import com.ldps.model.BuserRole;
-import com.ldps.model.Role;
 import com.ldps.model.UserModel;
 
 public interface IUserService {
@@ -17,4 +14,5 @@ public interface IUserService {
 	int saveOrUpdate(UserModel currentUserModel);
 	int getUserByName(String name);
 	int delBuser(Long id) ;
+	int delBUByRole(Long roleId);
 }

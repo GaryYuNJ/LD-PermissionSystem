@@ -23,6 +23,7 @@ public interface RoleMapper {
 			@Param("pageSize") Integer pageSize);
 	
 	int selectCountWithCondition(@Param("roleName")String roleName);
+	
 	List<Role> selectRoleWithConditionUser(@Param("roleName")String roleName,@Param("userId")Long userId,@Param("startRow") Integer startRow,
 			@Param("pageSize") Integer pageSize);
 	
