@@ -38,6 +38,9 @@
 						<li class="has_sub">
 							<a href="<c:url value="/admin/backendUserManage" />"><i class="icon-list-alt"></i> 管理员管理 </a>
 						</li>
+						<li class="has_sub">
+							<a href="<c:url value="/admin/buildingManagePage" />"><i class="icon-list-alt"></i> 楼栋管理 </a>
+						</li>
 					</c:if>
 					</c:if>
 			</div>
