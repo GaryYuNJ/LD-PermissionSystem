@@ -55,7 +55,7 @@
 											<button type="button" class="btn btn-primary"
 												data-toggle="modal" data-target="#buildingModal"
 												onclick="newbuildingPre()">
-												<i class="icon-plus"></i> 新增角色
+												<i class="icon-plus"></i> 新增楼栋
 											</button>
 										</div>
 									</div>
