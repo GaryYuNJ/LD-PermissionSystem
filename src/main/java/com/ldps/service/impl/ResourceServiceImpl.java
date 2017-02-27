@@ -151,6 +151,11 @@ public class ResourceServiceImpl implements IResourceService {
 	//新建资源
 	@Override
 	public int createResource(ResourceModel model) {
+		
+		if(null != resourceDao.selectWithResKeysByName(model.getName())){
+			return -1;
+		}
+		
 		if(resourceDao.insertSelective(model)>0){
 			for(ResourceKeyModel resourceKey:model.getResourceKeys()){
 				resourceKey.setResourceId(model.getId());

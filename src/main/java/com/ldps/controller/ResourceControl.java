@@ -145,11 +145,15 @@ public class ResourceControl {
 		} else {
 			resourceModel.setShareEnable("N");
 		}
-
-		if (iResourceService.createResource(resourceModel) == 1) {
+		int result = iResourceService.createResource(resourceModel);
+		if (result == 1) {
 			am.setStatus(0);
 			am.setMessage(resourceModel.getId().toString());
+		//有同名资源名称
+		}else if (result == -1){
+			am.setMessage("同名资源已存在，请更换一个名字");
 		}
+		
 		return JSON.toJSONString(am);
 	}
 
