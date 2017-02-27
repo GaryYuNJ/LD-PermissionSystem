@@ -21,7 +21,7 @@ public class MessageServiceImpl implements IMessageService {
 	
 	@Override
 	public int save(MessageRecord messageRecord) {
-		return messageDao.insert(messageRecord);
+		return messageDao.insertSelective(messageRecord);
 	}
 	
 	public int sendMessage(String message,String toMobile){

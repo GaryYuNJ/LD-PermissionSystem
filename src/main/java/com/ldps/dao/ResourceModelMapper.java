@@ -39,7 +39,9 @@ public interface ResourceModelMapper {
 	int selectCountByCondition(@Param("roleId")Long roleId,@Param("resourceModel")ResourceModel resourceModel);
 	
 
-	ResourceModel selectWithResKeysByName(@Param("name") String name);
+	//ResourceModel selectWithResKeysByName(@Param("name") String name);
+	
+	ResourceModel selectByNameAndBuildingId(@Param("name") String name, @Param("buildingId")Integer buildingId);
 	
 	ResourceModel selectWithResKeysById(@Param("resourceId") Integer resourceId);
 

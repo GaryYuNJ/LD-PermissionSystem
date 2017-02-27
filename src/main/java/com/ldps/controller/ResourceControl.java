@@ -151,7 +151,7 @@ public class ResourceControl {
 			am.setMessage(resourceModel.getId().toString());
 		//有同名资源名称
 		}else if (result == -1){
-			am.setMessage("同名资源已存在，请更换一个名字");
+			am.setMessage("该楼栋下同名资源已存在，请更换一个名字");
 		}
 		
 		return JSON.toJSONString(am);

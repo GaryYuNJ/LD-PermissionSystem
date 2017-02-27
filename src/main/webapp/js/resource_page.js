@@ -290,7 +290,7 @@ function addResource() {
 						resourceEditPre(data.message);
 						alert("保存成功！");
 					} else if(null != data.message && '' != data.message){
-						alert("后台异常！"+data.message);
+						alert(data.message);
 					}else {
 						alert("后台异常！");
 					}

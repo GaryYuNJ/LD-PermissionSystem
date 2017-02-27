@@ -568,15 +568,23 @@
     where STATUS = 'Y' and PERMISSION_ATTR_ID = 1 and BUILDING_ID = #{buildingId,jdbcType=INTEGER}
   </select>
   
-    
+  <!-- 
   <select id="selectWithResKeysByName" resultMap="queryWithResKeyResultMap" >
     select 
     <include refid="With_ResKeys_Column_List" /> 
     FROM RESOURCE R  LEFT JOIN RESOURCE_KEY RK ON R.ID=RK.RESOURCE_ID
 	WHERE R.NAME = #{name,jdbcType=VARCHAR} 
   </select>
+   -->
   
-    <select id="selectWithResKeysById" resultMap="queryWithResKeyResultMap" >
+  <select id="selectByNameAndBuildingId" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" /> 
+    FROM RESOURCE 
+	WHERE NAME = #{name,jdbcType=VARCHAR} and BUILDING_ID = #{buildingId,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectWithResKeysById" resultMap="queryWithResKeyResultMap" >
     select 
     <include refid="With_ResKeys_Column_List" /> 
     FROM RESOURCE R  LEFT JOIN RESOURCE_KEY RK ON R.ID=RK.RESOURCE_ID
