@@ -215,9 +215,9 @@ public class ResourceServiceImpl implements IResourceService {
 				model.setName(null);
 		} 
 		if(null == model || null == model.getSpecificUserId()){
-			return resourceDao.selectResouceListByCondition(roleId,model, pageNo, pageSize);
+			return resourceDao.selectResouceListByCondition(roleId, model, pageNo, pageSize);
 		}else{
-			return cusResourceRelDao.selectResouceListWithSpecUserId(model, pageNo, pageSize);
+			return cusResourceRelDao.selectResouceListWithSpecUserId(roleId, model, pageNo, pageSize);
 		}
 	}
 	
@@ -231,7 +231,7 @@ public class ResourceServiceImpl implements IResourceService {
 		if(null == model || null == model.getSpecificCusGroupId()){
 			return resourceDao.selectResouceListByCondition(roleId,model, pageNo, pageSize);
 		}else{
-			return cusGrpResRelDao.selectResouceListWithSpecCusGroupId(model, pageNo, pageSize);
+			return cusGrpResRelDao.selectResouceListWithSpecCusGroupId(roleId, model, pageNo, pageSize);
 		}
 	}
 

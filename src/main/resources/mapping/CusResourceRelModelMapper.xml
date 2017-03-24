@@ -257,7 +257,18 @@
   <select id="selectResouceListWithSpecUserId" resultMap="ResourceModel_WithRelModelMap" >
     select 
     <include refid="ResourceColumn_WithRelModel_List" /> 
-    from RESOURCE R LEFT JOIN CUSTOMER_RESOURCE_REL CR 
+    from  
+    <if test="roleId == null">
+    	RESOURCE 
+    </if>
+    <if test="roleId != null">
+    	(
+			select * from RESOURCE R1
+			where 
+			EXISTS (select 1 from ROLE_BUILDING RB where RB.ROLE_ID=#{roleId} and RB.BUILDING_ID = R1.BUILDING_ID)      
+		)
+    </if>
+    R LEFT JOIN CUSTOMER_RESOURCE_REL CR 
     ON R.ID = CR.RESOURCE_ID AND CR.CUSTOMER_ID = #{resourceModel.specificUserId, jdbcType=BIGINT} 
     <if test="resourceModel!=null">
     	<where>
@@ -268,6 +279,7 @@
     		<if test="resourceModel.permissionAttrId != null"> AND  PERMISSION_ATTR_ID = #{resourceModel.permissionAttrId}</if>
     	</where>
      </if>
+     
     limit #{startRow,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
   </select>
   

@@ -20,7 +20,7 @@ public interface CusGrpResourceRelModelMapper {
     
     List<CusGrpResourceRelModel> selectByCusGroupId(@Param("groupId") Integer groupId);
 
-	List<ResourceModel> selectResouceListWithSpecCusGroupId(@Param("resourceModel")ResourceModel resourceModel,@Param("startRow") Integer startRow,
+	List<ResourceModel> selectResouceListWithSpecCusGroupId(@Param(value="roleId") Long roleId, @Param("resourceModel")ResourceModel resourceModel,@Param("startRow") Integer startRow,
 			@Param("pageSize") Integer pageSize);
 	
 	  //int disableResourcePermission(CusGrpResourceRelModel record);

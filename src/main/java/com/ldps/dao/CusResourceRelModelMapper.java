@@ -22,7 +22,7 @@ public interface CusResourceRelModelMapper {
 
 	int updateByConditionSelective(CusResourceRelModel record);
 	
-	List<ResourceModel> selectResouceListWithSpecUserId(@Param("resourceModel")ResourceModel resourceModel,@Param("startRow") Integer startRow,
+	List<ResourceModel> selectResouceListWithSpecUserId( @Param(value="roleId") Long roleId, @Param("resourceModel")ResourceModel resourceModel,@Param("startRow") Integer startRow,
 			@Param("pageSize") Integer pageSize);
 
 	//int disableResourcePermission(CusResourceRelModel crModel);
