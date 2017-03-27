@@ -49,7 +49,7 @@
 									onclick="nodeDelete()">
 									<i class="icon-remove"></i> 删除
 								</button>
-								<small id="queryNodeId_html"></small>
+								<span class="badge" id="queryNodeId_html"></span>
 								<hr>
 								<div class="widget treeMinHeight" id="jstree_resource"></div>
 							</div>
