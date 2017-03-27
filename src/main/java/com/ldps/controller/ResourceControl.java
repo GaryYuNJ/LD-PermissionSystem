@@ -80,9 +80,17 @@ public class ResourceControl {
 	@RequestMapping(value = "updateResource.json")
 	public String updateResource(
 			@RequestParam("resourceModelJson") String resourceModelJson) {
-		ResourceModel resourceModel = JSON.parseObject(resourceModelJson,
-				ResourceModel.class);
+		
 		APIMessage am = new APIMessage();
+		ResourceModel resourceModel = null;
+		try{
+			resourceModel = JSON.parseObject(resourceModelJson,
+					ResourceModel.class);
+		}catch(Exception e){
+			am.setStatus(1);
+			return JSON.toJSONString(am);
+		}
+		
 		am.setStatus(1);
 
 		if (null != resourceModel.getStatus()

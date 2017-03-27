@@ -25,18 +25,21 @@ function addResourceKey(objForm) {
 	$(objForm)
 			.append(
 					'<div class="form-group resourceKeyForm">'
-							+ '<label class="col-lg-3 control-label">钥匙信息</label>'
-							+ '<div class="col-lg-3">'
+							+ '<label class="col-lg-1 control-label">钥匙信息</label>'
+							+ '<div class="col-lg-2">'
 							+ '<select class="form-control keyName" name="manufacturerId">'
 							+ ' <option value="1">特斯连</option>'
 							+ '<option value="2">立方</option>'
 							+ ' </select>'
 							+ '</div>'
-							+ '<div class="col-lg-3">'
+							+ '<div class="col-lg-2">'
 							+ '<input type="text" class="form-control keyName" placeholder="设备Mac地址" name="mac">'
 							+ '</div>'
 							+ '<div class="col-lg-3">'
 							+ '<input type="text" class="form-control keyName" placeholder="密码" name="password">'
+							+ ' </div>'
+							+ '<div class="col-lg-2">'
+							+ '<input type="text" class="form-control keyName" placeholder="优先级" name="rInt2">'
 							+ ' </div>'
 							+ '<div class="col-lg-1">'
 							+ '<button type="button" class="btn btn-danger" onclick="deleteKey(this)"><i class="icon-remove"></i>删除</button>'
@@ -161,16 +164,19 @@ function initResourceForm() {
 			.html(
 					'<div class="form-group resourceKeyForm">'
 							+ '<label class="col-lg-2 control-label">钥匙信息</label>'
-							+ '<div class="col-lg-3">'
+							+ '<div class="col-lg-2">'
 							+ '<select class="form-control keyName" name="manufacturerId">'
 							+ '<option value="1">特斯连</option>'
 							+ '<option value="2">立方</option>' + '</select>'
-							+ '</div>' + '<div class="col-lg-3">'
+							+ '</div>' + '<div class="col-lg-2">'
 							+ '<input type="text" class="form-control keyName"'
 							+ 'placeholder="设备Mac地址" name="mac">' + '</div>'
 							+ '<div class="col-lg-3">'
 							+ '<input type="text" class="form-control keyName"'
 							+ 'placeholder="密码" name="password">' + '</div>'
+							+ '<div class="col-lg-2">'
+							+ '<input type="text" class="form-control keyName" placeholder="优先级" name="rInt2">'
+							+ ' </div>'
 							+ '<div class="col-lg-1">'
 							+ '<button type="button" class="btn btn-danger" onclick="deleteKey(this)"><i class="icon-remove"></i>删除</button>'
 							+ '</div>' + ' </div>');
@@ -225,7 +231,7 @@ function resourceEditPre(row) {
 										function(n, value) {
 											var tempHtml = '<div class="form-group resourceKeyForm">'
 													+ '<label class="col-lg-3 control-label">钥匙信息</label>'
-													+ '<div class="col-lg-3">'
+													+ '<div class="col-lg-2">'
 													+ '<select class="form-control keyName" name="manufacturerId">';
 											if (value.manufacturerId == 1) {
 												tempHtml += '<option value="1" selected="true">特斯连</option>';
@@ -237,7 +243,7 @@ function resourceEditPre(row) {
 
 											tempHtml += '</select>'
 													+ '</div>'
-													+ '<div class="col-lg-3">'
+													+ '<div class="col-lg-2">'
 													+ '<input type="text" class="form-control keyName" placeholder="设备Mac地址" name="mac" value="'
 													+ value.mac
 													+ '">'
@@ -245,6 +251,10 @@ function resourceEditPre(row) {
 													+ '<div class="col-lg-3">'
 													+ '<input type="text" class="form-control keyName" placeholder="密码" name="password" value="'
 													+ value.password + '">'
+													+ ' </div>'
+													+ '<div class="col-lg-2">'
+													+ '<input type="text" class="form-control keyName" placeholder="优先级" name="rInt2" value="'
+													+ value.rInt2 + '">'
 													+ ' </div>'
 													+ '<div class="col-lg-1">';
 											tempHtml += '<button type="button" class="btn btn-danger" onclick="deleteKey(this)"><i class="icon-remove"></i>删除</button>';
@@ -472,6 +482,8 @@ $('#jstree_resource').jstree({
 // JSTree 事件
 $('#jstree_resource').on("changed.jstree", function(e, data) {
 	$("#queryNodeId").val(data.node.id);
+	$("#queryNodeId_html").text(data.node.id);
+	
 	refreshSearch();
 });
 // 分页
@@ -762,6 +774,7 @@ $('#jstree_updateResource').on(
 				$("#updateResourceNodeId").val(data.node.id);
 				$("#updateResourceNodePath").val(
 						data.instance.get_path(data.node, '/'));
+				//$("#updateResourceNodePath").val(data.node.text);
 				// console.log($("#newnodeId").val());
 				// console.log($("#newnodePath").val());
 			}

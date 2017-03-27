@@ -550,7 +550,7 @@
     <include refid="With_ResKeys_Column_List" />
     from RESOURCE R LEFT JOIN RESOURCE_KEY RK ON  R.ID=RK.RESOURCE_ID 
     where R.STATUS = 'Y' and R.PERMISSION_ATTR_ID = 1 
-    order by R.SEQUENCE desc
+    order by R.SEQUENCE desc, RK.R_INT2 desc
   </select>
   
   <select id="selectPubResWithKeysByBuildingId" resultMap="queryWithResKeyResultMap" parameterType="java.lang.Integer" >
@@ -558,7 +558,7 @@
     <include refid="With_ResKeys_Column_List" />
     from RESOURCE R LEFT JOIN RESOURCE_KEY RK ON  R.ID=RK.RESOURCE_ID 
     where R.STATUS = 'Y' and R.PERMISSION_ATTR_ID = 1 and R.BUILDING_ID = #{buildingId,jdbcType=INTEGER}
-    order by R.SEQUENCE desc
+    order by R.SEQUENCE desc, RK.R_INT2 desc
   </select>
   
   <select id="selectValidPubResByBuildingId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -582,6 +582,13 @@
     <include refid="Base_Column_List" /> 
     FROM RESOURCE 
 	WHERE NAME = #{name,jdbcType=VARCHAR} and BUILDING_ID = #{buildingId,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectWithResKeysByNameAndBuildingId" resultMap="queryWithResKeyResultMap" >
+    select 
+    <include refid="With_ResKeys_Column_List" /> 
+    FROM RESOURCE R  LEFT JOIN RESOURCE_KEY RK ON R.ID=RK.RESOURCE_ID
+	WHERE R.NAME = #{name,jdbcType=VARCHAR} and R.BUILDING_ID = #{buildingId,jdbcType=INTEGER}
   </select>
   
   <select id="selectWithResKeysById" resultMap="queryWithResKeyResultMap" >

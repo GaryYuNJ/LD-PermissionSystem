@@ -293,7 +293,7 @@ CREATE TABLE RESOURCE_KEY    (
     MANUFACTURER_ID int(3) COMMENT '钥匙生产厂家' ,
 	RESOURCE_ID INT(10) default 0  COMMENT '资源ID',
 	R_INT1 int(10) , 
-	R_INT2 int(10) , 
+	R_INT2 int(10) DEFAULT 0 COMMENT '优先级', 
 	NUM1 NUMERIC , 
 	NUM2 NUMERIC , 
     VC1 varchar(40) , 

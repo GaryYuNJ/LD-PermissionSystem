@@ -434,7 +434,7 @@
 	AND CR.CUSTOMER_ID = #{customerId,jdbcType=BIGINT}
 	<if test="buildingId!=null"> AND R.BUILDING_ID = #{buildingId,jdbcType=INTEGER} </if>	
 	AND PERMISSION_ATTR_ID != 1
-	order by R.SEQUENCE desc 
+	order by R.SEQUENCE desc, RK.R_INT2 desc
   </select>
   
   <select id="selectValidResByCIdAndMac" resultMap="Resource_WithResKeyResultMap" >

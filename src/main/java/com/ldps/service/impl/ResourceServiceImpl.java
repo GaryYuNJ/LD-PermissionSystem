@@ -373,7 +373,7 @@ public class ResourceServiceImpl implements IResourceService {
         	for(ResourceModel newResModel : rModelList){
         		
         		try{
-        			currentModel = resourceDao.selectByNameAndBuildingId(newResModel.getName(), newResModel.getBuildingId());
+        			currentModel = resourceDao.selectWithResKeysByNameAndBuildingId(newResModel.getName(), newResModel.getBuildingId());
                 	
                 	//有，更新(继续查询要保存的蓝牙设备是否已存在)；没有新建
                 	if(null != currentModel){

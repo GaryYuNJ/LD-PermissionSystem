@@ -43,6 +43,8 @@ public interface ResourceModelMapper {
 	
 	ResourceModel selectByNameAndBuildingId(@Param("name") String name, @Param("buildingId")Integer buildingId);
 	
+	ResourceModel selectWithResKeysByNameAndBuildingId(@Param("name") String name, @Param("buildingId")Integer buildingId);
+	
 	ResourceModel selectWithResKeysById(@Param("resourceId") Integer resourceId);
 
 	ResourceModel selectByCondition(ResourceModel newResModel);
