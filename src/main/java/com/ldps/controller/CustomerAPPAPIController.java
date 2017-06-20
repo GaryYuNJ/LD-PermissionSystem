@@ -495,9 +495,9 @@ public class CustomerAPPAPIController {
 			}
 			String message="";
 			if(i==2){//新用户
-				message="尾号"+toMobile.substring(7, 11)+"访客您好，尾号"+fromMobile.substring(7, 11)+"用户授权您访问"+buildString+"。点击“open”，可通过智能门禁梯控系统进入该区域！登录“荟生活”APP，畅享智慧办公便利！询4006981260，退订回复TD";
+				message="尾号"+toMobile.substring(7, 11)+"访客您好，尾号"+fromMobile.substring(7, 11)+"用户授权您访问"+buildString+"。点击链接 http://dwz.cn/3OJRnK 下载“荟生活”APP，即可通过智能门禁梯控系统进入该区域！登录“荟生活”APP，畅享智慧办公便利！询4006981260，退订回复TD";
 			}else{//老用户
-				message="尾号"+toMobile.substring(7, 11)+"访客您好，您已获得"+buildString+"访问权限。点击“open”，可通过智能门禁梯控系统进入该区域，询4006981260，退订回复TD";
+				message="尾号"+toMobile.substring(7, 11)+"访客您好，您已获得"+buildString+"访问权限。点击链接 http://dwz.cn/3OJRnK 下载“荟生活”APP，即可通过智能门禁梯控系统进入该区域，询4006981260，退订回复TD";
 			}
 			iMessageService.sendMessage(message, toMobile);
 		}
