@@ -71,6 +71,10 @@
 			<mvc:mapping path="/appApi/*" />
 			<bean class="com.ldps.interceptor.APPInterceptor" />
 		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/oaApi/*" />
+			<bean class="com.ldps.interceptor.APPInterceptor" />
+		</mvc:interceptor>
 		
 		<mvc:interceptor>
 			<mvc:mapping path="/admin/**" />
