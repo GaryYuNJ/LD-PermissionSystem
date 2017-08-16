@@ -45,7 +45,7 @@ public class CustomerOAAPIController {
 		if(!StringUtils.isEmpty(groupName)){
 		
 			CustomerGroupData data = customerGroupFacade.searchUserGroupByNameWithPageIndex(groupName, 1, 1);
-			if(null == data){
+			if(null == data || null == data.getId()){
 				customerGroupFacade.createNewUserGroup(groupName);
 				data = customerGroupFacade.searchUserGroupByNameWithPageIndex(groupName, 1, 1);
 				
@@ -79,7 +79,7 @@ public class CustomerOAAPIController {
 		APIMessage apiMessage = new APIMessage();
 		
 		CustomerModel customerModel= iCustomerSevice.getCustomerModelByMobile(mobile);
-		if(null == customerModel){
+		if(null == customerModel || null == customerModel.getId()){
 			//临时插入用户表数据，同时JOB更新
 			customerModel=new CustomerModel(); 
 			customerModel.setCmMobile1(mobile);
@@ -106,7 +106,7 @@ public class CustomerOAAPIController {
 		
 		CustomerData cusData = customerFacade.searchUserByMobileWithPageIndex(mobile, 1, 1);
 		
-		if(null != cusData){
+		if(null != cusData && null != cusData.getId()){
 			int flag = customerFacade.delUserGroupRelation(cusData.getId(), Integer.parseInt(StringUtils.trimWhitespace(groupId)));
 			apiMessage.setStatus(1);
 			apiMessage.setMessage("");
