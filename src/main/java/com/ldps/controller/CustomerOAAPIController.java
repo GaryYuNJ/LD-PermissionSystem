@@ -38,7 +38,7 @@ public class CustomerOAAPIController {
 	@RequestMapping(value="/createCusGroup",method = { RequestMethod.GET,
 			RequestMethod.POST },produces = "application/json; charset=utf-8")
 	@ResponseBody
-	public String createCusGroup(@RequestParam("groupName")String groupName,
+	public synchronized String createCusGroup(@RequestParam("groupName")String groupName,
 			Model model){
 		APIMessage apiMessage = new APIMessage();
 		
@@ -73,7 +73,7 @@ public class CustomerOAAPIController {
 	@RequestMapping(value="/addNewCusToGroup",method = { RequestMethod.GET,
 			RequestMethod.POST },produces = "application/json; charset=utf-8")
 	@ResponseBody
-	public String addNewCusToGroup(@RequestParam("groupId")String groupId,
+	public synchronized String addNewCusToGroup(@RequestParam("groupId")String groupId,
 			@RequestParam("mobile")String mobile,
 			Model model){
 		APIMessage apiMessage = new APIMessage();

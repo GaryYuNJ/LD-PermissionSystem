@@ -172,6 +172,7 @@
 														<option value="1">通行</option>
 														<option value="2">家居</option>
 														<option value="3">其它</option>
+														<option value="4">地锁</option>
 													</select>
 												</div>
 												<label class="col-lg-2 control-label">资源属性</label>
