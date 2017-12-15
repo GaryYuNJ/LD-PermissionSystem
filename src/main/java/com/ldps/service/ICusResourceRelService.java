@@ -48,5 +48,7 @@ public interface ICusResourceRelService {
 
 	int deleteCusResGrpPermission(CustomerResGroupRelModel crgModel,
 			PermissionRecordModel permRecordModel);
+	
+	List<CusResourceRelModel> querySharableResource(Long customerId,Integer buildingId,Integer floor,Long toCustomerId,Date startDate,Date endDate);
 
 }

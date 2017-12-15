@@ -145,7 +145,18 @@
     <select id="selectResouceListWithSpecCusGroupId" resultMap="Resource_With_CusGrp_RelModelMap" >
     select 
     <include refid="Resource_With_CusGrp_RelModel_List" /> 
-    from RESOURCE R LEFT JOIN CGROUP_RESOURCE_REL CR 
+    from 
+    <if test="roleId == null">
+    	RESOURCE 
+    </if>
+    <if test="roleId != null">
+    	(
+			select * from RESOURCE R1
+			where 
+			EXISTS (select 1 from ROLE_BUILDING RB where RB.ROLE_ID=#{roleId} and RB.BUILDING_ID = R1.BUILDING_ID)      
+		)
+    </if>
+     R LEFT JOIN CGROUP_RESOURCE_REL CR 
     ON R.ID = CR.RESOURCE_ID AND CR.CGROUP_ID = #{resourceModel.specificCusGroupId, jdbcType=BIGINT} 
     <if test="resourceModel!=null">
     	<where>
@@ -156,6 +167,9 @@
     		<if test="resourceModel.permissionAttrId != null"> AND  PERMISSION_ATTR_ID = #{resourceModel.permissionAttrId}</if>
     	</where>
      </if>
+     <if test="roleId!=null">
+      		AND EXISTS (select 1 from ROLE_BUILDING RB where RB.ROLE_ID=#{roleId} and RB.BUILDING_ID = R.BUILDING_ID)
+     	</if>
     limit #{startRow,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
   </select>
   

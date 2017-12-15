@@ -24,6 +24,7 @@ import com.ldps.dao.ResourceGrpRelModelMapper;
 import com.ldps.dao.ResourceKeyMapper;
 import com.ldps.dao.ResourceModelMapper;
 import com.ldps.data.APIMessage;
+import com.ldps.model.BuildingModel;
 import com.ldps.model.ResourceKeyModel;
 import com.ldps.model.ResourceModel;
 import com.ldps.service.IResourceService;
@@ -87,6 +88,15 @@ public class ResourceServiceImpl implements IResourceService {
 	public List<ResourceModel> queryPubResWithKeysByBuildingId(Integer buildingId) {
 		return resourceDao.selectPubResWithKeysByBuildingId(buildingId);
 	}
+	/*
+	获取building里的公共资源，resourceKeys同时返回
+	 */
+	@Override
+	public List<ResourceModel> queryPubResWithKeys() {
+		return resourceDao.selectPubResWithKeys();
+	}
+	
+	
 	
 	/*
 	获取building里用户有权限设备
@@ -129,7 +139,6 @@ public class ResourceServiceImpl implements IResourceService {
 
 	@Override
 	public Integer queryResourceIdByMAC(String mac) {
-		// TODO Auto-generated method stub
 		ResourceModel model = resourceDao.selectIdByMac(mac);
 		
 		if(null == model){
@@ -142,6 +151,11 @@ public class ResourceServiceImpl implements IResourceService {
 	//新建资源
 	@Override
 	public int createResource(ResourceModel model) {
+		
+		if(null != resourceDao.selectByNameAndBuildingId(model.getName(),model.getBuildingId())){
+			return -1;
+		}
+		
 		if(resourceDao.insertSelective(model)>0){
 			for(ResourceKeyModel resourceKey:model.getResourceKeys()){
 				resourceKey.setResourceId(model.getId());
@@ -186,53 +200,44 @@ public class ResourceServiceImpl implements IResourceService {
 	}
 
 	@Override
-	public List<ResourceModel> queryBasicResByCondition(ResourceModel model, Integer pageNo, Integer pageSize) {
+	public List<ResourceModel> queryBasicResByCondition(Long roleId,ResourceModel model, Integer pageNo, Integer pageSize) {
 		if(model!=null){
 			if(StringUtils.isEmpty(model.getName()))
 				model.setName(null);
 		} 
-		return resourceDao.selectResouceListByCondition(model, pageNo, pageSize);
-		//这个我们讨论下
-		/*
-		if(null == model || null == model.getSpecificUserId()){
-			return resourceDao.selectResouceListByCondition(model, pageNo, pageSize);
-		}else{
-			return cusResourceRelDao.selectResouceListWithSpecUserId(model, pageNo, pageSize);
-		}*/
-		
+		return resourceDao.selectResouceListByCondition(roleId,model, pageNo, pageSize);
 	}
 
 	@Override
-	public List<ResourceModel> queryResByConditionWithCusId(ResourceModel model, Integer pageNo, Integer pageSize) {
+	public List<ResourceModel> queryResByConditionWithCusId(Long roleId,ResourceModel model, Integer pageNo, Integer pageSize) {
 		if(model!=null){
 			if(StringUtils.isEmpty(model.getName()))
 				model.setName(null);
 		} 
-		
 		if(null == model || null == model.getSpecificUserId()){
-			return resourceDao.selectResouceListByCondition(model, pageNo, pageSize);
+			return resourceDao.selectResouceListByCondition(roleId, model, pageNo, pageSize);
 		}else{
-			return cusResourceRelDao.selectResouceListWithSpecUserId(model, pageNo, pageSize);
+			return cusResourceRelDao.selectResouceListWithSpecUserId(roleId, model, pageNo, pageSize);
 		}
 	}
 	
 	@Override
-	public List<ResourceModel> queryResByConditionWithCusGroupId(ResourceModel model, Integer pageNo, Integer pageSize) {
+	public List<ResourceModel> queryResByConditionWithCusGroupId(Long roleId,ResourceModel model, Integer pageNo, Integer pageSize) {
 		if(model!=null){
 			if(StringUtils.isEmpty(model.getName()))
 				model.setName(null);
 		} 
 		
 		if(null == model || null == model.getSpecificCusGroupId()){
-			return resourceDao.selectResouceListByCondition(model, pageNo, pageSize);
+			return resourceDao.selectResouceListByCondition(roleId,model, pageNo, pageSize);
 		}else{
-			return cusGrpResRelDao.selectResouceListWithSpecCusGroupId(model, pageNo, pageSize);
+			return cusGrpResRelDao.selectResouceListWithSpecCusGroupId(roleId, model, pageNo, pageSize);
 		}
 	}
 
 	@Override
-	public int queryCountByCondition(ResourceModel model) {
-		return resourceDao.selectCountByCondition(model);
+	public int queryCountByCondition(Long roleId,ResourceModel model) {
+		return resourceDao.selectCountByCondition(roleId,model);
 	}
 
 	@Override
@@ -240,7 +245,7 @@ public class ResourceServiceImpl implements IResourceService {
 			Integer buildingId, Long customerId) {
 		return cusResourceRelDao.selectPriResWIthKeysByBIdAndCusId(buildingId, customerId);
 	}
-
+	
 	@Override
 	public APIMessage importResFromExcel(String filePath, Integer nodeId) throws IOException {
 		
@@ -368,7 +373,7 @@ public class ResourceServiceImpl implements IResourceService {
         	for(ResourceModel newResModel : rModelList){
         		
         		try{
-        			currentModel = resourceDao.selectWithResKeysByName(newResModel.getName());
+        			currentModel = resourceDao.selectWithResKeysByNameAndBuildingId(newResModel.getName(), newResModel.getBuildingId());
                 	
                 	//有，更新(继续查询要保存的蓝牙设备是否已存在)；没有新建
                 	if(null != currentModel){

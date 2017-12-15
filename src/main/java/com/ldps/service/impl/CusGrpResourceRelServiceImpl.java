@@ -38,20 +38,17 @@ public class CusGrpResourceRelServiceImpl implements ICusGrpResourceRelService {
 
 	@Override
 	public CusGrpResourceRelModel queryModelByCidAndResId(CusGrpResourceRelModel model) {
-		// TODO Auto-generated method stub
 		return customerGrpResourceRelDao.selectByGrpIdAndResId(model);
 	}
 	
 
 	@Override
 	public  List<CusGrpResourceRelModel> queryByGroupIdListAndResId(List<Integer> groupIds, Integer resourceId) {
-		// TODO Auto-generated method stub
 		return customerGrpResourceRelDao.selectByGroupIdListAndResId(groupIds,resourceId);
 	}
 
 	@Override
 	public  List<CusGrpResourceRelModel> queryByCusGroupId(Integer groupId) {
-		// TODO Auto-generated method stub
 		return customerGrpResourceRelDao.selectByCusGroupId(groupId);
 	}
 

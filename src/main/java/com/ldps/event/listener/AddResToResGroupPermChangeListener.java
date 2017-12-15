@@ -45,7 +45,6 @@ public class AddResToResGroupPermChangeListener implements ApplicationListener<A
 	@Async
 	@Override
 	public void onApplicationEvent(AddResToResGroupPermChangeEvent event) {
-		// TODO Auto-generated method stub
 		ResAndResGroupRelChangeEventData eData = (ResAndResGroupRelChangeEventData)event.getSource();
 		
 		//用户对资源的关系

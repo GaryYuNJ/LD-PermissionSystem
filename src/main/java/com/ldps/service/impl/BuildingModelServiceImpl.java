@@ -29,4 +29,35 @@ public class BuildingModelServiceImpl implements IBuildingModelService {
 		this.buildingModelMapper = buildingModelMapper;
 	}
 
+	@Override
+	public BuildingModel queryBuilding(Integer id) {
+		return buildingModelMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public int save(BuildingModel buildingModel) {
+		if(buildingModel.getId()==null){
+			return buildingModelMapper.insert(buildingModel);			
+		}else{
+			return buildingModelMapper.updateByPrimaryKeySelective(buildingModel);
+		}
+
+	}
+
+	@Override
+	public int delete(Integer id) {
+		return buildingModelMapper.deleteByPrimaryKey(id);
+	}
+
+	@Override
+	public List<BuildingModel> queryBuildingWithPageIndex(String buildingName,
+			Integer pageNo, Integer pageSize) {
+		return buildingModelMapper.selectBuildingWithCondition(buildingName, pageNo, pageSize);
+	}
+
+	@Override
+	public int queryCountByCondition(String buildingName) {
+		
+		return buildingModelMapper.selectCountWithCondition(buildingName);
+	}
 }

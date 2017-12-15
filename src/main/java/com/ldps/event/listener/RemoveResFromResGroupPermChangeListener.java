@@ -60,7 +60,6 @@ public class RemoveResFromResGroupPermChangeListener implements ApplicationListe
 	@Async
 	@Override
 	public void onApplicationEvent(RemoveResFromResGroupPermChangeEvent event) {
-		// TODO Auto-generated method stub
 		ResAndResGroupRelChangeEventData eData = (ResAndResGroupRelChangeEventData)event.getSource();
 		
 		//用户对资源的关系

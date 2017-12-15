@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import com.ldps.data.APIMessage;
+import com.ldps.model.BuildingModel;
 import com.ldps.model.ResourceKeyModel;
 import com.ldps.model.ResourceModel;
 
@@ -51,17 +52,18 @@ public interface IResourceService {
 	 
 	int deleteResource(Integer primaryId);
 	
-	List<ResourceModel> queryBasicResByCondition(ResourceModel model, Integer pageNo, Integer pageSize);
-	int queryCountByCondition(ResourceModel model);
+	List<ResourceModel> queryBasicResByCondition(Long roleId,ResourceModel model, Integer pageNo, Integer pageSize);
+	int queryCountByCondition(Long roleId,ResourceModel model);
 
-	List<ResourceModel> queryResByConditionWithCusId(
+	List<ResourceModel> queryResByConditionWithCusId(Long roleId,
 			ResourceModel resourceModel, Integer offset, Integer limit);
 
-	List<ResourceModel> queryResByConditionWithCusGroupId(
+	List<ResourceModel> queryResByConditionWithCusGroupId(Long roleId,
 			ResourceModel resourceModel, Integer offset, Integer limit);
 
 	List<ResourceModel> queryPubResWithKeysByBuildingId(Integer buildingId);
-
+	List<ResourceModel> queryPubResWithKeys();
+	
 	List<ResourceModel> queryPriResWithKeysByBIdAndCusId(Integer buildingId,
 			Long customerId);
 	

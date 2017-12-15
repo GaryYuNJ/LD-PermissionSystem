@@ -184,15 +184,18 @@
     select 
     <include refid="Base_Column_List" />
     from RESOURCE 
-    <if test="resourceModel!=null">
-    	<where>
-    		<if test="resourceModel.name != null"><bind name="nameLike" value="'%' + resourceModel.name + '%'" /> name like #{nameLike}</if>
-    		<if test="resourceModel.buildingId != null"> AND  BUILDING_ID = #{resourceModel.buildingId}</if>
-    		<if test="resourceModel.deviceType != null"> AND  DEVICE_TYPE = #{resourceModel.deviceType}</if>
-    		<if test="resourceModel.nodeId != null"> AND  NODE_ID = #{resourceModel.nodeId}</if>
-    		<if test="resourceModel.permissionAttrId != null"> AND  PERMISSION_ATTR_ID = #{resourceModel.permissionAttrId}</if>
-    	</where>
-     </if>
+   	<where>
+   	    <if test="resourceModel!=null">
+	   		<if test="resourceModel.name != null"><bind name="nameLike" value="'%' + resourceModel.name + '%'" /> name like #{nameLike}</if>
+	   		<if test="resourceModel.buildingId != null"> AND  BUILDING_ID = #{resourceModel.buildingId}</if>
+	   		<if test="resourceModel.deviceType != null"> AND  DEVICE_TYPE = #{resourceModel.deviceType}</if>
+	   		<if test="resourceModel.nodeId != null"> AND  NODE_ID = #{resourceModel.nodeId}</if>
+	   		<if test="resourceModel.permissionAttrId != null"> AND  PERMISSION_ATTR_ID = #{resourceModel.permissionAttrId}</if>
+   		</if>
+   		<if test="roleId!=null">
+      		AND EXISTS (select 1 from ROLE_BUILDING  where ROLE_ID=#{roleId} and BUILDING_ID=RESOURCE.BUILDING_ID)
+     	</if>
+   	</where>
     limit #{startRow,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
   </select>
   
@@ -208,15 +211,18 @@
   <select id="selectCountByCondition" resultMap="resultOfInteger" parameterType="com.ldps.model.ResourceModel" >
 	SELECT count(1) AS totalCount
 	FROM RESOURCE 
-	<if test="resourceModel!=null">
-    	<where>
-    		<if test="resourceModel.name != null"><bind name="nameLike" value="'%' + resourceModel.name + '%'" /> name like #{nameLike}</if>
-    		<if test="resourceModel.buildingId != null"> AND  BUILDING_ID = #{resourceModel.buildingId}</if>
-    		<if test="resourceModel.deviceType != null"> AND  DEVICE_TYPE = #{resourceModel.deviceType}</if>
-    		<if test="resourceModel.nodeId != null"> AND  NODE_ID = #{resourceModel.nodeId}</if>
-    		<if test="resourceModel.permissionAttrId != null"> AND  PERMISSION_ATTR_ID = #{resourceModel.permissionAttrId}</if>
-    	</where>
-     </if>
+   	<where>
+   	    <if test="resourceModel!=null">
+	   		<if test="resourceModel.name != null"><bind name="nameLike" value="'%' + resourceModel.name + '%'" /> name like #{nameLike}</if>
+	   		<if test="resourceModel.buildingId != null"> AND  BUILDING_ID = #{resourceModel.buildingId}</if>
+	   		<if test="resourceModel.deviceType != null"> AND  DEVICE_TYPE = #{resourceModel.deviceType}</if>
+	   		<if test="resourceModel.nodeId != null"> AND  NODE_ID = #{resourceModel.nodeId}</if>
+	   		<if test="resourceModel.permissionAttrId != null"> AND  PERMISSION_ATTR_ID = #{resourceModel.permissionAttrId}</if>
+   		</if>
+   		<if test="roleId!=null">
+      		AND EXISTS (select 1 from ROLE_BUILDING  where ROLE_ID=#{roleId} and BUILDING_ID=RESOURCE.BUILDING_ID)
+     	</if>
+   	</where>
   </select>
   <!-- 
    <select id="selectCountConditionWithGId" resultMap="resultOfInteger" parameterType="com.ldps.model.ResourceModel" >
@@ -539,12 +545,20 @@
   </update>
 
 
+  <select id="selectPubResWithKeys" resultMap="queryWithResKeyResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="With_ResKeys_Column_List" />
+    from RESOURCE R LEFT JOIN RESOURCE_KEY RK ON  R.ID=RK.RESOURCE_ID 
+    where R.STATUS = 'Y' and R.PERMISSION_ATTR_ID = 1 
+    order by R.SEQUENCE desc, RK.R_INT2 desc
+  </select>
+  
   <select id="selectPubResWithKeysByBuildingId" resultMap="queryWithResKeyResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="With_ResKeys_Column_List" />
     from RESOURCE R LEFT JOIN RESOURCE_KEY RK ON  R.ID=RK.RESOURCE_ID 
     where R.STATUS = 'Y' and R.PERMISSION_ATTR_ID = 1 and R.BUILDING_ID = #{buildingId,jdbcType=INTEGER}
-    order by R.SEQUENCE desc
+    order by R.SEQUENCE desc, RK.R_INT2 desc
   </select>
   
   <select id="selectValidPubResByBuildingId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -554,15 +568,30 @@
     where STATUS = 'Y' and PERMISSION_ATTR_ID = 1 and BUILDING_ID = #{buildingId,jdbcType=INTEGER}
   </select>
   
-    
+  <!-- 
   <select id="selectWithResKeysByName" resultMap="queryWithResKeyResultMap" >
     select 
     <include refid="With_ResKeys_Column_List" /> 
     FROM RESOURCE R  LEFT JOIN RESOURCE_KEY RK ON R.ID=RK.RESOURCE_ID
 	WHERE R.NAME = #{name,jdbcType=VARCHAR} 
   </select>
+   -->
   
-    <select id="selectWithResKeysById" resultMap="queryWithResKeyResultMap" >
+  <select id="selectByNameAndBuildingId" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" /> 
+    FROM RESOURCE 
+	WHERE NAME = #{name,jdbcType=VARCHAR} and BUILDING_ID = #{buildingId,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectWithResKeysByNameAndBuildingId" resultMap="queryWithResKeyResultMap" >
+    select 
+    <include refid="With_ResKeys_Column_List" /> 
+    FROM RESOURCE R  LEFT JOIN RESOURCE_KEY RK ON R.ID=RK.RESOURCE_ID
+	WHERE R.NAME = #{name,jdbcType=VARCHAR} and R.BUILDING_ID = #{buildingId,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectWithResKeysById" resultMap="queryWithResKeyResultMap" >
     select 
     <include refid="With_ResKeys_Column_List" /> 
     FROM RESOURCE R  LEFT JOIN RESOURCE_KEY RK ON R.ID=RK.RESOURCE_ID

@@ -30,7 +30,7 @@ public class ResourceModel {
 
     private Integer permissionAttrId; //资源权限属性：1：公共资源；2：基础资源(授权时用：针对下层节点的资源来说，如果要使用下层节点，必须使用的上层节点)；3：私有资源；
 
-    private Integer deviceType; //设备类型：1. 通行、2. 家居、3.其它
+    private Integer deviceType; //设备类型：1. 通行、2. 家居、3.其它、4.地锁
 
     private Integer nodeId; //资源直接隶属的节点
 

@@ -49,11 +49,15 @@
 									onclick="nodeDelete()">
 									<i class="icon-remove"></i> 删除
 								</button>
+								<span class="badge" id="queryNodeId_html"></span>
 								<hr>
 								<div class="widget treeMinHeight" id="jstree_resource"></div>
 							</div>
+							
+							
 							<div class="col-lg-9">
 								<hr>
+								
 								<form class="form-horizontal" role="form" id="searchform">
 									<div class="form-group">
 										<div class="col-lg-2">
@@ -79,16 +83,16 @@
 												<i class="icon-search"></i> 查询
 											</button>
 										</div>
-										<div class="col-lg-2">
+										<div class="col-lg-1">
 											<button type="button" class="btn btn-primary"
 												id="addResourceButton">
-												<i class="icon-plus"></i> 新增资源
+												<i class="icon-plus"></i> 新增
 											</button>
 										</div>
 										<div class="col-lg-2">
 											<button type="button" class="btn btn-primary"
 												data-toggle="modal" data-target="#importModal">
-												<i class="icon-plus"></i> 导入资源
+												<i class="icon-plus"></i> 导入
 											</button>
 										</div>
 									</div>
@@ -112,7 +116,7 @@
 				<div class="col-md-12">
 					<div class="widget">
 						<div class="widget-head">
-							<div class="pull-left">资源组详情</div>
+							<div class="pull-left">资源详情</div>
 							<div class="widget-icons pull-right">
 								<a href="#" class="wminimize" id="icon_group_list2"><i
 									class="icon-chevron-down"></i></a>
@@ -168,6 +172,7 @@
 														<option value="1">通行</option>
 														<option value="2">家居</option>
 														<option value="3">其它</option>
+														<option value="4">地锁</option>
 													</select>
 												</div>
 												<label class="col-lg-2 control-label">资源属性</label>

@@ -11,19 +11,19 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.alibaba.fastjson.JSON;
 import com.ldps.model.UserModel;
 import com.ldps.service.IUserService;
+import com.ldps.service.impl.RoleBuildingServiceImpl;
 
-@RunWith(SpringJUnit4ClassRunner.class)     //琛ㄧず缁ф壙浜哠pringJUnit4ClassRunner绫�  
-@ContextConfiguration(locations = {"classpath:spring-mybatis.xml"})  
+@RunWith(SpringJUnit4ClassRunner.class)   
+@ContextConfiguration(locations = {"classpath:/springconfig/spring-mybatis.xml","classpath:/springconfig/spring-crm.xml","classpath:spring-mvc.xml"})  
    
 public class TestMyBatis {  
     private static Logger logger = Logger.getLogger(TestMyBatis.class);  
     @Resource  
-    private IUserService userService = null;  
+    private RoleBuildingServiceImpl roleBuildingService ;  
   
+    
     @Test  
-    public void test1() { 
-        UserModel user = userService.getUserById(1); 
-        userService.getUserById(1); 
-        logger.info(JSON.toJSONString(user));  
+    public void test2() { 
+       System.out.println(JSON.toJSONString( roleBuildingService.queryBuildingIdRoleId(3L)));  
     }  
 }  

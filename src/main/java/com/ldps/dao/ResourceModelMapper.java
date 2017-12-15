@@ -29,16 +29,21 @@ public interface ResourceModelMapper {
 	List<ResourceModel> selectValidPubResByBuildingId(Integer buildingId);
 	
 	List<ResourceModel> selectPubResWithKeysByBuildingId(Integer buildingId);
-
+	
+	List<ResourceModel> selectPubResWithKeys();
 
 	List<ResourceModel> selectBasicResByNodeIdList(@Param("nodeIds")List<Integer> nodeIds);
 	
-	List<ResourceModel> selectResouceListByCondition(@Param("resourceModel")ResourceModel resourceModel,@Param("startRow") Integer startRow,
+	List<ResourceModel> selectResouceListByCondition(@Param("roleId")Long roleId,@Param("resourceModel")ResourceModel resourceModel,@Param("startRow") Integer startRow,
 			@Param("pageSize") Integer pageSize);
-	int selectCountByCondition(@Param("resourceModel")ResourceModel resourceModel);
+	int selectCountByCondition(@Param("roleId")Long roleId,@Param("resourceModel")ResourceModel resourceModel);
 	
 
-	ResourceModel selectWithResKeysByName(@Param("name") String name);
+	//ResourceModel selectWithResKeysByName(@Param("name") String name);
+	
+	ResourceModel selectByNameAndBuildingId(@Param("name") String name, @Param("buildingId")Integer buildingId);
+	
+	ResourceModel selectWithResKeysByNameAndBuildingId(@Param("name") String name, @Param("buildingId")Integer buildingId);
 	
 	ResourceModel selectWithResKeysById(@Param("resourceId") Integer resourceId);
 

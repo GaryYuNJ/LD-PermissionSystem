@@ -35,6 +35,8 @@
 <script src="<c:url value="/js/bootstrapValidator.min.js" />"></script>
 <script src="<c:url value="/js/bootstrap-datetimepicker.min.js" />"></script>
 <script src="<c:url value="/js/bootstrap-datetimepicker.zh-CN.js" />"></script>
+<script src="<c:url value="/js/bootstrap-select.min.js" />"></script>
+<script src="<c:url value="/js/defaults-zh_CN.min.js" />"></script>
 
 <script src="<c:url value="/js/fileinput.min.js" />"></script>
 <script src="<c:url value="/js/fileinput_locale_zh.js" />"></script>

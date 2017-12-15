@@ -25,7 +25,6 @@ public class NodeServiceImpl implements INodeService {
 
 	@Override
 	public NodeModel getNodeById(Integer id) {
-		// TODO Auto-generated method stub
 		return this.nodeMapper.selectByPrimaryKey(id);
 	}
 

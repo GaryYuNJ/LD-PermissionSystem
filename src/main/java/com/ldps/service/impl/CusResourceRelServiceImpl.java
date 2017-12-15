@@ -49,14 +49,12 @@ public class CusResourceRelServiceImpl implements ICusResourceRelService {
 		CusResourceRelModel cusRRModel = new CusResourceRelModel();
 		cusRRModel.setCustomerId(customerId);
 		cusRRModel.setResourceId(resourceId);
-		// TODO Auto-generated method stub
 		return customerResourceRelDao.selectByCusIdAndResourceId(cusRRModel);
 	}
 
 	@Override
 	public List<CusResourceRelModel> queryByShareCustomerId(
 			Long customerId) {
-		// TODO Auto-generated method stub
 		return  customerResourceRelDao.selectByShareCustomerId(customerId);
 	}
 
@@ -99,7 +97,7 @@ public class CusResourceRelServiceImpl implements ICusResourceRelService {
 		}else{
 			
 			//如果用户已有权限，并且操作来自分享，分享的时间配置不能覆盖已有的最大时间范围
-			if("Y".equals(sourceModel.getFromShared()) && "Y".equals(currentModel.getEnable()) ){
+			/*if("Y".equals(sourceModel.getFromShared()) && "Y".equals(currentModel.getEnable()) ){
 				if(null == currentModel.getStartDate() || currentModel.getStartDate().before(sourceModel.getStartDate())){
 					sourceModel.setStartDate(currentModel.getStartDate());
 					updateFlag = 1;
@@ -110,7 +108,8 @@ public class CusResourceRelServiceImpl implements ICusResourceRelService {
 				}
 			}else{
 				updateFlag = 1;
-			}
+			}*/
+			updateFlag = 1;
 			sourceModel.setCreateDate(new Date());
 			sourceModel.setEnable("Y");
 			if(updateFlag == 1){
@@ -307,7 +306,6 @@ public class CusResourceRelServiceImpl implements ICusResourceRelService {
 
 	@Override
 	public int deleteCusResGrpPermission(CustomerResGroupRelModel crgModel, PermissionRecordModel permRecordModel) {
-		// TODO Auto-generated method stub
 		int flag = cusResGroupRelModelDao.deleteByCondition(crgModel);
 		
 		if(flag == 1){
@@ -353,5 +351,12 @@ public class CusResourceRelServiceImpl implements ICusResourceRelService {
 		}
 		return flag;
 	}
-
+	//获取用户可分享权限的资源列表 
+	/*
+		不包含公共资源，不包含用户组授权，只针对用户与资源的可用关系
+	*/
+	@Override
+	public List<CusResourceRelModel> querySharableResource(Long customerId,Integer buildingId,Integer floor,Long toCustomerId,Date startDate,Date endDate) {
+		return customerResourceRelDao.selectSharableResourceByIdAndArea(customerId,buildingId,floor,toCustomerId,startDate,endDate);
+	}
 }

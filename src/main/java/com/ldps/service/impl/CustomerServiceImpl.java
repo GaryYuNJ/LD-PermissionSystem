@@ -11,13 +11,14 @@ import com.ldps.dao.CusGroupRelModelMapper;
 import com.ldps.dao.CusResourceRelModelMapper;
 import com.ldps.dao.CustomerModelMapper;
 import com.ldps.dao.ResourceModelMapper;
+import com.ldps.data.ResourceArea;
+import com.ldps.model.CusResourceRelModel;
 import com.ldps.model.CustomerModel;
 import com.ldps.model.ResourceModel;
 import com.ldps.service.ICustomerService;
 
 @Service("iCustomerSevice")
 public class CustomerServiceImpl implements ICustomerService {
-
 	@Resource
 	private CustomerModelMapper customerDao;
 	
@@ -50,8 +51,17 @@ public class CustomerServiceImpl implements ICustomerService {
  
 	@Override
 	public int addCustomer(CustomerModel custoemrModel) {
-		if(getUserByCmMemid(custoemrModel.getCmMemid()) != null)
+		CustomerModel custoemrModelTemp= getUserByCmMemidOrMobile(custoemrModel.getCmMemid(),custoemrModel.getCmMobile1());
+		if(custoemrModelTemp!= null){
+			custoemrModel.setId(custoemrModelTemp.getId());
 			return -1;//customerDao.updateByCmMemidSelective(custoemrModel);
+		}
+		return customerDao.insertSelective(custoemrModel);
+	}
+
+	//分享权限时如果未注册或者未同步， 临时插入后面更新
+	@Override
+	public int addTempCustomer(CustomerModel custoemrModel) {
 		return customerDao.insertSelective(custoemrModel);
 	}
 
@@ -64,10 +74,20 @@ public class CustomerServiceImpl implements ICustomerService {
 	public int updateCustomerByCmMemid(CustomerModel custoemrModel) {
 		return customerDao.updateByCmMemidSelective(custoemrModel);
 	}
+	
+	@Override
+	public int updateCustomerById(CustomerModel custoemrModel) {
+		return customerDao.updateByPrimaryKeySelective(custoemrModel);
+	}
 
 	@Override
 	public CustomerModel getUserByCmMemid(String cmMemid) {
 		return customerDao.simpleSelectByCmMemid(cmMemid);
+	}
+	
+	@Override
+	public CustomerModel getUserByCmMemidOrMobile(String cmMemid,String mobile) {
+		return customerDao.simpleSelectByCmMemidOrMobile(cmMemid,mobile);
 	}
 //	
 //	@Override
@@ -89,10 +109,19 @@ public class CustomerServiceImpl implements ICustomerService {
 	public List<ResourceModel> querySharableResource(Long customerId) {
 		return cusResourceRelDao.selectSharableResourceById(customerId);
 	}
+	
+	
+	//获取用户可分享权限的资源所属区域
+	/*
+		不包含公共资源
+	*/
+	@Override
+	public List<ResourceArea> querySharableResourceArea(Long customerId) {
+		return cusResourceRelDao.selectSharableResBuildingById(customerId);
+	}
 
 	@Override
 	public Long getCustomerIdByMobile(String mobile) {
-		// TODO Auto-generated method stub
 		CustomerModel model = customerDao.selectIdByMobile(mobile);
 		if(null == model){
 			return null;
@@ -103,33 +132,28 @@ public class CustomerServiceImpl implements ICustomerService {
 	
 	@Override
 	public CustomerModel getCustomerModelByMobile(String mobile) {
-		// TODO Auto-generated method stub
 		return customerDao.simpleSelectByMobile(mobile);
 	}
 
 	@Override
 	public Integer queryCustomerTotalCount() {
-		// TODO Auto-generated method stub
 		return customerDao.selectTotalCount();
 	}
 
 	@Override
 	public CustomerModel UserDataByPrimaryId(Long customerId) {
-		// TODO Auto-generated method stub
 		return customerDao.selectByPrimaryKey(customerId);
 	}
 
 	@Override
 	public List<CustomerModel> queryByMobileAndNameWithPageIndex(String mobile,
 			String userName, Integer startRow, Integer pageSize) {
-		// TODO Auto-generated method stub
 		return customerDao.simpleByMobileAndNameWithPageIndex(mobile,
 				userName, startRow, pageSize);
 	}
 
 	@Override
 	public Integer queryTotalCountByMobileAndName(String mobile, String userName) {
-		// TODO Auto-generated method stub
 		return customerDao.selectTotalCountByMobileAndName(mobile, userName);
 	} 
 

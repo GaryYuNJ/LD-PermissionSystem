@@ -5,6 +5,11 @@
     <id column="ID" property="id" jdbcType="INTEGER" />
     <result column="NAME" property="name" jdbcType="VARCHAR" />
   </resultMap>
+  
+  <resultMap id="resultOfInteger" type="java.lang.Integer">  
+       <result column="totalCount" property="totalCount" jdbcType="INTEGER" />  
+  </resultMap> 
+  
   <sql id="Base_Column_List" >
     ID, NAME
   </sql>
@@ -13,6 +18,21 @@
     select 
     <include refid="Base_Column_List" />
     from BUILDING
+  </select>
+  
+  <select id="selectBuildingWithCondition" resultMap="BaseResultMap">
+    select 
+   <include refid="Base_Column_List" />
+    from BUILDING 
+    <if test="buildingName != null"><bind name="nameLike" value="'%' + buildingName + '%'" />where NAME like #{nameLike}</if>
+    limit #{startRow,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectCountWithCondition" resultMap="resultOfInteger">
+    select 
+    count(1) AS totalCount
+    from BUILDING 
+    <if test="buildingName != null"><bind name="nameLike" value="'%' + buildingName + '%'" />where NAME like #{nameLike}</if>
   </select>
   
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >

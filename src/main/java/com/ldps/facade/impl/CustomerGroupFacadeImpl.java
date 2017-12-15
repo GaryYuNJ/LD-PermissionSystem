@@ -61,7 +61,6 @@ public class CustomerGroupFacadeImpl implements CustomerGroupFacade {
 
 	@Override
 	public Integer queryCusGroupTotalCount() {
-		// TODO Auto-generated method stub
 		return iCustomerGroupService.queryCustomerTotalCount();
 	}
 
@@ -93,13 +92,11 @@ public class CustomerGroupFacadeImpl implements CustomerGroupFacade {
 
 	@Override
 	public int createNewUserGroup(String userGroupName) {
-		// TODO Auto-generated method stub
 		return iCustomerGroupService.createNewUserGroup(userGroupName);
 	}
 
 	@Override
 	public int deleteUserGroupById(Integer customerGroupId) {
-		// TODO Auto-generated method stub
 		return iCustomerGroupService.deleteUserGroupById(customerGroupId);
 	}
 

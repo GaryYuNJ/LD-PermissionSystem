@@ -67,19 +67,19 @@ public class ResourceKeyModel {
         this.resourceId = resourceId;
     }
 
-    public Integer getrInt1() {
+    public Integer getRInt1() {
         return rInt1;
     }
 
-    public void setrInt1(Integer rInt1) {
+    public void setRInt1(Integer rInt1) {
         this.rInt1 = rInt1;
     }
 
-    public Integer getrInt2() {
+    public Integer getRInt2() {
         return rInt2;
     }
 
-    public void setrInt2(Integer rInt2) {
+    public void setRInt2(Integer rInt2) {
         this.rInt2 = rInt2;
     }
 

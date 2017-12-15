@@ -79,6 +79,16 @@
     </association>
   </resultMap>
   
+  <resultMap id="ResourceFloorResultMap" type="com.ldps.data.ResourceFloor" >
+    <result column="FLOOR" property="floorId" />
+	<result column="FLOORNAME" property="floorName" />
+  </resultMap>
+  
+  <resultMap id="ResourceAreaResultMap" type="com.ldps.data.ResourceArea" >
+    <result column="NAME" property="buildingName" jdbcType="VARCHAR" />
+    <result column="BUILDING_ID" property="buildingId" jdbcType="INTEGER" />
+    <collection property="floors" resultMap="ResourceFloorResultMap"/>
+  </resultMap>
   
   <sql id="Column_WithResourceModel_List" >
     CR.CUSTOMER_ID CR_CUSTOMER_ID, CR.RESOURCE_ID CR_RESOURCE_ID, CR.ENABLE CR_ENABLE, CR.FROM_SHARED CR_FROM_SHARED, CR.CREATE_DATE CR_CREATE_DATE, 
@@ -247,7 +257,18 @@
   <select id="selectResouceListWithSpecUserId" resultMap="ResourceModel_WithRelModelMap" >
     select 
     <include refid="ResourceColumn_WithRelModel_List" /> 
-    from RESOURCE R LEFT JOIN CUSTOMER_RESOURCE_REL CR 
+    from  
+    <if test="roleId == null">
+    	RESOURCE 
+    </if>
+    <if test="roleId != null">
+    	(
+			select * from RESOURCE R1
+			where 
+			EXISTS (select 1 from ROLE_BUILDING RB where RB.ROLE_ID=#{roleId} and RB.BUILDING_ID = R1.BUILDING_ID)      
+		)
+    </if>
+    R LEFT JOIN CUSTOMER_RESOURCE_REL CR 
     ON R.ID = CR.RESOURCE_ID AND CR.CUSTOMER_ID = #{resourceModel.specificUserId, jdbcType=BIGINT} 
     <if test="resourceModel!=null">
     	<where>
@@ -258,6 +279,7 @@
     		<if test="resourceModel.permissionAttrId != null"> AND  PERMISSION_ATTR_ID = #{resourceModel.permissionAttrId}</if>
     	</where>
      </if>
+     
     limit #{startRow,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
   </select>
   
@@ -351,17 +373,53 @@
     <include refid="Resource_Base_Column_List_WithLable" /> 
     FROM RESOURCE R, CUSTOMER_RESOURCE_REL CR 
 	WHERE CR.RESOURCE_ID=R.ID AND R.SHARE_ENABLE='Y' 
-	<![CDATA[ AND (CR.START_DATE IS NULL OR CR.START_DATE < now()) AND (CR.END_DATE IS NULL OR CR.END_DATE > now()) ]]> 
+	<![CDATA[ AND (CR.START_DATE IS NULL OR CR.START_DATE <= now()) AND (CR.END_DATE IS NULL OR CR.END_DATE >= now()) ]]> 
 	AND CR.CUSTOMER_ID = #{customerId,jdbcType=BIGINT}
   </select>
   
+  <select id="selectSharableResourceByIdAndArea" resultMap="BaseResultMap">
+    select 
+    CR.* 
+    FROM RESOURCE R, CUSTOMER_RESOURCE_REL CR 
+	WHERE CR.RESOURCE_ID=R.ID AND R.SHARE_ENABLE='Y' 
+	<if test="startDate!=null and startDate!=''">
+		<![CDATA[ AND (CR.START_DATE IS NULL OR CR.START_DATE <= #{startDate})]]>
+	</if>
+	<if test="endDate!=null and endDate!=''">
+		<![CDATA[  AND (CR.END_DATE IS NULL OR CR.END_DATE >= #{endDate})]]>
+	</if>
+	AND CR.CUSTOMER_ID = #{customerId,jdbcType=BIGINT} 
+	<if test="buildingId!=null">
+		 AND  BUILDING_ID = #{buildingId,jdbcType=INTEGER}
+	</if>
+	<if test="floor!=null">
+		 AND  FLOOR = #{floor,jdbcType=INTEGER}
+	</if>
+	AND NOT EXISTS (select 1 from CUSTOMER_RESOURCE_REL where CUSTOMER_ID=#{toCustomerId,jdbcType=BIGINT} and R.ID=RESOURCE_ID 
+	<if test="startDate!=null and startDate!=''">
+		<![CDATA[ AND (START_DATE IS NULL OR START_DATE <= #{startDate}) ]]>
+	</if>
+	<if test="endDate!=null and endDate!=''">
+		<![CDATA[ AND (END_DATE IS NULL OR END_DATE >= #{endDate}) ]]>
+	</if>
+	)
+  </select>
+  
+  <select id="selectSharableResBuildingById" resultMap="ResourceAreaResultMap" parameterType="java.lang.Long" >
+    select 
+    DISTINCT BU.NAME,R.BUILDING_ID,R.FLOOR,concat(R.FLOOR,'层') AS FLOORNAME
+    FROM RESOURCE R, CUSTOMER_RESOURCE_REL CR,BUILDING BU
+	WHERE CR.RESOURCE_ID=R.ID AND R.BUILDING_ID=BU.ID AND R.SHARE_ENABLE='Y' 
+	<![CDATA[ AND (CR.START_DATE IS NULL OR CR.START_DATE <= now()) AND (CR.END_DATE IS NULL OR CR.END_DATE >= now()) ]]> 
+	AND CR.CUSTOMER_ID = #{customerId,jdbcType=BIGINT} AND PERMISSION_ATTR_ID!=1 ORDER BY BU.NAME,R.FLOOR
+  </select>
 
   <select id="selectPrivateResByBIdAndCusId" resultMap="Resource_BaseResultMap" >
     select 
     <include refid="Resource_Base_Column_List_WithLable" /> 
     FROM RESOURCE R, CUSTOMER_RESOURCE_REL CR 
 	WHERE CR.RESOURCE_ID=R.ID AND R.STATUS='Y' 
-	<![CDATA[ AND (CR.START_DATE IS NULL OR CR.START_DATE < now()) AND (CR.END_DATE IS NULL OR CR.END_DATE > now()) ]]> 
+	<![CDATA[ AND (CR.START_DATE IS NULL OR CR.START_DATE <= now()) AND (CR.END_DATE IS NULL OR CR.END_DATE >= now()) ]]> 
 	AND CR.CUSTOMER_ID = #{customerId,jdbcType=BIGINT}
 	AND R.BUILDING_ID = #{buildingId,jdbcType=INTEGER} 
 	AND PERMISSION_ATTR_ID != 1
@@ -372,11 +430,11 @@
     <include refid="ResourceWith_ResKeys_Column_List" /> 
     FROM RESOURCE R  LEFT JOIN RESOURCE_KEY RK ON R.ID=RK.RESOURCE_ID, CUSTOMER_RESOURCE_REL CR 
 	WHERE CR.RESOURCE_ID=R.ID AND R.STATUS='Y' AND CR.ENABLE='Y'
-	<![CDATA[ AND (CR.START_DATE IS NULL OR CR.START_DATE < now()) AND (CR.END_DATE IS NULL OR CR.END_DATE > now()) ]]> 
+	<![CDATA[ AND (CR.START_DATE IS NULL OR CR.START_DATE <= now()) AND (CR.END_DATE IS NULL OR CR.END_DATE >= now()) ]]> 
 	AND CR.CUSTOMER_ID = #{customerId,jdbcType=BIGINT}
-	AND R.BUILDING_ID = #{buildingId,jdbcType=INTEGER} 
+	<if test="buildingId!=null"> AND R.BUILDING_ID = #{buildingId,jdbcType=INTEGER} </if>	
 	AND PERMISSION_ATTR_ID != 1
-	order by R.SEQUENCE desc 
+	order by R.SEQUENCE desc, RK.R_INT2 desc
   </select>
   
   <select id="selectValidResByCIdAndMac" resultMap="Resource_WithResKeyResultMap" >
@@ -384,7 +442,7 @@
     <include refid="ResourceWith_ResKeys_Column_List" /> 
     FROM RESOURCE R  LEFT JOIN RESOURCE_KEY RK ON R.ID=RK.RESOURCE_ID, CUSTOMER_RESOURCE_REL CR 
 	WHERE CR.RESOURCE_ID=R.ID AND R.STATUS='Y' AND CR.ENABLE='Y'
-	<![CDATA[ AND (CR.START_DATE IS NULL OR CR.START_DATE < now()) AND (CR.END_DATE IS NULL OR CR.END_DATE > now()) ]]> 
+	<![CDATA[ AND (CR.START_DATE IS NULL OR CR.START_DATE <= now()) AND (CR.END_DATE IS NULL OR CR.END_DATE >= now()) ]]> 
 	AND CR.CUSTOMER_ID = #{customerId,jdbcType=BIGINT}
 	AND R.ID = #{resourceId,jdbcType=INTEGER} 
   </select>

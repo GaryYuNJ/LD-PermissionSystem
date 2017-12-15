@@ -205,7 +205,7 @@ public class SyncCustomerDataFromCRMJob {
 					
 					//添加、更新用户信息。以cmmemid为主键
 					if(-1 == iCustomerService.addCustomer(cModel)){
-						iCustomerService.updateCustomerByCmMemid(cModel);
+						iCustomerService.updateCustomerById(cModel);
 					}
 				}
 			}else{
@@ -224,7 +224,6 @@ public class SyncCustomerDataFromCRMJob {
 			byte[] buf = s.getBytes("ISO-8859-1");
 			result = new String(buf,"GBK");
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return result;

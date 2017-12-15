@@ -1,5 +1,12 @@
 package com.ldps.facade.impl;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
@@ -12,14 +19,15 @@ import com.ldps.converter.CustomerModelConverter;
 import com.ldps.converter.ResourceModelConverter;
 import com.ldps.data.CusResourceRelData;
 import com.ldps.data.CustomerData;
+import com.ldps.data.ResourceArea;
 import com.ldps.data.ResourceData;
 import com.ldps.facade.CustomerFacade;
 import com.ldps.model.CusGrpResourceRelModel;
 import com.ldps.model.CusResourceRelModel;
+import com.ldps.model.CustomerGroupModel;
 import com.ldps.model.CustomerModel;
 import com.ldps.model.CustomerResGroupRelModel;
 import com.ldps.model.ResourceGroupModel;
-import com.ldps.model.CustomerGroupModel;
 import com.ldps.model.ResourceModel;
 import com.ldps.service.ICusGrpResourceRelService;
 import com.ldps.service.ICusResourceRelService;
@@ -28,11 +36,6 @@ import com.ldps.service.ICustomerGroupService;
 import com.ldps.service.ICustomerService;
 import com.ldps.service.IResourceService;
 import com.ldps.service.IUserService;
-
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 
 @Service("customerFacade")
@@ -64,13 +67,11 @@ public class CustomerFacadeImpl implements CustomerFacade {
 
 	@Override
 	public int delUserGroupRelation(Long userId, Integer groupId) {
-		// TODO Auto-generated method stub
 		return iCustomerGroupRelService.delUserGroupRelation(userId, groupId);
 	}
 
 	@Override
 	public int addUserGroupRelation(Long userId, Integer groupId) {
-		// TODO Auto-generated method stub
 		return iCustomerGroupRelService.addUserGroupRelation(userId, groupId);
 	}
 
@@ -78,7 +79,6 @@ public class CustomerFacadeImpl implements CustomerFacade {
 
 	@Override
 	public CustomerData getUserDataByPrimaryId(Long CustomerId) {
-		// TODO Auto-generated method stub
 		CustomerModel cModel = iCustomerSevice.UserDataByPrimaryId(CustomerId);
 		return customerModelConverter.process(cModel,null);
 	}
@@ -86,7 +86,6 @@ public class CustomerFacadeImpl implements CustomerFacade {
 
 	@Override
 	public Integer queryCustomerTotalCount() {
-		// TODO Auto-generated method stub
 		return iCustomerSevice.queryCustomerTotalCount();
 	}
 	/*
@@ -185,6 +184,17 @@ public class CustomerFacadeImpl implements CustomerFacade {
 		return resourceModelConverter.processList(rModels);
 	}
 	
+	/*
+	获取系统中所有的公有资源
+	 */
+	@Override
+	public List<ResourceData> queryPubResWithKeys() {
+		
+		List<ResourceModel> rModels = iResourceService.queryPubResWithKeys();
+		
+		return resourceModelConverter.processList(rModels);	
+		}
+
 	/*
 	获取building里用户有权限设备
 	 */
@@ -295,6 +305,19 @@ public class CustomerFacadeImpl implements CustomerFacade {
 		
 		List<ResourceModel> resourceModel = iCustomerSevice.querySharableResource(customerId);
 		return resourceModelConverter.processList(resourceModel);
+	}
+	
+	//获取用户可分享权限的资源区域
+		/*
+			不包含公共资源
+		*/
+	@Override
+	public List<ResourceArea> querySharableResourceArea(String mobile) {
+		
+		Long customerId = iCustomerSevice.getCustomerIdByMobile(mobile);
+		
+		List<ResourceArea> resourceModel = iCustomerSevice.querySharableResourceArea(customerId);
+		return resourceModel;
 	}
 	/*
 		查看用户分享出去的资源
@@ -408,7 +431,6 @@ public class CustomerFacadeImpl implements CustomerFacade {
 	public String removeSharedResource(String fromMobile, String toMobile,
 			Integer sourceKeyId) {
 		
-		// TODO Auto-generated method stub
 		String message = "0";
 		//check params
 		//fromCId exist?
@@ -518,7 +540,6 @@ public class CustomerFacadeImpl implements CustomerFacade {
 	//禁用资源
 	@Override
 	public int disableResourcePermission(Long customerId, Integer resourceId) {
-		// TODO Auto-generated method stub
 		CusResourceRelModel crModel = new CusResourceRelModel();
 		crModel.setCustomerId(customerId);
 		crModel.setResourceId(resourceId);
@@ -529,14 +550,12 @@ public class CustomerFacadeImpl implements CustomerFacade {
 	//更新\添加用户资源权限
 	@Override
 	public int authCusResPermission(CusResourceRelModel cusResourceRelModel) {
-		// TODO Auto-generated method stub
 		return iCusResourceRelService.authorizeResPermission(cusResourceRelModel,null);
 	}
 	
 	//连带授权 资源
 	@Override
 	public int jointAuthCusResPermission(CusResourceRelModel cusResourceRelModel) {
-		// TODO Auto-generated method stub
 		return iCusResourceRelService.jointAuthorizeResPermission(cusResourceRelModel.getCustomerId(), cusResourceRelModel.getResourceId(),
 				cusResourceRelModel.getStartDate(), cusResourceRelModel.getEndDate(), 
 				cusResourceRelModel.getFromShared(), cusResourceRelModel.getCustomerId(),null);
@@ -553,11 +572,110 @@ public class CustomerFacadeImpl implements CustomerFacade {
 
 	@Override
 	public int deleteResGrpPermission(Long userId, Integer resGroupId) {
-		// TODO Auto-generated method stub
 		CustomerResGroupRelModel crgModel = new CustomerResGroupRelModel();
 		crgModel.setCustomerId(userId);
 		crgModel.setRgroupId(resGroupId);
 		return iCusResourceRelService.deleteCusResGrpPermission(crgModel,null);
+	}
+	
+	//分享权限
+	@Override
+	public int permissionShare(String fromMobile, String toMobile,
+			String toName, String startDateStr, String endDateStr, String buildingIdStr,
+			String floorStr) {
+		int message = 0;
+		Date startDate = null;
+		Date endDate = null;
+		Integer buildingId=null;
+		Integer floor=null;
+		try{
+			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			if(!StringUtils.isEmpty(startDateStr)){
+				startDate = df.parse(startDateStr);
+			}
+			if(!StringUtils.isEmpty(endDateStr)){
+				endDate = df.parse(endDateStr);
+			}
+			if(!StringUtils.isEmpty(buildingIdStr)){
+				buildingId =new Integer(buildingIdStr);
+			}
+			if(!StringUtils.isEmpty(floorStr)){
+				floor = new Integer(floorStr);
+			}
+		}catch(Exception e){
+			message = -1; //格式有问题
+		}
+		
+		if(0==message){
+			try{
+				if(StringUtils.isEmpty(fromMobile) || StringUtils.isEmpty(toMobile)){
+					message = -2; //入参有空值
+				}else{
+					CustomerModel fromCustomerModel = iCustomerSevice.getCustomerModelByMobile(fromMobile);
+					if(null == fromCustomerModel){
+						message = -3; //分享用户不存在
+					}else{
+						CustomerModel toCustomerModel = iCustomerSevice.getCustomerModelByMobile(toMobile);
+						if(null == toCustomerModel){
+							String regExp = "^((13[0-9])|(15[^4])|(18[0-9])|(17[0-8])|(147))\\d{8}$";  
+					        Pattern p = Pattern.compile(regExp);  
+					        Matcher m = p.matcher(toMobile);  
+					        if(m.matches()){
+					        	//临时插入用户表数据，同时JOB更新
+								toCustomerModel=new CustomerModel(); 
+								toCustomerModel.setCmMobile1(toMobile);
+								iCustomerSevice.addTempCustomer(toCustomerModel);
+								toCustomerModel= iCustomerSevice.getCustomerModelByMobile(toMobile);
+								message=2;//新增用户
+					        }else{
+					        	message=3;
+					        	return message;
+					        }
+						}
+						
+						//查询当前人的资源分享列表  同时排出已经拥有权限的
+						List<CusResourceRelModel> cusresourceList= querySharableResource(fromCustomerModel.getId(),buildingId,floor,toCustomerModel.getId(), startDate, endDate);
+						if(null==cusresourceList||cusresourceList.isEmpty()){
+							message=1;//无可授权数据
+						}
+						//循环cusresourceList 修改授权Date
+						for (int i=0; i<cusresourceList.size();i++){
+							cusresourceList.get(i).setCustomerId(toCustomerModel.getId());
+							cusresourceList.get(i).setCreateDate(new Date());
+							cusresourceList.get(i).setCreateUser(fromCustomerModel.getId());
+							cusresourceList.get(i).setFromShared("Y");
+							if(null!=startDate){
+								//if(null==cusresourceList.get(i).getStartDate()||cusresourceList.get(i).getStartDate().getTime()>startDate.getTime()){
+									cusresourceList.get(i).setStartDate(startDate);
+								//}
+							}
+							if(null!=endDate){
+								//if(null==cusresourceList.get(i).getEndDate()||cusresourceList.get(i).getEndDate().getTime()<endDate.getTime()){
+									cusresourceList.get(i).setEndDate(endDate);
+								//}
+							}
+							//authCusResPermission(cusresourceList.get(i));
+							//对当前用户进行批量授权  循环 
+							jointAuthCusResPermission(cusresourceList.get(i));
+							
+						}
+					}
+				}
+			}catch(Exception e){
+				logger.error("shareResource exception. ", e);
+				message = -4; //创建记录异常
+			}
+		}
+		
+		return message;
+	}
+	
+	//获取用户在指定地方可授权的设备, 根据楼栋和层级
+	/*
+		不包含公共资源
+	*/
+	private List<CusResourceRelModel> querySharableResource(Long customerId,Integer buildingId,Integer floor,Long toCustomerId,Date startDate,Date endDate) {
+		return iCusResourceRelService.querySharableResource(customerId,buildingId,floor,toCustomerId, startDate, endDate);
 	}
 	
 	public ICustomerService getiCustomerSevice() {
@@ -602,6 +720,5 @@ public class CustomerFacadeImpl implements CustomerFacade {
 			ResourceModelConverter resourceModelConverter) {
 		this.resourceModelConverter = resourceModelConverter;
 	}
-
 
 }

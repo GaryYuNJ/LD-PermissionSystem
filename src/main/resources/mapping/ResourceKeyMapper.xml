@@ -31,6 +31,7 @@
     <include refid="Base_Column_List" />
     from RESOURCE_KEY
     where RESOURCE_ID = #{resourceId,jdbcType=INTEGER}
+    order by R_INT2 desc
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from RESOURCE_KEY

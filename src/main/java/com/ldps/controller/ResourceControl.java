@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.alibaba.fastjson.JSON;
 import com.ldps.data.APIMessage;
 import com.ldps.data.BootstrapTableData;
+import com.ldps.model.BuildingModel;
 import com.ldps.model.ResourceModel;
 import com.ldps.service.IBuildingModelService;
 import com.ldps.service.IResourceService;
@@ -37,10 +38,10 @@ public class ResourceControl {
 	private IBuildingModelService iBuildingModelService;
 	@Resource
 	private IUserService userService;
-	
+
 	@Value("#{configProperties['upload.dir']}")
-	private String uploadDir; 
-	
+	private String uploadDir;
+
 	@RequestMapping(value = "resourceManagePage", method = RequestMethod.GET)
 	public String resouceManage(ModelMap model) {
 		// 页面菜单样式需要
@@ -57,6 +58,10 @@ public class ResourceControl {
 	@ResponseBody
 	@RequestMapping(value = "allBuildings.json")
 	public String getBuildings() {
+		//权限过滤
+		if (userService.getSessionUserModel().getUserRole().getRoleType() != 1) {
+			return JSON.toJSONString(userService.getSessionUserModel().getBuildings());
+		}
 		return JSON.toJSONString(iBuildingModelService.queryAll());
 	}
 
@@ -75,25 +80,33 @@ public class ResourceControl {
 	@RequestMapping(value = "updateResource.json")
 	public String updateResource(
 			@RequestParam("resourceModelJson") String resourceModelJson) {
-		ResourceModel resourceModel = JSON.parseObject(resourceModelJson,
-				ResourceModel.class);
-		APIMessage am = new APIMessage();
-		am.setStatus(1);
 		
-		if(null !=  resourceModel.getStatus() 
-				|| "on".equals(resourceModel.getStatus())){
+		APIMessage am = new APIMessage();
+		ResourceModel resourceModel = null;
+		try{
+			resourceModel = JSON.parseObject(resourceModelJson,
+					ResourceModel.class);
+		}catch(Exception e){
+			am.setStatus(1);
+			return JSON.toJSONString(am);
+		}
+		
+		am.setStatus(1);
+
+		if (null != resourceModel.getStatus()
+				|| "on".equals(resourceModel.getStatus())) {
 			resourceModel.setStatus("Y");
-		}else{
+		} else {
 			resourceModel.setStatus("N");
 		}
-		
-		if(null !=  resourceModel.getShareEnable() 
-				|| "on".equals(resourceModel.getShareEnable())){
+
+		if (null != resourceModel.getShareEnable()
+				|| "on".equals(resourceModel.getShareEnable())) {
 			resourceModel.setShareEnable("Y");
-		}else{
+		} else {
 			resourceModel.setShareEnable("N");
 		}
-		
+
 		if (iResourceService.updateResource(resourceModel) > 0) {
 			am.setStatus(0);
 		}
@@ -140,10 +153,15 @@ public class ResourceControl {
 		} else {
 			resourceModel.setShareEnable("N");
 		}
-
-		if (iResourceService.createResource(resourceModel) == 1) {
+		int result = iResourceService.createResource(resourceModel);
+		if (result == 1) {
 			am.setStatus(0);
+			am.setMessage(resourceModel.getId().toString());
+		//有同名资源名称
+		}else if (result == -1){
+			am.setMessage("该楼栋下同名资源已存在，请更换一个名字");
 		}
+		
 		return JSON.toJSONString(am);
 	}
 
@@ -157,13 +175,18 @@ public class ResourceControl {
 				ResourceModel.class);
 		BootstrapTableData bData = new BootstrapTableData();
 
-		List<ResourceModel> resourceList = iResourceService
-				.queryBasicResByCondition(resourceModel, offset, limit);
+		Long roleId=userService.getSessionUserModel().getUserRole().getId();
+		if(roleId==1){
+			roleId=null;
+		}
+		
+		List<ResourceModel> resourceList = iResourceService.queryBasicResByCondition(roleId,resourceModel, offset, limit);
+		
 		if (null != resourceList && resourceList.size() > 0) {
 			bData.setRows(resourceList);
 			bData.setPage(offset / limit + 1);
 			bData.setTotal(iResourceService
-					.queryCountByCondition(resourceModel));
+					.queryCountByCondition(roleId,resourceModel));
 		} else {
 			bData.setPage(0);
 			bData.setRows(new Object());
@@ -196,7 +219,7 @@ public class ResourceControl {
 		}
 		return JSON.toJSONString(bData);
 	}
-	
+
 	// 关联用户查询资源，返回用户是否有权限标识
 	@ResponseBody
 	@RequestMapping(value = "resourceSearchWithCusId.json")
@@ -207,14 +230,17 @@ public class ResourceControl {
 		ResourceModel resourceModel = JSON.parseObject(search,
 				ResourceModel.class);
 		BootstrapTableData bData = new BootstrapTableData();
-
+		Long roleId=userService.getSessionUserModel().getUserRole().getId();
+		if(roleId==1){
+			roleId=null;
+		}
 		List<ResourceModel> resourceList = iResourceService
-				.queryResByConditionWithCusId(resourceModel, offset, limit);
+				.queryResByConditionWithCusId(roleId,resourceModel, offset, limit);
 		if (null != resourceList && resourceList.size() > 0) {
 			bData.setRows(resourceList);
 			bData.setPage(offset / limit + 1);
 			bData.setTotal(iResourceService
-					.queryCountByCondition(resourceModel));
+					.queryCountByCondition(roleId,resourceModel));
 		} else {
 			bData.setRows(new Object());
 			bData.setTotal(0);
@@ -232,14 +258,17 @@ public class ResourceControl {
 		ResourceModel resourceModel = JSON.parseObject(search,
 				ResourceModel.class);
 		BootstrapTableData bData = new BootstrapTableData();
-
+		Long roleId=userService.getSessionUserModel().getUserRole().getId();
+		if(roleId==1){
+			roleId=null;
+		}
 		List<ResourceModel> resourceList = iResourceService
-				.queryResByConditionWithCusGroupId(resourceModel, offset, limit);
+				.queryResByConditionWithCusGroupId(roleId,resourceModel, offset, limit);
 		if (null != resourceList && resourceList.size() > 0) {
 			bData.setRows(resourceList);
 			bData.setPage(offset / limit + 1);
 			bData.setTotal(iResourceService
-					.queryCountByCondition(resourceModel));
+					.queryCountByCondition(roleId,resourceModel));
 		} else {
 			bData.setRows(new Object());
 			bData.setTotal(0);
@@ -248,67 +277,69 @@ public class ResourceControl {
 		return JSON.toJSONString(bData);
 	}
 
-	//资源导入功能
-		@ResponseBody
-		@RequestMapping(value = "uploadFile")
-	    public String uploadFileHandler(@RequestParam("file") MultipartFile file, 
-	    		@RequestParam("nodeId") Integer nodeId) throws IOException {
-	    
-			APIMessage message = new APIMessage();
-	    	if (!file.isEmpty()) {
-	    		//--上传--
-	            InputStream in = null;
-	            OutputStream out = null;
+	// 资源导入功能
+	@ResponseBody
+	@RequestMapping(value = "uploadFile")
+	public String uploadFileHandler(@RequestParam("file") MultipartFile file,
+			@RequestParam("nodeId") Integer nodeId) throws IOException {
 
-	            try {
-	                // 获得在tomcat中项目的路径， 需要在web.xml配置ft.webapp
-	            	if(StringUtils.isEmpty(uploadDir)){
-	            		String webRootPath = System.getProperty("ft.webapp");
-	            		uploadDir = webRootPath + File.separator + "uploadFiles";
-	            	}
-	            	File dir = new File(uploadDir);
-	                if (!dir.exists())
-	                    dir.mkdirs();
-	                
-	                File serverFile = new File(dir.getAbsolutePath() + File.separator + file.getOriginalFilename());
-	                in = file.getInputStream();
-	                out = new FileOutputStream(serverFile);
-	                byte[] b = new byte[1024];
-	                int len = 0;
-	                while ((len = in.read(b)) > 0) {
-	                    out.write(b, 0, len);
-	                }
-	                out.close();
-	                in.close();
-	                System.out.println("Server File Location=" + serverFile.getAbsolutePath());
-	                
-	                //--解析、导入--
-	                message = iResourceService.importResFromExcel(serverFile.getAbsolutePath(),nodeId);
+		APIMessage message = new APIMessage();
+		if (!file.isEmpty()) {
+			// --上传--
+			InputStream in = null;
+			OutputStream out = null;
 
-	            } catch (Exception e) {
-	            	e.printStackTrace();
-	            	message.setStatus(-1);
-	            	message.setMessage("文件解析失败！");
-	            } finally {
-	                if (out != null) {
-	                    out.close();
-	                    out = null;
-	                }
+			try {
+				// 获得在tomcat中项目的路径， 需要在web.xml配置ft.webapp
+				if (StringUtils.isEmpty(uploadDir)) {
+					String webRootPath = System.getProperty("ft.webapp");
+					uploadDir = webRootPath + File.separator + "uploadFiles";
+				}
+				File dir = new File(uploadDir);
+				if (!dir.exists())
+					dir.mkdirs();
 
-	                if (in != null) {
-	                    in.close();
-	                    in = null;
-	                }
-	            }
-	        } else {
-	        	message.setStatus(-1);
-	        	message.setMessage("文件没有资源数据！");
-	        }
-	    	
-	    	return JSON.toJSONString(message);
-	    }
-	    
-	
+				File serverFile = new File(dir.getAbsolutePath()
+						+ File.separator + file.getOriginalFilename());
+				in = file.getInputStream();
+				out = new FileOutputStream(serverFile);
+				byte[] b = new byte[1024];
+				int len = 0;
+				while ((len = in.read(b)) > 0) {
+					out.write(b, 0, len);
+				}
+				out.close();
+				in.close();
+				System.out.println("Server File Location="
+						+ serverFile.getAbsolutePath());
+
+				// --解析、导入--
+				message = iResourceService.importResFromExcel(
+						serverFile.getAbsolutePath(), nodeId);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				message.setStatus(-1);
+				message.setMessage("文件解析失败！");
+			} finally {
+				if (out != null) {
+					out.close();
+					out = null;
+				}
+
+				if (in != null) {
+					in.close();
+					in = null;
+				}
+			}
+		} else {
+			message.setStatus(-1);
+			message.setMessage("文件没有资源数据！");
+		}
+
+		return JSON.toJSONString(message);
+	}
+
 	public IResourceService getiResourceService() {
 		return iResourceService;
 	}

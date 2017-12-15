@@ -71,6 +71,15 @@
 			<mvc:mapping path="/appApi/*" />
 			<bean class="com.ldps.interceptor.APPInterceptor" />
 		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/oaApi/*" />
+			<bean class="com.ldps.interceptor.APPInterceptor" />
+		</mvc:interceptor>
+		
+		<mvc:interceptor>
+			<mvc:mapping path="/admin/**" />
+			<bean class="com.ldps.interceptor.AdminLoginInterceptor" />
+		</mvc:interceptor>
 		
 		<mvc:interceptor>
 			<mvc:mapping path="/manage/**" />
@@ -79,9 +88,9 @@
 			<mvc:exclude-mapping path="/login"/> 
 			<mvc:exclude-mapping path="/appApi/*"/> 
 			<mvc:exclude-mapping path="/crmApi/*"/>
-			
 			<bean class="com.ldps.interceptor.LoginInterceptor" />
 		</mvc:interceptor>
+		
 	</mvc:interceptors>
 
 	<mvc:view-controller path="/" view-name="redirect:/manage/resourceManagePage"/>

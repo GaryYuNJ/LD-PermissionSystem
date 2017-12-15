@@ -39,7 +39,6 @@ public class AddCusToCusGroupPermChangeListener implements ApplicationListener<A
 	@Async
 	@Override
 	public void onApplicationEvent(AddCusToCusGroupPermChangeEvent event) {
-		// TODO Auto-generated method stub
 		CusAndCusGrpRelChangeEventData eData = (CusAndCusGrpRelChangeEventData)event.getSource();
 
 		//用户对资源的关系

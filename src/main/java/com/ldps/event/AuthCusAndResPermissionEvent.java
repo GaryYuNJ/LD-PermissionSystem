@@ -12,7 +12,6 @@ public class AuthCusAndResPermissionEvent extends ApplicationEvent {
 	
 	public AuthCusAndResPermissionEvent(AuthCusAndResPermissionEventData source) {
 		super(source);
-		// TODO Auto-generated constructor stub
 	}
 	
 }

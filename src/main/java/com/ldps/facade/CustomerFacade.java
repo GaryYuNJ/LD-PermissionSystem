@@ -3,6 +3,7 @@ package com.ldps.facade;
 
 import com.ldps.data.CusResourceRelData;
 import com.ldps.data.CustomerData;
+import com.ldps.data.ResourceArea;
 import com.ldps.data.ResourceData;
 import com.ldps.model.CusResourceRelModel;
 import com.ldps.model.CustomerResGroupRelModel;
@@ -79,6 +80,10 @@ public interface CustomerFacade {
 	获取building里的公共资源 ，resourceKeys同时返回
 	 */
 	List<ResourceData> queryPubResWithKeysByBuildingId(Integer buildingId);
+	/*
+	获取系统中所有的公共资源
+	 */
+	public List<ResourceData> queryPubResWithKeys();
 
 	public List<ResourceData> queryPrivateResWithKeysByBIdAndMobile(
 			Integer buildingId, String mobile);
@@ -99,4 +104,9 @@ public interface CustomerFacade {
 
 	int jointAuthResPermissionWithCreateUserId(Long customerId,
 			Integer resourceId, Date startDate, Date endDate, Long createUserId);
+	//查询可分享的区域
+	public List<ResourceArea> querySharableResourceArea(String mobile);
+	//分享权限
+	public int permissionShare(String fromMobile,String toMobile,String toName,String startDate,String endDate,String buildingId,String floor);
+	
 }
