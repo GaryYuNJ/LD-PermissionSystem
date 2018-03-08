@@ -222,7 +222,7 @@ public class CusGrpResourceRelServiceImpl implements ICusGrpResourceRelService {
 			
 			
 			//获取userIdList
-			List<CusGroupRelModel> cGroupRelModels = iCustomerGroupRelService.queryByGroupId(cusGrpResGrpRelModel.getRgroupId());
+			List<CusGroupRelModel> cGroupRelModels = iCustomerGroupRelService.queryByGroupId(cusGrpResGrpRelModel.getCgroupId());
 			
 			//循环对单个用户、资源组授权
 			if(null != cGroupRelModels){
