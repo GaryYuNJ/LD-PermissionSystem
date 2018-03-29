@@ -43,5 +43,10 @@ public interface CustomerGroupFacade {
 	int jointAuthCusGrpResGrpPermission(
 			CusGroupResGroupRelModel cusGrpResGrpRelModel);
 
+	List<CustomerGroupData>  searchUserGroupByNameLikeWithPageIndex(String search,
+			Integer offset, Integer limit);
+
+	Integer queryCusGroupTotalCountByNameLike(String search);
+
 	
 }

@@ -71,7 +71,20 @@ public class CustomerGroupFacadeImpl implements CustomerGroupFacade {
 		
 		return customerGroupModelConverter.process(cModel,null);
 	}
-
+	
+	@Override
+	public Integer queryCusGroupTotalCountByNameLike(String name) {
+		return iCustomerGroupService.queryCustomerTotalCountByNameLike(name);
+	}
+	
+	@Override
+	public List<CustomerGroupData>  searchUserGroupByNameLikeWithPageIndex(String name,
+			Integer startRow, Integer pageSize) {
+		List<CustomerGroupModel> cModels = iCustomerGroupService.getCustomerGroupByNameLike(name,startRow, pageSize);
+		
+		return customerGroupModelConverter.processList(cModels);
+	}
+	
 	@Override
 	public List<CustomerGroupData> queryJoinCustomerIdWithPageIndex(Long customerId,
 			Integer offset, Integer limit) {

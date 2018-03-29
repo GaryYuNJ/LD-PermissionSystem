@@ -94,6 +94,14 @@
     where CGROUP_ID=#{userGroupId,jdbcType=INTEGER}
   </select>
   
+  <select id="selectCusIdByGroupIdAndCustId" resultMap="ResultOfLong"  >
+    select 
+    CUSTOMER_ID 
+    from CGROUP_REL
+    where CGROUP_ID = #{groupId,jdbcType=INTEGER} 
+    and CUSTOMER_ID =  #{customerId, jdbcType=BIGINT}
+  </select>
+  
    <select id="selectCusIdListByGroupIdList" resultMap="ResultOfLong"  >
     select 
     DISTINCT CUSTOMER_ID 

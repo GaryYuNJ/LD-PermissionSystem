@@ -54,6 +54,23 @@
     where NAME = #{name,jdbcType=VARCHAR}
   </select>  
   
+    
+  <select id="selectByNameLike" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from CGROUP
+    where NAME like concat(concat('%',#{name}),'%') 
+    limit #{startRow,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
+  </select>  
+  
+  
+  <select id="selectTotalCountByNameLike" resultMap="ResultOfInteger" >
+    select 
+     COUNT(ID) totalCount  
+    from CGROUP
+    where NAME like #{name,jdbcType=VARCHAR}
+  </select>
+  
   <select id="selectTotalCount" resultMap="ResultOfInteger" >
     select 
      COUNT(ID) totalCount  

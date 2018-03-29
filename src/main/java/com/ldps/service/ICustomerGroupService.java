@@ -28,4 +28,8 @@ public interface ICustomerGroupService {
 
 	public int updateUserGroup(Integer customerGroupId, String customerGroupName);
 
+	List<CustomerGroupModel> getCustomerGroupByNameLike(String namename,Integer startRow, Integer pageSize);
+
+	public Integer queryCustomerTotalCountByNameLike(String name);
+
 }

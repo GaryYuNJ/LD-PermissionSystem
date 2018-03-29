@@ -299,7 +299,7 @@ public class ResourceServiceImpl implements IResourceService {
 	                        	valueTmp = String.valueOf((int)cell.getNumericCellValue());
 	                    }
 	                    
-	                	switch(a){
+	                    switch(a){
 	                		case 1 :
 	                			rModel.setName(valueTmp);
 	                			break;
