@@ -931,7 +931,7 @@
 		 //button失效，防止重复提交
 		 //disabled="true"
 		 $('#saveButton_addGrpPer').attr("disabled", true);
-
+		 $('#saveButton_addGrpPer').html("处理中...");
 		 //关联用户组查询用户标识
 		 var jointAuthFlag = null;
       //定义参数  
@@ -965,10 +965,12 @@
 		    		alert("操作失败！");
 		    	}
 		    	$('#saveButton_addGrpPer').attr("disabled", false);
+		    	$('#saveButton_addGrpPer').html("保存");
 		     },  
 		     error : function() {  
 		          alert("系统异常！");  
 		         $('#saveButton_addGrpPer').attr("disabled", false);
+		         $('#saveButton_addGrpPer').html("保存");
 		     }  
 		});
       

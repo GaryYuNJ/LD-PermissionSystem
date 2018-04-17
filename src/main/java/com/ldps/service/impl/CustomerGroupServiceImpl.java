@@ -39,6 +39,17 @@ public class CustomerGroupServiceImpl implements ICustomerGroupService {
 	public CustomerGroupModel getCustomerGroupModelByName(String name) {
 		return customerGroupDao.selectByName(name);
 	}
+	
+
+	@Override
+	public List<CustomerGroupModel> getCustomerGroupByNameLike(String name,Integer startRow, Integer pageSize) {
+		return customerGroupDao.selectByNameLike(name, startRow, pageSize);
+	}
+
+	@Override
+	public Integer queryCustomerTotalCountByNameLike(String name) {
+		return customerGroupDao.selectTotalCountByNameLike(name);
+	}
 
 	@Override
 	public List<CustomerGroupModel> queryJoinCusIdWithPageIndex(Integer startRow,
@@ -48,8 +59,9 @@ public class CustomerGroupServiceImpl implements ICustomerGroupService {
 	}
 
 	@Override
-	public CustomerGroupModel queryByNameJoinCusIdWithPageIndex(String name, Long customerId) {
-		return customerGroupDao.selectByNameJoinCusIdWithPageIndex(name, customerId);
+	public List<CustomerGroupModel> queryByNameJoinCusIdWithPageIndex(Integer startRow,
+			Integer pageSize, String name, Long customerId) {
+		return customerGroupDao.selectByNameJoinCusIdWithPageIndex(startRow, pageSize, name, customerId);
 	}
 
 	@Override

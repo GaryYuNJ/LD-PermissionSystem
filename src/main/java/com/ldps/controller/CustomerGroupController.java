@@ -55,14 +55,14 @@ public class CustomerGroupController {
 				bData.setTotal(customerGroupFacade.queryCusGroupTotalCount());
 			}
 		}else{
-			CustomerGroupData cData = customerGroupFacade.searchUserGroupByNameWithPageIndex(search, offset, limit);
+			//模糊查询
+			List<CustomerGroupData> cDatas = customerGroupFacade.searchUserGroupByNameLikeWithPageIndex(search, offset, limit);
 			
-			if(null != cData && null != cData.getId()){
-				List<CustomerGroupData> cDatas = new ArrayList<CustomerGroupData> ();
-				cDatas.add(cData);
+			if(null != cDatas && cDatas.size()>0){
 				bData.setRows(cDatas);
-				bData.setPage(1);				
-				bData.setTotal(1);
+				bData.setPage(offset/limit +1);
+				//get total
+				bData.setTotal(customerGroupFacade.queryCusGroupTotalCountByNameLike(search));
 			}
 		}
 		if(null == bData.getRows()){
@@ -96,12 +96,12 @@ public class CustomerGroupController {
 				bData.setTotal(customerGroupFacade.queryCusGroupTotalCount());
 			}
 		}else{
-			CustomerGroupData cData = customerGroupFacade.searchByNameJoinCusIdWithPageIndex(search, userId, offset, limit);
-			if(null != cData && null != cData.getId()){
-				cDatas.add(cData);
+			cDatas = customerGroupFacade.searchByNameJoinCusIdWithPageIndex(search, userId, offset, limit);
+			if(null != cDatas && cDatas.size()>0){
+				//cDatas.add(cData);
 				bData.setRows(cDatas);
-				bData.setPage(1);				
-				bData.setTotal(1);
+				bData.setPage(offset/limit +1);				
+				bData.setTotal(customerGroupFacade.queryCusGroupTotalCountByNameLike(search));
 			}
 		}
 		if(null == bData.getRows()){

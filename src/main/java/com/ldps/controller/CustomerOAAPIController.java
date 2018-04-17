@@ -70,6 +70,35 @@ public class CustomerOAAPIController {
 		return JSON.toJSONString(apiMessage);
 	}
 	
+	@RequestMapping(value="/modifyGroupName",method = { RequestMethod.GET,
+			RequestMethod.POST },produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public synchronized String modifyGroupName(@RequestParam("groupId")String groupId, @RequestParam("groupName")String groupName,
+			Model model){
+		APIMessage apiMessage = new APIMessage();
+		
+		if(!StringUtils.isEmpty(groupId)
+				|| !StringUtils.isEmpty(groupName)){
+		
+			int result = customerGroupFacade.updateUserGroup(Integer.parseInt(StringUtils.trimWhitespace(groupId)), groupName);
+				
+			if(result == 1 ){
+				apiMessage.setStatus(1);
+				apiMessage.setMessage("成功");
+			}else{
+				apiMessage.setStatus(0);
+				apiMessage.setMessage("修改失败");
+			}
+			
+		}else{
+			apiMessage.setStatus(-2);
+			apiMessage.setMessage("用户组名称为空");
+		}
+		
+		return JSON.toJSONString(apiMessage);
+	}
+	
+	
 	@RequestMapping(value="/addNewCusToGroup",method = { RequestMethod.GET,
 			RequestMethod.POST },produces = "application/json; charset=utf-8")
 	@ResponseBody

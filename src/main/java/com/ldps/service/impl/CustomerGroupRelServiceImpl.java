@@ -51,7 +51,13 @@ public class CustomerGroupRelServiceImpl implements ICustomerGroupRelService {
 
 
 	@Override
-	public int addUserGroupRelation(Long userId, Integer groupId) {
+	public synchronized int addUserGroupRelation(Long userId, Integer groupId) {
+		//如果已存在，直接返回
+		List<Long> userList = customerGroupRelDao.selectCusIdByGroupIdAndCustId(userId, groupId);
+		if(userList !=null && userList.size()>0){
+			return 1;
+		}
+		
 		CusGroupRelModel model = new CusGroupRelModel();
 		model.setCgroupId(groupId);
 		model.setCustomerId(userId);

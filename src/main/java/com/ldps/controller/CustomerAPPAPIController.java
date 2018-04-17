@@ -235,6 +235,23 @@ public class CustomerAPPAPIController {
 		return JSON.toJSONString(apiMessage);
 	}
 	
+	
+	//连带资源授权接口(对一个资源授权，需要连带授权上层所有基础资源(要使用授权资源的前提资源)。
+	//by mobile、resourceKey
+	@RequestMapping(value="/jointAuthResPermiByMobAndUnixTime",method = { RequestMethod.GET,
+			RequestMethod.POST },  produces = {"application/json;charset=UTF-8"})
+	@ResponseBody
+	public String jointAuthResPermissionByMobile(@RequestParam("mobile")String mobile,
+			@RequestParam("resourceKey")String mac, @RequestParam("startDateUnixTime")Long startDateUnixTime,
+			@RequestParam("endDateUnixTime")Long endDateUnixTime, Model model){
+		
+		SimpleDateFormat df  = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		
+		String startDateStr= df.format(new Date(startDateUnixTime * 1000));
+		String endDateStr=df.format(new Date(endDateUnixTime * 1000));
+		
+		return this.jointAuthResPermissionByMobile(mobile, mac, startDateStr, endDateStr, model);
+	}
 
 	//连带资源授权接口(对一个资源授权，需要连带授权上层所有基础资源(要使用授权资源的前提资源)。
 	//by customerId、resourceId

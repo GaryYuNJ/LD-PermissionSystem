@@ -31,6 +31,12 @@ public interface CustomerGroupModelMapper {
 	List<CustomerGroupModel> selectJoinCustomerIdWithPageIndex(@Param("startRow") Integer startRow,
 			@Param("pageSize") Integer pageSize, @Param("customerId") Long customerId);
 
-	CustomerGroupModel selectByNameJoinCusIdWithPageIndex( @Param("name")String name, @Param("customerId") Long customerId);
-	
+	List<CustomerGroupModel>  selectByNameJoinCusIdWithPageIndex(@Param("startRow") Integer startRow,
+			@Param("pageSize") Integer pageSize, @Param("name")String name, @Param("customerId") Long customerId);
+
+	List<CustomerGroupModel> selectByNameLike(@Param("name")String name, @Param("startRow") Integer startRow,
+			@Param("pageSize") Integer pageSize);
+
+	Integer selectTotalCountByNameLike(@Param("name") String name);
+
 }
