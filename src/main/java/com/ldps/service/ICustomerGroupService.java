@@ -17,9 +17,6 @@ public interface ICustomerGroupService {
 	List<CustomerGroupModel> queryJoinCusIdWithPageIndex(Integer startRow,
 			Integer pageSize, Long customerId);
 
-	CustomerGroupModel queryByNameJoinCusIdWithPageIndex(String name,
-			Long customerId);
-
 	public int createNewUserGroup(String userGroupName);
 
 	public int deleteUserGroupById(Integer customerGroupId);
@@ -31,5 +28,8 @@ public interface ICustomerGroupService {
 	List<CustomerGroupModel> getCustomerGroupByNameLike(String namename,Integer startRow, Integer pageSize);
 
 	public Integer queryCustomerTotalCountByNameLike(String name);
+
+	List<CustomerGroupModel> queryByNameJoinCusIdWithPageIndex(
+			Integer startRow, Integer pageSize, String name, Long customerId);
 
 }

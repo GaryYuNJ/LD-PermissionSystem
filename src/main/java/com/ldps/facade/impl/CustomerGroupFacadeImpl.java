@@ -95,12 +95,12 @@ public class CustomerGroupFacadeImpl implements CustomerGroupFacade {
 	}
 	
 	@Override
-	public CustomerGroupData searchByNameJoinCusIdWithPageIndex(String name, Long customerId,
+	public List<CustomerGroupData>  searchByNameJoinCusIdWithPageIndex(String name, Long customerId,
 			Integer offset, Integer limit) {
-		CustomerGroupModel cModel = 
-				iCustomerGroupService.queryByNameJoinCusIdWithPageIndex(name, customerId);
+		List<CustomerGroupModel> cModels  = 
+				iCustomerGroupService.queryByNameJoinCusIdWithPageIndex(offset, limit, name, customerId);
 		
-		return customerGroupModelConverter.process(cModel, null);
+		return customerGroupModelConverter.processList(cModels);
 	}
 
 	@Override

@@ -68,7 +68,7 @@
     select 
      COUNT(ID) totalCount  
     from CGROUP
-    where NAME like #{name,jdbcType=VARCHAR}
+    where NAME like concat(concat('%',#{name}),'%') 
   </select>
   
   <select id="selectTotalCount" resultMap="ResultOfInteger" >
@@ -98,8 +98,10 @@
     <include refid="Base_Column_List_withlabel" /> ,CRG.CUSTOMER_ID AS EXTEND_LONG1
     FROM CGROUP CG 
     left join CGROUP_REL CRG on CG.ID=CRG.CGROUP_ID and CRG.CUSTOMER_ID = #{customerId,jdbcType=BIGINT}
-    where NAME = #{name,jdbcType=VARCHAR} 
+    where NAME like concat(concat('%',#{name}),'%') 
     order by CRG.CUSTOMER_ID desc 
+    limit #{startRow,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
+    
   </select>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >

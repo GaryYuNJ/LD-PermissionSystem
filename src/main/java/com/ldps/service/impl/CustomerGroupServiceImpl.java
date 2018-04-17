@@ -59,8 +59,9 @@ public class CustomerGroupServiceImpl implements ICustomerGroupService {
 	}
 
 	@Override
-	public CustomerGroupModel queryByNameJoinCusIdWithPageIndex(String name, Long customerId) {
-		return customerGroupDao.selectByNameJoinCusIdWithPageIndex(name, customerId);
+	public List<CustomerGroupModel> queryByNameJoinCusIdWithPageIndex(Integer startRow,
+			Integer pageSize, String name, Long customerId) {
+		return customerGroupDao.selectByNameJoinCusIdWithPageIndex(startRow, pageSize, name, customerId);
 	}
 
 	@Override

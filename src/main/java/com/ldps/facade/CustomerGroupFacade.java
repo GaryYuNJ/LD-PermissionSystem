@@ -22,9 +22,6 @@ public interface CustomerGroupFacade {
 	List<CustomerGroupData> queryJoinCustomerIdWithPageIndex(Long customerId,
 			Integer offset, Integer limit);
 
-	CustomerGroupData searchByNameJoinCusIdWithPageIndex(String name,
-			Long customerId, Integer offset, Integer limit);
-
 	int createNewUserGroup(String userGroupName);
 
 	int deleteUserGroupById(Integer customerGroupId);
@@ -47,6 +44,9 @@ public interface CustomerGroupFacade {
 			Integer offset, Integer limit);
 
 	Integer queryCusGroupTotalCountByNameLike(String search);
+
+	List<CustomerGroupData> searchByNameJoinCusIdWithPageIndex(String name,
+			Long customerId, Integer offset, Integer limit);
 
 	
 }

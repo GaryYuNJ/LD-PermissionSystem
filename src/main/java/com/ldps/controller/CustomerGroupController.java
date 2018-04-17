@@ -96,12 +96,12 @@ public class CustomerGroupController {
 				bData.setTotal(customerGroupFacade.queryCusGroupTotalCount());
 			}
 		}else{
-			CustomerGroupData cData = customerGroupFacade.searchByNameJoinCusIdWithPageIndex(search, userId, offset, limit);
-			if(null != cData && null != cData.getId()){
-				cDatas.add(cData);
+			cDatas = customerGroupFacade.searchByNameJoinCusIdWithPageIndex(search, userId, offset, limit);
+			if(null != cDatas && cDatas.size()>0){
+				//cDatas.add(cData);
 				bData.setRows(cDatas);
-				bData.setPage(1);				
-				bData.setTotal(1);
+				bData.setPage(offset/limit +1);				
+				bData.setTotal(customerGroupFacade.queryCusGroupTotalCountByNameLike(search));
 			}
 		}
 		if(null == bData.getRows()){
