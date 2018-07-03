@@ -382,12 +382,14 @@
     CR.* 
     FROM RESOURCE R, CUSTOMER_RESOURCE_REL CR 
 	WHERE CR.RESOURCE_ID=R.ID AND R.SHARE_ENABLE='Y' 
+	<!-- 
 	<if test="startDate!=null and startDate!=''">
 		<![CDATA[ AND (CR.START_DATE IS NULL OR CR.START_DATE <= #{startDate})]]>
 	</if>
 	<if test="endDate!=null and endDate!=''">
 		<![CDATA[  AND (CR.END_DATE IS NULL OR CR.END_DATE >= #{endDate})]]>
 	</if>
+	 -->
 	AND CR.CUSTOMER_ID = #{customerId,jdbcType=BIGINT} 
 	<if test="buildingId!=null">
 		 AND  BUILDING_ID = #{buildingId,jdbcType=INTEGER}

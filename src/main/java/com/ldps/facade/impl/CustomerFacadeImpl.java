@@ -640,16 +640,22 @@ public class CustomerFacadeImpl implements CustomerFacade {
 						}
 						//循环cusresourceList 修改授权Date
 						for (int i=0; i<cusresourceList.size();i++){
+							//判断时间是否合适
+							if((null != cusresourceList.get(i).getEndDate() && startDate.after(cusresourceList.get(i).getEndDate()))
+									|| (null != cusresourceList.get(i).getStartDate() && endDate.before(cusresourceList.get(i).getStartDate()))){
+								continue;
+							}
+							
 							cusresourceList.get(i).setCustomerId(toCustomerModel.getId());
 							cusresourceList.get(i).setCreateDate(new Date());
 							cusresourceList.get(i).setCreateUser(fromCustomerModel.getId());
 							cusresourceList.get(i).setFromShared("Y");
-							if(null!=startDate){
+							if(null!=startDate && (null == cusresourceList.get(i).getStartDate() || startDate.after(cusresourceList.get(i).getStartDate()))){
 								//if(null==cusresourceList.get(i).getStartDate()||cusresourceList.get(i).getStartDate().getTime()>startDate.getTime()){
 									cusresourceList.get(i).setStartDate(startDate);
 								//}
 							}
-							if(null!=endDate){
+							if(null!=endDate && (null == cusresourceList.get(i).getEndDate() || endDate.before(cusresourceList.get(i).getEndDate()))){
 								//if(null==cusresourceList.get(i).getEndDate()||cusresourceList.get(i).getEndDate().getTime()<endDate.getTime()){
 									cusresourceList.get(i).setEndDate(endDate);
 								//}

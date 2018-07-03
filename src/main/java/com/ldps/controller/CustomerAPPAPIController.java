@@ -474,14 +474,26 @@ public class CustomerAPPAPIController {
 	public String permissionShare(@RequestParam("fromMobile")String fromMobile,
 			@RequestParam("toMobile")String toMobile,
 			@RequestParam("toName")String toName,
-			@RequestParam("startDate")String startDate,
-			@RequestParam("endDate")String endDate,
+			String startDate,
+			String endDate,
+			String startTime,
+			String endTime,
 			@RequestParam("buildingId")String buildingId,
 			@RequestParam("floor")String floor){
 		APIMessage apiMessage = new APIMessage();
 		apiMessage.setStatus(-1);
 		if(StringUtils.isEmpty(fromMobile)||StringUtils.isEmpty(toMobile)){
 			apiMessage.setMessage("被授权人和分享人不能为空");
+			return JSON.toJSONString(apiMessage);
+		}
+		
+		//历史原因，处理时间参数
+		if(StringUtils.isEmpty(startDate) && !StringUtils.isEmpty(startTime)){
+			startDate = startTime;
+		}
+		
+		if(StringUtils.isEmpty(endDate) && !StringUtils.isEmpty(endTime)){
+			endDate = endTime;
 		}
 		
 		int i=customerFacade.permissionShare(fromMobile, toMobile, toName, startDate, endDate, buildingId, floor);
