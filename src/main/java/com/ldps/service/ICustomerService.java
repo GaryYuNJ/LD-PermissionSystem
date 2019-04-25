@@ -79,5 +79,7 @@ public interface ICustomerService {
 	public CustomerModel getUserByCmMemidOrMobile(String cmMemid,String mobile) ;
 	
 	public int updateCustomerById(CustomerModel custoemrModel);
+
+	int processCustomerJob(CustomerModel custoemrModel);
 	
 }

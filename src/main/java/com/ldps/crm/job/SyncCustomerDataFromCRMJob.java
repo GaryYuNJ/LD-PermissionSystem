@@ -48,6 +48,9 @@ public class SyncCustomerDataFromCRMJob {
 						break;
 					}
 					
+					//手机号更新要做特殊处理
+					
+					
 					cModel = new CustomerModel();
 					cModel.setCmMemid(crmCusModel.getCmmemid());
 					cModel.setCmAdd1(crmCusModel.getCmadd1());
@@ -204,9 +207,10 @@ public class SyncCustomerDataFromCRMJob {
 					cModel.setCmZip(crmCusModel.getCmzip());
 					
 					//添加、更新用户信息。以cmmemid为主键
-					if(-1 == iCustomerService.addCustomer(cModel)){
-						iCustomerService.updateCustomerById(cModel);
-					}
+					iCustomerService.processCustomerJob(cModel);
+//					if(-1 == iCustomerService.addCustomer(cModel)){
+//						iCustomerService.updateCustomerById(cModel);
+//					}
 				}
 			}else{
 				logger.warn("SyncCustomerDataFromCRMJob CRMCustmemberModelMapper.selectByMaintdate() return null. ");

@@ -48,6 +48,59 @@ public class CustomerServiceImpl implements ICustomerService {
 		 }
 		return message;
 	}
+	
+	@Override
+	public int processCustomerJob(CustomerModel custoemrModel) {
+		//根据cmmemberid查询
+		CustomerModel custoemrModelTemp = customerDao.simpleSelectByCmMemid(custoemrModel.getCmMemid());
+		
+		//cmmemberid已存在
+		if(null != custoemrModelTemp){
+			//判断手机号是否变更
+			if(custoemrModelTemp.getCmMobile1().equals(custoemrModel.getCmMobile1())){
+				//手机号未变更，直接更新
+				custoemrModel.setId(custoemrModelTemp.getId());
+				return updateCustomerById(custoemrModel);
+			}else{
+				//手机号变更
+				//判断新手机号是否已存在系统的其他用户
+				CustomerModel custoemrModelT2 = customerDao.selectIdByMobile(custoemrModel.getCmMobile1());
+				//新手机号已存在，不能直接更新，手机号在这里是唯一值，新老手机号相对于id互换
+				if(null != custoemrModelT2){
+					//获取一串随机数字
+					String random = (int)(1+Math.random()*(10-1+1))+"";
+					String oldMobile = custoemrModelTemp.getCmMobile1();
+					String newMobile = custoemrModel.getCmMobile1();
+					//新老手机号相对于id互换
+					custoemrModelT2.setCmMobile1(random);
+					updateCustomerById(custoemrModelT2);
+					
+					custoemrModel.setId(custoemrModelTemp.getId());
+					updateCustomerById(custoemrModel);
+					
+					custoemrModelT2.setCmMobile1(custoemrModelTemp.getCmMobile1());
+					return updateCustomerById(custoemrModelT2);
+					
+				}else{
+					//新手机号不存在，直接更新
+					custoemrModel.setId(custoemrModelTemp.getId());
+					return updateCustomerById(custoemrModel);
+				}
+			}
+		}else{
+			//cmmemberid不存在，查看手机号是否已存在
+			custoemrModelTemp = customerDao.selectIdByMobile(custoemrModel.getCmMobile1());
+			
+			//手机号存在，更新
+			if(null != custoemrModelTemp){
+				custoemrModel.setId(custoemrModelTemp.getId());
+				return updateCustomerById(custoemrModel);
+			}else{
+				//memberId和mobile都不存在，说明是新用户
+				return customerDao.insertSelective(custoemrModel);
+			}
+		}
+	}
  
 	@Override
 	public int addCustomer(CustomerModel custoemrModel) {
