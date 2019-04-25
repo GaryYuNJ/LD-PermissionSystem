@@ -185,8 +185,9 @@ public class CustomerAPPAPIController {
 			RequestMethod.POST },  produces = {"application/json;charset=UTF-8"})
 	@ResponseBody
 	public String jointAuthResPermissionByMobile(@RequestParam("mobile")String mobile,
-			@RequestParam("resourceKey")String mac, @RequestParam("startDate")String startDateStr,
-			@RequestParam("endDate")String endDateStr, Model model){
+			@RequestParam("resourceKey")String mac, 
+			String startDate, String endDate, String startTime,
+			String endTime, Model model){
 		
 		APIMessage apiMessage = new APIMessage();
 		
@@ -197,14 +198,24 @@ public class CustomerAPPAPIController {
 			
 			SimpleDateFormat df  = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			try {
-				//startDate\endDate为null，表示不限制权限时间
-				Date startDate = null;
-				Date endDate = null;
-				if(!StringUtils.isEmpty(startDateStr)){
-					startDate = df.parse(startDateStr);
+				
+				//历史原因，处理时间参数
+				if(StringUtils.isEmpty(startDate) && !StringUtils.isEmpty(startTime)){
+					startDate = startTime;
 				}
-				if(!StringUtils.isEmpty(endDateStr)){
-					endDate = df.parse(endDateStr); 
+				
+				if(StringUtils.isEmpty(endDate) && !StringUtils.isEmpty(endTime)){
+					endDate = endTime;
+				}
+				
+				//startDate\endDate为null，表示不限制权限时间
+				Date startDateTime = null;
+				Date endDateTime = null;
+				if(!StringUtils.isEmpty(startDate)){
+					startDateTime = df.parse(startDate);
+				}
+				if(!StringUtils.isEmpty(endDate)){
+					endDateTime = df.parse(endDate); 
 				}
 				Long customerId = iCustomerSevice.getCustomerIdByMobile(mobile);
 				Integer resourceId = iResourceService.queryResourceIdByMAC(mac);
@@ -217,7 +228,7 @@ public class CustomerAPPAPIController {
 						apiMessage.setMessage("资源不存在");
 					}else{
 						int result = 
-								customerFacade.jointAuthResPermissionWithCreateUserId(customerId, resourceId, startDate, endDate,0L);
+								customerFacade.jointAuthResPermissionWithCreateUserId(customerId, resourceId, startDateTime, endDateTime,0L);
 						apiMessage.setStatus(result);
 					}
 				}
@@ -250,7 +261,7 @@ public class CustomerAPPAPIController {
 		String startDateStr= df.format(new Date(startDateUnixTime * 1000));
 		String endDateStr=df.format(new Date(endDateUnixTime * 1000));
 		
-		return this.jointAuthResPermissionByMobile(mobile, mac, startDateStr, endDateStr, model);
+		return this.jointAuthResPermissionByMobile(mobile, mac, startDateStr, endDateStr,startDateStr,endDateStr, model);
 	}
 
 	//连带资源授权接口(对一个资源授权，需要连带授权上层所有基础资源(要使用授权资源的前提资源)。
